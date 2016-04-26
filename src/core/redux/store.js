@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
-import thunk from 'redux-thunk';
-
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
 import rootReducer from 'core/redux/modules';
 import devTools from 'core/redux/devTools';
 
 export default (history, initialState) => {
   const routing = routerMiddleware(history);
   const enhancers = compose(
-    applyMiddleware(thunk, routing),
+    applyMiddleware(thunkMiddleware, routing, createLogger()),
     devTools
   );
 

@@ -16,7 +16,7 @@ server.use((req, res, next) => {
 server.use(bodyParser.json());
 server.use(config.apiUrl, api);
 
-server.listen(config.apiPort, 'localhost', (err) => {
+server.listen(config.apiPort, 'localhost', err => {
   /* eslint-disable no-console */
   if (err) { return console.log(err); }
   console.log(`[API] listening at localhost:${config.apiPort} in ${config.env} mode`);

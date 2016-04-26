@@ -6,6 +6,7 @@ const dist = path.join(__dirname, '../..', 'dist');
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
 
 const APP_ENTRY = `${ROOT_DIR}/src/client`;
+
 export default {
 
   entry: [`${ROOT_DIR}/src/client`],
@@ -24,15 +25,12 @@ export default {
   },
 
   plugins: [
-
     new webpack.optimize.OccurrenceOrderPlugin(),
-
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(env),
         BROWSER: JSON.stringify(true)
       }
     })
-
   ]
 };

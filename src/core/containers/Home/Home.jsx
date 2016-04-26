@@ -4,6 +4,7 @@ class HomeContainer extends Component {
   render() {
     return (
       <div>
+      Home?
       </div>
     );
   }

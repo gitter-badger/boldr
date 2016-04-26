@@ -20,7 +20,7 @@ const launcher = {
 
 const pipingOpts = {
   hook: true,
-  ignore: /(actions|components|reducers|styles)\/.*/
+  ignore: /(containers|components|redux|styles)\/.*/
 };
 
 if (config.env !== 'development' || piping(pipingOpts)) {

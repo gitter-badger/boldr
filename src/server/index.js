@@ -25,7 +25,7 @@ server.use(render);
 
 server.use(session({
   store: bldrSess,
-  key: 'tsg.sid',
+  key: 'bldr.sid',
   secret: config.secret,
   resave: true,
   saveUninitialized: true,
