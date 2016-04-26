@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+  data-volumes:
+    image: busybox
+    tty: true
+    stdin_open: true
+    volumes:
+    - /var/lib/postgresql/data
+    - ./backup:/postgresql.backup:z
+    command: ["chown", "-v", "-R", "999:999", "/var/lib/postgresql/data"]
+  db:
+    build: ./tools/postgres
+    container_name: postgres
+    hostname: postgres1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DBNAME: boldr
+      POSTGRES_DBUSER: boldr
+      POSTGRES_DBPASS: boldr
+    ports:
+        - 5432:5432/tcp
+    volumes_from:
+        - data-volumes
+
+  # boldr1:
+  #   build: ./
+  #   volumes:
+  #       - .:/src
+  #   environment:
+  #       - POSTGRES_USER=boldr
+  #       - POSTGRES_PASSWORD=boldr
+  #   depends_on:
+  #       - db
+  #   ports:
+  #     - 3000:3000/tcp
+  #   networks:
+  #     - boldr
+
+# POSTGRES_PORT_5432_TCP_ADDR
+# POSTGRES_PORT_5432_TCP_PORT

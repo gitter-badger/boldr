@@ -6,6 +6,7 @@ const config = require(`./${env}`).default;
 export default {
   env,
   port: 3000,
+  dbType: 'postgres',
   assetsFolder: path.join(__dirname, '../client/assets'),
   distFolder: path.join(__dirname, '../../dist'),
   ...config

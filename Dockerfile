@@ -4,8 +4,8 @@ RUN mkdir /src
 RUN npm install -g nodemon
 
 # Define working directory
+ADD package.json /src/package.json
 WORKDIR /src
-ADD ../../package.json /src/package.json
 RUN npm install
 
 # Expose port

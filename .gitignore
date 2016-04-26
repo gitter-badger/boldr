@@ -11,3 +11,7 @@ npm-debug.log
 # IDE / Editor things
 .idea/
 .vscode
+mnt
+backup
+src/server/db/schema
+boldr.paw
