@@ -5,8 +5,8 @@ import autoprefixer from 'autoprefixer';
 import postcssImport from 'postcss-import';
 
 import webpackConfig from './config';
-
-const src = path.resolve(__dirname, '../src');
+const ROOT_DIR = path.resolve(__dirname, '..', '..');
+const src = `${ROOT_DIR}/src`;
 
 export default {
   ...webpackConfig,
@@ -20,7 +20,7 @@ export default {
 
   module: {
     loaders: [...webpackConfig.loaders, {
-      test: /\.jsx$/,
+      test: /\.(js|jsx)$/,
       loader: 'babel',
       include: src,
       query: { presets: ['react-hmre'] }

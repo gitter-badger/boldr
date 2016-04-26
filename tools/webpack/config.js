@@ -2,11 +2,13 @@ import webpack from 'webpack';
 import path from 'path';
 
 const env = process.env.NODE_ENV || 'development';
-const dist = path.resolve(__dirname, '../dist');
+const dist = path.join(__dirname, '../..', 'dist');
+const ROOT_DIR = path.resolve(__dirname, '..', '..');
 
+const APP_ENTRY = `${ROOT_DIR}/src/client`;
 export default {
 
-  entry: ['./src/client'],
+  entry: [`${ROOT_DIR}/src/client`],
 
   resolve: {
     modules: ['src', 'node_modules'],

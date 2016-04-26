@@ -5,13 +5,13 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npm run clean && npm run build:webpack",
-    "build:webpack": "NODE_ENV=production babel-node bin/build",
+    "build:webpack": "NODE_ENV=production babel-node tools/bin/build",
     "preview": "npm run build && npm run prod",
     "prod": "NODE_ENV=production npm run start:app",
-    "start:app": "node bin/start --app",
-    "start:api": "node bin/start --api",
+    "start:app": "node tools/bin/start --app",
+    "start:api": "node tools/bin/start --api",
     "start": "npm run start:app & npm run start:api & wait",
-    "lint": "eslint src webpack bin"
+    "lint": "eslint src tools/webpack tools/bin"
   },
   "babel": {
     "presets": [
@@ -29,10 +29,18 @@
     ]
   },
   "dependencies": {
+    "axios": "^0.10.0",
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.3.5",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
+    "crypto": "0.0.3",
     "express": "^4.13.4",
+    "express-jwt": "^3.3.0",
+    "express-session": "^1.13.0",
+    "jsonwebtoken": "^5.7.0",
     "lodash": "^4.11.1",
+    "morgan": "^1.7.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
@@ -41,7 +49,8 @@
     "redial": "^0.4.1",
     "redux": "^3.5.1",
     "redux-actions": "^0.9.1",
-    "redux-thunk": "^2.0.1"
+    "redux-thunk": "^2.0.1",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "app-module-path": "^1.0.6",

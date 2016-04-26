@@ -6,14 +6,16 @@ require('babel-polyfill');
 const path = require('path');
 const piping = require('piping');
 const appModulePath = require('app-module-path');
+const ROOT_DIR = path.resolve(__dirname, '..', '..');
+const src = `${ROOT_DIR}/src`;
 
-const config = require('../src/config').default;
+const config = require(`${src}/config`).default;
 
-appModulePath.addPath(path.resolve(__dirname, '../src'));
+appModulePath.addPath(src);
 
 const launcher = {
-  '--app': () => require('../src/server'),
-  '--api': () => require('../src/server/dev-api')
+  '--app': () => require(`${src}/server`),
+  '--api': () => require(`${src}/server/dev-api`)
 };
 
 const pipingOpts = {

@@ -16,7 +16,7 @@ export default {
 
   module: {
     loaders: [...webpackConfig.loaders, {
-      test: /\.jsx$/,
+      test: /\.(js|jsx)$/,
       loaders: ['babel'],
       exclude: /node_modules/
     }, {
