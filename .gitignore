@@ -1,0 +1,13 @@
+dist/
+node_modules/
+
+# Files
+.DS_Store
+.env
+.AppleDouble
+.LSOverride
+.buildlog
+npm-debug.log
+# IDE / Editor things
+.idea/
+.vscode
