@@ -1,5 +1,6 @@
 export default {
   env: 'development',
   apiPort: 3001,
-  apiUrl: ''
+  apiUrl: '',
+  secret: 'asdfasdf123123dasdf'
 };

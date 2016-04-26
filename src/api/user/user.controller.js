@@ -3,9 +3,10 @@ import Promise from 'bluebird';
 import jwt from 'jsonwebtoken';
 import uuid from 'node-uuid';
 import Debug from 'debug';
-
+// import { generateToken } from 'server/middlewares/auth/tokenHelper';
 import User from 'server/db/models/User';
 import errors from 'server/middlewares/responses/errors';
+import config from 'config';
 
 const saltAndHashPassword = pwd => new Promise((resolve, reject) => {
   bcrypt.genSalt(10, (err, salt) => {
@@ -146,9 +147,9 @@ export function loginUser(req, res, next) {
         }
 
         if (validated) {
-          const token = jwt.sign(result.id, 'jwtsecret', {
-            expiresIn: 60 * 60 * 5
-          });
+          const token = jwt.sign(result.id, config.secret, 3600);
+          // const token = generateToken(result.id);
+          // generateToken(result.id);
           res.status(200);
           return res.json({
             token
