@@ -1,0 +1,8 @@
+{
+    "verbose": false,
+    "watch": [
+      "src/server",
+      "tools/webpack"
+    ],
+    "exec": "npm run dev"
+}

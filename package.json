@@ -5,7 +5,7 @@
     "node": ">= 5.4.1 < 6",
     "npm": ">=3.0.0"
   },
-  "license": "GPL-3.0",
+  "license": "MIT",
   "homepage": "https://github.com/strues/boldr",
   "bugs": "https://github.com/strues/boldr/issues",
   "repository": {
@@ -89,6 +89,7 @@
     "koa-webpack-dev-middleware": "^1.2.0",
     "koa-webpack-hot-middleware": "^1.0.3",
     "node-sass": "^3.6.0",
+    "nodemon": "^1.9.1",
     "postcss-import": "^8.1.0",
     "postcss-loader": "^0.8.2",
     "postcss-url": "^5.1.1",
@@ -101,7 +102,7 @@
     "webpack": "^1.13.0"
   },
   "scripts": {
-    "start": "npm run dev",
+    "start": "cross-env NODE_ENV=development nodemon",
     "dev": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js"
   }
 }

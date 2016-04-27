@@ -1,10 +1,12 @@
 import Router from 'koa-router';
-const router = new Router();
+import User from '../../db/models/user';
+import * as userController from './user.controller';
 
-router.prefix('/api/v1/users');
-router
-  .get('/test', async ctx => {
-    ctx.body = 'Hello World';
-  });
+const userRouter = new Router({ prefix: '/api/v1/users' });
 
-export default router;
+userRouter
+    .get('/', userController.getUsers)
+    .get('/:id', userController.getUserById);
+
+
+export default userRouter;
