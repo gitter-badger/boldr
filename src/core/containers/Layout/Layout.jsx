@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class LayoutContainer extends Component {
+export const LayoutContainer = ({ children }) => (
+  <div>
+      {children}
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-
-}
+LayoutContainer.propTypes = {
+  children: React.PropTypes.element.isRequired
+};
 
 export default LayoutContainer;

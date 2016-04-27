@@ -1,21 +1,136 @@
-import { login } from '../api';
-import * as actions from './auth.constants';
+import { polyfill } from 'es6-promise';
+import request from 'axios';
+import { push } from 'react-router-redux';
 
-export const submitLogin = () => ({
-  type: actions.LOGIN_SUBMIT
-});
+import * as types from './auth.constants';
 
-export const loginFailed = data => ({
-  type: actions.LOGIN_FAILED,
-  data
-});
+polyfill();
 
-export const loginSucceed = json => ({
-  type: actions.LOGIN_SUCCESS,
-  json
-});
+/*
+ * Utility function to make AJAX requests using isomorphic fetch.
+ * You can also use jquery's $.ajax({}) if you do not want to use the
+ * /fetch API.
+ * @param Object Data you wish to pass to the server
+ * @param String HTTP method, e.g. post, get, put, delete
+ * @param String endpoint - defaults to /login
+ * @return Promise
+ */
+function makeAuthRequest(method, data, api) {
+  return request({
+    url: api,
+    method,
+    data,
+    withCredentials: true
+  });
+}
 
-export const loginRequest = (username, password) => dispatch => {
-  dispatch(submitLogin());
-  return login(username, password, loginSucceed, loginFailed);
-};
+
+// Log In Action Creators
+function beginLogin() {
+  return { type: types.LOGIN_USER_REQUEST };
+}
+
+function loginSuccess(response) {
+  return {
+    type: types.LOGIN_USER_SUCCESS,
+    payload: response.data,
+    message: response.data.message
+  };
+}
+
+function loginError(message) {
+  return {
+    type: types.LOGIN_USER_FAILURE,
+    message
+  };
+}
+
+// Sign Up Action Creators
+function signUpError(message) {
+  return {
+    type: types.SIGNUP_ERROR_USER,
+    message
+  };
+}
+
+function beginSignUp() {
+  return { type: types.SIGNUP_USER };
+}
+
+function signUpSuccess(message) {
+  return {
+    type: types.SIGNUP_SUCCESS_USER,
+    message
+  };
+}
+
+// Log Out Action Creators
+function beginLogout() {
+  return { type: types.LOGOUT_USER };
+}
+
+function logoutSuccess() {
+  return { type: types.LOGOUT_SUCCESS_USER };
+}
+
+function logoutError() {
+  return { type: types.LOGOUT_ERROR_USER };
+}
+
+export function toggleLoginMode() {
+  return { type: types.TOGGLE_LOGIN_MODE };
+}
+
+export function login(data) {
+  return dispatch => {
+    dispatch(beginLogin());
+
+    return makeAuthRequest('post', data, '/api/v1/auth/login')
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(loginSuccess(response));
+          localStorage.setItem('jwt', response.data);
+          dispatch(push('/'));
+        } else {
+          dispatch(loginError('Oops! Something went wrong!'));
+        }
+      })
+      .catch(err => {
+        dispatch(loginError(err.data.message));
+      });
+  };
+}
+
+export function signUp(data) {
+  return dispatch => {
+    dispatch(beginSignUp());
+
+    return makeAuthRequest('post', data, '/api/v1/auth/register')
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(signUpSuccess(response.data.message));
+          dispatch(push('/'));
+        } else {
+          dispatch(signUpError('Oops! Something went wrong'));
+        }
+      })
+      .catch(err => {
+        dispatch(signUpError(err.data.message));
+      });
+  };
+}
+
+export function logout() {
+  return dispatch => {
+    dispatch(beginLogout());
+
+    return makeAuthRequest('post', null, '/logout')
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(logoutSuccess());
+        } else {
+          dispatch(logoutError());
+        }
+      });
+  };
+}

@@ -1,2 +1,2 @@
-import LayoutContainer from 'core/containers/Layout/Layout.jsx';
+import LayoutContainer from './Layout.jsx';
 export default LayoutContainer;

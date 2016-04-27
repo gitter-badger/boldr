@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import LayoutContainer from 'core/containers/Layout';
-import HomeContainer from 'core/containers/Home';
+import LayoutContainer from './containers/Layout';
+import HomeContainer from './containers/Home';
 
 export default (
   <Route path="/" component={ LayoutContainer }>

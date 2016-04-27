@@ -4,11 +4,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { trigger } from 'redial';
 import { Provider } from 'react-redux';
 import { Router, browserHistory, match } from 'react-router';
-import { fetchComponentDataBeforeRender } from 'core/api/fetchComponentDataBeforeRender';
-import createStore from 'core/redux/store';
-import routes from 'core/routes';
+import { fetchComponentDataBeforeRender } from '../core/api/fetchComponentDataBeforeRender';
+import createStore from '../core/redux/store';
+import routes from '../core/routes';
 
-import 'client/styles/main.scss';
+import './styles/main.scss';
 
 const store = createStore(browserHistory, window.__INITIAL_STATE__);
 const history = syncHistoryWithStore(browserHistory, store);

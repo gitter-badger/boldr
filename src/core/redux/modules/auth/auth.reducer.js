@@ -1,62 +1,55 @@
-import { LOGIN_SUBMIT, LOGIN_FAILED, LOGIN_SUCCESS } from './auth.constants';
-import { createTokenCookie } from './auth.actions';
+import * as constants from './auth.constants';
+// import { createTokenCookie } from './auth.actions';
 
-const message = statusCode => {
-  switch (statusCode) {
-    case 401:
-      return '';
-    case 404:
-      return '';
-    case 410:
-      return 'Your session has expired, please login again.';
-    case 500:
-      return 'Internal authorization error';
-    default:
-      return 'Login failed';
-  }
-};
-const INITIAL_STATE = {
-  isLogging: false,
-  error: {
-    message: '',
-    code: 0
-  }
+export const INITIAL_STATE = {
+  loading: false,
+  message: '',
+  error: false,
+  isAuthenticated: false,
+  isAuthenticating: false,
+  token: {}
 };
 
-const AuthReducer = (state = INITIAL_STATE, action) => {
+export default function auth(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case LOGIN_SUBMIT:
+    case constants.LOGIN_USER_REQUEST:
       return {
         ...state,
-        isLogging: true,
-        error: {
-          message: '',
-          code: 0
-        }
+        error: null,
+        isAuthenticating: true,
+        isAuthenticated: false,
+        loading: true,
+        message: 'Logging in',
+        token: {}
       };
-    case LOGIN_FAILED:
+    case constants.LOGIN_USER_SUCCESS:
       return {
         ...state,
-        error: {
-          message: message(action.data.status),
-          code: action.data.status
-        },
-        isLogging: false
+        error: null,
+        isAuthenticating: false,
+        isAuthenticated: true,
+        loading: true,
+        message: 'You\'re logged in!',
+        token: action.payload
       };
-    case LOGIN_SUCCESS:
-      createTokenCookie(action.json.token);
+    case constants.LOGIN_USER_FAILURE:
       return {
         ...state,
-        error: {
-          message: '',
-          code: 0
-        },
-        isLogging: false
+        error: action.payload,
+        isAuthenticating: true,
+        isAuthenticated: false,
+        loading: false,
+        message: action.message
       };
     default:
       return state;
   }
-};
+}
 
-export default AuthReducer;
-
+export function isLoaded(globalState) {
+  // This is invoked by routees.
+  // globalState.user is the state of this current reducer.
+  // we are checking if it does exists, and we should check if we have
+  // the token
+  return globalState.auth && globalState.auth.token;
+}
