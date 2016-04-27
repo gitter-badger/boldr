@@ -1,4 +1,4 @@
-import { Bookshelf } from 'server/db/connector';
+import { Bookshelf } from '../connector';
 
 const User = Bookshelf.Model.extend({
   tableName: 'users',

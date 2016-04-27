@@ -1,17 +1,17 @@
 import knex from 'knex';
 import bookshelf from 'bookshelf';
-import config from 'config';
-import Redis from 'ioredis';
+import config, { paths } from '../../../tools/config';
+// import Redis from 'ioredis';
 import Debug from 'debug';
-
-const redisClient = new Redis('redis://10.211.55.7:6379/4');
-redisClient.on('error', err => {
-  Debug(`Error ${err}`);
-});
-
-redisClient.on('connect', () => {
-  Debug('Redis is online');
-});
+//
+// const redisClient = new Redis('redis://10.211.55.7:6379/4');
+// redisClient.on('error', err => {
+//   Debug(`Error ${err}`);
+// });
+//
+// redisClient.on('connect', () => {
+//   Debug('Redis is online');
+// });
 
 const Knex = knex({
   client: 'pg',
@@ -41,15 +41,15 @@ const database = () => {
   return null;
 };
 
-const User = () => require('server/db/models/User');
+const User = () => require('./models/user');
 
-export function instance() {
-  // Return instance of redis client
-  return redisClient;
-}
+// export function instance() {
+//   // Return instance of redis client
+//   return redisClient;
+// }
 
 export {
-  redisClient,
+  // redisClient,
   Knex,
   Bookshelf,
   database,

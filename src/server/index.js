@@ -1,45 +1,28 @@
-import express from 'express';
-import compression from 'compression';
-import bodyParser from 'body-parser';
-import session from 'express-session';
-import config from 'config';
-import render from 'server/middlewares/render';
-import logger from 'server/lib/logger/logger';
-import { session as bldrSess } from 'server/middlewares/session';
+import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
+import isomorphicToolsConfig from '../../tools/webpack/isomorphic.tools.config';
+import projectConfig, { paths } from '../../tools/config';
 
-const server = express();
+const projectBasePath = paths('base');
 
-if (config.env === 'development') {
-  require('server/middlewares/webpack').default(server);
+/**
+ * Define isomorphic constants.
+ */
+global.__CLIENT__ = false;
+global.__SERVER__ = true;
+global.__DEV__ = projectConfig.__DEV__;
+global.__PROD__ = projectConfig.__PROD__;
+global.__DEBUG__ = projectConfig.__DEBUG__;
+
+// https://github.com/halt-hammerzeit/webpack-isomorphic-tools#mainjs
+global.webpackIsomorphicTools =
+  new WebpackIsomorphicTools(isomorphicToolsConfig)
+    .development(__DEV__)
+    .server(projectBasePath, () => {
+      require('.');
+    });
+
+if (__DEV__) {
+  require('./server.dev');
+} else {
+  require('./server.prod');
 }
-
-if (config.env === 'production') {
-  server.use(compression());
-  server.use(bodyParser.json());
-  server.use('/dist', express.static(config.distFolder));
-  server.use(config.apiUrl, require('api').default);
-}
-
-server.use('/assets', express.static(config.assetsFolder));
-server.use(render);
-
-server.use(session({
-  store: bldrSess,
-  key: 'bldr.sid',
-  secret: config.secret,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    maxAge: 7 * 24 * 60 * 60 * 1000
-  }
-}));
-
-server.listen(config.port, 'localhost', err => {
-  /* eslint-disable no-console */
-  if (err) {
-    return console.log(err);
-  }
-  logger.info(`[APP] listening at localhost:${config.port} in ${config.env} mode`);
-/* eslint-enable no-console */
-});

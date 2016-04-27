@@ -5,8 +5,8 @@
 ## Tech Stack
 
 * Node.js
-* Express
-* RethinkDB
+* Koa2
+* Postgres
 * React
 
 ## Installation
@@ -32,4 +32,3 @@ $ npm run dev
 
 
 ## Contribute
-
