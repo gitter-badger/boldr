@@ -20,7 +20,7 @@ const error = () => async (ctx, next) => {
       case 'return':
         ctx.body = {
           success: false,
-          ...result.content,
+          ...result.content
         };
         break;
       default:

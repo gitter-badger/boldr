@@ -1,8 +1,15 @@
 {
     "verbose": false,
+    "ignore": [
+      "backup",
+      "docs",
+      "seeds",
+      "src/common",
+      "static",
+      "tools"
+    ],
     "watch": [
-      "src/server",
-      "tools/webpack"
+      "src/server"
     ],
     "exec": "npm run dev"
 }

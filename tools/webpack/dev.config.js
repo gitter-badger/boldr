@@ -1,24 +1,23 @@
-import webpack from 'webpack'
-import path from 'path'
-import _debug from 'debug'
-import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin'
+import webpack from 'webpack';
+import path from 'path';
+import _debug from 'debug';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
-import isomorphicToolsConfig from './isomorphic.tools.config'
-import projectConfig, { paths } from '../config'
+import isomorphicToolsConfig from './isomorphic.tools.config';
+import projectConfig, { paths } from '../config';
 
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig)
-const debug = _debug('app:webpack:config:dev')
-const srcDir = paths('src')
-const nodeModulesDir = paths('nodeModules')
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
+const debug = _debug('app:webpack:config:dev');
+const srcDir = paths('src');
+const nodeModulesDir = paths('nodeModules');
 const deps = [
-  'redux/dist/redux.min.js',
-  'font-awesome/css/font-awesome.min.css'
-]
+  'redux/dist/redux.min.js'
+];
 
-debug('Create configuration.')
+debug('Create configuration.');
 const config = {
   context: paths('base'),
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client?reload=true',
     paths('entryApp')
@@ -94,14 +93,14 @@ const config = {
     new webpack.optimize.DedupePlugin(),
     webpackIsomorphicToolsPlugin.development()
   ]
-}
+};
 
 // Optimizing rebundling
 deps.forEach(dep => {
-  const depPath = path.resolve(nodeModulesDir, dep)
+  const depPath = path.resolve(nodeModulesDir, dep);
 
-  config.resolve.alias[dep.split(path.sep)[0]] = depPath
-  config.module.noParse.push(depPath)
-})
+  config.resolve.alias[dep.split(path.sep)[0]] = depPath;
+  config.module.noParse.push(depPath);
+});
 
-export default config
+export default config;

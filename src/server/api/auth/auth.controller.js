@@ -1,24 +1,13 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import _debug from 'debug';
 import User from '../../db/models/user';
 import uuid from 'node-uuid';
 import config, { paths } from '../../../../tools/config';
-import { returnCode, response } from '../../utils';
+import { returnCode, response, saltAndHashPassword, respond } from '../../utils';
 
-const saltAndHashPassword = pwd => new Promise((resolve, reject) => {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(pwd, salt, (_err, hash) => {
-      if (_err) {
-        return reject(_err);
-      }
-      return resolve(hash);
-    });
-
-    if (err) {
-      return reject(err);
-    }
-  });
-});
+const debug = _debug('boldr:auth:controller');
+debug('init');
 
 /**
  * @description
@@ -29,7 +18,7 @@ const saltAndHashPassword = pwd => new Promise((resolve, reject) => {
 export const registerUser = async ctx => {
   saltAndHashPassword(ctx.request.body.password)
     .then(hash => {
-      const user = new User.forge({
+      User.forge({
         username: ctx.request.body.username,
         display_name: ctx.request.body.displayName,
         first_name: ctx.request.body.firstName,
@@ -48,7 +37,10 @@ export const registerUser = async ctx => {
         role: 'admin'
       }).save();
     });
-  response(ctx, returnCode.valid.success);
+
+  respond(201, {
+    message: 'Registration successful.'
+  }, ctx);
 };
 
 /**
@@ -70,8 +62,6 @@ export const loginUser = async ctx => {
         return;
       }
       const token = jwt.sign(result.id, config.JWT_SECRET_KEY);
-      ctx.body = {
-        token
-      };
+      ctx.body = token;
     });
 };

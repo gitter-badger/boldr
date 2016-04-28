@@ -4,10 +4,11 @@ import { Link } from 'react-router';
 // *** STYLES *** //
 import 'common/styles/app.scss';
 
-const propTypes = {
-  children: PropTypes.object
-};
-
+/**
+ * Core layout is the default layout for the main site. It is a stateless
+ * component and will require a full reload. Cannot HMR.
+ * @param {any} props everything that will be rendered.
+ */
 function CoreLayout(props) {
   return (
     <div>
@@ -16,5 +17,8 @@ function CoreLayout(props) {
   );
 }
 
-CoreLayout.propTypes = propTypes;
+CoreLayout.propTypes = {
+  children: PropTypes.object.isRequired
+};
+
 export default CoreLayout;
