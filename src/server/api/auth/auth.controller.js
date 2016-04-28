@@ -62,7 +62,9 @@ export const loginUser = async ctx => {
         return;
       }
       const token = jwt.sign(result.id, config.JWT_SECRET_KEY);
-      ctx.body = token;
+      ctx.body = {
+        token
+      };
     });
 };
 
