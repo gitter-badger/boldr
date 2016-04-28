@@ -18,14 +18,12 @@ export default async function decodeToken(ctx, next) {
     }
   } else {
     console.log(401, 'No Authorization header found\n');
-  // TODO @ilya Client will be broke if uncomment
-  //ctx.throw(401, 'No Authorization header found\n')
   }
 
   console.log('token:' + token, 'secret:' + config.JWT_SECRET_KEY);
   if (token) {
-    const result = await jwt.verify(token, config.JWT_SECRET_KEY);
-    console.log(result);
+    const decoded = await jwt.verify(token, config.JWT_SECRET_KEY);
+    console.log(decoded);
   } else {
     return next();
   }
