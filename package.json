@@ -43,7 +43,10 @@
     "koa-static": "^3.0.0",
     "lodash": "^4.11.1",
     "lost": "^6.7.2",
+    "material-ui": "^0.15.0-beta.2",
     "node-uuid": "^1.4.7",
+    "nodemailer": "^2.3.2",
+    "nodemailer-mailgun-transport": "^1.0.1",
     "normalize.css": "^4.1.1",
     "pg": "^4.5.5",
     "react": "^15.0.1",
@@ -52,6 +55,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.3.0",
     "react-router-redux": "^4.0.4",
+    "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.0.1",
     "serve-static": "^1.10.2",
@@ -84,14 +88,19 @@
     "eslint-plugin-react": "^5.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "ignore-styles": "^1.2.0",
     "json-loader": "^0.5.4",
     "koa-webpack-dev-middleware": "^1.2.0",
     "koa-webpack-hot-middleware": "^1.0.3",
+    "mocha": "^2.4.5",
     "node-sass": "^3.6.0",
     "nodemon": "^1.9.1",
+    "phantomjs-polyfill": "0.0.2",
+    "phantomjs-prebuilt": "^2.1.7",
     "postcss-import": "^8.1.0",
     "postcss-loader": "^0.8.2",
     "postcss-url": "^5.1.1",
+    "react-addons-test-utils": "^15.0.1",
     "redux-devtools": "^3.2.0",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
@@ -102,6 +111,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon",
-    "dev": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js"
+    "dev": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js",
+    "test": "better-npm-run test"
   }
 }

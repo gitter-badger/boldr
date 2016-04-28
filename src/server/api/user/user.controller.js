@@ -67,3 +67,10 @@ export async function deleteUser(ctx) {
     success: true
   };
 }
+
+export async function getMe(ctx) {
+  response(ctx, {
+    ...returnCode.valid.success,
+    object: ctx.user.clearResponse()
+  });
+}

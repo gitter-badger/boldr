@@ -1,2 +1,2 @@
-import SiteLogo from './SiteLogo.jsx'
+import SiteLogo from './SiteLogo.jsx';
 export default SiteLogo;

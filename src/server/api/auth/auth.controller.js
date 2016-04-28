@@ -65,3 +65,12 @@ export const loginUser = async ctx => {
       ctx.body = token;
     });
 };
+
+export const registerEmailCheck = async ctx => {
+  const { code } = ctx.request.query;
+  const result = await User.registerEmailCheck(code);
+  if (typeof result === 'string') {
+    response.err(returnCode.err[result]);
+  }
+  response(ctx, returnCode.valid.success);
+};

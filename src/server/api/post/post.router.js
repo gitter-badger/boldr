@@ -1,10 +1,10 @@
 import Router from 'koa-router';
-import * as postController from './post.controller';
+import { getAllPosts } from './post.controller';
 
 const postRouter = new Router({ prefix: '/api/v1/posts' });
 
-// postRouter
-//     .get('/', postController.getUsers);
+postRouter
+    .get('/', getAllPosts);
 
 
 export default postRouter;

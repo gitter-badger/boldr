@@ -1,2 +1,2 @@
-import { TopBar } from './TopBar.jsx';
+import TopBar from './TopBar.jsx';
 export default TopBar;

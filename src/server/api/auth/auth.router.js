@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import config, { paths } from '../../../../tools/config';
-import { registerUser, loginUser } from './auth.controller';
+import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
 
 const router = new Router();
 
@@ -12,7 +12,8 @@ router
   });
 
 router
-  .post('/register', registerUser);
+  .post('/register', registerUser)
+  .get('/email-check', registerEmailCheck);
 
 router
   .post('/login', loginUser);

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import { fetchComponentDataBeforeRender } from 'common/api/fetchComponentDataBeforeRender';
 import configureStore from 'common/redux/store';
@@ -11,7 +12,7 @@ const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
-
+injectTapEventPlugin();
 /**
  * Callback function handling frontend route changes.
  */

@@ -6,6 +6,10 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import serve from 'koa-static';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
+
 import Boldr from './boldr';
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHotMiddleware from './middleware/webpack-hot';
@@ -89,12 +93,27 @@ const handleRender = ctx => {
       _ctx.status = 302;
       _ctx.redirect(`${redirectLocation.pathname}${redirectLocation.search}`);
     } else if (renderProps) {
+      const blueIsh = '#359AD8';
+      const muiTheme = getMuiTheme({
+        palette: {
+          primary1Color: blueIsh,
+          primary2Color: green700,
+          primary3Color: cyanA400
+        }
+      }, {
+        avatar: {
+          borderColor: null
+        },
+        userAgent: ctx.headers['user-agent']
+      });
       // Render the component to a string
       const html = renderToString(
         <Provider store={store}>
+        <MuiThemeProvider muiTheme={ muiTheme }>
           <div className="app">
             <RouterContext { ...renderProps } />
           </div>
+          </MuiThemeProvider>
         </Provider>
       );
       // Send the rendered page back to the client

@@ -1,9 +1,9 @@
 import { Bookshelf } from '../connector';
-import Post from './Post';
+import User from './User';
 
-const User = Bookshelf.Model.extend({
-  tableName: 'users',
-  posts: () => this.hasMany(Post),
+const Post = Bookshelf.Model.extend({
+  tableName: 'posts',
+  author: () => this.belongsTo(User),
   initialize: function init() {
     this.on('updating', () => {
       this.attributes.updated_at = new Date();
@@ -12,7 +12,11 @@ const User = Bookshelf.Model.extend({
     this.on('creating', () => {
       this.attributes.created_at = new Date();
     });
+
+    this.on('fetching', () => {
+      this.attributes.views++;
+    });
   }
 });
 
-export default User;
+export default Post;

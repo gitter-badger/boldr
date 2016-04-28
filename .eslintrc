@@ -1,6 +1,13 @@
 {
   "extends": "axial",
   "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true,
+    "shared-node-browser": true
+  },
   "plugins": ["import"],
   "globals": {
     "__CLIENT__": false,
