@@ -16,8 +16,8 @@ import webpackHotMiddleware from './middleware/webpack-hot';
 import projectConfig from '../../tools/config';
 import webpackConfig from '../../tools/webpack/dev.config';
 
-import configureStore from 'common/redux/store';
-import routes from 'common/routes';
+import configureStore from '../common/redux/store';
+import routes from '../common/routes';
 
 const debug = _debug('app:server:dev');
 const app = new Koa();
