@@ -76,6 +76,7 @@ const config = {
   },
   postcss: wPack => ([
     require('postcss-import')({ addDependencyTo: wPack }),
+    require('lost')(),
     require('postcss-url')(),
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
