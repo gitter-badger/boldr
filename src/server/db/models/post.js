@@ -1,9 +1,10 @@
 import { Bookshelf } from '../connector';
 import User from './User';
-
+import Tag from './Tag';
 const Post = Bookshelf.Model.extend({
   tableName: 'posts',
   author: () => this.belongsTo(User),
+  tags: () => this.hasMany(Tag),
   initialize: function init() {
     this.on('updating', () => {
       this.attributes.updated_at = new Date();

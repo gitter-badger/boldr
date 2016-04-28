@@ -11,7 +11,21 @@ const User = Bookshelf.Model.extend({
 
     this.on('creating', () => {
       this.attributes.created_at = new Date();
+      this.set('email', this.get('email').toLowerCase().trim());
     });
+  },
+  toJSON: function toJSON(options) {
+    options = options || {};
+
+    const attrs = Bookshelf.Model.prototype.toJSON.call(this, options);
+    // remove password hash for security reasons
+    delete attrs.password;
+
+    if (!options || !options.context || (!options.context.user && !options.context.internal)) {
+      delete attrs.email;
+    }
+
+    return attrs;
   }
 });
 

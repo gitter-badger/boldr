@@ -38,9 +38,7 @@ export const registerUser = async ctx => {
       }).save();
     });
 
-  respond(201, {
-    message: 'Registration successful.'
-  }, ctx);
+  ctx.status = 201;
 };
 
 /**

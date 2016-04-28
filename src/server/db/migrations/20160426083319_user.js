@@ -18,23 +18,9 @@ exports.up = (knex, Promise) => Promise.all([
     table.string('slug');
     table.string('status');
     table.timestamps();
-  }),
-
-  knex.schema.withSchema('public').createTableIfNotExists('posts', (table) => {
-    table.increments('id').primary();
-    table.string('title').notNullable().unique();
-    table.string('slug').notNullable().unique();
-    table.text('content').notNullable();
-    table.text('edit_body').notNullable();
-    table.string('image');
-    table.integer('author_id').references('id').inTable('users');
-    table.integer('views').defaultTo(0);
-    table.boolean('is_public').defaultTo(false);
-    table.timestamps();
   })
 ]);
 
 exports.down = (knex, Promise) => Promise.all([
-  knex.schema.dropTable('users'),
-  knex.schema.dropTable('posts')
+  knex.schema.dropTable('users')
 ]);
