@@ -1,4 +1,4 @@
-import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcrypt';
+import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import _debug from 'debug';
 
