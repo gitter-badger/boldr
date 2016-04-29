@@ -3,17 +3,24 @@ import webpack from 'webpack';
 import _debug from 'debug';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import serve from 'koa-static';
+import Helmet from 'react-helmet';
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
+
+import createRoutes from 'common/routes';
 import Boldr from './boldr';
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHotMiddleware from './middleware/webpack-hot';
 import projectConfig from '../../tools/config';
 import webpackConfig from '../../tools/webpack/dev.config';
 
-import configureStore from 'common/redux/store';
-import routes from 'common/routes';
+import configureStore from '../common/redux/store';
+import routes from '../common/routes';
 
 const debug = _debug('app:server:dev');
 const app = new Koa();
@@ -22,17 +29,17 @@ const serverOptions = { publicPath: webpackConfig.output.publicPath };
 Boldr.init(app);
 app.use(serve('static'));
 
-/* *******************
-  WEBPACK CONFIGURATION
-******************* */
-// Use these middlewares to set up hot module reloading via webpack.
+/**
+ * WEBPACK CONFIGURATION
+ * Use these middlewares to set up hot module reloading via webpack.
+ */
 app.use(webpackDevMiddleware(compiler, serverOptions));
 app.use(webpackHotMiddleware(compiler));
 
 
 function renderFullPage(html, initialState) {
   const assets = webpackIsomorphicTools.assets();
-
+  const head = Helmet.rewind();
   // (will be present only in development mode)
   // This is for the dev mode so it's not mandatory
   // but recommended to speed up loading of styles
@@ -41,7 +48,7 @@ function renderFullPage(html, initialState) {
 
   return `
     <!doctype html>
-    <html>
+    <html ${head.htmlAttributes.toString()}>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,
@@ -70,14 +77,14 @@ const handleRender = ctx => {
   if (__DEV__) {
     webpackIsomorphicTools.refresh();
   }
-
+  const history = createMemoryHistory();
   // Compile an initial state
   const initialState = {};
   // Create a new Redux store instance
   const store = configureStore(initialState);
   // Grab the initial state from our Redux store
   const finalState = store.getState();
-
+  const routes = createRoutes(store);
   const _ctx = ctx;
   const { path: location } = _ctx;
 
@@ -89,12 +96,25 @@ const handleRender = ctx => {
       _ctx.status = 302;
       _ctx.redirect(`${redirectLocation.pathname}${redirectLocation.search}`);
     } else if (renderProps) {
+      const blueIsh = '#359AD8';
+      const muiTheme = getMuiTheme({
+        palette: {
+          primary1Color: blueIsh,
+          primary2Color: green700,
+          primary3Color: cyanA400
+        }
+      }, {
+        avatar: {
+          borderColor: null
+        },
+        userAgent: ctx.headers['user-agent']
+      });
       // Render the component to a string
       const html = renderToString(
         <Provider store={store}>
-          <div className="app">
+          <MuiThemeProvider muiTheme={ muiTheme }>
             <RouterContext { ...renderProps } />
-          </div>
+          </MuiThemeProvider>
         </Provider>
       );
       // Send the rendered page back to the client

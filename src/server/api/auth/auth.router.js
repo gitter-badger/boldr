@@ -1,31 +1,27 @@
 import Router from 'koa-router';
-import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import uuid from 'node-uuid';
-import User from '../../db/models/user';
 import config, { paths } from '../../../../tools/config';
-import { returnCode, response } from '../../utils';
-import { registerUser, loginUser } from './auth.controller';
+import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
+import { validateToken } from '../../middleware/auth/validateToken';
 
-const router = new Router();
-const salt = genSaltSync();
+const authRouter = new Router();
 
-router.prefix('/api/v1/auth');
+authRouter.prefix('/api/v1/auth');
 
-router
+authRouter
   .get('/test', async ctx => {
     ctx.body = 'Auth Router';
   });
 
-router
-  .post('/register', registerUser);
+authRouter
+  .post('/register', registerUser)
+  .get('/email-check', registerEmailCheck);
 
-router
+authRouter
   .post('/login', loginUser);
 
-router
+authRouter
   .post('/logout', async ctx => {
     ctx.body = 'Hello Logout';
   });
 
-export default router;
+export default authRouter;

@@ -9,8 +9,15 @@ import routers from './api';
 
 export default class Boldr {
   static init(application) {
-    application.use(morgan('dev'))
-      .use(bodyParser());
+    application
+      .use(logger())
+      .use(morgan('dev'))
+      .use(bodyParser())
+      .use(methodOverride())
+      .use(async (ctx, next) => {
+        return await next();
+      });
+
     for (const router of routers) {
       application.use(router.routes());
       application.use(router.allowedMethods());

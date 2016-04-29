@@ -1,36 +1,11 @@
-import { returnCode } from '../utils';
-
-const error = () => async (ctx, next) => {
-  try {
-    await next();
-  } catch (ex) {
-    ctx.status = ex.status || 403;
-
-    let result = ex;
-    if (ex.message === 'JSONSchema errors') {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Schema errors: ', ctx.schemaErrors);
-      }
-      result = {
-        type: 'return',
-        content: returnCode.err.schemaNotMatch
-      };
+export function errorMiddleware() {
+  return async (ctx, next) => {
+    try {
+      await next();
+    } catch (err) {
+      ctx.status = err.status || 500;
+      ctx.body = err.message;
+      ctx.app.emit('error', err, ctx);
     }
-    switch (result.type) {
-      case 'return':
-        ctx.body = {
-          success: false,
-          ...result.content,
-        };
-        break;
-      default:
-        console.error(result.stack);
-        ctx.body = {
-          success: false,
-          ...returnCode.err.undefine
-        };
-    }
-  }
-};
-
-export default error;
+  };
+}

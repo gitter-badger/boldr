@@ -1,24 +1,24 @@
-import webpack from 'webpack'
-import path from 'path'
-import _debug from 'debug'
-import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin'
+import webpack from 'webpack';
+import path from 'path';
+import _debug from 'debug';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import isomorphicToolsConfig from './isomorphic.tools.config';
+import projectConfig, { paths } from '../config';
 
-import isomorphicToolsConfig from './isomorphic.tools.config'
-import projectConfig, { paths } from '../config'
-
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig)
-const debug = _debug('app:webpack:config:dev')
-const srcDir = paths('src')
-const nodeModulesDir = paths('nodeModules')
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
+const debug = _debug('app:webpack:config:dev');
+const srcDir = paths('src');
+const testDir = paths('test');
+const nodeModulesDir = paths('nodeModules');
 const deps = [
-  'redux/dist/redux.min.js',
-  'font-awesome/css/font-awesome.min.css'
-]
+  'redux/dist/redux.min.js'
+];
 
-debug('Create configuration.')
+debug('Create configuration.');
 const config = {
   context: paths('base'),
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client?reload=true',
     paths('entryApp')
@@ -51,7 +51,7 @@ const config = {
         test: /\.js[x]?$/,
         loader: 'babel',
         exclude: [nodeModulesDir],
-        include: [srcDir],
+        include: [srcDir, testDir],
         query: {
           presets: ['react-hmre']
         }
@@ -62,7 +62,7 @@ const config = {
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('styles'),
-        include: [srcDir],
+        include: [srcDir, nodeModulesDir],
         loader: 'style!css!postcss!sass'
       },
       {
@@ -77,6 +77,7 @@ const config = {
   },
   postcss: wPack => ([
     require('postcss-import')({ addDependencyTo: wPack }),
+    require('lost')(),
     require('postcss-url')(),
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
@@ -94,14 +95,14 @@ const config = {
     new webpack.optimize.DedupePlugin(),
     webpackIsomorphicToolsPlugin.development()
   ]
-}
+};
 
 // Optimizing rebundling
 deps.forEach(dep => {
-  const depPath = path.resolve(nodeModulesDir, dep)
+  const depPath = path.resolve(nodeModulesDir, dep);
 
-  config.resolve.alias[dep.split(path.sep)[0]] = depPath
-  config.module.noParse.push(depPath)
-})
+  config.resolve.alias[dep.split(path.sep)[0]] = depPath;
+  config.module.noParse.push(depPath);
+});
 
-export default config
+export default config;

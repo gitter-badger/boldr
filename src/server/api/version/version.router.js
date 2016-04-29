@@ -1,5 +1,4 @@
 import Router from 'koa-router';
-import error from '../../middleware/error';
 import pkg from '../../../../package.json'; // eslint-disable-line
 
 const info = {
@@ -12,7 +11,6 @@ const router = new Router();
 export default router;
 
 router.prefix('/api/v1/version');
-router.use(error());
 
 router.get('/', async (ctx) => {
   ctx.body = info;

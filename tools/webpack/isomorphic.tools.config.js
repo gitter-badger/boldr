@@ -1,11 +1,11 @@
-import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin'
-import _debug from 'debug'
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
+import _debug from 'debug';
 
-import projectConfig from '../config'
+import projectConfig from '../config';
 
-const debug = _debug('app:webpack:isomorphic:tools:config')
+const debug = _debug('app:webpack:isomorphic:tools:config');
 
-debug('Create configuration.')
+debug('Create configuration.');
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools#configuration
 export default {
@@ -16,9 +16,9 @@ export default {
     },
     styles: {
       extensions: ['css', 'scss'],
-      filter (module, regular_expression, options, log) {
+      filter(module, regular_expression, options, log) {
         if (options.development) {
-          return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regular_expression, options, log)
+          return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regular_expression, options, log);
         }
         // in production mode there's no webpack "style-loader",
         // so the module.name will be equal to the asset path
@@ -28,4 +28,4 @@ export default {
       parser: WebpackIsomorphicToolsPlugin.css_loader_parser
     }
   }
-}
+};

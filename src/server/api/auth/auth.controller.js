@@ -1,24 +1,16 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../../db/models/user';
+import _debug from 'debug';
+
 import uuid from 'node-uuid';
+
 import config, { paths } from '../../../../tools/config';
-import { returnCode, response } from '../../utils';
+import User from '../../db/models/user';
+import { returnCode, response, saltAndHashPassword, respond } from '../../utils';
+import generateToken from '../../middleware/auth/generateToken';
 
-const saltAndHashPassword = pwd => new Promise((resolve, reject) => {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(pwd, salt, (_err, hash) => {
-      if (_err) {
-        return reject(_err);
-      }
-      return resolve(hash);
-    });
-
-    if (err) {
-      return reject(err);
-    }
-  });
-});
+const debug = _debug('boldr:auth:controller');
+debug('init');
 
 /**
  * @description
@@ -29,7 +21,7 @@ const saltAndHashPassword = pwd => new Promise((resolve, reject) => {
 export const registerUser = async ctx => {
   saltAndHashPassword(ctx.request.body.password)
     .then(hash => {
-      const user = new User.forge({
+      User.forge({
         username: ctx.request.body.username,
         display_name: ctx.request.body.displayName,
         first_name: ctx.request.body.firstName,
@@ -48,7 +40,8 @@ export const registerUser = async ctx => {
         role: 'admin'
       }).save();
     });
-  response(ctx, returnCode.valid.success);
+
+  ctx.status = 201;
 };
 
 /**
@@ -64,14 +57,23 @@ export const loginUser = async ctx => {
     .fetch({
       columns: ['password', 'id']
     })
-    .then(result => {
-      if (!compareSync(ctx.request.body.password, result.attributes.password)) {
+    .then(user => {
+      if (!compareSync(ctx.request.body.password, user.attributes.password)) {
         ctx.body = 'invalid credentials';
         return;
       }
-      const token = jwt.sign(result.id, config.JWT_SECRET_KEY);
+      const token = jwt.sign(user.id, config.JWT_SECRET_KEY);
       ctx.body = {
         token
       };
     });
+};
+
+export const registerEmailCheck = async ctx => {
+  const { code } = ctx.request.query;
+  const result = await User.registerEmailCheck(code);
+  if (typeof result === 'string') {
+    response.err(returnCode.err[result]);
+  }
+  response(ctx, returnCode.valid.success);
 };
