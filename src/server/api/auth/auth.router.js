@@ -14,7 +14,9 @@ authRouter
 
 authRouter
   .post('/register', registerUser)
-  .get('/email-check', registerEmailCheck);
+  .get('/check', validateToken, async ctx => {
+    ctx.body = 'You are authorized.';
+  });
 
 authRouter
   .post('/login', loginUser);
