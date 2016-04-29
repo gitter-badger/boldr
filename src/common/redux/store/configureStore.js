@@ -3,7 +3,6 @@ import thunkMiddleware from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import promiseMiddleware from 'redux-promise';
-import DevTools from 'common/containers/DevTools';
 import logger from '../middleware/logger';
 import rootReducer from '../modules';
 
