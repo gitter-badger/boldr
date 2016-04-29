@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -8,13 +9,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 
 import { fetchComponentDataBeforeRender } from 'common/api/fetchComponentDataBeforeRender';
+import createRoutes from 'common/routes';
 import configureStore from 'common/redux/store';
 import Root from 'common/containers/Root';
 
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState);
+const store = configureStore(initialState, browserHistory);
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
+const routes = createRoutes(store);
 injectTapEventPlugin();
 const blueIsh = '#359AD8';
 const muiTheme = getMuiTheme({
@@ -43,10 +46,14 @@ function onUpdate() {
 }
 
 const root = (
-              <MuiThemeProvider muiTheme={ muiTheme }>
-              <Root history={ history } store={ store } onUpdate={ onUpdate } />
-              </MuiThemeProvider>
-            );
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={ muiTheme }>
+      <Router history={history} onUpdate={onUpdate}>
+        { routes }
+      </Router>
+    </MuiThemeProvider>
+  </Provider>
+);
 
 const MOUNT_DOM = document.getElementById('root');
 

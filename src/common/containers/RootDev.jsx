@@ -12,13 +12,10 @@ const propTypes = {
 
 function RootDev(props) {
   const { history, store } = props;
-  const showDevTools = () => (__DEBUG__ ? (<DevTools />) : null);
-
   return (
     <Provider store={store}>
       <div className="app">
         <Router history={history} routes={routes} />
-        { showDevTools() }
       </div>
     </Provider>
   );

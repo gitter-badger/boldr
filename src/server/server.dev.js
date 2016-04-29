@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import _debug from 'debug';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import serve from 'koa-static';
 import Helmet from 'react-helmet';
@@ -12,6 +12,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 
+import createRoutes from 'common/routes';
 import Boldr from './boldr';
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHotMiddleware from './middleware/webpack-hot';
@@ -76,14 +77,14 @@ const handleRender = ctx => {
   if (__DEV__) {
     webpackIsomorphicTools.refresh();
   }
-
+  const history = createMemoryHistory();
   // Compile an initial state
   const initialState = {};
   // Create a new Redux store instance
   const store = configureStore(initialState);
   // Grab the initial state from our Redux store
   const finalState = store.getState();
-
+  const routes = createRoutes(store);
   const _ctx = ctx;
   const { path: location } = _ctx;
 
@@ -111,10 +112,8 @@ const handleRender = ctx => {
       // Render the component to a string
       const html = renderToString(
         <Provider store={store}>
-        <MuiThemeProvider muiTheme={ muiTheme }>
-          <div className="app">
+          <MuiThemeProvider muiTheme={ muiTheme }>
             <RouterContext { ...renderProps } />
-          </div>
           </MuiThemeProvider>
         </Provider>
       );
