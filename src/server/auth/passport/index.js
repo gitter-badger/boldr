@@ -2,13 +2,18 @@ import passport from 'koa-passport';
 import User from '../../db/models/user';
 import { Strategy } from 'passport-local';
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
+import _debug from 'debug';
+
+const debug = _debug('boldr:auth:passport');
+debug('init');
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id, '-password');
+    const user = await User.where('id', id);
     done(null, user);
   } catch (err) {
     done(err);
@@ -43,3 +48,4 @@ passport.use('local', new Strategy({
     return done(err);
   }
 }));
+

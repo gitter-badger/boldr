@@ -7,7 +7,6 @@ import uuid from 'node-uuid';
 import config, { paths } from '../../../../tools/config';
 import User from '../../db/models/user';
 import { returnCode, response, saltAndHashPassword, respond } from '../../utils';
-import generateToken from '../../middleware/auth/generateToken';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
