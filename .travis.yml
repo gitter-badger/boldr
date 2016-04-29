@@ -3,4 +3,4 @@ node_js:
   - "5.11"
 sudo: false # this enables faster builds - http://docs.travis-ci.com/user/migrating-from-legacy/
 script:
-- npm run test:node
+- npm run test:api
