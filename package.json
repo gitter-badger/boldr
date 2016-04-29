@@ -54,6 +54,7 @@
     "react": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.1",
     "react-dom": "^15.0.1",
+    "react-helmet": "^3.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.3.0",
     "react-router-redux": "^4.0.4",
@@ -120,7 +121,7 @@
     "webpack": "^1.13.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon",
+    "start": "cross-env NODE_ENV=development nodemon --debug",
     "dev": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js",
     "test:api": "./node_modules/mocha/bin/mocha $(find test/api -name '*.spec.js') --compilers js:babel-core/register"
   }

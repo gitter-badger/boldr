@@ -1,10 +1,13 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import _debug from 'debug';
-import User from '../../db/models/user';
+
 import uuid from 'node-uuid';
+
 import config, { paths } from '../../../../tools/config';
+import User from '../../db/models/user';
 import { returnCode, response, saltAndHashPassword, respond } from '../../utils';
+import generateToken from '../../middleware/auth/generateToken';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
@@ -54,12 +57,12 @@ export const loginUser = async ctx => {
     .fetch({
       columns: ['password', 'id']
     })
-    .then(result => {
-      if (!compareSync(ctx.request.body.password, result.attributes.password)) {
+    .then(user => {
+      if (!compareSync(ctx.request.body.password, user.attributes.password)) {
         ctx.body = 'invalid credentials';
         return;
       }
-      const token = jwt.sign(result.id, config.JWT_SECRET_KEY);
+      const token = jwt.sign(user.id, config.JWT_SECRET_KEY);
       ctx.body = {
         token
       };

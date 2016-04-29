@@ -1,5 +1,7 @@
 {
     "verbose": false,
+    "restartable": "rs",
+    "colours": true,
     "ignore": [
       "backup",
       "docs",
@@ -9,7 +11,7 @@
       "tools"
     ],
     "watch": [
-      "src/server"
+      "src/server/**/*"
     ],
     "exec": "npm run dev"
 }

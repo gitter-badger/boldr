@@ -6,6 +6,8 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import serve from 'koa-static';
+import Helmet from 'react-helmet';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
@@ -26,17 +28,17 @@ const serverOptions = { publicPath: webpackConfig.output.publicPath };
 Boldr.init(app);
 app.use(serve('static'));
 
-/* *******************
-  WEBPACK CONFIGURATION
-******************* */
-// Use these middlewares to set up hot module reloading via webpack.
+/**
+ * WEBPACK CONFIGURATION
+ * Use these middlewares to set up hot module reloading via webpack.
+ */
 app.use(webpackDevMiddleware(compiler, serverOptions));
 app.use(webpackHotMiddleware(compiler));
 
 
 function renderFullPage(html, initialState) {
   const assets = webpackIsomorphicTools.assets();
-
+  const head = Helmet.rewind();
   // (will be present only in development mode)
   // This is for the dev mode so it's not mandatory
   // but recommended to speed up loading of styles
@@ -45,7 +47,7 @@ function renderFullPage(html, initialState) {
 
   return `
     <!doctype html>
-    <html>
+    <html ${head.htmlAttributes.toString()}>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,

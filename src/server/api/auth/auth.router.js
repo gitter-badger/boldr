@@ -1,26 +1,27 @@
 import Router from 'koa-router';
 import config, { paths } from '../../../../tools/config';
 import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
-import decodeToken from '../../middleware/auth/decodeToken';
-const router = new Router();
+import { validateToken } from '../../middleware/auth/validateToken';
 
-router.prefix('/api/v1/auth');
+const authRouter = new Router();
 
-router
+authRouter.prefix('/api/v1/auth');
+
+authRouter
   .get('/test', async ctx => {
     ctx.body = 'Auth Router';
   });
 
-router
+authRouter
   .post('/register', registerUser)
   .get('/email-check', registerEmailCheck);
 
-router
+authRouter
   .post('/login', loginUser);
 
-router
+authRouter
   .post('/logout', async ctx => {
     ctx.body = 'Hello Logout';
   });
 
-export default router;
+export default authRouter;

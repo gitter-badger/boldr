@@ -5,7 +5,6 @@ import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import methodOverride from 'koa-methodoverride';
-import passport from 'koa-passport';
 import routers from './api';
 
 export default class Boldr {
@@ -15,12 +14,10 @@ export default class Boldr {
       .use(morgan('dev'))
       .use(bodyParser())
       .use(methodOverride())
-      .use(passport.initialize())
-      .use(passport.session())
-      .use(async function(ctx, next) {
-        console.log(ctx); // eslint-disable-line
+      .use(async (ctx, next) => {
         return await next();
       });
+
     for (const router of routers) {
       application.use(router.routes());
       application.use(router.allowedMethods());
