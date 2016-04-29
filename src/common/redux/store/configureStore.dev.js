@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-
+import thunkMiddleware from 'redux-thunk';
 import DevTools from 'common/containers/DevTools';
 
 import logger from '../middleware/logger';
@@ -10,7 +10,7 @@ let finalCreateStore;
 const configureStoreDev = (initialState = {}) => {
   if (__DEBUG__) {
     finalCreateStore = compose(
-      applyMiddleware(logger),
+      applyMiddleware(logger, thunkMiddleware),
       DevTools.instrument()
     )(createStore);
   } else {

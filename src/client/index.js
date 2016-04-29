@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 
 import { fetchComponentDataBeforeRender } from 'common/api/fetchComponentDataBeforeRender';
 import configureStore from 'common/redux/store';
@@ -13,6 +16,14 @@ const store = configureStore(initialState);
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
 injectTapEventPlugin();
+const blueIsh = '#359AD8';
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: blueIsh,
+    primary2Color: green700,
+    primary3Color: cyanA400
+  }
+});
 /**
  * Callback function handling frontend route changes.
  */
@@ -31,7 +42,11 @@ function onUpdate() {
   fetchComponentDataBeforeRender(store.dispatch, components, params);
 }
 
-const root = (<Root history={ history } store={ store } onUpdate={ onUpdate } />);
+const root = (
+              <MuiThemeProvider muiTheme={ muiTheme }>
+              <Root history={ history } store={ store } onUpdate={ onUpdate } />
+              </MuiThemeProvider>
+            );
 
 const MOUNT_DOM = document.getElementById('root');
 
