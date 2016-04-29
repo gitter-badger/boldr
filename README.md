@@ -1,7 +1,7 @@
 # boldr
 
 > Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little, **Boldr**?
-[![Build Status][build-badge]][travis]
+
 ## Tech Stack
 
 * Node.js
@@ -32,5 +32,3 @@ $ npm run dev
 
 
 ## Contribute
-
-[travis]: https://travis-ci.org/strues/boldr

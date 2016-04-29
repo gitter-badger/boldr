@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import config, { paths } from '../../../../tools/config';
-import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
+import { registerUser, loginUser, registerEmailCheck, authUser } from './auth.controller';
 import { validateToken } from '../../middleware/auth/validateToken';
 
 const authRouter = new Router();

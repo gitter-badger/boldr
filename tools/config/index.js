@@ -14,6 +14,7 @@ const config = {
   site: {
     url: 'asf'
   },
+  session: ['123123asdf', '23fasdf324f'],
   JWT_SECRET_KEY: 'hello',
   dbType: 'postgres',
   // Environment

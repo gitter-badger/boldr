@@ -1,5 +1,5 @@
 import { Bookshelf } from '../connector';
-import Post from './Post';
+import Post from './post';
 
 const Tag = Bookshelf.Model.extend({
   tableName: 'tags',

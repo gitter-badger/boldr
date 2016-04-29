@@ -6,6 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import serve from 'koa-static';
+import convert from 'koa-convert';
 import Helmet from 'react-helmet';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -27,7 +28,7 @@ const app = new Koa();
 const compiler = webpack(webpackConfig);
 const serverOptions = { publicPath: webpackConfig.output.publicPath };
 Boldr.init(app);
-app.use(serve('static'));
+app.use(convert(serve('static')));
 
 /**
  * WEBPACK CONFIGURATION

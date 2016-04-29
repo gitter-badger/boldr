@@ -9,7 +9,7 @@ const ensurePostAuthor = (id, authorId) => new Promise((resolve, reject) => {
   debug(`Ensuring ${authorId} is creator of ${id} post`);
   Post.where({
     id
-  }).fetch().then((result) => {
+  }).fetch().then(result => {
     debug(result);
     if (result.attributes.author_id === parseInt(authorId, 10)) {
       resolve();
@@ -17,7 +17,7 @@ const ensurePostAuthor = (id, authorId) => new Promise((resolve, reject) => {
       debug(`User ${authorId} wanted to update post ${JSON.stringify(result)}`);
       reject();
     }
-  }).catch((err) => {
+  }).catch(err => {
     reject(err);
   });
 });

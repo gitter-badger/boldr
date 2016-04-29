@@ -1,7 +1,7 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import _debug from 'debug';
-
+import passport from 'koa-passport';
 import uuid from 'node-uuid';
 
 import config, { paths } from '../../../../tools/config';
@@ -50,24 +50,24 @@ export const registerUser = async ctx => {
  * @route /api/v1/auth/login
  * @method POST
  */
-export const loginUser = async ctx => {
-  const { email, password } = ctx.request.body;
-  const fieldName = email.indexOf('@') > 0 ? 'email' : 'username';
-  const user = await User.where(fieldName, email)
-    .fetch({
-      columns: ['password', 'id']
-    })
-    .then(user => {
-      if (!compareSync(ctx.request.body.password, user.attributes.password)) {
-        ctx.body = 'invalid credentials';
-        return;
-      }
-      const token = jwt.sign(user.id, config.JWT_SECRET_KEY);
-      ctx.body = {
-        token
-      };
-    });
-};
+export async function loginUser(ctx, next) {
+  return passport.authenticate('local', (user) => {
+    if (!user) {
+      ctx.throw(401);
+    }
+
+    const token = jwt.sign({ id: user }, config.JWT_SECRET_KEY);
+
+    const response = user.toJSON();
+
+    delete response.password;
+
+    ctx.body = {
+      token,
+      user: response
+    };
+  })(ctx, next);
+}
 
 export const registerEmailCheck = async ctx => {
   const { code } = ctx.request.query;
