@@ -16,11 +16,16 @@ import Debug from 'debug';
 const Knex = knex({
   client: 'pg',
   debug: true,
+  charset: 'utf8',
   connection: {
     host: '10.211.55.7',
     user: 'boldr',
     password: 'boldr',
     database: 'boldr'
+  },
+  pool: {
+    min: 0,
+    max: 7
   },
   searchPath: 'knex,public'
 });

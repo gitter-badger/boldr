@@ -1,5 +1,4 @@
 import * as constants from './auth.constants';
-// import { createTokenCookie } from './auth.actions';
 
 export const INITIAL_STATE = {
   loading: false,
