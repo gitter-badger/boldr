@@ -12,6 +12,12 @@ export const INITIAL_STATE = {
 
 export default function auth(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case constants.TOGGLE_LOGIN_MODE:
+      return {
+        ...state,
+        isAuthenticated: !state.isAuthenticated,
+        message: ''
+      };
     case constants.LOGIN_USER_REQUEST:
       return {
         ...state,

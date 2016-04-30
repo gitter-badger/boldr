@@ -14,7 +14,7 @@ export default (store) => {
     <Route path="home" component={ HomeContainer } />
     <Route path="register" component={ AuthContainer } />
     <Route path="login" component={ AuthContainer } />
-      <Route path="/dashboard" component={ DashboardContainer }>
+      <Route path="dashboard" component={ DashboardContainer }>
         <IndexRoute component={ DashboardContainer} />
       </Route>
      <Route path="*" component={ Error404 } />

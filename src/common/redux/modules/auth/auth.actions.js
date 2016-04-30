@@ -6,14 +6,13 @@ import * as types from './auth.constants';
 
 polyfill();
 
-/*
+/**
  * Utility function to make AJAX requests using isomorphic fetch.
  * You can also use jquery's $.ajax({}) if you do not want to use the
- * /fetch API.
- * @param Object Data you wish to pass to the server
- * @param String HTTP method, e.g. post, get, put, delete
- * @param String endpoint - defaults to /login
- * @return Promise
+ * @param  {String} method HTTP method POST, GET, DELETE
+ * @param  {Object} data   What you pass to the server
+ * @param  {String} api    Endpoint /login
+ * @return {Promise}
  */
 function makeAuthRequest(method, data, api) {
   return request({
@@ -81,7 +80,7 @@ export function toggleLoginMode() {
   return { type: types.TOGGLE_LOGIN_MODE };
 }
 
-export function login(data) {
+export function authLogin(data) {
   return dispatch => {
     dispatch(beginLogin());
 
@@ -101,7 +100,7 @@ export function login(data) {
   };
 }
 
-export function signUp(data) {
+export function authRegister(data) {
   return dispatch => {
     dispatch(beginSignUp());
 
