@@ -14,7 +14,12 @@ const config = {
   site: {
     url: 'asf'
   },
-  session: ['123123asdf', '23fasdf324f'],
+  session: {
+    host: '10.211.55.7',
+    port: 6379,
+    prefix: 'bldr',
+    keys: ['123123asdf', '23fasdf324f']
+  },
   JWT_SECRET_KEY: 'hello',
   dbType: 'postgres',
   // Environment

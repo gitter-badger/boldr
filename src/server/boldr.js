@@ -4,23 +4,36 @@ import Router from 'koa-router';
 import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
+import redisStore from 'koa-redis';
 import methodOverride from 'koa-methodoverride';
 import passport from 'koa-passport';
 import convert from 'koa-convert';
 import routers from './api';
 import config from '../../tools/config';
+
 export default class Boldr {
   static init(application) {
-    application.keys = [config.session];
+    application.keys = [config.session.keys];
     application
-      .use(logger())
+      .use(convert(logger()))
       .use(morgan('dev'))
       .use(bodyParser())
-      .use(convert(session()))
       .use(methodOverride())
       .use(async (ctx, next) => {
-        return await next();
+        try {
+          await next();
+        } catch (err) {
+          ctx.body = { message: err.message };
+          ctx.status = err.status || 500;
+        }
       });
+    application.use(convert(session({
+      store: redisStore({
+        host: config.session.host,
+        port: config.session.port
+      }),
+      prefix: config.session.prefix
+    })));
     require('./auth/passport');
 
     application.use(passport.initialize());
