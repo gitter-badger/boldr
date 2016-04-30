@@ -1,0 +1,13 @@
+export const REQUEST_POSTS = '@@post/REQUEST_POSTS';
+export const RECEIVE_POSTS = '@@post/RECEIVE_POSTS';
+export const RECEIVE_POSTS_FAILED = '@@post/RECEIVE_POSTS_FAILED';
+export const REQUEST_POST_BY_NAME = '@@post/REQUEST_POST_BY_NAME';
+export const RECEIVE_POST = '@@post/RECEIVE_POST';
+export const FAILED_TO_RECEIVE_POST = '@@post/FAILED_TO_RECEIVE_POST';
+export const CREATE_POST = '@@post/CREATE_POST';
+export const UPDATE_POST = '@@post/UPDATE_POST';
+export const POST_CREATED = '@@post/POST_CREATED';
+export const POST_UPDATED = '@@post/POST_UPDATED';
+export const POST_DELETED = '@@post/POST_DELETED';
+export const POST_UPDATE_FAILED = '@@post/POST_UPDATE_FAILED';
+export const POST_CREATE_FAILED = '@@post/POST_CREATE_FAILED';
