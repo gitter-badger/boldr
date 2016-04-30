@@ -1,4 +1,7 @@
+import { polyfill } from 'es6-promise';
+import axios from 'axios';
 import * as types from './post.constants';
+polyfill();
 
 const requestPosts = () => ({
   type: types.REQUEST_POSTS
@@ -18,28 +21,28 @@ const updatingPost = () => ({
 });
 
 // Success receivers
-const postsReceived = (json) => ({
+const postsReceived = (response) => ({
   type: types.RECEIVE_POSTS,
-  isLoading: false,
-  json
+  loading: false,
+  payload: response.data
 });
 
-const postReceived = (json) => ({
+const postReceived = (response) => ({
   type: types.RECEIVE_POST,
-  isLoading: false,
-  json
+  loading: false,
+  payload: response.data
 });
 
-const postCreated = (json) => ({
+const postCreated = (response) => ({
   type: types.POST_CREATED,
-  isLoading: false,
-  json
+  loading: false,
+  payload: response.data
 });
 
-const postUpdated = (json) => ({
+const postUpdated = (response) => ({
   type: types.POST_UPDATED,
-  isLoading: false,
-  json
+  loading: false,
+  payload: response.data
 });
 
 const postDeleted = (id) => ({
@@ -50,33 +53,48 @@ const postDeleted = (id) => ({
 // Fail receivers
 const failedToReceivePosts = (data) => ({
   type: types.RECEIVE_POSTS_FAILED,
-  isLoading: false,
+  loading: false,
   data
 });
 
 const failedToReceivePost = (data) => ({
   type: types.FAILED_TO_RECEIVE_POST,
-  isLoading: false,
+  loading: false,
   data
 });
 
 const failedToCreatePost = (data) => ({
   type: types.POST_CREATE_FAILED,
-  isLoading: false,
+  loading: false,
   data
 });
 
 const failedToUpdatePost = (data) => ({
   type: types.POST_UPDATE_FAILED,
-  isLoading: false,
+  loading: false,
   data
 });
 
 // Public action creators
-// export const fetchPosts = (onlyMine) => dispatch => {
-//   dispatch(requestPosts());
-//   return getAllPosts(onlyMine | false, postsReceived, failedToReceivePosts);
-// };
+export function fetchPosts(data) {
+  return dispatch => {
+    dispatch(requestPosts());
+    return axios.get('http://localhost:3000/api/v1/posts', {
+      timeout: 5000,
+      responseType: 'json'
+    })
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(postsReceived(response));
+        } else {
+          dispatch(failedToReceivePosts('Oops! Something went wrong!'));
+        }
+      })
+      .catch(err => {
+        dispatch(failedToReceivePosts(err));
+      });
+  };
+}
 
 // export const fetchPostByName = (postName) => dispatch => {
 //   dispatch(requestPostByTitle(postName));

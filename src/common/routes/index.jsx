@@ -4,6 +4,7 @@ import { Route, IndexRoute, Redirect } from 'react-router';
 import CoreLayout from 'common/layouts/CoreLayout';
 import HomeContainer from 'common/scenes/Home';
 import DashboardContainer from 'common/scenes/Dashboard';
+import BlogContainer from 'common/scenes/Blog';
 import PostsContainer from 'common/scenes/Dashboard/Posts/PostsContainer';
 import CreatePost from 'common/scenes/Dashboard/Posts/CreatePost';
 import PostsList from 'common/scenes/Dashboard/Posts/PostsList';
@@ -17,6 +18,7 @@ export default (store) => {
     <Route path="home" component={ HomeContainer } />
     <Route path="register" component={ AuthContainer } />
     <Route path="login" component={ AuthContainer } />
+    <Route path="blog" component={ BlogContainer } />
       <Route path="dashboard" component={ DashboardContainer }>
         <IndexRoute component={ DashboardContainer} />
         <Route path="posts" component={ PostsContainer }>

@@ -4,7 +4,7 @@ import { validateToken } from '../../auth/validateToken';
 const postRouter = new Router({ prefix: '/api/v1/posts' });
 
 postRouter
-    .get('/', validateToken, getAllPosts)
+    .get('/', getAllPosts)
     .post('/', validateToken, createPost);
 
 

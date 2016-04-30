@@ -23,8 +23,6 @@ const ensurePostAuthor = (id, authorId) => new Promise((resolve, reject) => {
 });
 
 export async function getAllPosts(ctx) {
-  const authorId = ctx.state.user;
-  debug(`Ensuring ${authorId} is creator of post`);
   const posts = await Post.fetchAll({});
   ctx.body = posts;
 }
