@@ -2,8 +2,9 @@ import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
 
 import CoreLayout from 'common/layouts/CoreLayout';
-import HomeContainer from 'common/containers/Home';
-import About from 'common/components/views/About';
+import HomeContainer from 'common/scenes/Home';
+import DashboardContainer from 'common/scenes/Dashboard';
+import AuthContainer from 'common/scenes/Auth';
 import Error404 from 'common/components/404';
 
 export default (store) => {
@@ -11,7 +12,11 @@ export default (store) => {
   <Route path="/" component={ CoreLayout }>
     <IndexRoute component={ HomeContainer } />
     <Route path="home" component={ HomeContainer } />
-    <Route path="about" component={About} />
+    <Route path="register" component={ AuthContainer } />
+    <Route path="login" component={ AuthContainer } />
+      <Route path="/dashboard" component={ DashboardContainer }>
+        <IndexRoute component={ DashboardContainer} />
+      </Route>
      <Route path="*" component={ Error404 } />
   </Route>
   );

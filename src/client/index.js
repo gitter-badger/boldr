@@ -11,7 +11,7 @@ import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 import { fetchComponentDataBeforeRender } from 'common/api/fetchComponentDataBeforeRender';
 import createRoutes from 'common/routes';
 import configureStore from 'common/redux/store';
-import Root from 'common/containers/Root';
+import Root from 'common/scenes/Root';
 
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, browserHistory);

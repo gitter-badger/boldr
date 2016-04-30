@@ -46,5 +46,6 @@ export default class Boldr {
       application.use(router.routes());
       application.use(router.allowedMethods());
     }
+    application.use(async (ctx, next) => await next()); // Post-process responses.
   }
 }
