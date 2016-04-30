@@ -17,7 +17,7 @@ export async function validateToken(ctx, next) {
   } catch (err) {
     ctx.throw(401);
   }
-
+  ctx.decoded = decoded;
   const user = await User.where('id', decoded.id);
   if (!user) {
     ctx.throw(401);

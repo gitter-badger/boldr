@@ -35,8 +35,23 @@ export async function getAllPosts(ctx) {
  * @route /api/v1/auth/register
  * @method POST
  */
-export const createPost = async ctx => {
-  Post.forge(ctx.request.body).save();
+export const createPost = async (ctx, next) => {
+  try {
+    const user = await User.where({
+      id: ctx.decoded.id.id
+    }).fetch(['id']);
 
-  ctx.status = 201;
+    await Post.forge({
+      title: ctx.request.body.title,
+      slug: ctx.request.body.slug,
+      markup: ctx.request.body.markup,
+      content: ctx.request.body.content,
+      image: ctx.request.body.image,
+      author_id: user.id,
+      is_public: ctx.request.body.is_public
+    }).save();
+    ctx.status = 201;
+  } catch (err) {
+    response.send(err);
+  }
 };

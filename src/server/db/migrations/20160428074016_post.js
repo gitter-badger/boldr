@@ -9,7 +9,7 @@ exports.up = (knex, Promise) => Promise.all([
     table.string('image').nullable();
     table.integer('author_id').references('id').inTable('users');
     table.integer('views').defaultTo(0);
-    table.boolean('is_public').defaultTo(false);
+    table.boolean('is_public').defaultTo(true);
     table.timestamps();
   })
 ]);
