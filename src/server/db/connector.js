@@ -48,6 +48,7 @@ const database = () => {
 
 const User = () => require('./models/user');
 const Post = () => require('./models/post');
+const Tag = () => require('./models/tag');
 // export function instance() {
 //   // Return instance of redis client
 //   return redisClient;
@@ -59,5 +60,6 @@ export {
   Bookshelf,
   database,
   User,
-  Post
+  Post,
+  Tag
 };

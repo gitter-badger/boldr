@@ -22,6 +22,5 @@ export async function validateToken(ctx, next) {
   if (!user) {
     ctx.throw(401);
   }
-
   return next();
 }
