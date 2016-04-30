@@ -67,22 +67,26 @@ class AppDrawer extends React.Component {
           <ListItem primaryText="Home" value={ 1 }
           />
           <ListItem primaryText="Dashboard" value={ 2 }
-          />
-          <ListItem primaryText="Posts" value={ 3 }
               initiallyOpen={ false }
               primaryTogglesNestedList={ true }
               nestedItems={[
                 <ListItem
-                    value={ 4 }
-                    primaryText="Create a post"
+                    value={ 3 }
+                    primaryText="Posts"
+                    nestedItems={[
+                      <ListItem
+                          value={ 4 }
+                          primaryText="List posts"
+                      />,
+                      <ListItem
+                          value={ 5 }
+                          primaryText="Create a post"
+                      />
+                    ]}
                 />,
-                <ListItem
-                    value={ 5 }
-                    primaryText="Show posts"
-                />
+                <ListItem primaryText="Settings" value={ 6 } />
               ]}
           />
-        <ListItem primaryText="Settings" value={ 6 } />
         </SelectableList>
       </Drawer>
     );

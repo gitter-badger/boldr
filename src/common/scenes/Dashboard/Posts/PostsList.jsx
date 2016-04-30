@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class DashboardContainer extends Component {
+class PostsList extends Component {
   render() {
     return (
       <div>
 
        <div className="container">
-         DashboardContainer?
-         { this.props.children }
+       All Posts
        </div>
       </div>
     );
   }
 }
 
-export default DashboardContainer;
+export default PostsList;
