@@ -8,6 +8,8 @@ import redisStore from 'koa-redis';
 import methodOverride from 'koa-methodoverride';
 import passport from 'koa-passport';
 import convert from 'koa-convert';
+import etag from 'koa-etag';
+import helmet from 'koa-helmet';
 import routers from './api';
 import config from '../../tools/config';
 
@@ -19,6 +21,8 @@ export default class Boldr {
       .use(morgan('dev'))
       .use(bodyParser())
       .use(methodOverride())
+      .use(etag())
+      .use(helmet())
       .use(async (ctx, next) => {
         try {
           await next();

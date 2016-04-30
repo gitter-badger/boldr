@@ -135,7 +135,10 @@ app.use(handleRender);
 /* ****************
  START THE SERVER
 ***************** */
-
+app.on('error', (err, ctx) => {
+  debug(err);
+  debug('Boldr error', err, ctx);
+});
 app.listen(projectConfig.SERVER_PORT, () => {
   debug(`Boldr server listening on ${projectConfig.SERVER_PORT} in ${app.env} node`);
 });

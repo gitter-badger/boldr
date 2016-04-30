@@ -1,15 +1,16 @@
-FROM node:5.11-slim
-RUN mkdir /src
+FROM strues/node
+WORKDIR /usr/src
 
-RUN npm install -g nodemon
+COPY package.json package.json
 
-ADD package.json /tmp/package.json
-RUN cd /tmp && npm install
-RUN mkdir -p /src && cp -a /tmp/node_modules /src/
-WORKDIR /src
-RUN npm install
+RUN npm install --production
 
-# Expose port
-EXPOSE  3000
+COPY . .
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+# These images have `node` already set as the entrypoint
+# So you don't need to specify it in the CMD.
+# The following will execute `node server.js` when you
+# run the container.
+CMD ["server.js"]
