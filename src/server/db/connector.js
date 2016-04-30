@@ -47,7 +47,7 @@ const database = () => {
 };
 
 const User = () => require('./models/user');
-
+const Post = () => require('./models/post');
 // export function instance() {
 //   // Return instance of redis client
 //   return redisClient;
@@ -58,5 +58,6 @@ export {
   Knex,
   Bookshelf,
   database,
-  User
+  User,
+  Post
 };
