@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken';
-import config, { paths } from '../../../../tools/config';
-import User from '../../db/models/user';
+import config, { paths } from '../../../tools/config';
+import User from '../db/models/user';
 import getToken from './getToken';
 
 
@@ -18,7 +18,7 @@ export async function validateToken(ctx, next) {
     ctx.throw(401);
   }
 
-  const user = await User.where({ id: decoded.id }, '-password');
+  const user = await User.where('id', decoded.id);
   if (!user) {
     ctx.throw(401);
   }

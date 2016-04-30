@@ -1,4 +1,4 @@
-import bcrypt, { genSaltSync } from 'bcrypt';
+import bcrypt, { genSaltSync } from 'bcryptjs';
 
 const saltAndHashPassword = pwd => new Promise((resolve, reject) => {
   bcrypt.genSalt(10, (err, salt) => {

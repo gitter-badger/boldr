@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import config, { paths } from '../../../../tools/config';
 import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
-import { validateToken } from '../../middleware/auth/validateToken';
+import { validateToken } from '../../auth/validateToken';
 
 const authRouter = new Router();
 
@@ -14,7 +14,9 @@ authRouter
 
 authRouter
   .post('/register', registerUser)
-  .get('/email-check', registerEmailCheck);
+  .get('/check', validateToken, async ctx => {
+    ctx.body = 'You are authorized.';
+  });
 
 authRouter
   .post('/login', loginUser);

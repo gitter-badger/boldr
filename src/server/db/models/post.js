@@ -1,6 +1,6 @@
 import { Bookshelf } from '../connector';
-import User from './User';
-import Tag from './Tag';
+import User from './user';
+import Tag from './tag';
 const Post = Bookshelf.Model.extend({
   tableName: 'posts',
   author: () => this.belongsTo(User),
