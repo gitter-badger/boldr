@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 
+import { LoginForm } from 'common/forms';
 import { authLogin, authRegister, toggleLoginMode } from 'common/redux/modules/auth/auth.actions';
 
 @connect(mapStateToProps)
@@ -68,6 +69,7 @@ class AuthContainer extends Component {
       <div>
       { this.renderHeader() }
        <div className="container">
+       <LoginForm />
         <div className="email">
             <form onSubmit={this.handleOnSubmit}>
               <input className="input"
@@ -92,13 +94,15 @@ class AuthContainer extends Component {
 
 AuthContainer.propTypes = {
   auth: React.PropTypes.object,
+  user: React.PropTypes.object,
   dispatch: React.PropTypes.func
 };
 
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    user: state.user
   };
 }
 
