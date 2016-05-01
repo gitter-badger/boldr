@@ -29,7 +29,7 @@ function beginLogin() {
   return { type: types.LOGIN_USER_REQUEST };
 }
 
-function loginSuccess(response) {
+export function loginSuccess(response) {
   return {
     type: types.LOGIN_USER_SUCCESS,
     payload: response.data,
