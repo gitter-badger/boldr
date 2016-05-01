@@ -9,8 +9,6 @@ machine:
 dependencies:
   cache_directories:
     - node_modules
-  post:
-    - npm run build
 
 test:
   override:
