@@ -1,8 +1,9 @@
 /* global it, __DEV__, describe, before, post, get */
 import { expect, assert } from 'chai';
 import { mapUrl } from '../../tools/url';
-import User from '../../src/server/db/models/user';
 import app from '../../src/server';
+import User from '../../src/server/db/models/user';
+
 
 import Request from 'supertest';
 const request = Request('http://localhost:3000');
@@ -48,5 +49,13 @@ describe('API - Auth', () => {
           })
           .expect(401, done);
     });
+  });
+  it('cannot register user without password', (done) => {
+    request.post('/api/v1/auth/register')
+        .send({
+          username: testUsername,
+          email: testMail
+        })
+        .expect(400, done);
   });
 });

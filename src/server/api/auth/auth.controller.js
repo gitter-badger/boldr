@@ -18,29 +18,32 @@ debug('init');
  * @method POST
  */
 export const registerUser = async ctx => {
-  saltAndHashPassword(ctx.request.body.password)
-    .then(hash => {
-      User.forge({
-        username: ctx.request.body.username,
-        display_name: ctx.request.body.displayName,
-        first_name: ctx.request.body.firstName,
-        last_name: ctx.request.body.lastName,
-        location: ctx.request.body.location,
-        website: ctx.request.body.website,
-        slug: ctx.request.body.slug,
-        status: ctx.request.body.status,
-        uuid: uuid.v4(),
-        avatar: ctx.request.body.avatar,
-        bio: ctx.request.body.bio,
-        facebook: ctx.request.body.facebook,
-        twitter: ctx.request.body.twitter,
-        password: hash,
-        email: ctx.request.body.email,
-        role: 'admin'
-      }).save();
-    });
-
-  ctx.status = 201;
+  try {
+    const hash = await saltAndHashPassword(ctx.request.body.password);
+    const user = await User.forge({
+      username: ctx.request.body.username,
+      display_name: ctx.request.body.displayName,
+      first_name: ctx.request.body.firstName,
+      last_name: ctx.request.body.lastName,
+      location: ctx.request.body.location,
+      website: ctx.request.body.website,
+      slug: ctx.request.body.slug,
+      status: ctx.request.body.status,
+      uuid: uuid.v4(),
+      avatar: ctx.request.body.avatar,
+      bio: ctx.request.body.bio,
+      facebook: ctx.request.body.facebook,
+      twitter: ctx.request.body.twitter,
+      password: hash,
+      email: ctx.request.body.email,
+      role: 'admin'
+    }).save();
+    ctx.body = user;
+    ctx.status = 201;
+  } catch (error) {
+    ctx.status = 400;
+    debug(error);
+  }
 };
 
 /**
