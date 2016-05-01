@@ -16,6 +16,7 @@ debug('init');
  * registers a new user
  * @route /api/v1/auth/register
  * @method POST
+ * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
   try {
@@ -38,6 +39,7 @@ export const registerUser = async ctx => {
       email: ctx.request.body.email,
       role: 'admin'
     }).save();
+
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {

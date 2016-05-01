@@ -1,7 +1,6 @@
 /* global it, __DEV__, describe, before, post, get */
 import { expect } from 'chai';
 import { mapUrl } from '../../tools/url';
-import Post from '../../src/server/db/models/post';
 import app from '../../src/server';
 import Request from 'supertest';
 const request = Request('http://localhost:3000');

@@ -2,9 +2,6 @@
 import { expect, assert } from 'chai';
 import { mapUrl } from '../../tools/url';
 import app from '../../src/server';
-import User from '../../src/server/db/models/user';
-
-
 import Request from 'supertest';
 const request = Request('http://localhost:3000');
 const testUserId = 1;
@@ -35,7 +32,9 @@ describe('API - Auth', () => {
         .set('Accept', 'application/json')
         .expect(200)
         .end((err, res) => {
-          if (err) throw new Error(err);
+          if (err) {
+            throw new Error(err);
+          }
           assert.isOk('token', 'found the user test');
           done();
         });
@@ -43,19 +42,38 @@ describe('API - Auth', () => {
     it('wont allow login with invalid email and password', (done) => {
       request
         .post('/api/v1/auth/login')
+        .send({
+          email: testUsername,
+          password: testUsername
+        })
+        .expect(401, done);
+    });
+    it('wont login to non-existing user', (done) => {
+      request.post('/api/v1/auth/login')
           .send({
-            email: testUsername,
-            password: testUsername
+            email: 'A@bcd.com',
+            password: testPassword
           })
           .expect(401, done);
     });
   });
-  it('cannot register user without password', (done) => {
-    request.post('/api/v1/auth/register')
+  describe('POST - Register -- /api/v1/auth/register', () => {
+    it('cannot register user without password', (done) => {
+      request.post('/api/v1/auth/register')
         .send({
           username: testUsername,
           email: testMail
         })
         .expect(400, done);
+    });
+    it('cannot register duplicate user', (done) => {
+      request.post('/api/v1/auth/register')
+        .send({
+          username: testUsername,
+          password: testPassword,
+          email: testMail
+        })
+        .expect(400, done);
+    });
   });
 });
