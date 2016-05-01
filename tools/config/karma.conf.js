@@ -38,8 +38,8 @@ module.exports = function(config) {
         ],
         loaders: [
           { test: /\.json$/, loaders: ['json'] },
-          { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-          { test: /\.css$/, loader: 'css-loader/locals!postcss-loader' }
+          { test: /\.js[x]?$/, loader: 'babel', exclude: /node_modules/ },
+          { test: /\.css$/, loader: 'css-loader/locals!postcss!sass' }
         ]
       }
     },

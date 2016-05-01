@@ -6,8 +6,6 @@ import AppDrawer from '../../components/AppDrawer';
 import * as boldrActions from '../../redux/modules/boldr/boldr.actions';
 import TopBar from '../../components/TopBar';
 import Loader from '../../components/Loader';
-// *** STYLES *** //
-import '../../styles/app.scss';
 
 @connect(mapStateToProps)
 class CoreLayout extends Component {
@@ -16,11 +14,7 @@ class CoreLayout extends Component {
   }
 
   render() {
-    // if (this.props.boldr.isLoading) {
-    //   return (
-    //       <Loader />
-    //   );
-    // }
+    require('../../styles/app.scss');
     return (
         <div>
         <TopBar handleToggle={this.handleToggle} />
