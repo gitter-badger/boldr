@@ -19,13 +19,13 @@ describe('API - User', () => {
   });
 
   describe('GET /api/v1/users/1', () => {
-    it('get a user by their id and contain a display name', done => {
+    it('get a user by their id and contain a username', done => {
       request.get(`/api/v1/users/${testUserId}`)
           .set('Accept', 'application/json')
           .expect(200)
           .end((err, res) => {
             if (err) throw new Error(err);
-            assert.isOk('display_name', `${testUsername}`, 'found the user test');
+            assert.isOk('username', `${testUsername}`, 'found the user test');
             done();
           });
     });
