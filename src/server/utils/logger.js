@@ -6,7 +6,7 @@ winston.emitErrs = true;
 // paths('entryApp')
 const getFilePath = m => m.filename.split('/').slice(-2).join('/');
 
-const dirLog = path.join(process.cwd(), 'logs');
+const dirLog = path.join(process.cwd(), 'docs/logs');
 if (!fs.existsSync(dirLog)) {
   fs.mkdirSync(dirLog);
 }

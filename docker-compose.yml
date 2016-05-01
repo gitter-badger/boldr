@@ -6,6 +6,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
+    - /data
     - /var/lib/postgresql/data
     - ./backup:/postgresql.backup:z
     command: ["chown", "-v", "-R", "999:999", "/var/lib/postgresql/data"]
