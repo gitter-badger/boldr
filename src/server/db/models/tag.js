@@ -10,7 +10,7 @@ const Tag = Bookshelf.Model.extend({
   // hack for pagination of /blog/tags/:slug
   currentpage: 1,
 
-  posts: () => this.belongsToMany(Post),
+  post: () => this.belongsToMany(Post, 'post_tags', 'tag_id'),
   initialize: function init() {
     this.on('updating', () => {
       this.attributes.updated_at = new Date();
