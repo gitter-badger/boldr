@@ -7,10 +7,6 @@ module.exports = {
       password: 'boldr',
       database: 'boldr'
     },
-    pool: {
-      min: 2,
-      max: 10
-    },
     migrations: {
       directory: __dirname + '/src/server/db/migrations',
       tableName: 'knex_migrations'

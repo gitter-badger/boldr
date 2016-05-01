@@ -56,10 +56,10 @@ export const createPost = async (ctx, next) => {
 };
 
 /**
- * Performs a lookup of a user by their username.
+ * Performs a lookup of posts by the authors username.
  * @param  {[type]}   ctx  context of the request
  * @param  {Function} next continue to the next middleware
- * @return {Object}        the User object.
+ * @return {Object}        the Post object.
  */
 export async function getPostsByAuthor(ctx, next) {
   try {
