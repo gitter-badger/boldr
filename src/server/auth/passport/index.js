@@ -1,5 +1,5 @@
 import passport from 'koa-passport';
-import User from '../../db/models/user';
+import User, { getUserById } from '../../db/models/user';
 import { Strategy } from 'passport-local';
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import _debug from 'debug';
@@ -14,9 +14,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   (async () => {
     try {
-      const user = await User({
-        id
-      }).fetch();
+      const user = await getUserById(id);
       done(null, user);
     } catch (err) {
       done(err);
@@ -24,33 +22,32 @@ passport.deserializeUser((id, done) => {
   })();
 });
 
-passport.use('local', new Strategy({
-  usernameField: 'email',
-  passwordField: 'password'
-}, async (email, password, done) => {
+/**
+ * authenticates the information with whats in the database.
+ * @param  {String} email    the email address of the user
+ * @param  {String} password the user's password
+ * @return {Promise}          promises to return the user object or fail
+ */
+async function authenticate(email, password) {
   try {
     const user = await User.where('email', email).fetch({
       columns: ['password', 'id']
     });
-
-    if (!user) {
-      return done(null, false);
-    }
-
-    try {
-      const isMatch = await compareSync(password, user.attributes.password);
-
-      if (!isMatch) {
-        return done(null, false);
-      }
-
-      done(null, user);
-    } catch (err) {
-      done(err);
-    }
+    const match = await await compareSync(password, user.attributes.password);
+    return match ? user : false;
   } catch (err) {
-    return done(err);
+    return false;
   }
+}
+
+passport.use('local', new Strategy({
+  usernameField: 'email',
+  passwordField: 'password'
+},
+async (email, password, done) => {
+  authenticate(email, password)
+      .then(user => done(null, user))
+      .catch(err => done(err));
 }));
 
 export function isAuthenticated() {

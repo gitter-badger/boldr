@@ -2,6 +2,13 @@ import bcrypt, { genSaltSync } from 'bcryptjs';
 import { Bookshelf } from '../connector';
 import Post from './post';
 
+export async function getUserById(userId) {
+  return Bookshelf.oneOrNone(`
+    SELECT id, username, email, email_hash AS "emailHash", password
+    FROM users
+    WHERE id=$1`, userId);
+}
+
 const User = Bookshelf.Model.extend({
   tableName: 'users',
   hasTimestamps: true,
