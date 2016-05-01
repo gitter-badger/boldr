@@ -104,15 +104,5 @@ class CreatePost extends Component {
     );
   }
 }
-CreatePost.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  isEditing: PropTypes.bool.isRequired,
-  postId: PropTypes.number,
-  title: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  editableBody: PropTypes.string.isRequired,
-  params: PropTypes.shape({
-    postTitle: PropTypes.string.isRequired
-  }).isRequired
-};
+
 export default CreatePost;

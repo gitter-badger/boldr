@@ -43,22 +43,26 @@ export const routeToIndex = (index) => {
           title = 'Home';
           break;
         case 2:
-          path = '/dashboard';
-          title = 'Dashboard';
+          path = '/blog';
+          title = 'Blog';
           break;
         case 3:
-          path = '/dashboard/posts';
+          path = '/dashboard';
           title = 'Dashboard';
           break;
         case 4:
           path = '/dashboard/posts';
-          title = 'List all posts';
+          title = 'Dashboard';
           break;
         case 5:
+          path = '/dashboard/posts';
+          title = 'List all posts';
+          break;
+        case 6:
           path = '/dashboard/posts/create';
           title = 'Create a post';
           break;
-        case 6:
+        case 7:
           path = '/dashboard/settings';
           title = 'Settings';
           break;

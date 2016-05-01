@@ -138,6 +138,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --debug",
     "dev": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js",
-    "test:api": "./node_modules/mocha/bin/mocha $(find test/api -name '*.spec.js') --compilers js:babel-core/register"
+    "test:api": "mocha --compilers js:babel-core/register --recursive",
+    "test:api-watch": "mocha --compilers js:babel-core/register --watch --recursive"
   }
 }
