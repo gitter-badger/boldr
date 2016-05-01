@@ -8,10 +8,10 @@ const Knex = knex({
   debug: true,
   charset: 'utf8',
   connection: {
-    host: '10.211.55.7',
-    user: 'boldr',
-    password: 'boldr',
-    database: 'boldr'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
   },
   pool: {
     min: 0,

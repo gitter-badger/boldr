@@ -143,6 +143,8 @@
     "prod": "DEBUG=app:* cross-env NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
     "start": "cross-env NODE_ENV=development nodemon --debug",
     "dev": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run",
     "test:api": "mocha --require ignore-styles --compilers js:babel-register --timeout 5000 test/.setup.js test/**/*.spec.js",
     "test:api-watch": "mocha --require ignore-styles --compilers js:babel-register --timeout 5000 test/.setup.js test/**/*.spec.js"
   }
