@@ -9,7 +9,7 @@ import {
   ContentState
 } from 'draft-js';
 
-import { InlineStyleControls, BlockStyleControls } from 'common/components/Editor';
+import { InlineStyleControls, BlockStyleControls } from '../../../components/Editor';
 
 function getBlockStyle(block) {
   switch (block.getType()) {

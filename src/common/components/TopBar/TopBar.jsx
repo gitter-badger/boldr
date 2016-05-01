@@ -2,9 +2,9 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as boldrActions from 'common/redux/modules/boldr/boldr.actions';
+import * as boldrActions from '../../redux/modules/boldr/boldr.actions';
 
-import SiteLogo from 'common/components/SiteLogo';
+import SiteLogo from '../SiteLogo';
 
 @connect(state => ({ boldr: state.boldr }))
 class TopBar extends React.Component {

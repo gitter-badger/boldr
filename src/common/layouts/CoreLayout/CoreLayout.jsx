@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import AppDrawer from 'common/components/AppDrawer';
-import * as boldrActions from 'common/redux/modules/boldr/boldr.actions';
-import TopBar from 'common/components/TopBar';
-import Loader from 'common/components/Loader';
+import AppDrawer from '../../components/AppDrawer';
+import * as boldrActions from '../../redux/modules/boldr/boldr.actions';
+import TopBar from '../../components/TopBar';
+import Loader from '../../components/Loader';
 // *** STYLES *** //
-import 'common/styles/app.scss';
+import '../../styles/app.scss';
 
 @connect(mapStateToProps)
 class CoreLayout extends Component {

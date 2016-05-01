@@ -51,7 +51,7 @@ const config = {
   DIR_ASSETS: 'assets',
   DIR_DIST: 'dist',
   DIR_SERVER: 'server',
-  DIR_TEST: '__tests__',
+  DIR_TEST: 'test',
   DIR_NODE_MODULES: 'node_modules'
 };
 

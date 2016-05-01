@@ -2,20 +2,21 @@
 import { expect, assert } from 'chai';
 import { mapUrl } from '../../tools/url';
 import User from '../../src/server/db/models/user';
-import app from '../../src/server/server.test';
+import app from '../../src/server';
 
-const request = require('supertest');
+import Request from 'supertest';
+const request = Request('http://localhost:3000');
 const testUserId = 1;
 const testMail = 'test@test.com';
 const testPassword = 'test';
 const testUsername = 'test';
 
-const server = app.listen();
+// const server = app.listen();
 
 describe('API - Auth', () => {
   describe('GET /api/v1/auth/test', () => {
     it('responds with json', done => {
-      request(server)
+      request
         .get('/api/v1/auth/test')
         .set('Accept', 'application/json')
         .expect('Content-Type', /text\/plain/)
@@ -24,7 +25,8 @@ describe('API - Auth', () => {
   });
   describe('POST - Login -- /api/v1/auth/login', () => {
     it('allows the user to login with their credentials', done => {
-      request(server).post('/api/v1/auth/login')
+      request
+        .post('/api/v1/auth/login')
         .send({
           email: testMail,
           password: testPassword
@@ -38,8 +40,8 @@ describe('API - Auth', () => {
         });
     });
     it('wont allow login with invalid email and password', (done) => {
-      request(server)
-      .post('/api/v1/auth/login')
+      request
+        .post('/api/v1/auth/login')
           .send({
             email: testUsername,
             password: testUsername

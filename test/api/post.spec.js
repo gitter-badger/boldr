@@ -2,15 +2,14 @@
 import { expect } from 'chai';
 import { mapUrl } from '../../tools/url';
 import Post from '../../src/server/db/models/post';
-import app from '../../src/server/server.test';
-
-const request = require('supertest');
+import app from '../../src/server';
+import Request from 'supertest';
+const request = Request('http://localhost:3000');
 
 describe('API - Posts', () => {
   describe('GET /api/v1/posts', () => {
     it('respond with json', done => {
-      const server = app.listen();
-      request(server)
+      request
         .get('/api/v1/posts')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)

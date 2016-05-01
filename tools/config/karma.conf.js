@@ -10,7 +10,7 @@ module.exports = function(config) {
       rootdir + '/test/**/*.spec.js'
     ],
     preprocessors: {
-      'test/**/*.js': ['webpack']
+      'src/server/**/*.js': ['webpack']
     },
     reporters: ['mocha', 'coverage'],
     webpack: {

@@ -7,9 +7,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 
-import configureStore from 'common/redux/store';
-import { logInSuccess } from 'common/redux/modules/auth/auth.actions';
-import createRoutes from 'common/routes';
+import configureStore from '../../common/redux/store';
+import { logInSuccess } from '../../common/redux/modules/auth/auth.actions';
+import createRoutes from '../../common/routes';
 import { renderFullPage } from '../utils/Html';
 
 export const renderReact = (ctx) => {

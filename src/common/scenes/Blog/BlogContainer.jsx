@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPosts } from 'common/redux/modules/post/post.actions';
-import Loader from 'common/components/Loader';
+import { fetchPosts } from '../../redux/modules/post/post.actions';
+import Loader from '../../components/Loader';
 
 @connect(mapStateToProps)
 class BlogContainer extends Component {

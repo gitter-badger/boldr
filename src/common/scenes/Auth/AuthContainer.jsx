@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 
-import { LoginForm } from 'common/forms';
-import { authLogin, authRegister, toggleLoginMode } from 'common/redux/modules/auth/auth.actions';
+import { LoginForm } from '../../forms';
+import { authLogin, authRegister, toggleLoginMode } from '../../redux/modules/auth/auth.actions';
 
 @connect(mapStateToProps)
 class AuthContainer extends Component {
