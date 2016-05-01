@@ -5,13 +5,13 @@ import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 
-import redisStore from 'koa-redis';
 import methodOverride from 'koa-methodoverride';
 import passport from 'koa-passport';
 import convert from 'koa-convert';
 import etag from 'koa-etag';
 import helmet from 'koa-helmet';
 import routers from './api';
+import handleError from './middleware/handleError';
 import config from '../../tools/config';
 
 export default class Boldr {
@@ -23,14 +23,8 @@ export default class Boldr {
       .use(bodyParser())
       .use(methodOverride())
       .use(etag())
+      .use(convert(session()))
       .use(helmet());
-    application.use(convert(session({
-      store: redisStore({
-        host: config.session.host,
-        port: config.session.port
-      }),
-      prefix: config.session.prefix
-    })));
     require('./auth/passport');
 
     application.use(passport.initialize());
@@ -39,6 +33,6 @@ export default class Boldr {
       application.use(router.routes());
       application.use(router.allowedMethods());
     }
-    application.use(async (ctx, next) => await next()); // Post-process responses.
+    application.use(handleError());
   }
 }

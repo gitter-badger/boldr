@@ -25,14 +25,9 @@ services:
       - data-volumes
     networks:
       - boldr
-  redis:
-    image: redis:3.0.7
-    ports:
-      - 6379:6379/tcp
-    networks:
-      - boldr
   # boldr1:
   #   build: ./
+  #   working_dir: /home/app
   #   depends_on:
   #       - db
   #   ports:

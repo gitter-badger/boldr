@@ -1,11 +1,14 @@
 FROM strues/node:latest
-WORKDIR /usr/src
+RUN mkdir -p /home/app
+WORKDIR /home/app
 
-COPY package.json package.json
+COPY ./package.json /home/app/package.json
+RUN npm install
 
-RUN npm install --production
+COPY . /home/app
 
-COPY . .
+# Set development environment as default
+ENV NODE_ENV development
 
 EXPOSE 3000
 
@@ -13,4 +16,4 @@ EXPOSE 3000
 # So you don't need to specify it in the CMD.
 # The following will execute `node server.js` when you
 # run the container.
-CMD ["server.js"]
+CMD npm run start

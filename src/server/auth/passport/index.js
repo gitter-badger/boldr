@@ -1,5 +1,5 @@
 import passport from 'koa-passport';
-import User, { getUserById } from '../../db/models/user';
+import User from '../../db/models/user';
 import { Strategy } from 'passport-local';
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import _debug from 'debug';
@@ -14,7 +14,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   (async () => {
     try {
-      const user = await getUserById(id);
+      const user = await User.where('id', id);
       done(null, user);
     } catch (err) {
       done(err);

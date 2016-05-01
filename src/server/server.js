@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Koa from 'koa';
 import _debug from 'debug';
 import serve from 'koa-static';
@@ -7,8 +8,10 @@ import Boldr from './boldr';
 import projectConfig from '../../tools/config';
 import { renderReact } from './middleware/renderReact';
 import InitDev from './initDev';
+import _log from './utils/logger';
 const debug = _debug('app:server:dev');
 const app = new Koa();
+const log = _log(module);
 
 Boldr.init(app);
 /**
@@ -30,8 +33,8 @@ app.use(renderReact);
 ***************** */
 app.on('error', (err, ctx) => {
   debug(err);
-  debug('Boldr error', err, ctx);
+  log.debug('Boldr error', err, ctx);
 });
 app.listen(projectConfig.SERVER_PORT, () => {
-  debug(`Boldr server listening on ${projectConfig.SERVER_PORT} in ${app.env} node`);
+  log.debug(`Boldr server listening on ${projectConfig.SERVER_PORT} in ${app.env} node`);
 });
