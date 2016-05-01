@@ -2,7 +2,7 @@ machine:
   timezone:
     America/Denver
   node:
-    version: v5
+    version: v5.11.0
   environment:
     PORT: 3000
     DB_USER: ubuntu
