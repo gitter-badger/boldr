@@ -1,4 +1,4 @@
-FROM strues/node
+FROM strues/node:latest
 WORKDIR /usr/src
 
 COPY package.json package.json

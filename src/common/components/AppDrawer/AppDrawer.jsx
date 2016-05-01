@@ -64,25 +64,29 @@ class AppDrawer extends React.Component {
         <SelectableList defaultValue={ boldr.selectedDrawerMenuListItem } boldr={ boldr }
             {...bindActionCreators(boldrActions, dispatch)} >
 
-          <ListItem primaryText="Home" value={ 1 }
-          />
-          <ListItem primaryText="Dashboard" value={ 2 }
-          />
-          <ListItem primaryText="Posts" value={ 3 }
+          <ListItem primaryText="Home" value={ 1 } />
+          <ListItem primaryText="Blog" value={ 2 } />
+          <ListItem primaryText="Dashboard" value={ 3 }
               initiallyOpen={ false }
               primaryTogglesNestedList={ true }
               nestedItems={[
                 <ListItem
                     value={ 4 }
-                    primaryText="Create a post"
+                    primaryText="Posts"
+                    nestedItems={[
+                      <ListItem
+                          value={ 5 }
+                          primaryText="List posts"
+                      />,
+                      <ListItem
+                          value={ 6 }
+                          primaryText="Create a post"
+                      />
+                    ]}
                 />,
-                <ListItem
-                    value={ 5 }
-                    primaryText="Show posts"
-                />
+                <ListItem primaryText="Settings" value={ 7 } />
               ]}
           />
-        <ListItem primaryText="Settings" value={ 6 } />
         </SelectableList>
       </Drawer>
     );

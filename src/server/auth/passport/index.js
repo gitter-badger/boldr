@@ -11,13 +11,17 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User({ id }).fetch();
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
+passport.deserializeUser((id, done) => {
+  (async () => {
+    try {
+      const user = await User({
+        id
+      }).fetch();
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  })();
 });
 
 passport.use('local', new Strategy({
@@ -49,3 +53,6 @@ passport.use('local', new Strategy({
   }
 }));
 
+export function isAuthenticated() {
+  return passport.authenticate('local');
+}

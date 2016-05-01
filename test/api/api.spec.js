@@ -1,7 +1,6 @@
 /* global it, __DEV__, describe, before, post, get */
 import { expect } from 'chai';
 import { mapUrl } from '../../tools/url';
-import Post from '../../src/server/db/models/post';
 
 describe('API - Main', () => {
   describe('mapUrl', () => {

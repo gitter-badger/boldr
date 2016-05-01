@@ -31,22 +31,19 @@ services:
       - 6379:6379/tcp
     networks:
       - boldr
-
-
-networks:
-  boldr:
-    driver: bridge
   # boldr1:
   #   build: ./
-  #   volumes:
-  #       - .:/src
-  #   environment:
-  #       - POSTGRES_USER=boldr
-  #       - POSTGRES_PASSWORD=boldr
   #   depends_on:
   #       - db
   #   ports:
   #     - 3000:3000/tcp
+  #     - 5858:5858/tcp
+  #   networks:
+  #     - boldr
+networks:
+  boldr:
+    driver: bridge
+
   #   networks:
   #     - boldr
 

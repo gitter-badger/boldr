@@ -4,6 +4,7 @@ import Router from 'koa-router';
 import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
+
 import redisStore from 'koa-redis';
 import methodOverride from 'koa-methodoverride';
 import passport from 'koa-passport';
@@ -22,15 +23,7 @@ export default class Boldr {
       .use(bodyParser())
       .use(methodOverride())
       .use(etag())
-      .use(helmet())
-      .use(async (ctx, next) => {
-        try {
-          await next();
-        } catch (err) {
-          ctx.body = { message: err.message };
-          ctx.status = err.status || 500;
-        }
-      });
+      .use(helmet());
     application.use(convert(session({
       store: redisStore({
         host: config.session.host,
@@ -46,5 +39,6 @@ export default class Boldr {
       application.use(router.routes());
       application.use(router.allowedMethods());
     }
+    application.use(async (ctx, next) => await next()); // Post-process responses.
   }
 }

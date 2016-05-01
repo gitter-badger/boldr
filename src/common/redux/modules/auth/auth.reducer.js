@@ -1,5 +1,4 @@
 import * as constants from './auth.constants';
-// import { createTokenCookie } from './auth.actions';
 
 export const INITIAL_STATE = {
   loading: false,
@@ -12,6 +11,12 @@ export const INITIAL_STATE = {
 
 export default function auth(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case constants.TOGGLE_LOGIN_MODE:
+      return {
+        ...state,
+        isAuthenticated: !state.isAuthenticated,
+        message: ''
+      };
     case constants.LOGIN_USER_REQUEST:
       return {
         ...state,
@@ -19,7 +24,7 @@ export default function auth(state = INITIAL_STATE, action) {
         isAuthenticating: true,
         isAuthenticated: false,
         loading: true,
-        message: 'Logging in',
+        message: 'Logging in.',
         token: {}
       };
     case constants.LOGIN_USER_SUCCESS:
@@ -29,7 +34,7 @@ export default function auth(state = INITIAL_STATE, action) {
         isAuthenticating: false,
         isAuthenticated: true,
         loading: true,
-        message: 'You\'re logged in!',
+        message: 'Logged in successfully.',
         token: action.payload
       };
     case constants.LOGIN_USER_FAILURE:

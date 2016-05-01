@@ -4,12 +4,7 @@ import { Router } from 'react-router';
 
 import routes from 'common/routes';
 
-const propTypes = {
-  history: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
-};
-
-function RootDev(props) {
+function Root(props) {
   const { history, store } = props;
   return (
     <Provider store={store}>
@@ -20,6 +15,9 @@ function RootDev(props) {
   );
 }
 
-RootDev.propTypes = propTypes;
+Root.propTypes = {
+  history: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired
+};
 
-export default RootDev;
+export default Root;
