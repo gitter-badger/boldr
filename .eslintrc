@@ -15,7 +15,16 @@
     "__DEV__": false,
     "__PROD__": false,
     "__DEBUG__": false,
-    "webpackIsomorphicTools": false
+    "webpackIsomorphicTools": false,
+    "expect": true,
+    "global": true,
+    "window": true,
+    "sinon": true,
+    "debug": true,
+    "React": true,
+    "PropTypes": true,
+    "_": true,
+    "helpers": true
   },
   "rules": {
     "no-shadow" : 0,
