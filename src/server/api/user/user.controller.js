@@ -1,6 +1,6 @@
 import _debug from 'debug';
 
-import User from '../../db/models/user';
+import User from '../../db/models/user.js';
 import config, { paths } from '../../../../tools/config';
 import { returnCode, response, respond } from '../../utils';
 
