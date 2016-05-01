@@ -1,9 +1,9 @@
-import knex from 'knex';
+import knexLib from 'knex';
 import bookshelf from 'bookshelf';
 import config, { paths } from '../../../tools/config';
 import Debug from 'debug';
 
-const Knex = knex({
+export const connection = knexLib({
   client: 'pg',
   debug: true,
   charset: 'utf8',
@@ -13,14 +13,10 @@ const Knex = knex({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
   },
-  pool: {
-    min: 0,
-    max: 7
-  },
   searchPath: 'knex,public'
 });
 
-const Bookshelf = bookshelf(Knex);
+const Bookshelf = bookshelf(connection);
 Bookshelf.plugin('registry');
 
 const database = () => {
@@ -41,7 +37,7 @@ const Post = () => require('./models/post');
 const Tag = () => require('./models/tag');
 
 export {
-  Knex,
+  connection,
   Bookshelf,
   database,
   User,
