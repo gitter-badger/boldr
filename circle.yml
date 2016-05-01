@@ -5,17 +5,15 @@ machine:
     version: v5
   environment:
     PORT: 3000
+    DB_USER: ubuntu
+    DB_NAME: circle_test
+    DB_HOST: 127.0.0.1
+    CIRCLE_ENV: test
+    DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
 
 dependencies:
   cache_directories:
     - node_modules
-  # Add some environment variables
-environment:
-  DB_USER: ubuntu
-  DB_NAME: circle_test
-  DB_HOST: 127.0.0.1
-  CIRCLE_ENV: test
-  DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
 test:
   pre:
     - npm run migrate
