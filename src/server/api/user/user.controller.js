@@ -4,7 +4,6 @@ import User from '../../db/models/user';
 import config, { paths } from '../../../../tools/config';
 import { returnCode, response, respond } from '../../utils';
 
-
 const debug = _debug('boldr:user:controller');
 debug('init');
 /**
@@ -22,13 +21,40 @@ export async function getUsers(ctx) {
 
 /**
  * Performs a lookup of a user by their id.
- * @param  {[type]}   ctx  [description]
- * @param  {Function} next [description]
- * @return {object}        the user object.
+ * @param  {[type]}   ctx  context of the request
+ * @param  {Function} next continue to the next middleware
+ * @return {Object}        the User object.
  */
 export async function getUserById(ctx, next) {
   try {
     const user = await User.where('id', ctx.params.id).fetch({
+      columns: ['display_name', 'username', 'id', 'avatar', 'email']
+    });
+    if (!user) {
+      return respond(400, {
+        message: 'User is Not Found'
+      }, ctx);
+    }
+
+    ctx.body = user;
+  } catch (err) {
+    if (err === 404 || err.name === 'CastError') {
+      return respond(400, {
+        message: 'User is Not Found'
+      }, ctx);
+    }
+  }
+}
+
+/**
+ * Performs a lookup of a user by their username.
+ * @param  {[type]}   ctx  context of the request
+ * @param  {Function} next continue to the next middleware
+ * @return {Object}        the User object.
+ */
+export async function getUserByUserName(ctx, next) {
+  try {
+    const user = await User.where('username', ctx.params.username).fetch({
       columns: ['display_name', 'username', 'id', 'avatar', 'email']
     });
     if (!user) {

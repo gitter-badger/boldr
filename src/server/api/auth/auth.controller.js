@@ -60,7 +60,7 @@ export async function loginUser(ctx, next) {
       ctx.throw(401);
     }
 
-    const token = jwt.sign({ id: user }, config.JWT_SECRET_KEY);
+    const token = jwt.sign({ id: user }, config.JWT_SECRET_KEY, { expiresIn: '7d' });
 
     const response = user.toJSON();
 
@@ -81,3 +81,12 @@ export const registerEmailCheck = async ctx => {
   }
   response(ctx, returnCode.valid.success);
 };
+
+export async function fetchAuthenticatedUserData(ctx, next) {
+  if (ctx.isAuthenticated()) {
+    const user = await User.where('id', ctx.req.user.id);
+    ctx.req.user = user;
+  }
+
+  await next();
+}
