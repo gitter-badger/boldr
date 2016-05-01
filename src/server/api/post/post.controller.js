@@ -1,5 +1,6 @@
 import _debug from 'debug';
 import Post from '../../db/models/post';
+
 import User from '../../db/models/user';
 import { returnCode, response, respond } from '../../utils';
 const debug = _debug('boldr:post:controller');

@@ -9,6 +9,7 @@ import projectConfig from '../../tools/config';
 import { renderReact } from './middleware/renderReact';
 import InitDev from './initDev';
 import _log from './utils/logger';
+
 const debug = _debug('app:server:dev');
 const app = new Koa();
 const log = _log(module);
@@ -28,9 +29,7 @@ app.use(serve('static'));
 // This is fired every time the server side receives a request
 app.use(renderReact);
 
-/* ****************
- START THE SERVER
-***************** */
+// Start server.
 app.on('error', (err, ctx) => {
   debug(err);
   log.debug('Boldr error', err, ctx);

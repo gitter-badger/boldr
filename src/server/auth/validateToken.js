@@ -1,4 +1,4 @@
-import { verifyAsync, signAsync } from 'jsonwebtoken';
+import { verify, verifyAsync, signAsync } from 'jsonwebtoken';
 import config, { paths } from '../../../tools/config';
 import User from '../db/models/user';
 import getToken from './getToken';
@@ -9,7 +9,7 @@ function getExpirationDate() {
   return new Date(Number(new Date()) + EXPIRATION_AGE);
 }
 export async function signJwt(payload, options) {
-  return await signAsync(payload, config.JWT_SECRET_KEY, options);
+  return await signAsync(payload, process.env.JWT_SECRET, options);
 }
 export async function validateToken(ctx, next) {
   const token = getToken(ctx);
@@ -20,7 +20,7 @@ export async function validateToken(ctx, next) {
 
   let decoded = null;
   try {
-    decoded = verifyAsync(token, config.JWT_SECRET_KEY);
+    decoded = verifyAsync(token, process.env.JWT_SECRET);
   } catch (err) {
     ctx.throw(401);
   }
@@ -33,7 +33,7 @@ export async function validateToken(ctx, next) {
 }
 
 export async function verifyJwt(token) {
-  return await verifyAsync(token, config.JWT_SECRET_KEY);
+  return await verifyAsync(token, process.env.JWT_SECRET);
 }
 
 export async function getUserByJwt(token) {

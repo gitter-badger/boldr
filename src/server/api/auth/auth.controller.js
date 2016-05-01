@@ -60,7 +60,7 @@ export async function loginUser(ctx, next) {
       ctx.throw(401);
     }
 
-    const token = jwt.sign({ id: user }, config.JWT_SECRET_KEY, { expiresIn: '7d' });
+    const token = jwt.sign({ id: user }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     const response = user.toJSON();
 
