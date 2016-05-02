@@ -15,22 +15,6 @@ const User = Bookshelf.Model.extend({
       this.attributes.created_at = new Date();
       this.set('email', this.get('email').toLowerCase().trim());
     });
-    this.on('saving', this.hashPassword, this);
-  },
-  hashPassword(model, attrs, options) {
-    const password = options.patch ? attrs.password : model.get('password');
-    if (!password) { return; }
-    return new Promise((resolve, reject) => {
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(password, salt, null, (err, hash) => {
-          if (options.patch) {
-            attrs.password = hash;
-          }
-          model.set('password', hash);
-          resolve();
-        });
-      });
-    });
   },
 
   toJSON: function toJSON(options) {
