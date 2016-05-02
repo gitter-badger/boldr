@@ -6,7 +6,6 @@ services:
     tty: true
     stdin_open: true
     volumes:
-    - /data
     - /var/lib/postgresql/data
     - ./backup:/postgresql.backup:z
     command: ["chown", "-v", "-R", "999:999", "/var/lib/postgresql/data"]
@@ -39,9 +38,3 @@ services:
 networks:
   boldr:
     driver: bridge
-
-  #   networks:
-  #     - boldr
-
-# POSTGRES_PORT_5432_TCP_ADDR
-# POSTGRES_PORT_5432_TCP_PORT

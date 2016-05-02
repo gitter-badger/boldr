@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - '5'
+sudo: false
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - npm run migrate
+  - npm run seed
+
+env:
+- CXX=g++-4.8
+- NODE_ENV=TEST
+- DB_NAME=travis_ci_test
+- DB_USER=postgres
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8

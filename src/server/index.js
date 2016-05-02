@@ -18,7 +18,7 @@ global.webpackIsomorphicTools =
   new WebpackIsomorphicTools(isomorphicToolsConfig)
     .development(__DEV__)
     .server(projectBasePath, () => {
-      require('.');
+      require('./server');
     });
 
-require('./server');
+

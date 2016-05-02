@@ -3,8 +3,10 @@ import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHotMiddleware from './middleware/webpack-hot';
 import projectConfig from '../../tools/config';
 import webpackConfig from '../../tools/webpack/dev.config';
+
 const compiler = webpack(webpackConfig);
 const serverOptions = { publicPath: webpackConfig.output.publicPath };
+
 export default class InitDev {
   static init(application) {
     /**
