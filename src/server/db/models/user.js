@@ -15,6 +15,7 @@ const User = Bookshelf.Model.extend({
       this.attributes.created_at = new Date();
       this.set('email', this.get('email').toLowerCase().trim());
     });
+    this.on('saving', this.hashPassword, this);
   },
   hashPassword(model, attrs, options) {
     const password = options.patch ? attrs.password : model.get('password');
