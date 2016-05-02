@@ -11,11 +11,11 @@ exports.seed = function(knex, Promise) {
       markup: '<h1>asdfasdfasdf</h1>',
       content: 'this stuff is stuff',
       image: 'http://placehold.it/760x300',
-      author_id: '1',
-      views: '0',
+      author_id: 1,
+      views: 0,
       is_public: true,
       created_at: '2016-04-30 22:05:19.551+00',
-      updated_at: '',
+      updated_at: '2016-04-30 22:05:19.551+00',
       tags: ''
     })
   );
