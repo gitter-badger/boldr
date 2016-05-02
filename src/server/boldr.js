@@ -12,11 +12,13 @@ import etag from 'koa-etag';
 import helmet from 'koa-helmet';
 import routers from './api';
 import handleError from './middleware/handleError';
+
 import config from '../../tools/config';
 
 export default class Boldr {
   static init(application) {
     application.keys = [config.session.keys];
+
     application
       .use(convert(logger()))
       .use(morgan('dev'))

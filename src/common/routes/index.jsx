@@ -8,6 +8,7 @@ import BlogContainer from '../scenes/Blog';
 import PostsContainer from '../scenes/Dashboard/Posts/PostsContainer';
 import CreatePost from '../scenes/Dashboard/Posts/CreatePost';
 import PostsList from '../scenes/Dashboard/Posts/PostsList';
+import SettingsContainer from '../scenes/Dashboard/Settings/SettingsContainer';
 import AuthContainer from '../scenes/Auth';
 import Error404 from '../components/404';
 
@@ -25,6 +26,7 @@ export default (store) => {
           <IndexRoute component={ PostsList} />
           <Route path="create" component={ CreatePost } />
         </Route>
+        <Route path="settings" component={ SettingsContainer } />
       </Route>
      <Route path="*" component={ Error404 } />
   </Route>

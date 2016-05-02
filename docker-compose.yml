@@ -27,7 +27,6 @@ services:
       - boldr
   # boldr1:
   #   build: ./
-  #   working_dir: /home/app
   #   depends_on:
   #       - db
   #   ports:

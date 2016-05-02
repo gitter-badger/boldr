@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import TextField from 'material-ui/TextField';
 
 @connect(selector)
 class LoginForm extends Component {
@@ -9,12 +10,10 @@ class LoginForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email</label>
-          <input type="email" placeholder="Email" {...email}/>
+          <TextField type="email" floatingLabelText="Email" { ...email } />
         </div>
         <div>
-          <label>Password</label>
-          <input type="text" placeholder="Last Name" {...password}/>
+           <TextField type="password" floatingLabelText="Password" { ...password } />
         </div>
         <button type="submit">Submit</button>
       </form>

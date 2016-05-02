@@ -7,6 +7,10 @@ module.exports = {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME
     },
+    pool: {
+      min: 0,
+      max: 7
+    },
     migrations: {
       directory: __dirname + '/src/server/db/migrations',
       tableName: 'knex_migrations'

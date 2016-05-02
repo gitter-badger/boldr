@@ -12,6 +12,40 @@ const testUsername = 'test';
 // const server = app.listen();
 
 describe('API - Auth', () => {
+  describe('POST - Register -- /api/v1/auth/register', () => {
+    it('can register when providing the correct info', (done) => {
+      request.post('/api/v1/auth/register')
+        .send({
+          username: testUsername,
+          password: testPassword,
+          email: testMail,
+          firstName: 'test',
+          lastName: 'test',
+          website: 'www.test.com',
+          avatar: 'www.test.com',
+          bio: 'hello i am user',
+          location: 'narnia'
+        })
+        .expect(201, done);
+    });
+    it('cannot register user without password', (done) => {
+      request.post('/api/v1/auth/register')
+        .send({
+          username: testUsername,
+          email: testMail
+        })
+        .expect(400, done);
+    });
+    it('cannot register duplicate user', (done) => {
+      request.post('/api/v1/auth/register')
+        .send({
+          username: testUsername,
+          password: testPassword,
+          email: testMail
+        })
+        .expect(400, done);
+    });
+  });
   describe('GET /api/v1/auth/test', () => {
     it('responds with json', done => {
       request
@@ -50,30 +84,11 @@ describe('API - Auth', () => {
     });
     it('wont login to non-existing user', (done) => {
       request.post('/api/v1/auth/login')
-          .send({
-            email: 'A@bcd.com',
-            password: testPassword
-          })
-          .expect(401, done);
-    });
-  });
-  describe('POST - Register -- /api/v1/auth/register', () => {
-    it('cannot register user without password', (done) => {
-      request.post('/api/v1/auth/register')
         .send({
-          username: testUsername,
-          email: testMail
+          email: 'A@bcd.com',
+          password: testPassword
         })
-        .expect(400, done);
-    });
-    it('cannot register duplicate user', (done) => {
-      request.post('/api/v1/auth/register')
-        .send({
-          username: testUsername,
-          password: testPassword,
-          email: testMail
-        })
-        .expect(400, done);
+        .expect(401, done);
     });
   });
 });
