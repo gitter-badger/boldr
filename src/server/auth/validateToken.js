@@ -20,7 +20,7 @@ export async function validateToken(ctx, next) {
 
   let decoded = null;
   try {
-    decoded = verifyAsync(token, process.env.JWT_SECRET);
+    decoded = verify(token, process.env.JWT_SECRET);
   } catch (err) {
     ctx.throw(401);
   }
