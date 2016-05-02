@@ -15,9 +15,11 @@ This image is generic, thus you can obviously re-use it whereever
     $ docker run --name=pg1 \
                  -e POSTGRES_USER=postgres \
                  -e POSTGRES_PASSWORD=postgres \
-                 -e POSTGRES_DBNAME=dbname \
-                 -e POSTGRES_DBUSER=dbname \
-                 -e POSTGRES_DBPASS=dbname \
+                 -e POSTGRES_DBNAME=boldr_dev \
+                 -e POSTGRES_DBUSER=boldr_dev \
+                 -e POSTGRES_DBPASS=boldr_dev \
+                 -v /opt/docker/data/pg:/var/lib/postgresql \
+                 -p 5432:5432/tcp -d \
              strues/postgres
 
 Or using docker-compose:
@@ -25,7 +27,7 @@ Or using docker-compose:
     postgres:
       image: strues/postgres:9.5
       ports:
-      - "5432:5432"
+      - "5432:5432/tcp"
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
@@ -33,7 +35,7 @@ Or using docker-compose:
         POSTGRES_DBUSER: zope
         POSTGRES_DBPASS: dbname
       volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data:rw
 
 ## PostgreSQL replication
 

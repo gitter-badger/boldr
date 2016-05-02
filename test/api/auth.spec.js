@@ -1,7 +1,7 @@
 /* global it, __DEV__, describe, before, post, get */
 import { expect, assert } from 'chai';
 import { mapUrl } from '../../tools/url';
-import app from '../../src/server';
+import server from '../../src/server';
 import Request from 'supertest';
 const request = Request('http://localhost:3000');
 const testUserId = 1;
@@ -13,7 +13,7 @@ const testUsername = 'test';
 
 describe('API - Auth', () => {
   describe('POST - Register -- /api/v1/auth/register', () => {
-    it('can register when providing the correct info', (done) => {
+    it('register with the correct info', (done) => {
       request.post('/api/v1/auth/register')
         .send({
           username: testUsername,

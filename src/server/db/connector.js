@@ -12,8 +12,7 @@ export const connection = knexLib({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
-  },
-  searchPath: 'knex,public'
+  }
 });
 
 const Bookshelf = bookshelf(connection);
