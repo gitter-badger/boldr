@@ -11,7 +11,11 @@ import { returnCode, response, respond, saltAndHashPassword } from '../../utils'
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
-
+const errorMessages = {
+  authFailed: 'Authorization failed.',
+  incompleteAttributes: 'Incomplete attributes.',
+  emailTaken: 'Email already taken.'
+};
 /**
  * @description
  * registers a new user
@@ -20,6 +24,9 @@ debug('init');
  * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
+  if (!ctx.request.body || !ctx.request.body.username || !ctx.request.body.password || !ctx.request.body.email) {
+    return ctx.throw(400, errorMessages.incompleteAttributes);
+  }
   try {
     const hash = await saltAndHashPassword(ctx.request.body.password);
     const user = await User.forge({
@@ -44,7 +51,7 @@ export const registerUser = async ctx => {
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {
-    ctx.status = 400;
+    ctx.throw(400, error.message);
     debug(error);
   }
 };
@@ -61,7 +68,11 @@ export async function loginUser(ctx, next) {
       ctx.throw(401);
     }
 
-    const token = jwt.sign({ id: user }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({
+      id: user
+    }, process.env.JWT_SECRET, {
+      expiresIn: '7d'
+    });
 
     const response = user.toJSON();
 
@@ -75,7 +86,7 @@ export async function loginUser(ctx, next) {
 }
 
 export const registerEmailCheck = async ctx => {
-  const { code } = ctx.request.query;
+  const {code} = ctx.request.query;
   const result = await User.registerEmailCheck(code);
   if (typeof result === 'string') {
     response.err(returnCode.err[result]);
