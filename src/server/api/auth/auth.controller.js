@@ -4,9 +4,10 @@ import _debug from 'debug';
 import passport from 'koa-passport';
 import uuid from 'node-uuid';
 
+import Promise from 'bluebird';
 import config, { paths } from '../../../../tools/config';
 import User from '../../db/models/user';
-import { returnCode, response, saltAndHashPassword, respond } from '../../utils';
+import { returnCode, response, respond, saltAndHashPassword } from '../../utils';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');

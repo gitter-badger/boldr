@@ -1,9 +1,5 @@
-
 exports.seed = function(knex, Promise) {
   return Promise.join(
-    // Deletes ALL existing entries
-    knex('posts').del(),
-    // Inserts seed entries
     knex('posts').insert({
       id: 1,
       title: 'Purple Penguins',
@@ -15,8 +11,9 @@ exports.seed = function(knex, Promise) {
       views: 0,
       is_public: true,
       created_at: '2016-04-30 22:05:19.551+00',
-      updated_at: '2016-04-30 22:05:19.551+00',
-      tags: ''
+      updated_at: '2016-04-30 22:05:19.551+00'
     })
-  );
+  ).catch(function(error) {
+    console.error('knex test seed', error);
+  });
 };
