@@ -5,7 +5,14 @@ import { fetchPosts } from '../../redux/modules/post/post.actions';
 import Loader from '../../components/Loader';
 import Post from '../../components/scenes/Blog';
 
+// Data that needs to be called before rendering the component
+// This is used for server side rending via the fetchComponentDataBeforeRending() method
+Post.need = [
+  fetchPosts
+];
+
 class BlogContainer extends Component {
+
   constructor(props) {
     super(props);
 
