@@ -8,6 +8,7 @@ build/*
 build_styleguide
 styleguide
 reports
+docs/logs
 
 # webpack-isomorphic-tools
 webpack-assets.json

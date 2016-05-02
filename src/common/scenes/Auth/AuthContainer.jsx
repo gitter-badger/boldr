@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-
-import { LoginForm } from '../../forms';
+import Register from './Register.jsx';
+import Login from './Login.jsx';
 import { authLogin, authRegister, toggleLoginMode } from '../../redux/modules/auth/auth.actions';
 
 @connect(mapStateToProps)
@@ -13,9 +13,8 @@ class AuthContainer extends Component {
     this.toggleMode = this.toggleMode.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
-  handleOnSubmit(event) {
-    event.preventDefault();
 
+  handleOnSubmit(event) {
     const { dispatch, auth: { isAuthenticated } } = this.props;
     const email = ReactDOM.findDOMNode(this.refs.email).value;
     const password = ReactDOM.findDOMNode(this.refs.password).value;
@@ -36,12 +35,13 @@ class AuthContainer extends Component {
   toggleMode() {
     this.props.dispatch(toggleLoginMode());
   }
-  renderHeader() {
+  renderLoginReg() {
     const { isAuthenticated } = this.props.auth;
     if (isAuthenticated) {
       return (
         <div className="header">
           <h1 className="heading">Login with Email</h1>
+          <Login onSubmit={ this.handleOnSubmit } />
           <div className="alternative">
             Not what you want?
             <a className="alternative-link"
@@ -53,7 +53,8 @@ class AuthContainer extends Component {
 
     return (
        <div className="header">
-      <h1 className="heading">Register with Email</h1>
+        <h1 className="heading">Register with Email</h1>
+         <Register onSubmit={ this.handleOnSubmit } />
         <div className="alternative">
           Already have an account?
         <a className="alternative-link"
@@ -67,25 +68,8 @@ class AuthContainer extends Component {
 
     return (
       <div>
-      { this.renderHeader() }
        <div className="container">
-       <LoginForm />
-        <div className="email">
-            <form onSubmit={this.handleOnSubmit}>
-              <input className="input"
-              type="email"
-              ref="email"
-              placeholder="email" />
-              <input className="input"
-              type="password"
-              ref="password"
-              placeholder="password" />
-
-              <input className="button"
-                type="submit"
-                value={isAuthenticated ? 'Login' : 'Register'} />
-            </form>
-          </div>
+          { this.renderLoginReg() }
        </div>
       </div>
     );

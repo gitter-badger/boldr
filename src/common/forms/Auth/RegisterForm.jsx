@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 
 @connect(selector)
-class LoginForm extends Component {
+class RegisterForm extends Component {
   render() {
     const { fields: { email, password }, handleSubmit } = this.props;
     return (
@@ -23,9 +23,9 @@ class LoginForm extends Component {
 
 const selector = (state) => ({ auth: state.auth });
 
-LoginForm = reduxForm({
-  form: 'login',
+RegisterForm = reduxForm({
+  form: 'register',
   fields: ['email', 'password']
-})(LoginForm);
+})(RegisterForm);
 
-export default LoginForm;
+export default RegisterForm;

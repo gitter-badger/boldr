@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
+
+import { LoginForm } from '../../forms';
+
 
 class Login extends Component {
   render() {
     return (
-      <div>
-
-       <div className="container">
-       Login?
-       </div>
-      </div>
+      <Paper zDepth={ 1 }>
+        <LoginForm onSubmit={ this.props.onSubmit } />
+      </Paper>
     );
   }
 }
