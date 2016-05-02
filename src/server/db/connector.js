@@ -1,6 +1,6 @@
 import knexLib from 'knex';
 import bookshelf from 'bookshelf';
-import config, { paths } from '../../../tools/config';
+import config, { paths } from '../../../config';
 import Debug from 'debug';
 
 export const connection = knexLib({

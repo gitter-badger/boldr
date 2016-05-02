@@ -5,7 +5,7 @@ import passport from 'koa-passport';
 import uuid from 'node-uuid';
 
 import Promise from 'bluebird';
-import config, { paths } from '../../../../tools/config';
+import config, { paths } from '../../../../config';
 import User from '../../db/models/user';
 import { returnCode, response, respond, saltAndHashPassword } from '../../utils';
 

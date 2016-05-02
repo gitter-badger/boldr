@@ -7,16 +7,16 @@ import { createServer } from 'http';
 import proxy from 'koa-proxy';
 import Boldr from './boldr';
 import projectConfig from '../../config';
-import { renderReact } from './utils/renderReact';
 // import InitDev from './initDev';
 import { logger as _log, normalizePort, onError } from './utils';
-import { handleRender } from './utils/render';
+import { handleRender } from './utils/renderReact';
 
 const debug = _debug('app:server:dev');
 const app = new Koa();
 const server = createServer(app.callback());
 const log = _log(module);
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = projectConfig;
+
 export function init() {
   Boldr.init(app);
   /**
@@ -24,14 +24,14 @@ export function init() {
    * @param  {Boolean} __DEV__ Global variable for development environment
    * @return {InitDev}        The initializer class for development
    */
-  // if (__DEV__) {
-  //   InitDev.init(app);
-  // }
+  if (__DEV__) {
+    app.use(convert(proxy({
+      host: `http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}`,
+      match: /^\/build\//
+    })));
+  }
   app.use(serve('static'));
-  app.use(convert(proxy({
-    host: `http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}`,
-    match: /^\/build\//
-  })));
+
   // This is fired every time the server side receives a request
   app.use(handleRender);
 

@@ -1,6 +1,7 @@
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
-import isomorphicToolsConfig from '../../tools/webpack/isomorphic.tools.config';
-import projectConfig, { paths } from '../../tools/config';
+
+import isomorphicToolsConfig from '../../webpack/isomorphic.tools.config';
+import projectConfig, { paths } from '../../config';
 
 const projectBasePath = paths('base');
 
@@ -18,7 +19,9 @@ global.webpackIsomorphicTools =
   new WebpackIsomorphicTools(isomorphicToolsConfig)
     .development(__DEV__)
     .server(projectBasePath, () => {
-      require('.');
+      if (__DEV__) {
+        require('./server.dev');
+      } else {
+        require('./server.prod');
+      }
     });
-
-require('./server');

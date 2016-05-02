@@ -34,7 +34,7 @@ export const changeSelectedDrawerMenuListItem = (index, title) => {
 // };
 export const routeToIndex = (index) => {
   return (dispatch) => {
-    setTimeout(function() {
+    setTimeout(() => {
       let path = null;
       let title = null;
       switch (index) {

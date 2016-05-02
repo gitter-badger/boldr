@@ -1,7 +1,7 @@
 import _debug from 'debug';
 
 import User from '../../db/models/user.js';
-import config, { paths } from '../../../../tools/config';
+import config, { paths } from '../../../../config';
 import { returnCode, response, respond } from '../../utils';
 
 const debug = _debug('boldr:user:controller');

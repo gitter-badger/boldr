@@ -1,12 +1,12 @@
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
-import config, { paths } from '../../../tools/config';
+import config, { paths } from '../../../config';
 
 const auth = {
   auth: {
-    api_key: config.mg.apiKey,
-    domain: config.mg.domain
+    api_key: 'config.mg.apiKey',
+    domain: 'config.mg.domain'
   }
 };
 const nodemailerMailgun = nodemailer.createTransport(mg(auth));

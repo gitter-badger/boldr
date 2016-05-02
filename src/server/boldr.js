@@ -13,11 +13,11 @@ import helmet from 'koa-helmet';
 import routers from './api';
 import handleError from './middleware/handleError';
 
-import config from '../../tools/config';
+import config from '../../config';
 
 export default class Boldr {
   static init(application) {
-    application.keys = [config.session.keys];
+    application.keys = ['topk3kles'];
 
     application
       .use(convert(logger()))

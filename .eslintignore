@@ -4,5 +4,4 @@ dist/**
 *.spec.js
 static/**
 docs/**
-seeds/**
 backup/**
