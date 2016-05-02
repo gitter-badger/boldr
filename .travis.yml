@@ -7,8 +7,8 @@ services:
 before_script:
   - psql -c 'create database travis;' -U postgres
   - npm run migrate
-  - npm run seed
-
+script:
+  - npm run test
 env:
 - CXX=g++-4.8
 - NODE_ENV=TEST
