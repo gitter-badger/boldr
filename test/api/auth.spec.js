@@ -1,35 +1,44 @@
 /* global it, __DEV__, describe, before, post, get */
-import { expect, assert } from 'chai';
-import { mapUrl } from '../../tools/url';
-import server from '../../src/server';
-import Request from 'supertest';
-const request = Request('http://localhost:3000');
-const testUserId = 1;
-const testMail = 'test@test.com';
-const testPassword = 'test';
-const testUsername = 'test';
+process.env.NODE_ENV = 'test';
 
-// const server = app.listen();
+import chai, { expect, assert } from 'chai';
+import chaiHttp from 'chai-http';
+import { server } from '../server';
+import request from 'supertest';
+
+const knex = require('../db');
+const should = chai.should();
+const testUserId = 1;
+const testMail = 'testing@test.com';
+const testPassword = 'testing';
+const testUsername = 'testing';
+
+chai.use(chaiHttp);
 
 describe('API - Auth', () => {
   describe('POST - Register -- /api/v1/auth/register', () => {
-    it('register with the correct info', (done) => {
-      request.post('/api/v1/auth/register')
+    it('should register a user', (done) => {
+      request(server)
+        .post('/api/v1/auth/register')
         .send({
-          username: testUsername,
-          password: testPassword,
-          email: testMail,
+          username: 'testing',
+          password: 'testing',
+          displayName: 'bob',
+          email: 'testing@test.com',
           firstName: 'test',
           lastName: 'test',
           website: 'www.test.com',
           avatar: 'www.test.com',
           bio: 'hello i am user',
-          location: 'narnia'
+          location: 'narnia',
+          facebook: 'user',
+          twitter: 'user'
         })
         .expect(201, done);
     });
     it('cannot register user without password', (done) => {
-      request.post('/api/v1/auth/register')
+      request(server)
+        .post('/api/v1/auth/register')
         .send({
           username: testUsername,
           email: testMail
@@ -37,7 +46,8 @@ describe('API - Auth', () => {
         .expect(400, done);
     });
     it('cannot register duplicate user', (done) => {
-      request.post('/api/v1/auth/register')
+      request(server)
+        .post('/api/v1/auth/register')
         .send({
           username: testUsername,
           password: testPassword,
@@ -48,7 +58,7 @@ describe('API - Auth', () => {
   });
   describe('GET /api/v1/auth/test', () => {
     it('responds with json', done => {
-      request
+      request(server)
         .get('/api/v1/auth/test')
         .set('Accept', 'application/json')
         .expect('Content-Type', /text\/plain/)
@@ -57,7 +67,7 @@ describe('API - Auth', () => {
   });
   describe('POST - Login -- /api/v1/auth/login', () => {
     it('allows the user to login with their credentials', done => {
-      request
+      request(server)
         .post('/api/v1/auth/login')
         .send({
           email: testMail,
@@ -74,7 +84,7 @@ describe('API - Auth', () => {
         });
     });
     it('wont allow login with invalid email and password', (done) => {
-      request
+      request(server)
         .post('/api/v1/auth/login')
         .send({
           email: testUsername,
@@ -83,7 +93,8 @@ describe('API - Auth', () => {
         .expect(401, done);
     });
     it('wont login to non-existing user', (done) => {
-      request.post('/api/v1/auth/login')
+      request(server)
+        .post('/api/v1/auth/login')
         .send({
           email: 'A@bcd.com',
           password: testPassword

@@ -13,5 +13,5 @@
     "watch": [
       "src/server/**/*"
     ],
-    "exec": "npm run dev"
+    "exec": "babel-node webpack/dev.server.js"
 }

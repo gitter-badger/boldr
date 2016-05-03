@@ -29,6 +29,10 @@ const config = {
     'classnames',
     'superagent'
   ],
+  TESTDB_HOST: process.env.TEST_DB_HOST || '10.211.55.7',
+  TESTDB_NAME: process.env.TEST_DB_NAME || 'boldr_test',
+  TESTDB_USER: process.env.TEST_DB_USER || 'postgres',
+  TESTDB_PASS: process.env.TEST_DB_PASS || 'postgres',
 
   // Project Structure
   PATH_BASE: path.resolve(__dirname, '../'),

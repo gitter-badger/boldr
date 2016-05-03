@@ -17,13 +17,11 @@
     "README.md"
   ],
   "dependencies": {
-    "async": "^2.0.0-rc.3",
     "async-busboy": "0.0.6",
     "axios": "^0.11.0",
     "bcryptjs": "^2.3.0",
     "bluebird": "^3.3.5",
     "bookshelf": "^0.9.4",
-    "boom": "^3.1.2",
     "chalk": "^1.1.3",
     "classnames": "^2.2.4",
     "crypto": "0.0.3",
@@ -99,6 +97,7 @@
     "babel-register": "^6.7.2",
     "babel-runtime": "^6.6.1",
     "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
     "concurrently": "^2.0.0",
     "copy-webpack-plugin": "^2.1.3",
     "cross-env": "^1.0.7",
@@ -139,10 +138,10 @@
     "prod": "DEBUG=app:* cross-env NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
     "start": "concurrently --kill-others --raw \"npm run start:client:server\" \"npm run start:server\"",
     "start:server": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js",
-    "start:client:server": "DEBUG=app:* babel-node webpack/dev.server.js",
+    "start:client:server": "DEBUG=app:* nodemon",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
-    "test": "NODE_ENV=TEST mocha --require ignore-styles --compilers js:babel-register --timeout 5000 test/.setup.js test/**/*.spec.js",
-    "test:api-watch": "mocha --require ignore-styles --compilers js:babel-register --timeout 5000 test/.setup.js test/**/*.spec.js"
+    "test": "NODE_ENV=TEST mocha --compilers js:babel-register --timeout 5000 test/**/*.spec.js",
+    "test:api-watch": "mocha --compilers js:babel-register --timeout 5000 test/**/*.spec.js"
   }
 }

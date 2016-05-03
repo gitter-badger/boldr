@@ -1,14 +1,25 @@
 /* global it, __DEV__, describe, before, post, get */
-import { expect } from 'chai';
-import { mapUrl } from '../../tools/url';
-import app from '../../src/server';
-import Request from 'supertest';
-const request = Request('http://localhost:3000');
+process.env.NODE_ENV = 'test';
+
+import chai, { expect, assert } from 'chai';
+import chaiHttp from 'chai-http';
+import { server } from '../server';
+import request from 'supertest';
+
+const knex = require('../db');
+
+const should = chai.should();
+const testUserId = 1;
+const testMail = 'test@test.com';
+const testPassword = 'test';
+const testUsername = 'test';
+
+chai.use(chaiHttp);
 
 describe('API - Posts', () => {
   describe('GET /api/v1/posts', () => {
     it('respond with json', done => {
-      request
+      request(server)
         .get('/api/v1/posts')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
