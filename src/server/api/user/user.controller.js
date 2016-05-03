@@ -2,7 +2,6 @@ import _debug from 'debug';
 
 import User from '../../db/models/user.js';
 import config, { paths } from '../../../../config';
-import { returnCode, response, respond } from '../../utils';
 
 const debug = _debug('boldr:user:controller');
 debug('init');
@@ -31,17 +30,13 @@ export async function getUserById(ctx, next) {
       columns: ['display_name', 'username', 'id', 'avatar', 'email']
     });
     if (!user) {
-      return respond(400, {
-        message: 'User is Not Found'
-      }, ctx);
+      return ctx.badRequest('User is Not Found');
     }
 
     ctx.body = user;
   } catch (err) {
     if (err === 404 || err.name === 'CastError') {
-      return respond(400, {
-        message: 'User is Not Found'
-      }, ctx);
+      return ctx.badRequest('User is Not Found');
     }
   }
 }
@@ -58,17 +53,13 @@ export async function getUserByUserName(ctx, next) {
       columns: ['display_name', 'username', 'id', 'avatar', 'email']
     });
     if (!user) {
-      return respond(400, {
-        message: 'User is Not Found'
-      }, ctx);
+      return ctx.badRequest('User is Not Found');
     }
 
     ctx.body = user;
   } catch (err) {
     if (err === 404 || err.name === 'CastError') {
-      return respond(400, {
-        message: 'User is Not Found'
-      }, ctx);
+      return ctx.badRequest('User is Not Found');
     }
   }
 }
@@ -95,8 +86,5 @@ export async function deleteUser(ctx) {
 }
 
 export async function getMe(ctx) {
-  response(ctx, {
-    ...returnCode.valid.success,
-    object: ctx.user.clearResponse()
-  });
+
 }

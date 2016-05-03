@@ -1,6 +1,10 @@
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import * as types from './post.constants';
+import { getPostByTitle, createPostCall, updatePostCall } from 'common/api/postEndpoint';
+import configureStore from 'common/redux/store';
+
+const store = configureStore();
 polyfill();
 
 const requestPosts = () => ({
@@ -8,7 +12,7 @@ const requestPosts = () => ({
 });
 
 const requestPostByTitle = (title) => ({
-  type: types.REQUEST_POST_BY_NAME,
+  type: types.REQUEST_POST_BY_TITLE,
   title
 });
 
@@ -96,31 +100,26 @@ export function fetchPosts(data) {
   };
 }
 
-// export const fetchPostByName = (postName) => dispatch => {
-//   dispatch(requestPostByTitle(postName));
-//   return getPostByName(postName, postReceived, failedToReceivePost);
-// };
+export const getOrFetchPost = (title) => dispatch => {
+  const post = store.getState().post.posts.filter((x) => x.title === title);
+  if (post.length === 0) {
+    dispatch(fetchPostByTitle(title));
+  } else {
+    dispatch(postReceived(post[0]));
+  }
+};
 
-// export const createPost = (title, body, editableBody) => dispatch => {
-//   dispatch(creatingPost());
-//   return createPostCall(title, body, editableBody, postCreated, failedToCreatePost);
-// };
+export const fetchPostByTitle = (postTitle) => dispatch => {
+  dispatch(requestPostByTitle(postTitle));
+  return getPostByTitle(postTitle, postReceived, failedToReceivePost);
+};
 
-// export const updatePost = (id, title, body, editableBody) => dispatch => {
-//   dispatch(creatingPost());
-//   return updatePostCall(id, title, body, editableBody, postUpdated, failedToUpdatePost);
-// };
+export const createPost = (title, content, editableBody) => dispatch => {
+  dispatch(creatingPost());
+  return createPostCall(title, content, editableBody, postCreated, failedToCreatePost);
+};
 
-// export const deletePost = (id) => dispatch => {
-//   dispatch(postDeleted(id));
-//   return deletePostCall(id, postDeleted, postDeleted);
-// };
-
-// export const getOrFetchPost = (title) => dispatch => {
-//   const post = store.getState().PostsReducer.posts.filter((x) => x.title === title);
-//   if (post.length === 0) {
-//     dispatch(fetchPostByName(title));
-//   } else {
-//     dispatch(postReceived(post[0]));
-//   }
-// };
+export const updatePost = (id, isPublic, content, body, editableBody) => dispatch => {
+  dispatch(updatingPost());
+  return updatePostCall(id, isPublic, content, body, editableBody, postUpdated, failedToUpdatePost);
+};
