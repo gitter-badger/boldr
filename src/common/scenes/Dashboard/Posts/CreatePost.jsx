@@ -203,7 +203,7 @@ const getEditablePost = (state) => {
   }
 
   return {
-    loading: true,
+    loading: false,
     isEditing: true,
     isPublic: false,
     isWorking: false,
