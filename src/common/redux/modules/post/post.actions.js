@@ -1,11 +1,9 @@
-import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import * as types from './post.constants';
 import { getPostByTitle, createPostCall, updatePostCall } from 'common/api/postEndpoint';
 import configureStore from 'common/redux/store';
 
 const store = configureStore();
-polyfill();
 
 const requestPosts = () => ({
   type: types.REQUEST_POSTS
