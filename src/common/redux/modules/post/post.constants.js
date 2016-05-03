@@ -1,7 +1,7 @@
 export const REQUEST_POSTS = '@@post/REQUEST_POSTS';
 export const RECEIVE_POSTS = '@@post/RECEIVE_POSTS';
 export const RECEIVE_POSTS_FAILED = '@@post/RECEIVE_POSTS_FAILED';
-export const REQUEST_POST_BY_NAME = '@@post/REQUEST_POST_BY_NAME';
+export const REQUEST_POST_BY_TITLE = '@@post/REQUEST_POST_BY_TITLE';
 export const RECEIVE_POST = '@@post/RECEIVE_POST';
 export const FAILED_TO_RECEIVE_POST = '@@post/FAILED_TO_RECEIVE_POST';
 export const CREATE_POST = '@@post/CREATE_POST';

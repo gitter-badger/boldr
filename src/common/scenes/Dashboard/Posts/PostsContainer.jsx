@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as postActions from 'common/redux/modules/post/post.actions';
 
+@connect(mapStateToProps, mapDispatchToProps)
 class PostsContainer extends Component {
   render() {
     return (
@@ -14,5 +17,17 @@ class PostsContainer extends Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    post: state.post
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    postActions: bindActionCreators(postActions, dispatch)
+  };
+};
+
 
 export default PostsContainer;

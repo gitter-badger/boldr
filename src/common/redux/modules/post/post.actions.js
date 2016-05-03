@@ -1,7 +1,7 @@
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import * as types from './post.constants';
-import { getPostByName } from 'common/api/postEndpoint';
+import { getPostByTitle, createPostCall, updatePostCall } from 'common/api/postEndpoint';
 import configureStore from 'common/redux/store';
 
 const store = configureStore();
@@ -12,7 +12,7 @@ const requestPosts = () => ({
 });
 
 const requestPostByTitle = (title) => ({
-  type: types.REQUEST_POST_BY_NAME,
+  type: types.REQUEST_POST_BY_TITLE,
   title
 });
 
@@ -103,23 +103,23 @@ export function fetchPosts(data) {
 export const getOrFetchPost = (title) => dispatch => {
   const post = store.getState().post.posts.filter((x) => x.title === title);
   if (post.length === 0) {
-    dispatch(fetchPostByName(title));
+    dispatch(fetchPostByTitle(title));
   } else {
     dispatch(postReceived(post[0]));
   }
 };
 
-function createPostCall() {
-
-}
-
-export const fetchPostByName = (postName) => dispatch => {
-  dispatch(requestPostByTitle(postName));
-  return getPostByName(postName, postReceived, failedToReceivePost);
+export const fetchPostByTitle = (postTitle) => dispatch => {
+  dispatch(requestPostByTitle(postTitle));
+  return getPostByTitle(postTitle, postReceived, failedToReceivePost);
 };
 
-export const createPost = (title, body, editableBody) => dispatch => {
+export const createPost = (title, content, editableBody) => dispatch => {
   dispatch(creatingPost());
-  return createPostCall(title, body, editableBody, postCreated, failedToCreatePost);
+  return createPostCall(title, content, editableBody, postCreated, failedToCreatePost);
 };
 
+export const updatePost = (id, isPublic, content, body, editableBody) => dispatch => {
+  dispatch(updatingPost());
+  return updatePostCall(id, isPublic, content, body, editableBody, postUpdated, failedToUpdatePost);
+};

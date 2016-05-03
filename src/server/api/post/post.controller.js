@@ -1,6 +1,6 @@
 import _debug from 'debug';
 import Post from '../../db/models/post';
-
+import PostService from 'server/api/post/post.service';
 import User from '../../db/models/user';
 import { returnCode, response, respond } from '../../utils';
 const debug = _debug('boldr:post:controller');
@@ -62,16 +62,11 @@ export async function getPostsByAuthor(ctx, next) {
 }
 
 /**
- * Performs a lookup of posts by the authors username.
- * @param  {[type]}   ctx  context of the request
+ * Looks for a post matching the title
+ * @param  {postTitle}   ctx  context of the request
  * @param  {Function} next continue to the next middleware
  * @return {Object}        the Post object.
  */
 export const getPostByTitle = async (ctx) => {
-  const post = await Post.query('where', 'title', 'Homerun').fetch();
-  return ctx.ok(post);
+  ctx.body = await PostService.getPostByTitle(ctx.params.postTitle);
 };
-// export async function getUserById(models, userId) {
-//   return await models.User.findById(userId);
-// }
-// .get('/:id', async ctx => await accountController.getUserById(models, ctx.params.id))
