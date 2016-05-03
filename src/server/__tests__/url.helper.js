@@ -1,3 +1,4 @@
+/* eslint-disable */
 export function mapUrl(availableActions = {}, url = []) {
   const notFound = { action: null, params: [] };
 

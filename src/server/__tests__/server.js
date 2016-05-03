@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'dotenv/config';
 import Koa from 'koa';
 import _debug from 'debug';
@@ -6,8 +7,8 @@ import convert from 'koa-convert';
 import { createServer } from 'http';
 import proxy from 'koa-proxy';
 
-import Boldr from '../src/server/boldr';
-import { logger as _log, normalizePort, onError } from '../src/server/utils';
+import Boldr from '../boldr';
+import { logger as _log, normalizePort, onError } from '../utils';
 
 const debug = _debug('app:server:dev');
 const app = new Koa();

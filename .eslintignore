@@ -1,7 +1,8 @@
 coverage/**
 node_modules/**
 dist/**
-*.spec.js
+*-test.js
 static/**
 docs/**
 backup/**
+src/server/__tests__/**/*.js
