@@ -1,7 +1,8 @@
-import { argv } from 'yargs';
-import path from 'path';
+/* eslint-disable */
+var yargs = require('yargs');
+var path = require('path');
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
+var NODE_ENV = process.env.NODE_ENV || 'development';
 
 const config = {
 
@@ -10,7 +11,7 @@ const config = {
   __SERVER__: false,
   __DEV__: NODE_ENV === 'development',
   __PROD__: NODE_ENV === 'production',
-  __DEBUG__: !!argv.debug,
+  __DEBUG__: !!yargs.argv.debug,
 
   // Server Configuration
   SERVER_HOST: 'localhost',
