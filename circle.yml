@@ -4,13 +4,7 @@ machine:
   node:
     version: 5.7.0
   services:
-    - postgres
-  environment:
-    - JWT_SECRET: b0ldRs3cr3t
-    - DB_HOST: 127.0.0.1
-    - DB_USER: ubuntu
-    - DB_NAME: circle_test
-    - DB_PORT: 5432
+    - postgresql
 test:
   pre:
     - npm run migrate
