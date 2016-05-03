@@ -5,9 +5,9 @@ import serve from 'koa-static';
 import convert from 'koa-convert';
 import { createServer } from 'http';
 import proxy from 'koa-proxy';
+
 import Boldr from './boldr';
 import projectConfig from '../../config';
-// import InitDev from './initDev';
 import { logger as _log, normalizePort, onError } from './utils';
 import { handleRender } from './utils/renderReact';
 
