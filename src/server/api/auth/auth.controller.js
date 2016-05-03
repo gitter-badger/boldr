@@ -7,7 +7,7 @@ import uuid from 'node-uuid';
 import Promise from 'bluebird';
 import config, { paths } from '../../../../config';
 import User from '../../db/models/user';
-import { returnCode, response, respond, saltAndHashPassword } from '../../utils';
+import { saltAndHashPassword } from '../../utils';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
@@ -86,12 +86,12 @@ export async function loginUser(ctx, next) {
 }
 
 export const registerEmailCheck = async ctx => {
-  const {code} = ctx.request.query;
+  const { code } = ctx.request.query;
   const result = await User.registerEmailCheck(code);
   if (typeof result === 'string') {
-    response.err(returnCode.err[result]);
+    return ctx.badRequest('there was a problem with the email');
   }
-  response(ctx, returnCode.valid.success);
+  return ctx.ok('the email is ok');
 };
 
 export async function fetchAuthenticatedUserData(ctx, next) {

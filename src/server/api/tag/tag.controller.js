@@ -1,7 +1,6 @@
 import _debug from 'debug';
 import Post from '../../db/models/post';
 import Tag from '../../db/models/tag';
-import { returnCode, response, respond } from '../../utils';
 
 const debug = _debug('boldr:tag:controller');
 debug('init');
@@ -25,7 +24,7 @@ export const createTag = async (ctx, next) => {
     }).save();
     ctx.status = 201;
   } catch (err) {
-    response.send(err);
+    return ctx.error('There was an error!');
   }
 };
 

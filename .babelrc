@@ -3,10 +3,7 @@
   "plugins": ["transform-runtime", "transform-decorators-legacy"],
   "env": {
     "production": {
-      "plugins": [
-        "react-remove-prop-types",
-        "transform-react-constant-elements"
-      ]
+      "presets": ["react-optimize"]
     }
   }
 }

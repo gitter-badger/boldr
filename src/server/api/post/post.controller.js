@@ -2,7 +2,7 @@ import _debug from 'debug';
 import Post from '../../db/models/post';
 import PostService from 'server/api/post/post.service';
 import User from '../../db/models/user';
-import { returnCode, response, respond } from '../../utils';
+
 const debug = _debug('boldr:post:controller');
 debug('init');
 
@@ -34,7 +34,7 @@ export const createPost = async (ctx, next) => {
     }).save();
     ctx.status = 201;
   } catch (err) {
-    response.send(err);
+    return ctx.error('Uh oh there was a problem!');
   }
 };
 
