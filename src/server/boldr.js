@@ -11,6 +11,7 @@ import convert from 'koa-convert';
 import etag from 'koa-etag';
 import helmet from 'koa-helmet';
 import routers from './api';
+import responseCalls from './middleware/responseCalls';
 import handleError from './middleware/handleError';
 
 import config from '../../config';
@@ -20,6 +21,7 @@ export default class Boldr {
     application.keys = ['topk3kles'];
 
     application
+      .use(responseCalls)
       .use(convert(logger()))
       .use(morgan('dev'))
       .use(bodyParser())

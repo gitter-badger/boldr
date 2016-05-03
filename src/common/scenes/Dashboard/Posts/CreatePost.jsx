@@ -38,7 +38,10 @@ class CreatePost extends Component {
     this.onChange = (editorState) => this.setState({ editorState });
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
-
+    this.logState = () => {
+      const content = this.state.editorState.getCurrentContent();
+      console.log(convertToRaw(content));
+    };
     // const title = decodeURI(window.location.pathname.split('/')[2]);
 
     // setTimeout(() => {
@@ -97,6 +100,7 @@ class CreatePost extends Component {
                   ref="editor"
                 />
               </div>
+              <input onClick={this.logState} type="button" value="Console.log State" />
             </div>
           </div>
 

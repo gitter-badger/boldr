@@ -6,26 +6,9 @@ import { returnCode, response, respond } from '../../utils';
 const debug = _debug('boldr:post:controller');
 debug('init');
 
-const ensurePostAuthor = (id, authorId) => new Promise((resolve, reject) => {
-  debug(`Ensuring ${authorId} is creator of ${id} post`);
-  Post.where({
-    id
-  }).fetch().then(result => {
-    debug(result);
-    if (result.attributes.author_id === parseInt(authorId, 10)) {
-      resolve();
-    } else {
-      debug(`User ${authorId} wanted to update post ${JSON.stringify(result)}`);
-      reject();
-    }
-  }).catch(err => {
-    reject(err);
-  });
-});
-
 export async function getAllPosts(ctx) {
   const posts = await Post.fetchAll({});
-  ctx.body = posts;
+  return ctx.ok(posts);
 }
 
 /**
@@ -70,11 +53,25 @@ export async function getPostsByAuthor(ctx, next) {
     await Post.query('where', 'author_id', user.id).fetchAll()
       .then((posts) => {
         if (posts) {
-          ctx.status = 200;
-          ctx.body = posts;
+          return ctx.ok(posts);
         }
       });
   } catch (err) {
-    ctx.body = err;
+    return ctx.error(`There was a problem ${err}`);
   }
 }
+
+/**
+ * Performs a lookup of posts by the authors username.
+ * @param  {[type]}   ctx  context of the request
+ * @param  {Function} next continue to the next middleware
+ * @return {Object}        the Post object.
+ */
+export const getPostByTitle = async (ctx) => {
+  const post = await Post.query('where', 'title', 'Homerun').fetch();
+  return ctx.ok(post);
+};
+// export async function getUserById(models, userId) {
+//   return await models.User.findById(userId);
+// }
+// .get('/:id', async ctx => await accountController.getUserById(models, ctx.params.id))
