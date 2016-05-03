@@ -1,4 +1,8 @@
-# boldr
+boldr
+====
+[![Circle CI](https://circleci.com/gh/strues/boldr.svg?style=svg)](https://circleci.com/gh/strues/boldr)
+[![Dependency Status][david-badge]][david]
+[![devDependency Status][david-dev-badge]][david-dev]
 
 > Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little, **Boldr**?
 
@@ -46,3 +50,10 @@ $ npm start
 
 
 ## Contribute
+
+
+[david-badge]: http://img.shields.io/david/strues/boldr.svg?style=flat
+[david-dev-badge]: http://img.shields.io/david/dev/strues/boldr.svg?style=flat
+
+[david]: https://david-dm.org/strues/boldr
+[david-dev]: https://david-dm.org/strues/boldr#info=devDependencies
