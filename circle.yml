@@ -10,4 +10,4 @@ test:
     - npm run migrate
     - npm run seed
   override:
-    - npm run test
+    - npm run lint
