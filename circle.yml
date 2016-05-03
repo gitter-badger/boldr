@@ -6,8 +6,8 @@ machine:
   services:
     - postgresql
 test:
-  pre:
-    - npm run migrate
-    - npm run seed
+  # pre:
+  #   - npm run migrate
+  #   - npm run seed
   override:
     - npm run lint

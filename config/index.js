@@ -1,3 +1,4 @@
+require('babel-register');
 import { argv } from 'yargs';
 import path from 'path';
 
