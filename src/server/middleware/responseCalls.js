@@ -8,7 +8,15 @@ function ok(content) {
   this.status = 200;
   this.body = content;
 }
-
+/**
+ * HTTP 201 with the given content.
+ *
+ * @param  {Any} content The content to put in `body`.
+ */
+function created(content) {
+  this.status = 201;
+  this.body = content;
+}
 /**
  * Sets the status to the given code and returns a JSON
  * body with the given message. Used by other calls.
@@ -71,6 +79,7 @@ function notFound(message) {
  */
 export default async function responseCalls(ctx, next) {
   ctx.ok = ok.bind(ctx);
+  ctx.created = created.bind(ctx);
   ctx.error = error.bind(ctx);
   ctx.badRequest = badRequest.bind(ctx);
   ctx.unauthorized = unauthorized.bind(ctx);

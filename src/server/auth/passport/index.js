@@ -14,7 +14,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   (async () => {
     try {
-      const user = await User.where('id', id);
+      const user = await User.query().where({ id });
       done(null, user);
     } catch (err) {
       done(err);
@@ -30,10 +30,9 @@ passport.deserializeUser((id, done) => {
  */
 async function authenticate(email, password) {
   try {
-    const user = await User.where('email', email).fetch({
-      columns: ['password', 'id']
-    });
-    const match = await await compareSync(password, user.attributes.password);
+    const user = await User.query().where('email', email).first();
+
+    const match = await compareSync(password, user.password);
     return match ? user : false;
   } catch (err) {
     return false;

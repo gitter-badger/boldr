@@ -25,7 +25,7 @@ export async function validateToken(ctx, next) {
     ctx.throw(401);
   }
   ctx.decoded = decoded;
-  const user = await User.where('id', decoded.id);
+  const user = await User.query().where('id', decoded.id);
   if (!user) {
     ctx.throw(401);
   }
@@ -38,12 +38,12 @@ export async function verifyJwt(token) {
 
 export async function getUserByJwt(token) {
   const decoded = await verifyJwt(token);
-  return await User.where('id', decoded.id);
+  return await User.query().where({ id: decoded.id });
 }
 
 export async function fetchAuthenticatedUserData(ctx, next) {
   if (ctx.isAuthenticated()) {
-    const user = await User.where('id', ctx.req.user.id);
+    const user = await User.query().where('id', ctx.req.user.id);
     ctx.req.user = user;
   }
 

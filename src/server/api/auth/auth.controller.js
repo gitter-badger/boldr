@@ -29,7 +29,7 @@ export const registerUser = async ctx => {
   }
   try {
     const hash = await saltAndHashPassword(ctx.request.body.password);
-    const user = await User.forge({
+    const user = new User({
       username: ctx.request.body.username,
       display_name: ctx.request.body.displayName,
       first_name: ctx.request.body.firstName,
@@ -46,10 +46,11 @@ export const registerUser = async ctx => {
       password: hash,
       email: ctx.request.body.email,
       role: 'admin'
-    }).save();
+    });
 
-    ctx.body = user;
-    ctx.status = 201;
+    await user.save().then((user) => {
+      return ctx.created(user);
+    });
   } catch (error) {
     ctx.throw(400, error.message);
     debug(error);
@@ -74,13 +75,10 @@ export async function loginUser(ctx, next) {
       expiresIn: '7d'
     });
 
-    const response = user.toJSON();
-
-    delete response.password;
 
     ctx.body = {
       token,
-      user: response
+      user
     };
   })(ctx, next);
 }
@@ -96,7 +94,7 @@ export const registerEmailCheck = async ctx => {
 
 export async function fetchAuthenticatedUserData(ctx, next) {
   if (ctx.isAuthenticated()) {
-    const user = await User.where('id', ctx.req.user.id);
+    const user = await User.query().where({ id: ctx.req.user.id });
     ctx.req.user = user;
   }
 
