@@ -7,7 +7,7 @@ import { createServer } from 'http';
 import proxy from 'koa-proxy';
 
 import Boldr from './boldr';
-import projectConfig from '../../config';
+import projectConfig from '../../tools/config';
 import { logger as _log, normalizePort, onError } from './utils';
 import { handleRender } from './utils/renderReact';
 

@@ -14,7 +14,9 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   (async () => {
     try {
-      const user = await User.query().where({ id });
+      const user = await User.query().where({
+        id
+      });
       done(null, user);
     } catch (err) {
       done(err);
@@ -28,12 +30,35 @@ passport.deserializeUser((id, done) => {
  * @param  {String} password the user's password
  * @return {Promise}          promises to return the user object or fail
  */
-async function authenticate(email, password) {
+async function authenticate(ctx, next) {
   try {
-    const user = await User.query().where('email', email).first();
+    const email = ctx.request.body.email;
+    const password = ctx.request.body.password;
+    User.filter({
+      email
+    })
+      .limit(1)
+      .run()
+      .then((userArray) => {
+        const user = userArray[0];
+        if (!user) {
+          return ctx.error();
+        }
 
-    const match = await compareSync(password, user.password);
-    return match ? user : false;
+        User.comparePassword(password, user, (err, valid) => {
+          if (err) {
+            return ctx.badRequest();
+          }
+
+          if (!valid) {
+            return ctx.badRequest();
+          } else {
+            return ctx.ok({
+              user
+            }).end();
+          }
+        });
+      });
   } catch (err) {
     return false;
   }
@@ -43,11 +68,11 @@ passport.use('local', new Strategy({
   usernameField: 'email',
   passwordField: 'password'
 },
-async (email, password, done) => {
-  authenticate(email, password)
+  async (email, password, done) => {
+    authenticate(email, password)
       .then(user => done(null, user))
       .catch(err => done(err));
-}));
+  }));
 
 export function isAuthenticated() {
   return passport.authenticate('local');

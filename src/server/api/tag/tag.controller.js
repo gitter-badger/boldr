@@ -1,12 +1,12 @@
 import _debug from 'debug';
-import Post from '../../db/models/post';
+import Article from '../../db/models/article';
 import Tag from '../../db/models/tag';
 
 const debug = _debug('boldr:tag:controller');
 debug('init');
 
 export async function getAllTags(ctx) {
-  const tags = await Tag.fetchAll();
+  const tags = await Tag.get();
   ctx.body = tags;
 }
 
@@ -18,10 +18,10 @@ export async function getAllTags(ctx) {
  */
 export const createTag = async (ctx, next) => {
   try {
-    Tag.forge({
+    Tag.save({
       name: ctx.request.body.name,
       description: ctx.request.body.description
-    }).save();
+    }).run();
     ctx.status = 201;
   } catch (err) {
     return ctx.error('There was an error!');

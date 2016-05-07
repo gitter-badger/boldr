@@ -14,7 +14,7 @@ import routers from './api';
 import responseCalls from './middleware/responseCalls';
 import handleError from './middleware/handleError';
 
-import config from '../../config';
+import config from '../../tools/config';
 
 export default class Boldr {
   static init(application) {

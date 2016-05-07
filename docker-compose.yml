@@ -6,21 +6,18 @@ services:
     tty: true
     stdin_open: true
     volumes:
-    - /var/lib/postgresql/data
-    - ./backup:/postgresql.backup:z
-    command: ["chown", "-v", "-R", "999:999", "/var/lib/postgresql/data"]
-  db:
-    build: ./tools/postgres
-    container_name: postgres
-    hostname: postgres1
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DBNAME: boldr
-      POSTGRES_DBUSER: boldr
-      POSTGRES_DBPASS: boldr
+      - "./tools/data:/data:rw"
+      - "./docs/logs/rethinkdb:/var/logs/rethinkdb:rw"
+  rethinkdb:
+    build: ./tools/docker/rethinkdb
     ports:
-      - 5432:5432/tcp
+     - "8080:8080/tcp"
+     - "28015:28015/tcp"
+     - "29015:29015/tcp"
+    expose:
+      - "8080"
+      - "28015"
+      - "29015"
     volumes_from:
       - data-volumes
     networks:

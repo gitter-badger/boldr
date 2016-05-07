@@ -1,5 +1,5 @@
 import { verify, verifyAsync, signAsync } from 'jsonwebtoken';
-import config, { paths } from '../../../config';
+import config, { paths } from '../../../tools/config';
 import User from '../db/models/user';
 import getToken from './getToken';
 

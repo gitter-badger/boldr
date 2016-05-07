@@ -2,10 +2,8 @@ import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import _debug from 'debug';
 import passport from 'koa-passport';
-import uuid from 'node-uuid';
-
 import Promise from 'bluebird';
-import config, { paths } from '../../../../config';
+import config, { paths } from '../../../../tools/config';
 import User from '../../db/models/user';
 import { saltAndHashPassword } from '../../utils';
 
@@ -28,27 +26,16 @@ export const registerUser = async ctx => {
     return ctx.throw(400, errorMessages.incompleteAttributes);
   }
   try {
-    const hash = await saltAndHashPassword(ctx.request.body.password);
-    const user = new User({
-      username: ctx.request.body.username,
-      display_name: ctx.request.body.displayName,
-      first_name: ctx.request.body.firstName,
-      last_name: ctx.request.body.lastName,
-      location: ctx.request.body.location,
-      website: ctx.request.body.website,
-      slug: ctx.request.body.slug,
-      status: ctx.request.body.status,
-      uuid: uuid.v4(),
-      avatar: ctx.request.body.avatar,
-      bio: ctx.request.body.bio,
-      facebook: ctx.request.body.facebook,
-      twitter: ctx.request.body.twitter,
-      password: hash,
+    const user = await User.save({
       email: ctx.request.body.email,
-      role: 'admin'
-    });
-
-    await user.save().then((user) => {
+      password: ctx.request.body.password,
+      username: ctx.request.body.username,
+      firstName: ctx.request.body.firstName,
+      lastName: ctx.request.body.lastName,
+      bio: ctx.request.body.bio,
+      avatar: ctx.request.body.avatar,
+      website: ctx.request.body.website
+    }).then((user) => {
       return ctx.created(user);
     });
   } catch (error) {
@@ -76,15 +63,12 @@ export async function loginUser(ctx, next) {
     });
 
 
-    ctx.body = {
-      token,
-      user
-    };
+    return ctx.ok(token);
   })(ctx, next);
 }
 
 export const registerEmailCheck = async ctx => {
-  const { code } = ctx.request.query;
+  const {code} = ctx.request.query;
   const result = await User.registerEmailCheck(code);
   if (typeof result === 'string') {
     return ctx.badRequest('there was a problem with the email');
@@ -94,7 +78,9 @@ export const registerEmailCheck = async ctx => {
 
 export async function fetchAuthenticatedUserData(ctx, next) {
   if (ctx.isAuthenticated()) {
-    const user = await User.query().where({ id: ctx.req.user.id });
+    const user = await User.query().where({
+      id: ctx.req.user.id
+    });
     ctx.req.user = user;
   }
 

@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import config, { paths } from '../../../../config';
+import config, { paths } from '../../../../tools/config';
 import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
 import { validateToken } from '../../auth/validateToken';
 
