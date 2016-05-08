@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Drawer, MenuItem, Colors, List, ListItem, MakeSelectable } from 'material-ui';
 import FontIcon from 'material-ui/FontIcon';
-import * as boldrActions from '../..//redux/modules/boldr/boldr.actions';
+import * as boldrActions from 'common/state/modules/boldr/boldr.actions';
 import NavLink from '../nav-link.jsx';
 let SelectableList = MakeSelectable(List);
 const iconStyles = {

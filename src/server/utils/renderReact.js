@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
-import configureStore from 'common/redux/store';
+import configureStore from 'common/state/store';
 import createRoutes from 'common/routes';
 import Html from 'common/components/Html';
 

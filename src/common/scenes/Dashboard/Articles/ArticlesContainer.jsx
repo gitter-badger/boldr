@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as postActions from 'common/redux/modules/post/post.actions';
+import * as articleActions from 'common/state/modules/article/article.actions';
 
-@connect(mapStateToProps, mapDispatchToProps)
-class PostsContainer extends Component {
+class ArticlesContainer extends Component {
   render() {
     return (
       <div>
 
        <div className="container">
-       PostsContainer
+       ArticlesContainer
        { this.props.children }
        </div>
       </div>
@@ -19,15 +18,15 @@ class PostsContainer extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    post: state.post
+    article: state.article
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    postActions: bindActionCreators(postActions, dispatch)
+    articleActions: bindActionCreators(articleActions, dispatch)
   };
 };
 
 
-export default PostsContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlesContainer);

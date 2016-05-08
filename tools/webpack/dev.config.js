@@ -3,6 +3,7 @@ import path from 'path';
 import _debug from 'debug';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
+
 import isomorphicToolsConfig from './isomorphic.tools.config';
 import projectConfig, { paths } from '../config';
 
@@ -10,16 +11,19 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphic
 const debug = _debug('app:webpack:config:dev');
 const srcDir = paths('src');
 const nodeModulesDir = paths('nodeModules');
+
 const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
   'redux/dist/redux.min.js'
 ];
+
 const cssLoader = [
   'css?modules',
   'sourceMap',
   'importLoaders=2',
   'localIdentName=[name]__[local]___[hash:base64:5]'
 ].join('&');
+
 const {
   SERVER_HOST,
   VENDOR_DEPENDENCIES,

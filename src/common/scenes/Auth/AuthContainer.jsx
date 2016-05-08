@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
-import { authLogin, authRegister, toggleLoginMode } from '../../redux/modules/auth/auth.actions';
+import { authLogin, authRegister, toggleLoginMode } from 'common/state/modules/auth/auth.actions';
 
 @connect(mapStateToProps)
 class AuthContainer extends Component {

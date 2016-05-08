@@ -1,0 +1,13 @@
+export const REQUEST_ARTICLES = '@@article/REQUEST_ARTICLES';
+export const RECEIVE_ARTICLES = '@@article/RECEIVE_ARTICLES';
+export const RECEIVE_ARTICLES_FAILED = '@@article/RECEIVE_ARTICLES_FAILED';
+export const REQUEST_ARTICLE_BY_TITLE = '@@article/REQUEST_ARTICLE_BY_TITLE';
+export const RECEIVE_ARTICLE = '@@article/RECEIVE_ARTICLE';
+export const FAILED_TO_RECEIVE_ARTICLE = '@@article/FAILED_TO_RECEIVE_ARTICLE';
+export const CREATE_ARTICLE = '@@article/CREATE_ARTICLE';
+export const UPDATE_ARTICLE = '@@article/UPDATE_ARTICLE';
+export const ARTICLE_CREATED = '@@article/ARTICLE_CREATED';
+export const ARTICLE_UPDATED = '@@article/ARTICLE_UPDATED';
+export const ARTICLE_DELETED = '@@article/ARTICLE_DELETED';
+export const ARTICLE_UPDATE_FAILED = '@@article/ARTICLE_UPDATE_FAILED';
+export const ARTICLE_CREATE_FAILED = '@@article/ARTICLE_CREATE_FAILED';

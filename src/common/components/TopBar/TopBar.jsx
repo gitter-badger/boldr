@@ -2,7 +2,7 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as boldrActions from '../../redux/modules/boldr/boldr.actions';
+import * as boldrActions from 'common/state/modules/boldr/boldr.actions';
 
 import SiteLogo from '../SiteLogo';
 
