@@ -1,2 +1,2 @@
-import Post from './Post.jsx';
-export default Post;
+import Article from './Article.jsx';
+export default Article;

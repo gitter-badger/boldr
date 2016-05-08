@@ -51,6 +51,8 @@ $ npm run dev
 
 ## Contribute
 
+## Change Log
+[View Here](Changelog.md)
 
 [david-badge]: http://img.shields.io/david/strues/boldr.svg?style=flat
 [david-dev-badge]: http://img.shields.io/david/dev/strues/boldr.svg?style=flat

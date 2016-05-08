@@ -4,10 +4,10 @@ import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, ContentSt
 } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { bindActionCreators } from 'redux';
-import * as postActions from 'common/redux/modules/post/post.actions';
-import { InlineStyleControls, BlockStyleControls, PublishingControls } from '../../../components/Editor';
+import * as articleActions from 'common/state/modules/article/article.actions';
+import { InlineStyleControls, BlockStyleControls, PublishingControls } from 'common/components/Editor';
 import Loader from 'common/components/Loader';
-import { changePostPublishSetting } from 'common/api/postEndpoint';
+import { changeArticlePublishSetting } from 'common/api/articleEndpoint';
 function getBlockStyle(block) {
   switch (block.getType()) {
     case 'blockquote':
@@ -26,7 +26,7 @@ const styleMap = {
   }
 };
 
-class CreatePost extends Component {
+class CreateArticle extends Component {
   constructor(props) {
     super(props);
 
@@ -41,7 +41,7 @@ class CreatePost extends Component {
     };
     const title = decodeURI(window.location.pathname.split('/')[2]);
 
-    if (title !== 'undefined') this.props.postActions.getOrFetchPost(title);
+    if (title !== 'undefined') this.props.postActions.getOrFetchArticle(title);
 
     setTimeout(() => {
       this.loadContent(props);
@@ -100,17 +100,17 @@ class CreatePost extends Component {
 
     if (props.isEditing) {
       // update post action
-      dispatch(postActions.getOrFetchPost(props.postId, document.getElementById('title').value,
+      dispatch(articleActions.getOrFetchArticle(props.articleId, document.getElementById('title').value,
           document.getElementById('publish-toggle').value, renderableContent, editableContent));
     } else {
       // create post action
-      dispatch(postActions.getOrFetchPost(document.getElementById('title').value,
+      dispatch(articleActions.getOrFetchArticle(document.getElementById('title').value,
           renderableContent, editableContent));
     }
   }
 
   publish(props) {
-    changePostPublishSetting(props.postId, !props.isPublic);
+    changeArticlePublishSetting(props.articleId, !props.isDraft);
   }
 
   render() {
@@ -172,7 +172,7 @@ class CreatePost extends Component {
   }
 }
 
-const getEditablePost = (state) => {
+const getEditableArticle = (state) => {
   const title = decodeURI(window.location.pathname.split('/')[2]);
 
   if (!title || title === 'undefined') {
@@ -188,17 +188,17 @@ const getEditablePost = (state) => {
     };
   }
 
-  const post = state.posts.filter((x) => x.title === title)[0];
-  if (post) {
+  const article = state.article.filter((x) => x.title === title)[0];
+  if (article) {
     return {
       loading: false,
       isEditing: true,
-      isPublic: post.is_public,
+      isDraft: article.isDraft,
       isWorking: false,
-      title: post.title,
-      postId: post.id,
-      content: post.content,
-      editableBody: post.content
+      title: article.title,
+      postId: article.id,
+      content: article.content,
+      editableBody: article.content
     };
   }
 
@@ -213,11 +213,11 @@ const getEditablePost = (state) => {
     editableBody: '{}'
   };
 };
-const mapStateToProps = (state) => getEditablePost(state.post);
+const mapStateToProps = (state) => getEditableArticle(state.article);
 const mapDispatchToProps = (dispatch) => {
   return {
-    postActions: bindActionCreators(postActions, dispatch)
+    articleActions: bindActionCreators(articleActions, dispatch)
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);

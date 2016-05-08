@@ -5,9 +5,9 @@ import CoreLayout from '../layouts/CoreLayout';
 import HomeContainer from '../scenes/Home';
 import DashboardContainer from '../scenes/Dashboard';
 import BlogContainer from '../scenes/Blog';
-import PostsContainer from '../scenes/Dashboard/Posts/PostsContainer';
-import CreatePost from '../scenes/Dashboard/Posts/CreatePost';
-import PostsList from '../scenes/Dashboard/Posts/PostsList';
+import ArticlesContainer from '../scenes/Dashboard/Articles/ArticlesContainer';
+import CreateArticle from '../scenes/Dashboard/Articles/CreateArticle';
+import ArticleList from '../scenes/Dashboard/Articles/ArticleList';
 import SettingsContainer from '../scenes/Dashboard/Settings/SettingsContainer';
 import AuthContainer from '../scenes/Auth';
 import Error404 from '../components/404';
@@ -22,9 +22,9 @@ export default (store) => {
     <Route path="blog" component={ BlogContainer } />
       <Route path="dashboard" component={ DashboardContainer }>
         <IndexRoute component={ DashboardContainer} />
-        <Route path="posts" component={ PostsContainer }>
-          <IndexRoute component={ PostsList} />
-          <Route path="create" component={ CreatePost } />
+        <Route path="posts" component={ ArticlesContainer }>
+          <IndexRoute component={ ArticleList} />
+          <Route path="create" component={ CreateArticle } />
         </Route>
         <Route path="settings" component={ SettingsContainer } />
       </Route>

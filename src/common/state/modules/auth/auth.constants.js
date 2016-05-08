@@ -1,0 +1,10 @@
+export const TOGGLE_LOGIN_MODE = '@@auth/TOGGLE_LOGIN_MODE';
+export const LOGIN_USER_REQUEST = '@@auth/LOGIN_USER_REQUEST';
+export const LOGIN_USER_SUCCESS = '@@auth/LOGIN_USER_SUCCESS';
+export const LOGIN_USER_FAILURE = '@@auth/LOGIN_USER_FAILURE';
+export const SIGNUP_USER = '@@auth/SIGNUP_USER';
+export const SIGNUP_SUCCESS_USER = '@@auth/SIGNUP_SUCCESS_USER';
+export const SIGNUP_ERROR_USER = '@@auth/SIGNUP_ERROR_USER';
+export const LOGOUT_USER = '@@auth/LOGOUT_USER';
+export const LOGOUT_SUCCESS_USER = '@@auth/LOGOUT_SUCCESS_USER';
+export const LOGOUT_ERROR_USER = '@@auth/LOGOUT_ERROR_USER';

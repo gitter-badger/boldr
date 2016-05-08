@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AppDrawer from '../../components/AppDrawer';
-import * as boldrActions from '../../redux/modules/boldr/boldr.actions';
+import * as boldrActions from 'common/state/modules/boldr/boldr.actions';
 import TopBar from '../../components/TopBar';
 import Loader from '../../components/Loader';
 import 'common/styles/app.scss';
