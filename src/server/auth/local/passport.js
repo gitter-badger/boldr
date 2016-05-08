@@ -58,9 +58,14 @@ export default function setup(User) {
     done(null, user.id);
   });
   passport.deserializeUser((id, done) => {
-    User.get(id).then((user) => {
-      done(null, user);
-    });
+    (async () => {
+      try {
+        const user = await User.get(id).run();
+        done(null, user);
+      } catch (error) {
+        done(error);
+      }
+    })();
   });
 
   passport.use(new LocalStrategy({
@@ -69,4 +74,8 @@ export default function setup(User) {
   }, (email, password, done) => {
     return localAuthenticate(User, email, password, done);
   }));
+}
+
+export function isAuthenticated() {
+  return passport.authenticate('local');
 }

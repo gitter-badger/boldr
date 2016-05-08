@@ -2,7 +2,7 @@ import Router from 'koa-router';
 import passport from 'koa-passport';
 import config, { paths } from '../../../../tools/config';
 import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
-import { validateToken } from '../../auth/validateToken';
+import { checkAuth } from '../../auth/validateToken';
 import localSetup from '../../auth/local/passport';
 import localAuth from '../../auth/local';
 import User from '../../db/models/user';
@@ -19,7 +19,7 @@ authRouter
 
 authRouter
   .post('/register', registerUser)
-  .get('/check', validateToken, async ctx => {
+  .get('/check', checkAuth(), async ctx => {
     ctx.body = 'You are authorized.';
   });
 

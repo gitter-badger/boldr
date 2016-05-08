@@ -27,6 +27,7 @@ export default function logger(module) {
         level: 'debug',
         label: getFilePath(module),
         handleException: true,
+        humanReadableUnhandledException: true,
         json: false,
         colorize: true
       })

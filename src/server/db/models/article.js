@@ -3,7 +3,7 @@ import shortid from 'shortid';
 const { type, r } = thinky;
 
 const Article = thinky.createModel('Article', {
-  id: type.string().optional().default(shortid.generate),
+  id: type.string().optional(),
   title: type.string(),
   categoryId: type.string().optional(),
   markup: type.string(),

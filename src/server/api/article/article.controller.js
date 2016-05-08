@@ -1,6 +1,8 @@
 import _debug from 'debug';
 import slug from 'slugg';
 import Article from '../../db/models/article';
+import User from '../../db/models/user';
+
 // import ArticleService from 'server/api/article/article.service';
 
 const debug = _debug('boldr:article:controller');
@@ -22,14 +24,20 @@ export async function getAllArticles(ctx) {
  */
 export const createArticle = async (ctx, next) => {
   try {
-    const aSlug = slug(ctx.request.body.slug);
-    const article = ctx.request.body;
-    article.slug = aSlug;
-    article.authorId = ctx.decoded.id;
+    console.log(ctx.user)
 
-    await Article.save(article).then((article) => {
-      return ctx.created(article);
+    const article = new Article({
+      title: ctx.request.body.title,
+      slug: ctx.request.body.slug,
+      markup: ctx.request.body.markup,
+      content: ctx.request.body.content,
+      featureImage: ctx.request.body.featureImage,
+      authorId: ctx.user.id.id,
+      isDraft: ctx.request.body.draft
     });
+
+    await article.save();
+    return ctx.created(article);
   } catch (err) {
     return ctx.error('Uh oh there was a problem!');
   }
