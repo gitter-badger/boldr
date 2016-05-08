@@ -6,7 +6,8 @@ const debug = _debug('boldr:tag:controller');
 debug('init');
 
 export async function getAllTags(ctx) {
-  const tags = await Tag.get();
+  console.log(ctx.session)
+  const tags = await Tag.getJoin({article: true}).run();
   ctx.body = tags;
 }
 

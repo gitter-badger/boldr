@@ -22,11 +22,9 @@
     "deploy": "npm run clean:dist && npm run compile && npm run prod",
     "prod": "DEBUG=app:* cross-env NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
     "start": "concurrently --kill-others --raw \"npm run start:client:server\" \"npm run start:server\"",
-    "start:server": "DEBUG=app:* cross-env NODE_PATH=src babel-node -- src/server/index.js",
-    "start:client:server": "DEBUG=app:* nodemon --debug=5858 --nolazy",
+    "start:server": "NODE_PATH=src babel-node -- src/server/index.js",
+    "start:client:server": "nodemon --debug=5858 --nolazy",
     "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
-    "migrate": "knex migrate:latest",
-    "seed": "knex seed:run",
     "test-node": "NODE_PATH=./src ./node_modules/mocha/bin/mocha $(find src/server -name '*-test.js') --compilers js:babel-core/register",
     "test": "NODE_ENV=TEST NODE_PATH=./src ./node_modules/.bin/mocha --compilers js:babel-register --timeout 5000 test/index.js test/**/*.spec.js"
   },

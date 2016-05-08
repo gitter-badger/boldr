@@ -16,7 +16,7 @@ authRouter
   .get('/test', async ctx => {
     ctx.body = 'Auth Router';
   });
-//localAuth
+
 authRouter
   .post('/register', registerUser)
   .get('/check', validateToken, async ctx => {
