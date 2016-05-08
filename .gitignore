@@ -19,7 +19,7 @@ build_styleguide
 styleguide
 reports
 docs/logs
-
+tools/data/dump.rdb
 # webpack-isomorphic-tools
 webpack-assets.json
 webpack-stats.json

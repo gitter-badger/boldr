@@ -29,8 +29,6 @@ export default class Boldr {
       .use(etag())
       .use(convert(session()))
       .use(helmet());
-    require('./auth/passport');
-
     application.use(passport.initialize());
     application.use(passport.session());
     for (const router of routers) {

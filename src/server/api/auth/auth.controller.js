@@ -55,34 +55,11 @@ export async function loginUser(ctx, next) {
     if (!user) {
       ctx.throw(401);
     }
-
     const token = jwt.sign({
       id: user
     }, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
-
-
-    return ctx.ok(token);
+    return ctx.ok({ token });
   })(ctx, next);
-}
-
-export const registerEmailCheck = async ctx => {
-  const {code} = ctx.request.query;
-  const result = await User.registerEmailCheck(code);
-  if (typeof result === 'string') {
-    return ctx.badRequest('there was a problem with the email');
-  }
-  return ctx.ok('the email is ok');
-};
-
-export async function fetchAuthenticatedUserData(ctx, next) {
-  if (ctx.isAuthenticated()) {
-    const user = await User.query().where({
-      id: ctx.req.user.id
-    });
-    ctx.req.user = user;
-  }
-
-  await next();
 }
