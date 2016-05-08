@@ -1,7 +1,7 @@
 import winston from 'winston';
 import path from 'path';
 import fs from 'fs';
-import config, { paths } from '../../../config';
+import config, { paths } from '../../../tools/config';
 winston.emitErrs = true;
 // paths('entryApp')
 const getFilePath = m => m.filename.split('/').slice(-2).join('/');
@@ -27,6 +27,7 @@ export default function logger(module) {
         level: 'debug',
         label: getFilePath(module),
         handleException: true,
+        humanReadableUnhandledException: true,
         json: false,
         colorize: true
       })

@@ -1,7 +1,7 @@
 import _debug from 'debug';
 
 import User from '../../db/models/user.js';
-import config, { paths } from '../../../../config';
+import config, { paths } from '../../../../tools/config';
 
 const debug = _debug('boldr:user:controller');
 debug('init');
@@ -12,9 +12,7 @@ debug('init');
  * @return {[type]}     [description]
  */
 export async function getUsers(ctx) {
-  const users = await User.fetchAll({
-    columns: ['display_name', 'username', 'id', 'avatar', 'email']
-  });
+  const users = await User.getClean().execute();
   ctx.body = users;
 }
 
@@ -26,37 +24,12 @@ export async function getUsers(ctx) {
  */
 export async function getUserById(ctx, next) {
   try {
-    const user = await User.where('id', ctx.params.id).fetch({
-      columns: ['display_name', 'username', 'id', 'avatar', 'email']
-    });
+    const user = await User.get(ctx.params.id);
     if (!user) {
       return ctx.badRequest('User is Not Found');
     }
 
-    ctx.body = user;
-  } catch (err) {
-    if (err === 404 || err.name === 'CastError') {
-      return ctx.badRequest('User is Not Found');
-    }
-  }
-}
-
-/**
- * Performs a lookup of a user by their username.
- * @param  {[type]}   ctx  context of the request
- * @param  {Function} next continue to the next middleware
- * @return {Object}        the User object.
- */
-export async function getUserByUserName(ctx, next) {
-  try {
-    const user = await User.where('username', ctx.params.username).fetch({
-      columns: ['display_name', 'username', 'id', 'avatar', 'email']
-    });
-    if (!user) {
-      return ctx.badRequest('User is Not Found');
-    }
-
-    ctx.body = user;
+    return ctx.ok(user);
   } catch (err) {
     if (err === 404 || err.name === 'CastError') {
       return ctx.badRequest('User is Not Found');
@@ -65,8 +38,11 @@ export async function getUserByUserName(ctx, next) {
 }
 
 export async function updateUser(ctx) {
-  const user = ctx.body.user;
-  Object.assign(user, ctx.request.body.user);
+  if (ctx.request.body._id) {
+    delete ctx.request.body._id;
+  }
+  const user = await User.get(ctx.params.id);
+  Object.assign(user, ctx.request.body);
   await user.save();
 
   ctx.body = {
@@ -75,7 +51,7 @@ export async function updateUser(ctx) {
 }
 
 export async function deleteUser(ctx) {
-  const user = ctx.body.user;
+  const user = User.get(ctx.params.id);
 
   await user.remove();
 

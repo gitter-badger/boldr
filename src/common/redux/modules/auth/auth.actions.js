@@ -1,11 +1,7 @@
-import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
 
 import * as types from './auth.constants';
-
-polyfill();
-
 /**
  * Utility function to make AJAX requests using isomorphic fetch.
  * You can also use jquery's $.ajax({}) if you do not want to use the

@@ -7,8 +7,4 @@ userRouter
   .get('/', userController.getUsers)
   .get('/:id', userController.getUserById);
 
-userRouter
-  .get('/user/:username', userController.getUserByUserName);
-
-
 export default userRouter;

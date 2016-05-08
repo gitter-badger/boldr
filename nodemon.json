@@ -11,7 +11,8 @@
       "tools"
     ],
     "watch": [
-      "src/server/**/*"
+      "src/server/",
+      "tools/webpack/"
     ],
-    "exec": "babel-node webpack/dev.server.js"
+    "exec": "babel-node tools/webpack/dev.server.js"
 }

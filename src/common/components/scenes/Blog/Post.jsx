@@ -21,7 +21,7 @@ export default function Post(props) {
                 <span dangerouslySetInnerHTML={ { __html: post.markup } } />
               </p>
               </div>
-              {/* NOTE we need to fetch the author info in another call or tack it onto this initial req */}
+              {/* NOTE: we need to fetch the author info in another call or tack it onto this initial req */}
               <p className="post-meta">Posted by { post.author_id }</p>
             </div>
             </div>

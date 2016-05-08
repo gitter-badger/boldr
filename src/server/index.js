@@ -1,7 +1,7 @@
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
-import isomorphicToolsConfig from '../../webpack/isomorphic.tools.config';
-import projectConfig, { paths } from '../../config';
+import isomorphicToolsConfig from '../../tools/webpack/isomorphic.tools.config';
+import projectConfig, { paths } from '../../tools/config';
 
 const projectBasePath = paths('base');
 
