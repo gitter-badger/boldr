@@ -1,6 +1,7 @@
 {
   "name": "boldr",
   "description": "Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little Boldr?",
+  "version": "0.0.2",
   "engines": {
     "node": ">= 5.1.0",
     "npm": ">=3.0.0"
@@ -12,20 +13,16 @@
     "type": "git",
     "url": "git+https://github.com/strues/boldr.git"
   },
-  "files": [
-    "CHANGELOG.md",
-    "README.md"
-  ],
   "scripts": {
     "compile": "NODE_ENV=production babel-node ./node_modules/.bin/webpack --optimize-minimize --progress --config ./webpack/prod.config",
     "clean:dist": "rm -rf static/dist",
     "deploy": "npm run clean:dist && npm run compile && npm run prod",
-    "prod": "DEBUG=app:* cross-env NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
+    "prod": "DEBUG=app:* NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
     "start": "concurrently --kill-others --raw \"npm run start:client:server\" \"npm run start:server\"",
     "start:server": "better-npm-run start:server",
-    "start:client:server": "nodemon --nolazy",
+    "start:client:server": "nodemon",
     "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
-    "test-node": "NODE_PATH=./src ./node_modules/mocha/bin/mocha $(find src/server -name '*-test.js') --compilers js:babel-core/register",
+    "test:api": "better-npm-run test:api",
     "test": "NODE_ENV=TEST NODE_PATH=./src ./node_modules/.bin/mocha --compilers js:babel-register --timeout 5000 test/index.js test/**/*.spec.js"
   },
   "betterScripts": {
@@ -36,8 +33,8 @@
         "NODE_ENV": "development"
       }
     },
-    "test": {
-      "command": "babel-node ./node_modules/karma/bin/karma start tools/karma.conf",
+    "test:api": {
+      "command": "npm run lint",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
@@ -125,11 +122,8 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.8.0",
     "babel-runtime": "^6.6.1",
-    "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
     "concurrently": "^2.0.0",
     "copy-webpack-plugin": "^2.1.3",
-    "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
     "eslint": "^2.9.0",
     "eslint-config-axial": "^1.0.8",
@@ -142,7 +136,6 @@
     "json-loader": "^0.5.4",
     "koa-webpack-dev-middleware": "^1.2.0",
     "koa-webpack-hot-middleware": "^1.0.3",
-    "mocha": "^2.4.5",
     "node-sass": "^3.7.0",
     "nodemon": "^1.9.2",
     "npm-install-webpack-plugin": "^3.1.1",
@@ -154,10 +147,7 @@
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
     "sass-loader": "^3.2.0",
-    "should": "^8.3.1",
-    "sinon": "^1.17.4",
     "style-loader": "^0.13.1",
-    "supertest": "^1.2.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.0"
   }
