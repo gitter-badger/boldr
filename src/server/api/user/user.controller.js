@@ -31,9 +31,7 @@ export async function getUserById(ctx, next) {
 
     return ctx.ok(user);
   } catch (err) {
-    if (err === 404 || err.name === 'CastError') {
-      return ctx.badRequest('User is Not Found');
-    }
+    return ctx.badRequest('User is Not Found');
   }
 }
 
@@ -56,11 +54,11 @@ export async function deleteUser(ctx) {
   await user.remove();
 
   ctx.status = 200;
-  ctx.body = {
-    success: true
-  };
+  return ctx.ok();
 }
 
 export async function getMe(ctx) {
-
+  console.log(ctx.user.id.id)
+  const me = await User.get(ctx.user.id.id).getClean().execute();
+  return ctx.ok(me);
 }

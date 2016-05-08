@@ -1,9 +1,6 @@
 import _debug from 'debug';
 import slug from 'slugg';
 import Article from '../../db/models/article';
-import User from '../../db/models/user';
-
-// import ArticleService from 'server/api/article/article.service';
 
 const debug = _debug('boldr:article:controller');
 debug('init');
@@ -41,7 +38,7 @@ export const createArticle = async (ctx, next) => {
   }
 };
 
-export const showArticle = async (ctx, next) => {
+export const showArticle = async (ctx) => {
   const article = await Article.get(ctx.params.id).run();
   return ctx.ok(article);
 };
