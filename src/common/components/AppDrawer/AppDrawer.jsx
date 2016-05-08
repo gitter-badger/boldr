@@ -72,15 +72,15 @@ class AppDrawer extends React.Component {
               nestedItems={[
                 <ListItem
                     value={ 4 }
-                    primaryText="Posts"
+                    primaryText="Articles"
                     nestedItems={[
                       <ListItem
                           value={ 5 }
-                          primaryText="List posts"
+                          primaryText="List articles"
                       />,
                       <ListItem
                           value={ 6 }
-                          primaryText="Create a post"
+                          primaryText="Create article"
                       />
                     ]}
                 />,

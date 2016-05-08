@@ -10,6 +10,7 @@ import CreateArticle from '../scenes/Dashboard/Articles/CreateArticle';
 import ArticleList from '../scenes/Dashboard/Articles/ArticleList';
 import SettingsContainer from '../scenes/Dashboard/Settings/SettingsContainer';
 import AuthContainer from '../scenes/Auth';
+import LoginContainer from '../scenes/Auth/LoginContainer';
 import Error404 from '../components/404';
 
 export default (store) => {
@@ -18,7 +19,7 @@ export default (store) => {
     <IndexRoute component={ HomeContainer } />
     <Route path="home" component={ HomeContainer } />
     <Route path="register" component={ AuthContainer } />
-    <Route path="login" component={ AuthContainer } />
+    <Route path="login" component={ LoginContainer } />
     <Route path="blog" component={ BlogContainer } />
       <Route path="dashboard" component={ DashboardContainer }>
         <IndexRoute component={ DashboardContainer} />

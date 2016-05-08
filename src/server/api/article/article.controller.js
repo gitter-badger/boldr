@@ -24,11 +24,9 @@ export async function getAllArticles(ctx) {
  */
 export const createArticle = async (ctx, next) => {
   try {
-    console.log(ctx.user)
-
     const article = new Article({
       title: ctx.request.body.title,
-      slug: ctx.request.body.slug,
+      slug: slug(ctx.request.body.slug),
       markup: ctx.request.body.markup,
       content: ctx.request.body.content,
       featureImage: ctx.request.body.featureImage,
@@ -39,11 +37,21 @@ export const createArticle = async (ctx, next) => {
     await article.save();
     return ctx.created(article);
   } catch (err) {
-    return ctx.error('Uh oh there was a problem!');
+    return ctx.error('Something went terribly wrong creating your article. Try again.');
   }
 };
 
 export const showArticle = async (ctx, next) => {
   const article = await Article.get(ctx.params.id).run();
-  ctx.ok(article);
+  return ctx.ok(article);
+};
+
+/**
+ * looks up an article by the slug, which is a sanitized version of its title.
+ * @param  {Object}   ctx  slug
+ * @return {Object}        The article
+ */
+export const getArticleBySlug = async (ctx, next) => {
+  const article = await Article.filter({ slug: ctx.params.slug }).run();
+  return ctx.ok(article);
 };

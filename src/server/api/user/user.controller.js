@@ -24,7 +24,7 @@ export async function getUsers(ctx) {
  */
 export async function getUserById(ctx, next) {
   try {
-    const user = await User.get(ctx.params.id);
+    const user = await User.get(ctx.params.id).getClean().execute();
     if (!user) {
       return ctx.badRequest('User is Not Found');
     }

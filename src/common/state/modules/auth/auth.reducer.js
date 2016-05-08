@@ -20,7 +20,7 @@ export default function auth(state = INITIAL_STATE, action) {
     case constants.LOGIN_USER_REQUEST:
       return {
         ...state,
-        error: null,
+        error: false,
         isAuthenticating: true,
         isAuthenticated: false,
         loading: true,
@@ -30,10 +30,10 @@ export default function auth(state = INITIAL_STATE, action) {
     case constants.LOGIN_USER_SUCCESS:
       return {
         ...state,
-        error: null,
+        error: false,
         isAuthenticating: false,
         isAuthenticated: true,
-        loading: true,
+        loading: false,
         message: 'Logged in successfully.',
         token: action.payload
       };
@@ -44,7 +44,7 @@ export default function auth(state = INITIAL_STATE, action) {
         isAuthenticating: true,
         isAuthenticated: false,
         loading: false,
-        message: action.message
+        message: 'There was a problem logging you in.'
       };
     default:
       return state;

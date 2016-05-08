@@ -12,4 +12,4 @@ Tag.ensureIndex('name');
 export default Tag;
 
 const Article = require('./article').default;
-Tag.hasAndBelongsToMany(Article, 'articles', 'articleId', 'id');
+Tag.hasAndBelongsToMany(Article, 'articles', 'id', 'id');

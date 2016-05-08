@@ -19,7 +19,6 @@ function makeAuthRequest(method, data, api) {
   });
 }
 
-
 // Log In Action Creators
 function beginLogin() {
   return { type: types.LOGIN_USER_REQUEST };
@@ -33,18 +32,18 @@ export function loginSuccess(response) {
   };
 }
 
-function loginError(message) {
+function loginError(err) {
   return {
     type: types.LOGIN_USER_FAILURE,
-    message
+    message: err.error
   };
 }
 
 // Sign Up Action Creators
-function signUpError(message) {
+function signUpError(response) {
   return {
     type: types.SIGNUP_ERROR_USER,
-    message
+    message: response.error
   };
 }
 
@@ -91,7 +90,7 @@ export function authLogin(data) {
         }
       })
       .catch(err => {
-        dispatch(loginError(err.data.message));
+        dispatch(loginError(err));
       });
   };
 }

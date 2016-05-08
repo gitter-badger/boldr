@@ -113,7 +113,7 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new NpmInstallPlugin({ save: true }),
+    // new NpmInstallPlugin({ save: true }),
     new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
     new webpack.DefinePlugin({
       __CLIENT__,

@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import Koa from 'koa';
 import _debug from 'debug';
 import serve from 'koa-static';
@@ -7,10 +7,10 @@ import { createServer } from 'http';
 import proxy from 'koa-proxy';
 
 import Boldr from './boldr';
-import projectConfig from '../../tools/config';
+import projectConfig from 'config';
 import { logger as _log, normalizePort, onError } from './utils';
 import { handleRender } from './utils/renderReact';
-
+dotenv.config();
 const debug = _debug('app:server:dev');
 const app = new Koa();
 export const server = createServer(app.callback());
