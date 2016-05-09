@@ -23,18 +23,21 @@ const sessionStore = new RethinkDBSession({
 
 require('co')(sessionStore.setup());
 
-export default function middleware() {
-  return compose([
-    responseCalls,
-    convert(logger()),
-    morgan('dev'),
-    bodyParser(),
-    methodOverride(),
-    etag(),
-    convert(session({
-      key: 'sid',
-      store: sessionStore
-    })),
-    handleError(),
-    helmet()]);
+export default class BoldrMiddleware {
+  static init(application) {
+    application
+      .use(responseCalls)
+      .use(convert(logger()))
+      .use(morgan('dev'))
+      .use(bodyParser())
+      .use(methodOverride())
+      .use(etag())
+      .use(convert(session({
+        key: 'sid',
+        store: sessionStore
+      })))
+      .use(helmet());
+    application.use(passport.initialize());
+    application.use(passport.session());
+  }
 }
