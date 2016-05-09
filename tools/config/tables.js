@@ -30,6 +30,6 @@ export const ACL_ALLOW = [{
   roles: ['admin'],
   allows: [{
     resources: ['category', 'group', 'tag', 'page', 'article', 'user'],
-    permissions: ['edit','view','delete']
+    permissions: ['edit', 'view', 'delete']
   }]
 }];
