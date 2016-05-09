@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import r from 'rethinkdb';
 import config from 'config';
+import { promisify } from 'bluebird';
 
 const rethinkdb = { host: config.RDB_HOST, port: config.RDB_PORT, db: config.RDB_DB };
 const DATABASE = config.RDB_DB || 'boldr_dev';
@@ -59,4 +60,14 @@ function createTable(conn, table) {
 function closeConnection(conn) {
   console.log(' [x] Close connection!');
   return conn.close();
+}
+
+export async function clearDatabase() {
+  const tableList = r.tableList();
+  const tables = await promisify(tableList.run, tableList)();
+
+  await tables.map(table => {
+    const del = r.table(table).delete();
+    return promisify(del.run, del)();
+  });
 }

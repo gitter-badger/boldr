@@ -70,7 +70,7 @@ export default async function main() {
 
     await createDb(dbName);
 
-    for (let table of tables) {
+    for (const table of tables) {
       await createTable(table);
 
       if (hasData(table)) {

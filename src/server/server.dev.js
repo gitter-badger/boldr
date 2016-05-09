@@ -11,7 +11,7 @@ import BoldrMiddleware from './middleware';
 import projectConfig from 'config';
 import { logger as _log, normalizePort, onError } from './utils';
 import { handleRender } from './utils/renderReact';
-import { liveUpdates } from './api/article/article.controller';
+
 dotenv.config();
 
 const debug = _debug('app:server:dev');
@@ -50,7 +50,6 @@ async function init() {
   server.on('listening', onListening);
 }
 
-liveUpdates(io);
 /**
  * Event listener for HTTP server "listening" event.
  */

@@ -12,16 +12,7 @@ export async function getAllArticles(ctx) {
   }).run();
   return ctx.ok(articles);
 }
-export async function liveUpdates(io) {
-  r.table('articles')
-    .changes().run((err, cursor) => {
-    console.log('Listening for changes...'); // eslint-disable-line
-      cursor.each((err, change) => {
-      console.log('Change detected', change); // eslint-disable-line
-        io.emit('event-change', change);
-      });
-    });
-}
+
 /**
  * @description
  * creates a new article
