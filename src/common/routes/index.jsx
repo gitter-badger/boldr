@@ -1,15 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
-import DashboardLayout from '../layouts/DashboardLayout';
+import DashboardRoutes from './dashboard.routes';
 import CoreLayout from '../layouts/CoreLayout';
 import HomeContainer from '../scenes/Home';
 
 import BlogContainer from '../scenes/Blog';
-import DashboardContainer from '../scenes/Dashboard';
-import ArticlesContainer from '../scenes/Dashboard/Articles/ArticlesContainer';
-import CreateArticle from '../scenes/Dashboard/Articles/CreateArticle';
-import ArticleList from '../scenes/Dashboard/Articles/ArticleList';
-import SettingsContainer from '../scenes/Dashboard/Settings/SettingsContainer';
+
 import AuthContainer from '../scenes/Auth';
 import LoginContainer from '../scenes/Auth/LoginContainer';
 import Error404 from '../components/404';
@@ -22,14 +18,7 @@ export default (store) => {
     <Route path="register" component={ AuthContainer } />
     <Route path="login" component={ LoginContainer } />
     <Route path="blog" component={ BlogContainer } />
-      <Route path="dashboard" component={ DashboardLayout }>
-        <IndexRoute component={ DashboardContainer} />
-        <Route path="articles" component={ ArticlesContainer }>
-          <IndexRoute component={ ArticleList} />
-          <Route path="create" component={ CreateArticle } />
-        </Route>
-        <Route path="settings" component={ SettingsContainer } />
-      </Route>
+       { DashboardRoutes }
      <Route path="*" component={ Error404 } />
   </Route>
   );

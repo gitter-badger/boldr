@@ -1,7 +1,7 @@
 import _debug from 'debug';
 import slug from 'slugg';
 import Article from '../../db/models/article';
-
+import { r } from '../../db/connector';
 const debug = _debug('boldr:article:controller');
 debug('init');
 
@@ -12,7 +12,16 @@ export async function getAllArticles(ctx) {
   }).run();
   return ctx.ok(articles);
 }
-
+export async function liveUpdates(io) {
+  r.table('Article')
+    .changes().run((err, cursor) => {
+    console.log('Listening for changes...'); // eslint-disable-line
+      cursor.each((err, change) => {
+      console.log('Change detected', change); // eslint-disable-line
+        io.emit('event-change', change);
+      });
+    });
+}
 /**
  * @description
  * creates a new article
@@ -49,6 +58,8 @@ export const showArticle = async (ctx) => {
  * @return {Object}        The article
  */
 export const getArticleBySlug = async (ctx, next) => {
-  const article = await Article.filter({ slug: ctx.params.slug }).run();
+  const article = await Article.filter({
+    slug: ctx.params.slug
+  }).run();
   return ctx.ok(article);
 };

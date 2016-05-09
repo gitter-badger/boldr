@@ -12,7 +12,17 @@ import helmet from 'koa-helmet';
 import routers from './api';
 import responseCalls from './middleware/responseCalls';
 import handleError from './middleware/handleError';
+import RethinkDBSession from 'koa-generic-session-rethinkdb';
 
+import { r } from './db/connector';
+
+const sessionStore = new RethinkDBSession({
+  connection: r,
+  db: process.env.RDB_NAME || 'boldr_dev',
+  table: 'sessions'
+});
+
+require('co')(sessionStore.setup());
 import config from '../../tools/config';
 
 export default class Boldr {
@@ -26,7 +36,10 @@ export default class Boldr {
       .use(bodyParser())
       .use(methodOverride())
       .use(etag())
-      .use(convert(session()))
+      .use(convert(session({
+        key: 'sid',
+        store: sessionStore
+      })))
       .use(helmet());
     application.use(passport.initialize());
     application.use(passport.session());
