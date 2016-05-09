@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import * as profileController from './profile.controller';
-import { checkAuth } from '../../auth/validateToken';
+import { validateToken } from '../../auth/validateToken';
 
 const profileRouter = new Router({ prefix: '/api/v1/profiles' });
 

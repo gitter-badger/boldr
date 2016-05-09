@@ -1,7 +1,5 @@
 import Boom from 'boom';
-import _log from '../utils/logger';
-
-const log = _log(module);
+import logger from '../utils/logger';
 
 export default function() {
   return async(ctx, next) => {
@@ -24,7 +22,7 @@ export default function() {
       };
 
       ctx.status = err.status || 500;
-      log.error(err);
+      logger.error(err);
       ctx.app.emit('error', err, ctx);
     }
   };
