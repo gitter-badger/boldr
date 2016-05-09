@@ -10,11 +10,7 @@ describe('API: v1/auth', () => {
     const accountData = {
       email: 'test@boldr.io',
       username: 'boldr',
-      password: 'boldr123',
-      firstName: 'Michael',
-      lastName: 'Scott',
-      avatarUrl: 'https://boldr.io',
-      bio: 'This is the bio'
+      password: 'boldr123'
     };
     const result = await request
                           .post('/api/v1/auth/register')

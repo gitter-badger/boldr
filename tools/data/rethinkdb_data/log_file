@@ -238,3 +238,96 @@
 2016-05-09T15:07:39.653013126 241.586445s info: Table f08433d4-0848-4c3b-b1cd-e77efe2bde38: Configuration is changing.
 2016-05-09T15:08:50.311233649 312.244666s info: Table f08433d4-0848-4c3b-b1cd-e77efe2bde38: Configuration is changing.
 2016-05-09T15:10:37.389919242 419.323351s info: Table f08433d4-0848-4c3b-b1cd-e77efe2bde38: Configuration is changing.
+2016-05-09T15:48:19.334349500 2681.267782s notice: Removing file /data/rethinkdb_data/162ca203-ebde-4c1e-9a2f-ada4d35e32d6
+2016-05-09T15:48:19.334543943 2681.267976s info: Table 162ca203-ebde-4c1e-9a2f-ada4d35e32d6: Deleted the table.
+2016-05-09T15:48:19.339086592 2681.272519s notice: Removing file /data/rethinkdb_data/1a4a4a76-489e-45e0-a625-a4ba356f0e39
+2016-05-09T15:48:19.339230881 2681.272663s info: Table 1a4a4a76-489e-45e0-a625-a4ba356f0e39: Deleted the table.
+2016-05-09T15:48:19.364309355 2681.297742s notice: Removing file /data/rethinkdb_data/28d00881-3b0a-4486-b03b-384e8f0833fc
+2016-05-09T15:48:19.364531032 2681.297963s info: Table 28d00881-3b0a-4486-b03b-384e8f0833fc: Deleted the table.
+2016-05-09T15:48:19.373883743 2681.307316s notice: Removing file /data/rethinkdb_data/470133af-a57a-447a-b439-910c768bdf3b
+2016-05-09T15:48:19.374064327 2681.307496s info: Table 470133af-a57a-447a-b439-910c768bdf3b: Deleted the table.
+2016-05-09T15:48:19.384882650 2681.318315s notice: Removing file /data/rethinkdb_data/5f3a4e9e-3fb0-4e95-a3c7-877dcbc360c1
+2016-05-09T15:48:19.385053176 2681.318485s info: Table 5f3a4e9e-3fb0-4e95-a3c7-877dcbc360c1: Deleted the table.
+2016-05-09T15:48:19.410439187 2681.343871s notice: Removing file /data/rethinkdb_data/974160ed-8ac0-4f0d-9e21-f3a87e5fbc9e
+2016-05-09T15:48:19.410609963 2681.344042s info: Table 974160ed-8ac0-4f0d-9e21-f3a87e5fbc9e: Deleted the table.
+2016-05-09T15:48:19.415361086 2681.348793s notice: Removing file /data/rethinkdb_data/af1a8603-70df-4fc8-bfaa-c04a608f0cb6
+2016-05-09T15:48:19.415497956 2681.348930s info: Table af1a8603-70df-4fc8-bfaa-c04a608f0cb6: Deleted the table.
+2016-05-09T15:48:19.425803227 2681.359235s notice: Removing file /data/rethinkdb_data/bfb96989-9559-46ad-8142-64dc5ae061a6
+2016-05-09T15:48:19.425950364 2681.359382s info: Table bfb96989-9559-46ad-8142-64dc5ae061a6: Deleted the table.
+2016-05-09T15:48:19.430560530 2681.363993s notice: Removing file /data/rethinkdb_data/f08433d4-0848-4c3b-b1cd-e77efe2bde38
+2016-05-09T15:48:19.430702138 2681.364134s info: Table f08433d4-0848-4c3b-b1cd-e77efe2bde38: Deleted the table.
+2016-05-09T15:49:42.763111374 2764.696543s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/29dc5828-526e-4544-acb4-d4ae5396fa93.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.763363522 2764.696796s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/0eadee4b-c44a-4e79-8075-4bd415de865f.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.763430707 2764.696863s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/4c41e693-87de-4696-88cb-9845993ff2f7.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.767107985 2764.700540s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/29dc5828-526e-4544-acb4-d4ae5396fa93.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.768022455 2764.701455s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/0eadee4b-c44a-4e79-8075-4bd415de865f.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.768212154 2764.701644s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/4c41e693-87de-4696-88cb-9845993ff2f7.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.785746235 2764.719178s info: Table 29dc5828-526e-4544-acb4-d4ae5396fa93: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.786799676 2764.720232s info: Table 0eadee4b-c44a-4e79-8075-4bd415de865f: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.786851643 2764.720284s warn: Failed to sync parent directory of "/data/rethinkdb_data/29dc5828-526e-4544-acb4-d4ae5396fa93" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.787135999 2764.720568s info: Table 29dc5828-526e-4544-acb4-d4ae5396fa93: Added replica on this server.
+2016-05-09T15:49:42.787228975 2764.720661s warn: Failed to sync parent directory of "/data/rethinkdb_data/0eadee4b-c44a-4e79-8075-4bd415de865f" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.787287996 2764.720720s info: Table 0eadee4b-c44a-4e79-8075-4bd415de865f: Added replica on this server.
+2016-05-09T15:49:42.793011938 2764.726444s warn: Failed to sync parent directory of "/data/rethinkdb_data/4c41e693-87de-4696-88cb-9845993ff2f7" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.793726464 2764.727158s info: Table 4c41e693-87de-4696-88cb-9845993ff2f7: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.793831768 2764.727264s info: Table 4c41e693-87de-4696-88cb-9845993ff2f7: Added replica on this server.
+2016-05-09T15:49:42.797709130 2764.731141s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/02aed6ad-0caf-4065-a5d5-93b770e5021b.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.798086687 2764.731519s info: Table 29dc5828-526e-4544-acb4-d4ae5396fa93: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.798130609 2764.731563s info: Table 0eadee4b-c44a-4e79-8075-4bd415de865f: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.798135577 2764.731567s info: Table 4c41e693-87de-4696-88cb-9845993ff2f7: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.800177577 2764.733610s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/d3612903-9576-4eec-b2e4-8023a676df7b.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.802388672 2764.735821s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/4d77864a-d694-4d62-b564-2744dea736dc.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.802588433 2764.736021s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/4ce93867-9c48-4d04-bde7-d91b6186826e.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.802589808 2764.736022s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/3ba49e85-1bef-4d59-88a7-771e4d8fbfd0.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.802785393 2764.736218s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/e737b46e-80b3-48f6-8447-d30a43fe8612.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.802786646 2764.736219s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/fe40b8e8-648f-4a4f-bf84-a03a7d3419c0.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.810454052 2764.743886s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/02aed6ad-0caf-4065-a5d5-93b770e5021b.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.810625018 2764.744057s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/d3612903-9576-4eec-b2e4-8023a676df7b.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.810696485 2764.744128s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/4d77864a-d694-4d62-b564-2744dea736dc.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.811155463 2764.744587s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/4ce93867-9c48-4d04-bde7-d91b6186826e.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.811184560 2764.744617s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/3ba49e85-1bef-4d59-88a7-771e4d8fbfd0.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.811242544 2764.744674s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/e737b46e-80b3-48f6-8447-d30a43fe8612.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.812192934 2764.745625s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/fe40b8e8-648f-4a4f-bf84-a03a7d3419c0.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.840685752 2764.774118s info: Table 4ce93867-9c48-4d04-bde7-d91b6186826e: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.841916561 2764.775349s info: Table 3ba49e85-1bef-4d59-88a7-771e4d8fbfd0: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.842723035 2764.776155s info: Table e737b46e-80b3-48f6-8447-d30a43fe8612: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.844109826 2764.777542s warn: Failed to sync parent directory of "/data/rethinkdb_data/4ce93867-9c48-4d04-bde7-d91b6186826e" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.844254776 2764.777687s info: Table 4ce93867-9c48-4d04-bde7-d91b6186826e: Added replica on this server.
+2016-05-09T15:49:42.844304523 2764.777736s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.844305655 2764.777738s info: Table fe40b8e8-648f-4a4f-bf84-a03a7d3419c0: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.845339446 2764.778771s info: Table d3612903-9576-4eec-b2e4-8023a676df7b: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.845447309 2764.778879s warn: Failed to sync parent directory of "/data/rethinkdb_data/3ba49e85-1bef-4d59-88a7-771e4d8fbfd0" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.845457522 2764.778889s warn: Failed to sync parent directory of "/data/rethinkdb_data/e737b46e-80b3-48f6-8447-d30a43fe8612" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.845460329 2764.778892s warn: Failed to sync parent directory of "/data/rethinkdb_data/02aed6ad-0caf-4065-a5d5-93b770e5021b" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.845792530 2764.779225s info: Table 3ba49e85-1bef-4d59-88a7-771e4d8fbfd0: Added replica on this server.
+2016-05-09T15:49:42.845847585 2764.779280s info: Table e737b46e-80b3-48f6-8447-d30a43fe8612: Added replica on this server.
+2016-05-09T15:49:42.846588205 2764.780020s warn: Failed to sync parent directory of "/data/rethinkdb_data/fe40b8e8-648f-4a4f-bf84-a03a7d3419c0" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.846803147 2764.780235s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Added replica on this server.
+2016-05-09T15:49:42.846842330 2764.780274s info: Table fe40b8e8-648f-4a4f-bf84-a03a7d3419c0: Added replica on this server.
+2016-05-09T15:49:42.847358901 2764.780791s warn: Failed to sync parent directory of "/data/rethinkdb_data/d3612903-9576-4eec-b2e4-8023a676df7b" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.848410193 2764.781842s info: Table d3612903-9576-4eec-b2e4-8023a676df7b: Added replica on this server.
+2016-05-09T15:49:42.848527588 2764.781959s info: Table 4d77864a-d694-4d62-b564-2744dea736dc: Starting a new Raft election for term 1.
+2016-05-09T15:49:42.849500749 2764.782933s info: Table 4ce93867-9c48-4d04-bde7-d91b6186826e: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.849854277 2764.783286s info: Table 3ba49e85-1bef-4d59-88a7-771e4d8fbfd0: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.849975550 2764.783408s info: Table e737b46e-80b3-48f6-8447-d30a43fe8612: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.850022264 2764.783454s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.850076751 2764.783509s info: Table fe40b8e8-648f-4a4f-bf84-a03a7d3419c0: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.850132869 2764.783565s info: Table d3612903-9576-4eec-b2e4-8023a676df7b: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.850537984 2764.783970s info: Table 4d77864a-d694-4d62-b564-2744dea736dc: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-09T15:49:42.852062866 2764.785495s warn: Failed to sync parent directory of "/data/rethinkdb_data/4d77864a-d694-4d62-b564-2744dea736dc" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-09T15:49:42.852442412 2764.785874s info: Table 4d77864a-d694-4d62-b564-2744dea736dc: Added replica on this server.
+2016-05-09T15:49:50.928272571 2772.861705s info: Table e737b46e-80b3-48f6-8447-d30a43fe8612: Configuration is changing.
+2016-05-09T15:49:50.940661127 2772.874093s info: Table 29dc5828-526e-4544-acb4-d4ae5396fa93: Configuration is changing.
+2016-05-09T15:49:50.940753487 2772.874185s info: Table 29dc5828-526e-4544-acb4-d4ae5396fa93: Configuration is changing.
+2016-05-09T15:49:50.972384443 2772.905817s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Configuration is changing.
+2016-05-09T15:49:50.972712756 2772.906145s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Configuration is changing.
+2016-05-09T15:49:50.972713634 2772.906146s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Configuration is changing.
+2016-05-09T15:49:50.972714810 2772.906147s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Configuration is changing.
+2016-05-09T15:49:50.972715967 2772.906148s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Configuration is changing.
+2016-05-09T15:49:50.972717096 2772.906149s info: Table 02aed6ad-0caf-4065-a5d5-93b770e5021b: Configuration is changing.
+2016-05-09T15:49:50.978874686 2772.912307s info: Table 4d77864a-d694-4d62-b564-2744dea736dc: Configuration is changing.
+2016-05-09T15:49:50.980901362 2772.914334s info: Table fe40b8e8-648f-4a4f-bf84-a03a7d3419c0: Configuration is changing.
+2016-05-09T15:49:50.981022689 2772.914455s info: Table fe40b8e8-648f-4a4f-bf84-a03a7d3419c0: Configuration is changing.
+2016-05-09T15:49:50.981864920 2772.915297s info: Table 0eadee4b-c44a-4e79-8075-4bd415de865f: Configuration is changing.
+2016-05-09T15:49:50.982191388 2772.915623s info: Table 0eadee4b-c44a-4e79-8075-4bd415de865f: Configuration is changing.
+2016-05-09T15:50:43.959859286 2825.893291s info: Table e737b46e-80b3-48f6-8447-d30a43fe8612: Configuration is changing.

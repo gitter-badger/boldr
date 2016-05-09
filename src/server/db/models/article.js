@@ -18,14 +18,4 @@ const Article = thinky.createModel('articles', {
   isDraft: type.boolean().default(true)
 });
 
-Article.ensureIndex('title');
-Article.ensureIndex('createdAt');
-Article.ensureIndex('slug');
-Article.ensureIndex('isDraft');
 export default Article;
-
-const User = require('./user').default;
-const Tag = require('./tag').default;
-
-Article.belongsTo(User, 'user', 'authorId', 'id');
-Article.hasAndBelongsToMany(Tag, 'tag', 'id', 'id');

@@ -7,9 +7,4 @@ const Tag = thinky.createModel('tags', {
   description: type.string().optional()
 });
 
-Tag.ensureIndex('name');
-
 export default Tag;
-
-const Article = require('./article').default;
-Tag.hasAndBelongsToMany(Article, 'articles', 'id', 'id');

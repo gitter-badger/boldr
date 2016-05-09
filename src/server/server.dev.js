@@ -11,6 +11,7 @@ import BoldrMiddleware from './middleware';
 import projectConfig from 'config';
 import { logger as _log, normalizePort, onError } from './utils';
 import { handleRender } from './utils/renderReact';
+import './db/models';
 
 dotenv.config();
 

@@ -4,7 +4,7 @@ import _debug from 'debug';
 import passport from 'koa-passport';
 import Promise from 'bluebird';
 import config, { paths } from 'config';
-import User from '../../db/models/user';
+import Account from '../../db/models/account';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
@@ -15,27 +15,22 @@ const errorMessages = {
 };
 /**
  * @description
- * registers a new user
+ * registers a new account
  * @route /api/v1/auth/register
  * @method POST
  * @see docs/api/auth/registerUser.md
  */
-export const registerUser = async ctx => {
+export const registerAccount = async ctx => {
   if (!ctx.request.body || !ctx.request.body.username || !ctx.request.body.password || !ctx.request.body.email) {
     return ctx.throw(400, errorMessages.incompleteAttributes);
   }
   try {
-    const user = await User.save({
+    const account = await Account.save({
       email: ctx.request.body.email,
       password: ctx.request.body.password,
-      username: ctx.request.body.username,
-      firstName: ctx.request.body.firstName,
-      lastName: ctx.request.body.lastName,
-      bio: ctx.request.body.bio,
-      avatar: ctx.request.body.avatar,
-      website: ctx.request.body.website
+      username: ctx.request.body.username
     }).then((user) => {
-      return ctx.created(user);
+      return ctx.created(account);
     });
   } catch (error) {
     ctx.throw(400, error.message);
@@ -50,12 +45,12 @@ export const registerUser = async ctx => {
  * @method POST
  */
 export async function loginUser(ctx, next) {
-  return passport.authenticate('local', (user) => {
-    if (!user) {
+  return passport.authenticate('local', (account) => {
+    if (!account) {
       ctx.unauthorized('Failed to validate login information.');
     }
     const token = jwt.sign({
-      id: user
+      id: account
     }, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
