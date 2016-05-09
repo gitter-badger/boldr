@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Session as RethinkSession } from 'react-rethinkdb';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
@@ -28,8 +27,7 @@ const muiTheme = getMuiTheme({
     primary3Color: cyanA400
   }
 });
-const rethinkSession = new RethinkSession();
-rethinkSession.connect(dbConfig);
+
 /**
  * Callback function handling frontend route changes.
  */
@@ -51,7 +49,7 @@ function onUpdate() {
 const root = (
   <Provider store={store}>
     <MuiThemeProvider muiTheme={ muiTheme }>
-      <Router rethinkSession={ rethinkSession } history={history} onUpdate={onUpdate}>
+      <Router history={history} onUpdate={onUpdate}>
         { routes }
       </Router>
     </MuiThemeProvider>

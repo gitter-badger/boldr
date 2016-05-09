@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, ContentState
-} from 'draft-js';
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { bindActionCreators } from 'redux';
 import * as articleActions from 'common/state/modules/article/article.actions';
 import { InlineStyleControls, BlockStyleControls, PublishingControls } from 'common/components/Editor';
 import Loader from 'common/components/Loader';
 import { changeArticlePublishSetting } from 'common/api/articleEndpoint';
+
 function getBlockStyle(block) {
   switch (block.getType()) {
     case 'blockquote':
@@ -39,22 +39,10 @@ class CreateArticle extends Component {
       const content = this.state.editorState.getCurrentContent();
       console.log(convertToRaw(content)); // eslint-disable-line
     };
-    const title = decodeURI(window.location.pathname.split('/')[2]);
-
-    if (title !== 'undefined') this.props.postActions.getOrFetchArticle(title);
-
-    setTimeout(() => {
-      this.loadContent(props);
-    }, 100);
-    this.titleAutoSizer();
   }
 
   componentDidMount() {
     this.focus = () => this.refs.editor.focus();
-  }
-
-  componentWillReceiveProps(props) {
-    this.loadContent(props);
   }
 
   _toggleBlockType(blockType) {
@@ -63,54 +51,6 @@ class CreateArticle extends Component {
 
   _toggleInlineStyle(inlineStyle) {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
-  }
-  titleAutoSizer() {
-    function autosize() {
-      const _this = this;
-      setTimeout(() => {
-        _this.style.cssText = 'height: auto; padding:0';
-        _this.style.cssText = `height: ${_this.scrollHeight}px`;
-      }, 0);
-    }
-
-    setTimeout(() => {
-      document.getElementById('title').addEventListener('keydown', autosize);
-    }, 200);
-  }
-  loadContent(props) {
-    if (props.editableBody !== '{}') {
-      const content = ContentState.createFromBlockArray(
-          convertFromRaw(JSON.parse(props.editableBody)));
-
-      this.setState({
-        editorState: EditorState.createWithContent(content)
-      });
-
-      setTimeout(() => {
-        document.getElementById('title').value = props.title;
-        document.getElementById('publish-toggle').value = props.isPublic;
-      }, 1);
-    }
-  }
-  sanitize(state, props) {
-    const { editorState } = state;
-    const { dispatch } = props;
-    const editableContent = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-    const renderableContent = stateToHTML(editorState.getCurrentContent());
-
-    if (props.isEditing) {
-      // update post action
-      dispatch(articleActions.getOrFetchArticle(props.articleId, document.getElementById('title').value,
-          document.getElementById('publish-toggle').value, renderableContent, editableContent));
-    } else {
-      // create post action
-      dispatch(articleActions.getOrFetchArticle(document.getElementById('title').value,
-          renderableContent, editableContent));
-    }
-  }
-
-  publish(props) {
-    changeArticlePublishSetting(props.articleId, !props.isDraft);
   }
 
   render() {
@@ -126,7 +66,7 @@ class CreateArticle extends Component {
 
     return (
         <div className="RichEditor-root">
-        { this.props.loading ? <Loader /> :
+
           <div>
             <div>
               <BlockStyleControls
@@ -160,60 +100,20 @@ class CreateArticle extends Component {
               <input onClick={this.logState} type="button" value="Console.log State" />
             </div>
           </div>
-        }
         <PublishingControls
-            sanitize={() => this.sanitize(this.state, this.props)}
             publish={() => this.publish(this.props)}
-            showPublishButton={this.props.postId !== -1}
-            loading={this.props.loading}
+            showPublishButton={this.props.articleId !== -1}
           />
         </div>
     );
   }
 }
-
-const getEditableArticle = (state) => {
-  const title = decodeURI(window.location.pathname.split('/')[2]);
-
-  if (!title || title === 'undefined') {
-    return {
-      loading: false,
-      isEditing: state.editPostId !== -1,
-      isPublic: false,
-      isWorking: false,
-      postId: state.editPostId || -1,
-      title: '',
-      content: '',
-      editableBody: '{}'
-    };
-  }
-
-  const article = state.article.filter((x) => x.title === title)[0];
-  if (article) {
-    return {
-      loading: false,
-      isEditing: true,
-      isDraft: article.isDraft,
-      isWorking: false,
-      title: article.title,
-      postId: article.id,
-      content: article.content,
-      editableBody: article.content
-    };
-  }
-
+const mapStateToProps = (state, ownProps) => {
   return {
-    loading: false,
-    isEditing: true,
-    isPublic: false,
-    isWorking: false,
-    title: '',
-    postId: -1,
-    body: '',
-    editableBody: '{}'
+    article: state.article,
+    loading: state.article.loading
   };
 };
-const mapStateToProps = (state) => getEditableArticle(state.article);
 const mapDispatchToProps = (dispatch) => {
   return {
     articleActions: bindActionCreators(articleActions, dispatch)
