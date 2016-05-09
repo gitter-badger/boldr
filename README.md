@@ -9,7 +9,7 @@ boldr
 ## Tech Stack
 
 * Node
-* Koa2
+* Koa v2
 * React
 * RethinkDB
 
@@ -36,18 +36,24 @@ Find the IP of your Docker Machine by executing `docker-machine ip $DOCKER_VM`.
 #### Development
 
 ```bash
-$ npm run dev
+$ npm start
 ```
 
 #### Production
 > No way. Not yet.
 
+## Immediate ToDos
+  [-] Finish implementing article tagging.  
+  [-] Frontend create article
 
-## Road Map
+## Road Map to Release
+  [-] Setup CI testing RethinkDB container.
   [-] Media uploading - S3 or local file system.  
   [-] Role based access control.  
-  [-] Post tagging.  
-  [-] GraphQL
+  [-] Site settings
+  [-] Menu builder  
+  [-] GraphQL  
+  [-] Page builder
 
 ## Contribute
 
