@@ -13,7 +13,7 @@ export async function getAllArticles(ctx) {
   return ctx.ok(articles);
 }
 export async function liveUpdates(io) {
-  r.table('Article')
+  r.table('articles')
     .changes().run((err, cursor) => {
     console.log('Listening for changes...'); // eslint-disable-line
       cursor.each((err, change) => {

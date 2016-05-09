@@ -35,7 +35,7 @@ const config = {
     'classnames',
     'axios'
   ],
-  RDB_HOST: process.env.RDB_HOST || '10.211.55.7',
+  RDB_HOST: process.env.RDB_HOST || 'localhost',
   RDB_PORT: process.env.RDB_PORT || 28015,
   RDB_DB: process.env.RDB_DB || 'boldr_dev',
   TESTDB_HOST: process.env.TEST_DB_HOST || '10.211.55.7',

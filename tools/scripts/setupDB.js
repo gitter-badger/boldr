@@ -4,7 +4,7 @@ import config from 'config';
 
 const rethinkdb = { host: config.RDB_HOST, port: config.RDB_PORT, db: config.RDB_DB };
 const DATABASE = config.RDB_DB || 'boldr_dev';
-const TABLES = ['users', 'groups', 'articles', 'pages', 'tags', 'categories', 'menus', 'sessions', 'article_tag'];
+const TABLES = ['users', 'groups', 'articles', 'pages', 'tags', 'categories', 'menus', 'sessions', 'articles_tags'];
 
 r.connect(rethinkdb)
 .then(conn => {
