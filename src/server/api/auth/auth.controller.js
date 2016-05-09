@@ -5,6 +5,7 @@ import passport from 'koa-passport';
 import Promise from 'bluebird';
 import config, { paths } from 'config';
 import Account from '../../db/models/account';
+import Profile from '../../db/models/profile';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
@@ -25,11 +26,21 @@ export const registerAccount = async ctx => {
     return ctx.throw(400, errorMessages.incompleteAttributes);
   }
   try {
-    const account = await Account.save({
+    const account = await new Account({
       email: ctx.request.body.email,
       password: ctx.request.body.password,
-      username: ctx.request.body.username
-    }).then((user) => {
+      username: ctx.request.body.username,
+      profile: new Profile({
+        name: {
+          first: ctx.request.body.first,
+          last: ctx.request.body.last
+        },
+        location: ctx.request.body.location,
+        website: ctx.request.body.website,
+        avatar: ctx.request.body.avatar,
+        bio: ctx.request.body.bio
+      })
+    }).saveAll().then((account) => {
       return ctx.created(account);
     });
   } catch (error) {

@@ -26,6 +26,7 @@ export function checkAuth(force = false) {
     try {
       ctx.account = await jwt.verifyAsync(token, process.env.JWT_SECRET);
       ctx.state.isAuthorised = true;
+      console.info(ctx.account + '--------------------------acccount log'); // eslint-disable-line
     } catch (err) {
       if (force) {
         return ctx.throw(403, { _errors: ['Invalid credentials provided.'] });

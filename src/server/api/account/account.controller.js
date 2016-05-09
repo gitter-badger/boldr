@@ -1,10 +1,12 @@
 import _debug from 'debug';
 
 import Account from '../../db/models/account';
+
 import config, { paths } from '../../../../tools/config';
 
 const debug = _debug('boldr:account:controller');
 debug('init');
+
 /**
  * Returns a listing of all the user accounts in the database.
  * @method getUsers
@@ -14,7 +16,7 @@ debug('init');
 export async function getAccounts(ctx) {
   const accounts = await Account.getJoin({
     profile: true
-  }).run();
+  }).getClean().execute();
   return ctx.ok(accounts);
 }
 
@@ -26,7 +28,7 @@ export async function getAccounts(ctx) {
  */
 export async function getAccountById(ctx, next) {
   try {
-    const account = await Account.get(ctx.params.id).run();
+    const account = await Account.get(ctx.params.id).getClean().execute();
     if (!account) {
       return ctx.badRequest('Account is Not Found');
     }
@@ -50,7 +52,7 @@ export async function updateAccount(ctx) {
   };
 }
 
-export async function deleteUser(ctx) {
+export async function deleteAccount(ctx) {
   const account = Account.get(ctx.params.id);
 
   await account.remove();
