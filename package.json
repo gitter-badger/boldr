@@ -24,7 +24,7 @@
     "start:client:server": "nodemon",
     "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
     "test:api": "better-npm-run test:api",
-    "test": "NODE_ENV=TEST NODE_PATH=./src ./node_modules/.bin/mocha --compilers js:babel-register --timeout 5000 test/index.js test/**/*.spec.js"
+    "test": "better-npm-run test:api"
   },
   "betterScripts": {
     "start:server": {
