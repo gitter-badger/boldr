@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as articleActions from 'common/state/modules/article/article.actions';
+import ArticleList from './ArticleList';
+
+ArticleList.need = [
+  articleActions.fetchArticles
+];
 
 class ArticlesContainer extends Component {
   render() {
@@ -16,9 +21,11 @@ class ArticlesContainer extends Component {
     );
   }
 }
+
 const mapStateToProps = (state, ownProps) => {
   return {
-    article: state.article
+    article: state.article,
+    loading: state.article.loading
   };
 };
 

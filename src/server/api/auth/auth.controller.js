@@ -3,9 +3,8 @@ import jwt from 'jsonwebtoken';
 import _debug from 'debug';
 import passport from 'koa-passport';
 import Promise from 'bluebird';
-import config, { paths } from '../../../../tools/config';
+import config, { paths } from 'config';
 import User from '../../db/models/user';
-import { saltAndHashPassword } from '../../utils';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
@@ -53,7 +52,7 @@ export const registerUser = async ctx => {
 export async function loginUser(ctx, next) {
   return passport.authenticate('local', (user) => {
     if (!user) {
-      ctx.throw(401);
+      ctx.unauthorized('Failed to validate login information.');
     }
     const token = jwt.sign({
       id: user

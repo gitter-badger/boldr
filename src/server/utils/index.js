@@ -1,5 +1,4 @@
 export * as mailer from './mailer';
-export saltAndHashPassword from './saltAndHashPassword';
 export logger from './logger';
 
 

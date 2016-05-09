@@ -1,10 +1,7 @@
 import _debug from 'debug';
 import slug from 'slugg';
 import Article from '../../db/models/article';
-import User from '../../db/models/user';
-
-// import ArticleService from 'server/api/article/article.service';
-
+import { r } from '../../db/connector';
 const debug = _debug('boldr:article:controller');
 debug('init');
 
@@ -15,7 +12,16 @@ export async function getAllArticles(ctx) {
   }).run();
   return ctx.ok(articles);
 }
-
+export async function liveUpdates(io) {
+  r.table('Article')
+    .changes().run((err, cursor) => {
+    console.log('Listening for changes...'); // eslint-disable-line
+      cursor.each((err, change) => {
+      console.log('Change detected', change); // eslint-disable-line
+        io.emit('event-change', change);
+      });
+    });
+}
 /**
  * @description
  * creates a new article
@@ -24,11 +30,9 @@ export async function getAllArticles(ctx) {
  */
 export const createArticle = async (ctx, next) => {
   try {
-    console.log(ctx.user)
-
     const article = new Article({
       title: ctx.request.body.title,
-      slug: ctx.request.body.slug,
+      slug: slug(ctx.request.body.slug),
       markup: ctx.request.body.markup,
       content: ctx.request.body.content,
       featureImage: ctx.request.body.featureImage,
@@ -39,11 +43,23 @@ export const createArticle = async (ctx, next) => {
     await article.save();
     return ctx.created(article);
   } catch (err) {
-    return ctx.error('Uh oh there was a problem!');
+    return ctx.error('Something went terribly wrong creating your article. Try again.');
   }
 };
 
-export const showArticle = async (ctx, next) => {
+export const showArticle = async (ctx) => {
   const article = await Article.get(ctx.params.id).run();
-  ctx.ok(article);
+  return ctx.ok(article);
+};
+
+/**
+ * looks up an article by the slug, which is a sanitized version of its title.
+ * @param  {Object}   ctx  slug
+ * @return {Object}        The article
+ */
+export const getArticleBySlug = async (ctx, next) => {
+  const article = await Article.filter({
+    slug: ctx.params.slug
+  }).run();
+  return ctx.ok(article);
 };

@@ -7,8 +7,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
-
-import { fetchComponentDataBeforeRender } from 'common/api/fetchComponentDataBeforeRender';
+import dbConfig from 'server/db/dbConfig';
+import preRenderMiddleware from 'common/state/middleware/preRenderMiddleware';
 import createRoutes from 'common/routes';
 import configureStore from 'common/state/store';
 import Root from 'common/scenes/Root';
@@ -27,6 +27,7 @@ const muiTheme = getMuiTheme({
     primary3Color: cyanA400
   }
 });
+
 /**
  * Callback function handling frontend route changes.
  */
@@ -42,7 +43,7 @@ function onUpdate() {
     return;
   }
   const { state: { components, params } } = this;
-  fetchComponentDataBeforeRender(store.dispatch, components, params);
+  preRenderMiddleware(store.dispatch, components, params);
 }
 
 const root = (

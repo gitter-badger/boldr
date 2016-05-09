@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import Register from './Register.jsx';
-import Login from './Login.jsx';
+import LoginContainer from './LoginContainer.jsx';
 import { authLogin, authRegister, toggleLoginMode } from 'common/state/modules/auth/auth.actions';
 
 @connect(mapStateToProps)
@@ -41,7 +41,7 @@ class AuthContainer extends Component {
       return (
         <div className="header">
           <h1 className="heading">Login with Email</h1>
-          <Login onSubmit={ this.handleOnSubmit } />
+          <LoginContainer />
           <div className="alternative">
             Not what you want?
             <a className="alternative-link"

@@ -2,6 +2,10 @@ require('babel-register');
 import { argv } from 'yargs';
 import path from 'path';
 
+export const env = (string) => {
+  return process.env[string] || '';
+};
+
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const ROOT_DIR = path.normalize(path.join(__dirname, '..', '..'));
 const config = {
