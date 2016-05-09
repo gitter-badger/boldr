@@ -41,3 +41,5 @@ async function reset({ db, isUpdate }) {
   })]);
   console.log(`>>Setup complete for: ${db}`); // eslint-disable-line
 }
+
+setupDB();
