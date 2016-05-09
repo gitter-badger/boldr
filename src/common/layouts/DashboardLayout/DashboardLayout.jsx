@@ -16,9 +16,7 @@ class DashboardLayout extends Component {
 
   render() {
     return (
-        <div>
-        <TopBar handleToggle={this.handleToggle} />
-        <AppDrawer />
+    <div>
         { this.props.children }
     </div>
     );

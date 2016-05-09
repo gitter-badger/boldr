@@ -110,11 +110,9 @@ const config = {
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     // new NpmInstallPlugin({ save: true }),
-    new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
     new webpack.DefinePlugin({
       __CLIENT__,
       __SERVER__,
@@ -122,7 +120,6 @@ const config = {
       __PROD__,
       __DEBUG__
     }),
-    new webpack.optimize.DedupePlugin(),
     webpackIsomorphicToolsPlugin.development()
   ]
 };
