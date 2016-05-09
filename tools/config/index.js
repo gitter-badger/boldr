@@ -1,7 +1,7 @@
-require('babel-register');
+import dotenv from 'dotenv';
 import { argv } from 'yargs';
 import path from 'path';
-
+dotenv.config();
 export const env = (string) => {
   return process.env[string] || '';
 };
@@ -29,15 +29,18 @@ const config = {
     'react-redux',
     'react-router',
     'react-router-redux',
+    'material-ui',
     'redux',
     'lodash',
     'classnames',
-    'superagent'
+    'axios'
   ],
+  RDB_HOST: process.env.RDB_HOST || '10.211.55.7',
+  RDB_PORT: process.env.RDB_PORT || 28015,
+  RDB_DB: process.env.RDB_DB || 'boldr_dev',
   TESTDB_HOST: process.env.TEST_DB_HOST || '10.211.55.7',
   TESTDB_NAME: process.env.TEST_DB_NAME || 'boldr_test',
-  TESTDB_USER: process.env.TEST_DB_USER || 'postgres',
-  TESTDB_PASS: process.env.TEST_DB_PASS || 'postgres',
+  TESTDB_PORT: process.env.TEST_DB_PORT || 28015,
 
   // Project Structure
   PATH_BASE: path.normalize(path.join(__dirname, '..', '..')),
