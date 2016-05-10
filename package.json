@@ -28,7 +28,7 @@
   },
   "betterScripts": {
     "start:server": {
-      "command": "nodemon",
+      "command": "nodemon --debug",
       "env": {
         "NODE_PATH": "src",
         "NODE_ENV": "development"
@@ -57,7 +57,6 @@
     "dotenv": "^2.0.0",
     "draft-js": "^0.7.0",
     "draft-js-export-html": "^0.1.13",
-    "ioredis": "^1.15.1",
     "jsonwebtoken": "^6.2.0",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.0.0",
@@ -76,7 +75,6 @@
     "koa-passport": "^2.1.1",
     "koa-proxy": "^0.6.0",
     "koa-router": "^7.0.1",
-    "koa-session2": "^1.0.3",
     "koa-static": "^3.0.0",
     "lodash": "^4.12.0",
     "lost": "^6.7.2",

@@ -77,6 +77,7 @@ export async function loginUser(ctx, next) {
     const token = jwt.signAsync(payload, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
+    ctx.session.account = ctx.account;
     return ctx.ok(token);
   })(ctx, next);
 }

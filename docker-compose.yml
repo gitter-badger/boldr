@@ -23,16 +23,16 @@ services:
       - data-volumes
     networks:
       - boldr
-  redis:
-    build: ./tools/docker/redis
-    ports:
-     - "6379:6379/tcp"
-    expose:
-      - "6379"
-    volumes_from:
-      - data-volumes
-    networks:
-      - boldr
+  # redis:
+  #   build: ./tools/docker/redis
+  #   ports:
+  #    - "6379:6379/tcp"
+  #   expose:
+  #     - "6379"
+  #   volumes_from:
+  #     - data-volumes
+  #   networks:
+  #     - boldr
   # boldr1:
   #   build: ./
   #   depends_on:
