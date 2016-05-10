@@ -20,7 +20,7 @@ global.webpackIsomorphicTools =
     .development(__DEV__)
     .server(projectBasePath, () => {
       if (__DEV__) {
-        require('./server.dev');
+        require('./server');
       } else {
         require('./server.prod');
       }

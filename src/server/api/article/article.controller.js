@@ -27,7 +27,7 @@ export const createArticle = async (ctx, next) => {
       markup: ctx.request.body.markup,
       content: ctx.request.body.content,
       featureImage: ctx.request.body.featureImage,
-      authorId: ctx.account.id.id,
+      authorId: ctx.state.account.id,
       isDraft: ctx.request.body.draft
     });
 

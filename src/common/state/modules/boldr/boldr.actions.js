@@ -66,6 +66,14 @@ export const routeToIndex = (index) => {
           path = '/dashboard/settings';
           title = 'Settings';
           break;
+        case 8:
+          path = '/dashboard/pages';
+          title = 'Pages';
+          break;
+        case 9:
+          path = '/dashboard/users';
+          title = 'Users';
+          break;
         default:
           path = '/404';
       }

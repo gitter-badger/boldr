@@ -1,9 +1,9 @@
 import _debug from 'debug';
 
 import Account from '../../db/models/account';
-
+import jwt from 'jsonwebtoken';
 import config, { paths } from '../../../../tools/config';
-
+import getToken from '../../auth/getToken';
 const debug = _debug('boldr:account:controller');
 debug('init');
 
@@ -59,9 +59,4 @@ export async function deleteAccount(ctx) {
 
   ctx.status = 200;
   return ctx.ok();
-}
-
-export async function getMe(ctx) {
-  const me = await Account.get(ctx.account.id.id).run();
-  return ctx.ok(me);
 }

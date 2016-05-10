@@ -13,24 +13,26 @@ function getExpirationDate() {
 }
 
 export async function signJwt(payload, options) {
-  return await jwt.signAsync(payload, process.env.JWT_SECRET, options);
+  return await jwt.sign(payload, process.env.JWT_SECRET, options);
 }
 
-export function validateToken(force = false) {
+export function checkAuth(force = false) {
   return async function (ctx, next) {
     ctx.state.isAuthorised = false;
-    const token = getToken(ctx);
+
+    const token = ctx.request.get('Authorization').split(' ')[1];
 
     if (typeof token === 'undefined' && force) {
-      ctx.unauthorized();
+      ctx.throw(401, { _errors: ['No credentials were provided.'] });
       return;
     }
     try {
       ctx.account = await jwt.verifyAsync(token, process.env.JWT_SECRET);
       ctx.state.isAuthorised = true;
+      ctx.state.account = ctx.account;
     } catch (err) {
       if (force) {
-        return ctx.forbidden();
+        return ctx.throw(403, { _errors: ['Invalid credentials provided.'] });
       }
     }
     await next();

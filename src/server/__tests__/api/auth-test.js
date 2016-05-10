@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { assert, expect } from 'chai';
 import supertest from 'supertest';
-import { server } from '../../server.dev';
+import { server } from '../../server';
 
 describe('API: v1/auth', () => {
   const request = supertest(server.listen());

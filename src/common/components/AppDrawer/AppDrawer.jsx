@@ -84,7 +84,9 @@ class AppDrawer extends React.Component {
                       />
                     ]}
                 />,
-                <ListItem primaryText="Settings" value={ 7 } />
+                <ListItem primaryText="Settings" value={ 7 } />,
+                <ListItem primaryText="Pages" value={ 8 } />,
+                <ListItem primaryText="Users" value={ 9 } />
               ]}
           />
         </SelectableList>

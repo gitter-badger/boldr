@@ -1,9 +1,8 @@
 import winston from 'winston';
 import path from 'path';
 import fs from 'fs';
-import config, { paths } from '../../../tools/config';
+import config, { paths } from 'config';
 winston.emitErrs = true;
-// paths('entryApp')
 const getFilePath = m => m.filename.split('/').slice(-2).join('/');
 
 const dirLog = path.join(process.cwd(), 'docs/logs');
