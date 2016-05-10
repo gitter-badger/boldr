@@ -44,16 +44,17 @@ $ npm start
 
 ## Immediate ToDos
   [-] Finish implementing article tagging.  
-  [-] Frontend create article
+  [-] Frontend create article  
+  [-] Unique validation for articles and users.
 
 ## Road Map to Release
-  [-] Setup CI testing RethinkDB container.
+  [-] Setup CI testing RethinkDB container.  
   [-] Media uploading - S3 or local file system.  
   [-] Role based access control.  
-  [-] Site settings
+  [-] Site settings  
   [-] Menu builder  
   [-] GraphQL  
-  [-] Page builder
+  [-] Page builder  
 
 ## Contribute
 

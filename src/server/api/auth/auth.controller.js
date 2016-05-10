@@ -4,6 +4,7 @@ import _debug from 'debug';
 import passport from 'koa-passport';
 import Promise from 'bluebird';
 import config, { paths } from 'config';
+import { signJwt } from '../../auth/signToken';
 import Account from '../../db/models/account';
 import Profile from '../../db/models/profile';
 
@@ -54,17 +55,28 @@ export const registerAccount = async ctx => {
  * logs a user into his or her account.
  * @route /api/v1/auth/login
  * @method POST
+ * Token response is
+ * {
+ * isFulfilled: true,
+ * isRejected: false,
+ * fulfillmentValue: TOKEN
+ * }
  */
 export async function loginUser(ctx, next) {
   return passport.authenticate('local', (account) => {
     if (!account) {
       ctx.unauthorized('Failed to validate login information.');
     }
-    const token = jwt.sign({
-      id: account
-    }, process.env.JWT_SECRET, {
+    const payload = {
+      id: account.id,
+      email: account.email,
+      username: account.username
+    };
+    ctx.account = payload;
+
+    const token = jwt.signAsync(payload, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
-    return ctx.ok({ token });
+    return ctx.ok(token);
   })(ctx, next);
 }

@@ -19,9 +19,5 @@ global.webpackIsomorphicTools =
   new WebpackIsomorphicTools(isomorphicToolsConfig)
     .development(__DEV__)
     .server(projectBasePath, () => {
-      if (__DEV__) {
-        require('./server.dev');
-      } else {
-        require('./server.prod');
-      }
+      require('./server');
     });

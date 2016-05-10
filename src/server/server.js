@@ -23,7 +23,7 @@ export const server = createServer(app.callback());
 // Application constants
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = projectConfig;
 
-async function init() {
+(async() => {
   await BoldrMiddleware.init(app);
   await Boldr.initRoutes(app);
   /**
@@ -45,18 +45,4 @@ async function init() {
   await server.listen(SERVER_PORT, () => {
     debug(`Boldr server listening on ${SERVER_PORT} in ${process.env.NODE_ENV} node`);
   });
-  server.on('listening', onListening);
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? ` pipe ${addr}`
-    : ` port ${addr.port}`;
-  debug(`listening on  ${bind}`);
-}
-
-init();
+})();

@@ -83,7 +83,7 @@ export function authLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response));
-          localStorage.setItem('jwt', response.data.token);
+          localStorage.setItem('jwt', response.data.fulfillmentValue);
           dispatch(push('/'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));

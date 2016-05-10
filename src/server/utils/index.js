@@ -1,7 +1,5 @@
 export * as mailer from './mailer';
 export logger from './logger';
-
-
 /**
  * Normalize a port into a number, string, or false.
  */
