@@ -15,7 +15,7 @@ dependencies:
   override:
     - npm install --only=prod && npm install --only=dev
   post:
-    - npm run build:db
+    - npm run setup:db
 test:
   post:
     - npm run lint

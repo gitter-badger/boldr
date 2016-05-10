@@ -1,30 +1,24 @@
 import Router from 'koa-router';
 import passport from 'koa-passport';
 import config, { paths } from '../../../../tools/config';
-import { registerUser, loginUser, registerEmailCheck } from './auth.controller';
-import { checkAuth } from '../../auth/validateToken';
+import { registerAccount, loginUser, registerEmailCheck } from './auth.controller';
+import { validateToken } from '../../auth/validateToken';
 import localSetup from '../../auth/local/passport';
 import localAuth from '../../auth/local';
-import User from '../../db/models/user';
-localSetup(User);
+import Account from '../../db/models/account';
+
+localSetup(Account);
 
 const authRouter = new Router();
 
 authRouter.prefix('/api/v1/auth');
 
 authRouter
-  .get('/test', async ctx => {
-    ctx.body = 'Auth Router';
-  });
-
-authRouter
-  .post('/register', registerUser)
-  .get('/check', checkAuth(), async ctx => {
+  .post('/register', registerAccount)
+  .post('/login', loginUser)
+  .get('/check', validateToken(), async ctx => {
     ctx.body = 'You are authorized.';
   });
-
-authRouter
-  .post('/login', loginUser);
 
 authRouter
   .post('/logout', async ctx => {

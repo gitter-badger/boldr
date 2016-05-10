@@ -5,22 +5,21 @@ import serve from 'koa-static';
 import convert from 'koa-convert';
 import { createServer } from 'http';
 import proxy from 'koa-proxy';
-import SocketIO from 'socket.io';
+
 import Boldr from './boldr';
 import BoldrMiddleware from './middleware';
 import projectConfig from 'config';
-import { logger as _log, normalizePort, onError } from './utils';
+import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
-import { liveUpdates } from './api/article/article.controller';
+import './db/models';
+
 dotenv.config();
 
 const debug = _debug('app:server:dev');
 const app = new Koa();
 // export server for easier testing.
 export const server = createServer(app.callback());
-const io = SocketIO(server);
-// Logging
-const log = _log(module);
+
 // Application constants
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = projectConfig;
 
@@ -44,13 +43,11 @@ async function init() {
   app.use(handleRender);
 
   await server.listen(SERVER_PORT, () => {
-    log.debug(`Boldr server listening on ${SERVER_PORT} in ${process.env.NODE_ENV} node`);
+    debug(`Boldr server listening on ${SERVER_PORT} in ${process.env.NODE_ENV} node`);
   });
-  server.on('error', onError);
   server.on('listening', onListening);
 }
 
-liveUpdates(io);
 /**
  * Event listener for HTTP server "listening" event.
  */

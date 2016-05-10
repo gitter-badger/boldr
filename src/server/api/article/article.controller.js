@@ -7,21 +7,12 @@ debug('init');
 
 export async function getAllArticles(ctx) {
   const articles = await Article.getJoin({
-    user: true,
+    account: true,
     tags: true
   }).run();
   return ctx.ok(articles);
 }
-export async function liveUpdates(io) {
-  r.table('Article')
-    .changes().run((err, cursor) => {
-    console.log('Listening for changes...'); // eslint-disable-line
-      cursor.each((err, change) => {
-      console.log('Change detected', change); // eslint-disable-line
-        io.emit('event-change', change);
-      });
-    });
-}
+
 /**
  * @description
  * creates a new article
@@ -36,7 +27,7 @@ export const createArticle = async (ctx, next) => {
       markup: ctx.request.body.markup,
       content: ctx.request.body.content,
       featureImage: ctx.request.body.featureImage,
-      authorId: ctx.user.id.id,
+      authorId: ctx.account.id.id,
       isDraft: ctx.request.body.draft
     });
 

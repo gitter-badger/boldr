@@ -1,20 +1,23 @@
 export const TABLES = {
-  user: {
+  users: {
     indexes: ['email', 'username', 'createdAt']
   },
-  group: {
+  groups: {
     indexes: ['name']
   },
-  article: {
+  articles: {
     indexes: ['slug', 'createdAt']
   },
-  page: {
+  pages: {
     indexes: ['slug']
   },
-  tag: {
+  tags: {
     indexes: ['slug']
   },
-  category: {
+  categories: {
+    indexes: ['slug']
+  },
+  menus: {
     indexes: ['slug']
   }
 };

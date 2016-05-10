@@ -1,34 +1,36 @@
 import jwt from 'jsonwebtoken';
 import Promise from 'bluebird';
 import config, { paths } from '../../../tools/config';
-import User from '../db/models/user';
+import Account from '../db/models/account';
 import getToken from './getToken';
+
 Promise.promisifyAll(jwt);
+
 const EXPIRATION_AGE = 604800000; // 7 days
 
 function getExpirationDate() {
   return new Date(Number(new Date()) + EXPIRATION_AGE);
 }
+
 export async function signJwt(payload, options) {
   return await jwt.signAsync(payload, process.env.JWT_SECRET, options);
 }
 
-export function checkAuth(force = false) {
+export function validateToken(force = false) {
   return async function (ctx, next) {
     ctx.state.isAuthorised = false;
-
-    const token = ctx.request.get('Authorization').split(' ')[1];
+    const token = getToken(ctx);
 
     if (typeof token === 'undefined' && force) {
-      ctx.throw(401, { _errors: ['No credentials were provided.'] });
+      ctx.unauthorized();
       return;
     }
     try {
-      ctx.user = await jwt.verifyAsync(token, process.env.JWT_SECRET);
+      ctx.account = await jwt.verifyAsync(token, process.env.JWT_SECRET);
       ctx.state.isAuthorised = true;
     } catch (err) {
       if (force) {
-        return ctx.throw(403, { _errors: ['Invalid credentials provided.'] });
+        return ctx.forbidden();
       }
     }
     await next();
