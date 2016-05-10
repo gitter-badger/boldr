@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import supertest from 'supertest';
-import { server } from '../../server.dev';
+import { server } from '../../server';
 
 describe('API: v1/version', () => {
   const request = supertest(server.listen());
