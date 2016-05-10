@@ -7,6 +7,7 @@ services:
     stdin_open: true
     volumes:
       - "./tools/data:/data:rw"
+      - "./tools/data/rethinkdb_data:/data/rethinkdb_data:rw"
       - "./docs/logs/rethinkdb:/var/logs/rethinkdb:rw"
   rethinkdb:
     build: ./tools/docker/rethinkdb
@@ -22,16 +23,16 @@ services:
       - data-volumes
     networks:
       - boldr
-  # redis:
-  #   build: ./tools/docker/redis
-  #   ports:
-  #    - "6379:6379/tcp"
-  #   expose:
-  #     - "6379"
-  #   volumes_from:
-  #     - data-volumes
-  #   networks:
-  #     - boldr
+  redis:
+    build: ./tools/docker/redis
+    ports:
+     - "6379:6379/tcp"
+    expose:
+      - "6379"
+    volumes_from:
+      - data-volumes
+    networks:
+      - boldr
   # boldr1:
   #   build: ./
   #   depends_on:

@@ -5,7 +5,7 @@ import serve from 'koa-static';
 import convert from 'koa-convert';
 import { createServer } from 'http';
 import proxy from 'koa-proxy';
-
+import Redis from 'ioredis';
 import Boldr from './boldr';
 import BoldrMiddleware from './middleware';
 import projectConfig from 'config';
@@ -19,7 +19,7 @@ const debug = _debug('app:server:dev');
 const app = new Koa();
 // export server for easier testing.
 export const server = createServer(app.callback());
-
+const redis = new Redis();
 // Application constants
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = projectConfig;
 
