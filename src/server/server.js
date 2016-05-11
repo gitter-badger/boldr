@@ -1,3 +1,10 @@
+/**
+ * boldr/server
+ * Main web server.
+ *
+ * @exports {Object} app - Koa
+ * @exports {Object} server - HTTP built into node.
+ */
 import dotenv from 'dotenv';
 import Koa from 'koa';
 import _debug from 'debug';
@@ -6,23 +13,25 @@ import convert from 'koa-convert';
 import { createServer } from 'http';
 import proxy from 'koa-proxy';
 
+import config from 'config';
 import Boldr from './boldr';
 import BoldrMiddleware from './middleware';
-import projectConfig from 'config';
+
 import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
 import './db/models';
 
 dotenv.config();
-
-const debug = _debug('app:server:dev');
-const app = new Koa();
-app.keys = ['bldr'];
-// export server for easier testing.
-export const server = createServer(app.callback());
-
+const debug = _debug('boldr:server:dev');
 // Application constants
-const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = projectConfig;
+const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
+
+const app = new Koa();
+app.name = 'Boldr';
+app.env = process.env.NODE_ENV;
+app.keys = [config.JWT_SECRET];
+
+export const server = createServer(app.callback());
 
 (async() => {
   await BoldrMiddleware.init(app);
@@ -39,11 +48,22 @@ const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = projectConfig;
     })));
   }
   app.use(serve('static'));
-
+  app.use(async function(ctx, next) {
+    const start = new Date();
+    ctx.req.body = ctx.request.body;
+    await next();
+    const end = new Date();
+    logger.verbose(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
+  });
   // This is fired every time the server side receives a request
   app.use(handleRender);
-
-  await server.listen(SERVER_PORT, () => {
-    debug(`Boldr server listening on ${SERVER_PORT} in ${process.env.NODE_ENV} node`);
-  });
 })();
+server.listen(SERVER_PORT, () => {
+  logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
+});
+server.on('close', () => {
+  // db.disconnect()
+  logger.info('Keep on, keepin on. Boldr out.');
+});
+
+export default app;

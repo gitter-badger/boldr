@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import Promise from 'bluebird';
 import config, { paths } from '../../../tools/config';
-import Account from '../db/models/account';
+import User from '../db/models/user';
 import getToken from './getToken';
 
 Promise.promisifyAll(jwt);
@@ -27,9 +27,9 @@ export function checkAuth(force = false) {
       return;
     }
     try {
-      ctx.account = await jwt.verifyAsync(token, process.env.JWT_SECRET);
+      ctx.user = await jwt.verifyAsync(token, process.env.JWT_SECRET);
       ctx.state.isAuthorised = true;
-      ctx.state.account = ctx.account;
+      ctx.state.user = ctx.user;
     } catch (err) {
       if (force) {
         return ctx.throw(403, { _errors: ['Invalid credentials provided.'] });

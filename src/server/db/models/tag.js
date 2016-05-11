@@ -1,3 +1,10 @@
+/**
+ * boldr/server/db/models/tag
+ * Tag model for Thinky ORM
+ *
+ * @exports {Object} - Tag model
+ */
+
 import thinky from '../thinky';
 const { type, r } = thinky;
 

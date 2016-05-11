@@ -1,3 +1,10 @@
+/**
+ * boldr/server/db/models/group
+ * Group model for Thinky ORM
+ *
+ * @exports {Object} - Group model
+ */
+
 import shortid from 'shortid';
 import thinky from '../thinky';
 const { type, r } = thinky;

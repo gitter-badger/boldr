@@ -1,4 +1,5 @@
 import * as types from './user.constants';
+import jwtDecode from 'jwt-decode';
 
 const persistUser = (user) => {
   localStorage.setItem(types.LOCAL_STORAGE_KEY, JSON.stringify(user));
@@ -16,6 +17,14 @@ export const getUser = () => {
 
   return user;
 };
+export function populateUser() {
+  const jwt = localStorage.getItem('jwt');
+  const user = jwtDecode(jwt);
+  return {
+    type: types.PARTIAL_POPULATE_USER,
+    user
+  };
+}
 
 export const setUser = (user) => {
   persistUser(user);

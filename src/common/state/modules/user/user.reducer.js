@@ -31,6 +31,15 @@ export default function user(state = INITIAL_STATE, action) {
           role: action.user.role
         }
       };
+    case constants.PARTIAL_POPULATE_USER:
+      return {
+        ...state,
+        profile: {
+          email: action.user.email,
+          username: action.user.username,
+          id: action.user.id
+        }
+      };
     default:
       return state;
   }

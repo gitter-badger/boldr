@@ -5,8 +5,7 @@ import passport from 'koa-passport';
 import Promise from 'bluebird';
 import config, { paths } from 'config';
 import { signJwt } from '../../auth/signToken';
-import Account from '../../db/models/account';
-import Profile from '../../db/models/profile';
+import User from '../../db/models/user';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
@@ -17,32 +16,30 @@ const errorMessages = {
 };
 /**
  * @description
- * registers a new account
+ * registers a new user
  * @route /api/v1/auth/register
  * @method POST
  * @see docs/api/auth/registerUser.md
  */
-export const registerAccount = async ctx => {
+export const registerUser = async ctx => {
   if (!ctx.request.body || !ctx.request.body.username || !ctx.request.body.password || !ctx.request.body.email) {
     return ctx.throw(400, errorMessages.incompleteAttributes);
   }
   try {
-    const account = await new Account({
+    const user = await new User({
       email: ctx.request.body.email,
       password: ctx.request.body.password,
       username: ctx.request.body.username,
-      profile: new Profile({
-        name: {
-          first: ctx.request.body.first,
-          last: ctx.request.body.last
-        },
-        location: ctx.request.body.location,
-        website: ctx.request.body.website,
-        avatar: ctx.request.body.avatar,
-        bio: ctx.request.body.bio
-      })
-    }).saveAll().then((account) => {
-      return ctx.created(account);
+      name: {
+        first: ctx.request.body.first,
+        last: ctx.request.body.last
+      },
+      location: ctx.request.body.location,
+      website: ctx.request.body.website,
+      avatar: ctx.request.body.avatar,
+      bio: ctx.request.body.bio
+    }).save().then((user) => {
+      return ctx.created(user);
     });
   } catch (error) {
     ctx.throw(400, error.message);
@@ -63,21 +60,22 @@ export const registerAccount = async ctx => {
  * }
  */
 export async function loginUser(ctx, next) {
-  return passport.authenticate('local', (account) => {
-    if (!account) {
+  return passport.authenticate('local', (user) => {
+    if (!user) {
       ctx.unauthorized('Failed to validate login information.');
     }
     const payload = {
-      id: account.id,
-      email: account.email,
-      username: account.username
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      right: user.right
     };
-    ctx.account = payload;
+    ctx.user = payload;
 
     const token = jwt.signAsync(payload, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
-    ctx.session.account = ctx.account;
+    ctx.session.user = ctx.user;
     return ctx.ok(token);
   })(ctx, next);
 }

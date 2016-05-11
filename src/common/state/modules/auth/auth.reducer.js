@@ -35,7 +35,7 @@ export default function auth(state = INITIAL_STATE, action) {
         isAuthenticated: true,
         loading: false,
         message: 'Logged in successfully.',
-        token: action.payload
+        token: action.payload.fulfillmentValue
       };
     case constants.LOGIN_USER_FAILURE:
       return {
