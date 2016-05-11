@@ -27,19 +27,19 @@ describe('API: v1/auth', () => {
 
     // assert.deepEqual(result.body, expected);
   });
-  it('should login and return a token.', async () => {
+  it('should login and return a token.', (done) => {
     const loginDetails = {
       email: 'test@boldr.io',
       password: 'boldr123'
     };
-    const result = await request
+    const result = request
                           .post('/api/v1/auth/login')
                           .send(loginDetails)
                           .set('Accept', 'application/json')
                           .expect('Content-Type', /json/)
                           .expect(200);
     expect('fulfillmentValue').to.not.be.null;
-
+    done();
     // assert.deepEqual(result.body, expected);
   });
 });
