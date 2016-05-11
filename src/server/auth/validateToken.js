@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import Promise from 'bluebird';
 import config, { paths } from '../../../tools/config';
-import Account from '../db/models/account';
+import User from '../db/models/user';
 import getToken from './getToken';
 
 Promise.promisifyAll(jwt);

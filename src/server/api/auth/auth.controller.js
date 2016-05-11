@@ -6,7 +6,6 @@ import Promise from 'bluebird';
 import config, { paths } from 'config';
 import { signJwt } from '../../auth/signToken';
 import User from '../../db/models/user';
-import Profile from '../../db/models/profile';
 
 const debug = _debug('boldr:auth:controller');
 debug('init');

@@ -57,12 +57,10 @@ const server = createServer(app.callback());
   });
   // This is fired every time the server side receives a request
   app.use(handleRender);
-
-  await server.listen(SERVER_PORT, () => {
-    logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
-  });
 })();
-
+server.listen(SERVER_PORT, () => {
+  logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
+});
 server.on('close', () => {
   // db.disconnect()
   logger.info('Keep on, keepin on. Boldr out.');
