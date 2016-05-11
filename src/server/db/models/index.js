@@ -6,12 +6,16 @@
  * @exports {Object} - Collection model
  * @exports {Object} - Group model
  * @exports {Object} - Page model
+ * @exports {Object} - Setting model
  * @exports {Object} - Tag model
  * @exports {Object} - User model
  */
 
 import Article from './article';
+import Collection from './collection';
 import Group from './group';
+import Page from './page';
+import Setting from './setting';
 import Tag from './tag';
 import User from './user';
 
@@ -20,6 +24,9 @@ Article.ensureIndex('isDraft');
 Article.ensureIndex('authorId');
 Article.ensureIndex('createdAt');
 Article.ensureIndex('slug');
+
+Collection.ensureIndex('name');
+Collection.ensureIndex('contentType');
 
 Group.ensureIndex('name');
 
