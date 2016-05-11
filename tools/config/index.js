@@ -20,7 +20,7 @@ const config = {
   // Server Configuration
   SERVER_HOST: 'localhost',
   SERVER_PORT: process.env.PORT || 3000,
-
+  JWT_SECRET: process.env.JWT_SECRET || 'boldr',
   // Webpack Configuration
   WEBPACK_DEV_SERVER_PORT: 3001,
   VENDOR_DEPENDENCIES: [
@@ -41,7 +41,11 @@ const config = {
   TESTDB_HOST: process.env.TEST_DB_HOST || '10.211.55.7',
   TESTDB_NAME: process.env.TEST_DB_NAME || 'boldr_test',
   TESTDB_PORT: process.env.TEST_DB_PORT || 28015,
-
+  logger: {
+    console: true,
+    level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'
+    files: false
+  },
   // Project Structure
   PATH_BASE: path.normalize(path.join(__dirname, '..', '..')),
   ENTRY_APP: 'index',
