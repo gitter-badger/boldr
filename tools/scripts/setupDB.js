@@ -5,7 +5,7 @@ import { promisify } from 'bluebird';
 
 const rethinkdb = { host: config.RDB_HOST, port: config.RDB_PORT, db: config.RDB_DB };
 const DATABASE = config.RDB_DB || 'boldr_dev';
-const TABLES = ['accounts', 'profiles', 'groups', 'articles', 'pages', 'tags', 'categories', 'menus',
+const TABLES = ['users', 'groups', 'articles', 'pages', 'tags', 'categories', 'menus',
 'sessions', 'articles_tags'];
 
 r.connect(rethinkdb)

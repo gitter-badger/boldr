@@ -1,6 +1,6 @@
 import request from 'axios';
 import { push } from 'react-router-redux';
-
+import { populateUser } from '../user/user.actions';
 import * as types from './auth.constants';
 /**
  * Utility function to make AJAX requests using isomorphic fetch.
@@ -25,6 +25,7 @@ function beginLogin() {
 }
 
 export function loginSuccess(response) {
+  localStorage.setItem('jwt', response.data.fulfillmentValue);
   return {
     type: types.LOGIN_USER_SUCCESS,
     payload: response.data,
@@ -83,7 +84,7 @@ export function authLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response));
-          localStorage.setItem('jwt', response.data.fulfillmentValue);
+          dispatch(populateUser(response));
           dispatch(push('/'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));

@@ -1,7 +1,6 @@
 import _debug from 'debug';
 import slug from 'slugg';
 import Article from '../../db/models/article';
-import { r } from '../../db/connector';
 const debug = _debug('boldr:article:controller');
 debug('init');
 
