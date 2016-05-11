@@ -31,7 +31,7 @@ app.name = 'Boldr';
 app.env = process.env.NODE_ENV;
 app.keys = [config.JWT_SECRET];
 
-const server = createServer(app.callback());
+export const server = createServer(app.callback());
 
 (async() => {
   await BoldrMiddleware.init(app);
@@ -66,4 +66,4 @@ server.on('close', () => {
   logger.info('Keep on, keepin on. Boldr out.');
 });
 
-export default { app, server };
+export default app;
