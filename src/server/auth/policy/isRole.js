@@ -6,7 +6,7 @@
  */
 
 import ifRole from './ifRole';
-import Account from 'server/db/models/account';
+import User from 'server/db/models/user';
 
 /**
  * Checks a user's rights
@@ -21,12 +21,12 @@ export default (role) => {
       return ctx.redirect('/login');
     }
 
-    if (ifRole(ctx.account, role)) {
+    if (ifRole(ctx.user, role)) {
       return next();
     }
-    const possibilities = Account.tree.right.enum;
+    const possibilities = User.tree.right.enum;
 
-    if (role === possibilities.indexOf('ROLES')) {
+    if (role === possibilities.indexOf('BANNED')) {
       return ctx.forbidden();
     }
 

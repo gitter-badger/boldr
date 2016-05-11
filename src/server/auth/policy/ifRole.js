@@ -5,20 +5,20 @@
  * @exports {Function} - Koa-Router Middleware
  */
 
-import Account from 'server/db/models/account';
+import User from 'server/db/models/user';
 import config from 'config';
 import logger from 'server/utils/logger';
 
 /**
  * Checks user rights
  *
- * @param {Object} account - the account model.
+ * @param {Object} user - the user model.
  * @param {String|Number} role - role to check against
  * @returns {Boolean} - Is the user equal to or greater than the requested role?
  */
-export default (account, role, ctx) => {
-  const possibilities = Account.indexOf;
-  const accountRole = possibilities.indexOf(account.right);
+export default (user, role, ctx) => {
+  const possibilities = User.indexOf;
+  const userRole = possibilities.indexOf(user.right);
 
   if (typeof role === 'string') {
     role = possibilities.indexOf(role.toUpperCase());
@@ -29,17 +29,17 @@ export default (account, role, ctx) => {
   }
 
   if (!config.rights) {
-    logger.info(`User rights disabled, letting ${account.username} access "${possibilities[role]}" section`);
+    logger.info(`User rights disabled, letting ${user.username} access "${possibilities[role]}" section`);
     return true;
   }
 
-  if (accountRole >= role) {
+  if (userRole >= role) {
     logger.info(
-      `${account.username} is a "${possibilities[accountRole]}", allowing access to "${possibilities[role]}" section`);
+      `${user.username} is a "${possibilities[userRole]}", allowing access to "${possibilities[role]}" section`);
     return true;
   }
 
   logger.info(
-    `${account.username} is a "${possibilities[accountRole]}", denying access to "${possibilities[role]}" section`);
+    `${user.username} is a "${possibilities[userRole]}", denying access to "${possibilities[role]}" section`);
   return false;
 };

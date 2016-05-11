@@ -38,8 +38,7 @@ describe('API: v1/auth', () => {
                           .set('Accept', 'application/json')
                           .expect('Content-Type', /json/)
                           .expect(200);
-    expect('token').to.not.be.null;
-
+    expect('fulfillmentValue').to.not.be.null;
 
     // assert.deepEqual(result.body, expected);
   });
