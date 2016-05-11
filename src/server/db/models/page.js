@@ -1,3 +1,10 @@
+/**
+ * boldr/server/db/models/page
+ * Page model for Thinky ORM
+ *
+ * @exports {Object} - Page model
+ */
+
 import shortid from 'shortid';
 import thinky from '../thinky';
 const { type, r } = thinky;

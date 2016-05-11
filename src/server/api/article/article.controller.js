@@ -7,7 +7,7 @@ debug('init');
 
 export async function getAllArticles(ctx) {
   const articles = await Article.getJoin({
-    account: true,
+    user: true,
     tags: true
   }).run();
   return ctx.ok(articles);
@@ -27,7 +27,7 @@ export const createArticle = async (ctx, next) => {
       markup: ctx.request.body.markup,
       content: ctx.request.body.content,
       featureImage: ctx.request.body.featureImage,
-      authorId: ctx.state.account.id,
+      authorId: ctx.state.user.id,
       isDraft: ctx.request.body.draft
     });
 

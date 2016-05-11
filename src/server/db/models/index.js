@@ -1,12 +1,19 @@
-import Account from './account';
+/**
+ * boldr/server/db/models
+ * Definition of secondary indexes and relationships.
+ *
+ * @exports {Object} - Article model
+ * @exports {Object} - Collection model
+ * @exports {Object} - Group model
+ * @exports {Object} - Page model
+ * @exports {Object} - Tag model
+ * @exports {Object} - User model
+ */
+
 import Article from './article';
-import Profile from './profile';
 import Group from './group';
 import Tag from './tag';
-
-Account.ensureIndex('id');
-Account.ensureIndex('email');
-Account.ensureIndex('username');
+import User from './user';
 
 Article.ensureIndex('title');
 Article.ensureIndex('isDraft');
@@ -16,21 +23,20 @@ Article.ensureIndex('slug');
 
 Group.ensureIndex('name');
 
-Profile.ensureIndex('accountId');
-Profile.ensureIndex('id');
-
 Tag.ensureIndex('id');
 Tag.ensureIndex('name');
 
-Account.hasOne(Profile, 'profile', 'id', 'accountId');
-Account.hasMany(Article, 'articles', 'id', 'authorId');
-Account.hasAndBelongsToMany(Group, 'groups', 'id', 'id');
+User.ensureIndex('id');
+User.ensureIndex('email');
+User.ensureIndex('username');
+User.ensureIndex('createdAt');
 
-Article.belongsTo(Account, 'account', 'authorId', 'id');
+Article.belongsTo(User, 'user', 'authorId', 'id');
 Article.hasAndBelongsToMany(Tag, 'tag', 'id', 'id');
 
-Group.hasAndBelongsToMany(Account, 'accounts', 'id', 'id');
-
-Profile.belongsTo(Account, 'account', 'accountId', 'id');
+Group.hasAndBelongsToMany(User, 'users', 'id', 'id');
 
 Tag.hasAndBelongsToMany(Article, 'articles', 'id', 'id');
+
+User.hasMany(Article, 'articles', 'id', 'authorId');
+User.hasAndBelongsToMany(Group, 'groups', 'id', 'id');

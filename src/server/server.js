@@ -59,7 +59,7 @@ const server = createServer(app.callback());
   app.use(handleRender);
 
   await server.listen(SERVER_PORT, () => {
-    logger.info(`Doing Boldr things and listening on port ${SERVER_PORT}`);
+    logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
   });
 })();
 

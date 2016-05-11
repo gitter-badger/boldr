@@ -238,3 +238,42 @@
 2016-05-11T00:34:05.765179506 4081.271646s notice: Someone asked for the nonwhitelisted file "/apple-touch-icon.png".  If this should be accessible, add it to the static web assets.
 2016-05-11T00:34:05.789913594 4081.296380s notice: Someone asked for the nonwhitelisted file "/apple-touch-icon-precomposed.png".  If this should be accessible, add it to the static web assets.
 2016-05-11T00:34:05.792393643 4081.298860s notice: Someone asked for the nonwhitelisted file "/apple-touch-icon.png".  If this should be accessible, add it to the static web assets.
+2016-05-11T01:07:07.738821152 6063.245291s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/c4526151-7091-41ef-b848-8f6a7c39fcc3.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-11T01:07:07.741683970 6063.248151s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/c4526151-7091-41ef-b848-8f6a7c39fcc3.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-11T01:07:07.795516692 6063.301983s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: Starting a new Raft election for term 1.
+2016-05-11T01:07:07.796072508 6063.302539s warn: Failed to sync parent directory of "/data/rethinkdb_data/c4526151-7091-41ef-b848-8f6a7c39fcc3" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-11T01:07:07.796786988 6063.303254s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-11T01:07:07.796954642 6063.303421s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: Added replica on this server.
+2016-05-11T01:07:07.798900718 6063.305367s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/f9e866f4-f9a2-4eb7-9be2-99f6e5b41532.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-11T01:07:07.807721037 6063.314188s warn: Failed to sync parent directory of "/data/rethinkdb_data/tmp/f9e866f4-f9a2-4eb7-9be2-99f6e5b41532.create" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-11T01:07:07.816494139 6063.322961s info: Table f9e866f4-f9a2-4eb7-9be2-99f6e5b41532: Starting a new Raft election for term 1.
+2016-05-11T01:07:07.816869564 6063.323336s info: Table f9e866f4-f9a2-4eb7-9be2-99f6e5b41532: This server is Raft leader for term 1. Latest log index is 0.
+2016-05-11T01:07:07.817067193 6063.323534s warn: Failed to sync parent directory of "/data/rethinkdb_data/f9e866f4-f9a2-4eb7-9be2-99f6e5b41532" (errno: 22 - Invalid argument). You may encounter data loss in case of a system failure. (Is the file located on a filesystem that doesn't support directory sync? e.g. VirtualBox shared folders)
+2016-05-11T01:07:07.817462420 6063.323929s info: Table f9e866f4-f9a2-4eb7-9be2-99f6e5b41532: Added replica on this server.
+2016-05-11T01:07:08.061906600 6063.568373s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: Configuration is changing.
+2016-05-11T01:07:08.062136175 6063.568603s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: Configuration is changing.
+2016-05-11T01:07:08.062138336 6063.568605s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: Configuration is changing.
+2016-05-11T01:07:08.071036170 6063.577503s info: Table f9e866f4-f9a2-4eb7-9be2-99f6e5b41532: Configuration is changing.
+2016-05-11T01:07:08.071606528 6063.578073s info: Table f9e866f4-f9a2-4eb7-9be2-99f6e5b41532: Configuration is changing.
+2016-05-11T01:07:55.853940581 6111.360408s notice: Someone asked for the nonwhitelisted file "/apple-touch-icon-precomposed.png".  If this should be accessible, add it to the static web assets.
+2016-05-11T01:07:55.856281670 6111.362748s notice: Someone asked for the nonwhitelisted file "/apple-touch-icon.png".  If this should be accessible, add it to the static web assets.
+2016-05-11T01:08:05.643601458 6121.150068s notice: Removing file /data/rethinkdb_data/61357ca8-99c9-4140-8389-7daceebfff7e
+2016-05-11T01:08:05.643846824 6121.150313s info: Table 61357ca8-99c9-4140-8389-7daceebfff7e: Deleted the table.
+2016-05-11T01:08:05.647941188 6121.154408s notice: Removing file /data/rethinkdb_data/6ebf8dff-1566-45e8-9aa5-503aac6a7489
+2016-05-11T01:08:05.648113622 6121.154580s info: Table 6ebf8dff-1566-45e8-9aa5-503aac6a7489: Deleted the table.
+2016-05-11T01:08:05.651102182 6121.157569s notice: Removing file /data/rethinkdb_data/85639b9e-a91f-43ad-b533-eb805cc2010c
+2016-05-11T01:08:05.651225574 6121.157692s info: Table 85639b9e-a91f-43ad-b533-eb805cc2010c: Deleted the table.
+2016-05-11T01:08:05.653337844 6121.159804s notice: Removing file /data/rethinkdb_data/9e708af6-d161-4e49-8c2f-237c0774ee3b
+2016-05-11T01:08:05.653428556 6121.159895s info: Table 9e708af6-d161-4e49-8c2f-237c0774ee3b: Deleted the table.
+2016-05-11T01:08:05.661132497 6121.167599s notice: Removing file /data/rethinkdb_data/a1a30780-d08c-454d-a0e1-c845c88d2305
+2016-05-11T01:08:05.661323829 6121.167790s info: Table a1a30780-d08c-454d-a0e1-c845c88d2305: Deleted the table.
+2016-05-11T01:08:05.689757941 6121.196225s notice: Removing file /data/rethinkdb_data/c4526151-7091-41ef-b848-8f6a7c39fcc3
+2016-05-11T01:08:05.690025527 6121.196492s info: Table c4526151-7091-41ef-b848-8f6a7c39fcc3: Deleted the table.
+2016-05-11T01:08:05.694090538 6121.200557s notice: Removing file /data/rethinkdb_data/cf4ecbf7-b711-4ac9-963e-5d2b2a63ca95
+2016-05-11T01:08:05.694246980 6121.200714s info: Table cf4ecbf7-b711-4ac9-963e-5d2b2a63ca95: Deleted the table.
+2016-05-11T01:08:05.697601957 6121.204069s notice: Removing file /data/rethinkdb_data/eb0c6c70-dda2-4f92-8d38-817bb7109431
+2016-05-11T01:08:05.697739302 6121.204206s info: Table eb0c6c70-dda2-4f92-8d38-817bb7109431: Deleted the table.
+2016-05-11T01:08:05.706894235 6121.213361s notice: Removing file /data/rethinkdb_data/ed4f9413-3da0-4450-ba5c-888e7ef2caed
+2016-05-11T01:08:05.707085280 6121.213552s info: Table ed4f9413-3da0-4450-ba5c-888e7ef2caed: Deleted the table.
+2016-05-11T01:08:05.712558718 6121.219025s notice: Removing file /data/rethinkdb_data/f9e866f4-f9a2-4eb7-9be2-99f6e5b41532
+2016-05-11T01:08:05.712708226 6121.219175s info: Table f9e866f4-f9a2-4eb7-9be2-99f6e5b41532: Deleted the table.

@@ -1,3 +1,10 @@
+/**
+ * boldr/server/db/models/collection
+ * Collection model for Thinky ORM
+ *
+ * @exports {Object} - Collection model
+ */
+
 import shortid from 'shortid';
 import thinky from '../thinky';
 const { type, r } = thinky;
