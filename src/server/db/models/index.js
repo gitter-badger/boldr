@@ -10,6 +10,7 @@
  * @exports {Object} - Tag model
  * @exports {Object} - User model
  */
+import thinky from '../thinky';
 
 import Article from './article';
 import Collection from './collection';
@@ -18,32 +19,21 @@ import Page from './page';
 import Setting from './setting';
 import Tag from './tag';
 import User from './user';
+const type = thinky.type;
+const r = thinky.r;
 
-Article.ensureIndex('title');
-Article.ensureIndex('isDraft');
-Article.ensureIndex('authorId');
-Article.ensureIndex('createdAt');
-Article.ensureIndex('slug');
+const promises = [];
 
-Collection.ensureIndex('name');
-Collection.ensureIndex('contentType');
-
-Group.ensureIndex('name');
-
-Tag.ensureIndex('id');
-Tag.ensureIndex('name');
-
-User.ensureIndex('id');
-User.ensureIndex('email');
-User.ensureIndex('username');
-User.ensureIndex('createdAt');
-
-Article.belongsTo(User, 'user', 'authorId', 'id');
-Article.hasAndBelongsToMany(Tag, 'tag', 'id', 'id');
-
-Group.hasAndBelongsToMany(User, 'users', 'id', 'id');
-
-Tag.hasAndBelongsToMany(Article, 'articles', 'id', 'id');
-
-User.hasMany(Article, 'articles', 'id', 'authorId');
-User.hasAndBelongsToMany(Group, 'groups', 'id', 'id');
+for (let name in thinky.models) {// eslint-disable-line
+  if (thinky.models[name] && thinky.models[name].ready !== undefined) {
+    promises.push(thinky.models[name].ready());
+  }
+}
+Promise.all(promises).then(() => {
+  for (let name in thinky.models) {// eslint-disable-line
+    if (thinky.models[name] && thinky.models[name].relationship !== undefined) {
+      thinky.models[name].relationship();
+    }
+  }
+});
+export { Article, Collection, Group, Page, Setting, Tag, User };

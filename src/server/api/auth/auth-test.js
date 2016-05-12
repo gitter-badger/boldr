@@ -3,10 +3,12 @@ import { assert, expect } from 'chai';
 import supertest from 'supertest';
 import { server } from '../../server';
 
-describe('API: v1/auth', () => {
-  const request = supertest(server.listen());
+function request() {
+  return supertest(server.listen());
+}
 
-  it('should register an account with the provided data.', async () => {
+describe('API: v1/auth', () => {
+  it('should register an account with the provided data.', (done) => {
     const accountData = {
       email: 'test@boldr.io',
       username: 'boldr',
@@ -18,12 +20,12 @@ describe('API: v1/auth', () => {
       first: 'Bobbo',
       last: 'smith'
     };
-    const result = await request
-                          .post('/api/v1/auth/register')
-                          .send(accountData)
-                          .set('Accept', 'application/json')
-                          .expect('Content-Type', /json/)
-                          .expect(201);
+    request()
+      .post('/api/v1/auth/register')
+      .send(accountData)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(201, done);
 
     // assert.deepEqual(result.body, expected);
   });
@@ -32,14 +34,13 @@ describe('API: v1/auth', () => {
       email: 'test@boldr.io',
       password: 'boldr123'
     };
-    const result = request
-                          .post('/api/v1/auth/login')
-                          .send(loginDetails)
-                          .set('Accept', 'application/json')
-                          .expect('Content-Type', /json/)
-                          .expect(200);
+    request()
+      .post('/api/v1/auth/login')
+      .send(loginDetails)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200);
     expect('fulfillmentValue').to.not.be.null;
     done();
-    // assert.deepEqual(result.body, expected);
   });
 });

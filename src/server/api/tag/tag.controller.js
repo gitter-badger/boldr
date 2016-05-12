@@ -6,9 +6,8 @@ const debug = _debug('boldr:tag:controller');
 debug('init');
 
 export async function getAllTags(ctx) {
-  console.log(ctx.session)
-  const tags = await Tag.getJoin({article: true}).run();
-  ctx.body = tags;
+  const tags = await Tag.getJoin({ article: true }).run();
+  return ctx.ok(tags);
 }
 
 /**
@@ -19,11 +18,12 @@ export async function getAllTags(ctx) {
  */
 export const createTag = async (ctx, next) => {
   try {
-    Tag.save({
+    const tag = new Tag({
       name: ctx.request.body.name,
       description: ctx.request.body.description
-    }).run();
-    ctx.status = 201;
+    });
+    await tag.save();
+    return ctx.created(tag);
   } catch (err) {
     return ctx.error('There was an error!');
   }

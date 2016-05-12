@@ -6,9 +6,10 @@
  */
 
 import thinky from '../thinky';
-const { type, r } = thinky;
+const type = thinky.type;
+const r = thinky.r;
 
-const Setting = thinky.createModel('settings', {
+const Setting = thinky.createModel('Setting', {
   id: type.string().optional(),
   name: type.string(),
   description: type.string().optional()

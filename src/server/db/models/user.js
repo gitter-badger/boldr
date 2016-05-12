@@ -9,9 +9,10 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import shortid from 'shortid';
 import thinky from '../thinky';
-const { type, r } = thinky;
+const type = thinky.type;
+const r = thinky.r;
 
-const User = thinky.createModel('users', {
+const User = thinky.createModel('User', {
   id: type.string().default(shortid.generate),
   username: type.string().required().alphanum().min(2).max(16),
   password: type.string().required(),
@@ -30,6 +31,7 @@ const User = thinky.createModel('users', {
   bio: type.string(),
   avatar: type.string(),
   createdAt: type.date().default(r.now()),
+  updatedAt: type.date(),
   isActive: type.boolean().default(true)
 });
 
@@ -89,6 +91,8 @@ User.define('authenticate', function(password, callback) {
 });
 
 User.pre('save', function(next) {
+  this.updatedAt = thinky.r.now();
+  if (this.isSaved()) { return next(); }
   this.makeSalt((err, salt) => {
     if (err) {
       return next(err);
@@ -114,5 +118,15 @@ User.pre('save', function(next) {
 User.defineStatic('getClean', function() {
   return this.without(['password', 'salt']);
 });
+
+User.ensureIndex('id');
+User.ensureIndex('email');
+User.ensureIndex('username');
+User.ensureIndex('createdAt');
+
+User.relationship = () => {
+  User.hasMany(thinky.models.Article, 'articles', 'id', 'userId');
+  User.hasAndBelongsToMany(thinky.models.Group, 'groups', 'id', 'id');
+};
 
 export default User;

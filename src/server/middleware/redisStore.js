@@ -1,9 +1,10 @@
 import RedisStore from 'koa-redis';
 import redis from 'ioredis';
+import config from 'config';
 
 const redisClient = redis.createClient({
-  host: '10.211.55.7',
-  port: 6379
+  host: config.REDIS_HOST,
+  port: config.REDIS_PORT
 });
 
 const redisStore = new RedisStore({

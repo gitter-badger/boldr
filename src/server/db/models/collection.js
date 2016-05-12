@@ -7,9 +7,10 @@
 
 import shortid from 'shortid';
 import thinky from '../thinky';
-const { type, r } = thinky;
+const type = thinky.type;
+const r = thinky.r;
 
-const Collection = thinky.createModel('collections', {
+const Collection = thinky.createModel('Collection', {
   id: type.string().optional().default(shortid.generate),
   name: type.string(),
   description: type.string().optional(),
@@ -17,5 +18,8 @@ const Collection = thinky.createModel('collections', {
   content: type.string(),
   media: type.string()
 });
+
+Collection.ensureIndex('name');
+Collection.ensureIndex('contentType');
 
 export default Collection;

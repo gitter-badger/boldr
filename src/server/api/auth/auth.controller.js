@@ -71,11 +71,10 @@ export async function loginUser(ctx, next) {
       right: user.right
     };
     ctx.user = payload;
-
+    ctx.session.user = ctx.user;
     const token = jwt.signAsync(payload, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
-    ctx.session.user = ctx.user;
     return ctx.ok(token);
   })(ctx, next);
 }

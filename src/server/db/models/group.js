@@ -7,13 +7,20 @@
 
 import shortid from 'shortid';
 import thinky from '../thinky';
-const { type, r } = thinky;
+const type = thinky.type;
+const r = thinky.r;
 
-const Group = thinky.createModel('groups', {
+const Group = thinky.createModel('Group', {
   id: type.string().optional(),
   name: type.string(),
   description: type.string().optional(),
   createdAt: type.date().default(new Date())
 });
+
+Group.ensureIndex('name');
+
+Group.relationship = () => {
+  Group.belongsTo(thinky.models.User, 'user', 'userId', 'id');
+};
 
 export default Group;

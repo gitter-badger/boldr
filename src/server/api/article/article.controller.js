@@ -6,10 +6,10 @@ debug('init');
 
 export async function getAllArticles(ctx) {
   const articles = await Article.getJoin({
-    user: true,
-    tags: true
-  }).run();
-  return ctx.ok(articles);
+    user: true
+  }).run().then((articles) => {
+    return ctx.ok(articles);
+  });
 }
 
 /**
@@ -20,16 +20,17 @@ export async function getAllArticles(ctx) {
  */
 export const createArticle = async (ctx, next) => {
   try {
+    // const tags = ctx.request.body.tags.id;
     const article = new Article({
       title: ctx.request.body.title,
       slug: slug(ctx.request.body.slug),
       markup: ctx.request.body.markup,
       content: ctx.request.body.content,
       featureImage: ctx.request.body.featureImage,
-      authorId: ctx.state.user.id,
+      userId: ctx.session.user.id,
       isDraft: ctx.request.body.draft
     });
-
+    // article.tags = tags;
     await article.save();
     return ctx.created(article);
   } catch (err) {

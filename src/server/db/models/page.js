@@ -7,9 +7,9 @@
 
 import shortid from 'shortid';
 import thinky from '../thinky';
-const { type, r } = thinky;
-
-const Page = thinky.createModel('pages', {
+const type = thinky.type;
+const r = thinky.r;
+const Page = thinky.createModel('Page', {
   id: type.string().optional().default(shortid.generate),
   title: type.string(),
   description: type.string().optional(),
@@ -17,5 +17,8 @@ const Page = thinky.createModel('pages', {
   content: type.string(),
   media: type.string()
 });
+
+Page.ensureIndex('slug');
+Page.ensureIndex('title');
 
 export default Page;
