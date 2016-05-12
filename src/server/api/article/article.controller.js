@@ -6,8 +6,7 @@ debug('init');
 
 export async function getAllArticles(ctx) {
   const articles = await Article.getJoin({
-    user: true,
-    tags: true
+    user: true
   }).run().then((articles) => {
     return ctx.ok(articles);
   });

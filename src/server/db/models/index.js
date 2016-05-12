@@ -17,23 +17,9 @@ import Collection from './collection';
 import Group from './group';
 import Page from './page';
 import Setting from './setting';
-import Tag from './tag';
+// import Tag from './tag';
 import User from './user';
 const type = thinky.type;
 const r = thinky.r;
 
-const promises = [];
-
-for (let name in thinky.models) {// eslint-disable-line
-  if (thinky.models[name] && thinky.models[name].ready !== undefined) {
-    promises.push(thinky.models[name].ready());
-  }
-}
-Promise.all(promises).then(() => {
-  for (let name in thinky.models) {// eslint-disable-line
-    if (thinky.models[name] && thinky.models[name].relationship !== undefined) {
-      thinky.models[name].relationship();
-    }
-  }
-});
-export { Article, Collection, Group, Page, Setting, Tag, User };
+export { Article, Collection, Group, Page, Setting, User };
