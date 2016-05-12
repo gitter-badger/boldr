@@ -1,6 +1,6 @@
 import _debug from 'debug';
-
-import User from '../../db/models/user';
+import r from 'server/db';
+// import User from '../../db/models/user';
 import jwt from 'jsonwebtoken';
 import config, { paths } from '../../../../tools/config';
 import getToken from '../../auth/getToken';
@@ -13,9 +13,14 @@ debug('init');
  * @param  {[type]} ctx [description]
  * @return {[type]}     [description]
  */
-export async function getUsers(ctx) {
-  const users = await User.getClean().execute();
-  return ctx.ok(users);
+export async function getAll(ctx) {
+  const users = await r.table('users')
+  .run((err, user) => {
+    if (err) {
+      throw err;
+    }
+    return ctx.ok(user);
+  });
 }
 
 /**
@@ -24,37 +29,30 @@ export async function getUsers(ctx) {
  * @param  {Function} next continue to the next middleware
  * @return {Object}        the User object.
  */
-export async function getUserById(ctx, next) {
+export async function getId(ctx, next) {
   try {
-    const user = await User.get(ctx.params.id).getClean().execute();
-    if (!user) {
-      return ctx.badRequest('User is Not Found');
-    }
-
+    const user = await r.table('users')
+      .get(ctx.params.id)
+      .run();
     return ctx.ok(user);
   } catch (err) {
     return ctx.badRequest('User is Not Found');
   }
 }
-
-export async function updateUser(ctx) {
-  if (ctx.request.body._id) {
-    delete ctx.request.body._id;
-  }
-  const user = await User.get(ctx.params.id);
-  Object.assign(user, ctx.request.body);
-  await user.save();
-
-  ctx.body = {
-    user
-  };
+//
+export async function update(ctx) {
+  const result = await r.table('users')
+    .get(ctx.params.id)
+    .update(ctx.request.body)
+    .run();
+  return ctx.ok(result);
 }
 
-export async function deleteUser(ctx) {
-  const user = User.get(ctx.params.id);
+export async function destroy(ctx) {
+  const result = await r.table('users')
+    .get(ctx.params.id)
+    .delete()
+    .run();
 
-  await user.remove();
-
-  ctx.status = 200;
   return ctx.ok();
 }

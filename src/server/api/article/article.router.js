@@ -1,7 +1,7 @@
 import Router from 'koa-router';
-import { getAllArticles, createArticle, showArticle, getArticleBySlug } from './article.controller';
+import { getAllArticles, showArticle, createArticle, getArticleBySlug } from './article.controller';
 import { checkAuth } from '../../auth/validateToken';
-import { isAuthenticated } from '../../auth/local/passport';
+// import { isAuthenticated } from '../../auth/local/passport';
 const articleRouter = new Router({ prefix: '/api/v1/articles' });
 
 articleRouter

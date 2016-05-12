@@ -41,6 +41,8 @@ const config = {
   TESTDB_HOST: process.env.TEST_DB_HOST || '10.211.55.7',
   TESTDB_NAME: process.env.TEST_DB_NAME || 'boldr_test',
   TESTDB_PORT: process.env.TEST_DB_PORT || 28015,
+  REDIS_HOST: process.env.REDIS_HOST || 'localhost',
+  REDIS_PORT: process.env.REDIS_PORT || 6379,
   logger: {
     console: true,
     level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'

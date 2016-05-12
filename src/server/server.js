@@ -6,6 +6,7 @@
  * @exports {Object} server - HTTP built into node.
  */
 import dotenv from 'dotenv';
+
 import Koa from 'koa';
 import _debug from 'debug';
 import serve from 'koa-static';
@@ -19,8 +20,7 @@ import BoldrMiddleware from './middleware';
 
 import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
-import './db/models';
-
+// import './db/models';
 dotenv.config();
 const debug = _debug('boldr:server:dev');
 // Application constants
@@ -36,6 +36,7 @@ export const server = createServer(app.callback());
 (async() => {
   await BoldrMiddleware.init(app);
   await Boldr.initRoutes(app);
+
   /**
    * Loads the development specific functions
    * @param  {Boolean} __DEV__ Global variable for development environment

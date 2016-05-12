@@ -6,8 +6,17 @@ import tagRouter from './tag/tag.router';
 
 export default [
   versionRouter,
-  userRouter,
   articleRouter,
+  userRouter,
   authRouter,
   tagRouter
 ];
+/*
+export default [
+  versionRouter,
+  userRouter,
+  articleRouter,
+  authRouter
+];
+
+ */

@@ -1,74 +1,52 @@
 /* eslint-disable no-console */
-import r from 'rethinkdb';
+import r from 'server/db';
 import config from 'config';
-import { promisify } from 'bluebird';
 
-const rethinkdb = { host: config.RDB_HOST, port: config.RDB_PORT, db: config.RDB_DB };
-const DATABASE = config.RDB_DB || 'boldr_dev';
-const TABLES = ['users', 'groups', 'articles', 'pages', 'tags', 'categories', 'menus',
-'sessions', 'articles_tags'];
-
-r.connect(rethinkdb)
-.then(conn => {
-  console.log(' [-] Database Setup');
-  return createDbIfNotExists(conn)
-  .then(() => Promise.all(TABLES.map((table) => createTableIfNotExists(conn, table))))
-  .then(() => closeConnection(conn));
-});
-
-function createDbIfNotExists(conn) {
-  return getDbList(conn)
-  .then((list) => {
-    if (list.indexOf(DATABASE) === -1) {
-      return createDatabase(conn);
-    } else {
-      console.log(' [!] Database already exists:', DATABASE);
-      return Promise.resolve(true);
-    }
-  });
+function initDB() {
+  r.dbCreate('boldr').run();
 }
 
-function createTableIfNotExists(conn, table) {
-  return getTableList(conn)
-  .then((list) => {
-    if (list.indexOf(table) === -1) {
-      return createTable(conn, table);
-    } else {
-      console.log(' [!] Table already exists:', table);
-      return Promise.resolve(true);
-    }
-  });
+function initUser() {
+  r.tableCreate('users').run().then(() => buildUserIndexes());
+}
+function buildUserIndexes() {
+  r.table('users').indexCreate('email').run();
+  r.table('users').indexCreate('username').run();
+  r.table('users').indexCreate('createdAt').run();
 }
 
-function getDbList(conn) {
-  return r.dbList().run(conn);
+function initArticle() {
+  r.tableCreate('articles').run()
+  .then(() => buildArticleIndexes());
 }
 
-function getTableList(conn) {
-  return r.db(DATABASE).tableList().run(conn);
+function buildArticleIndexes() {
+  r.table('articles').indexCreate('title').run();
+  r.table('articles').indexCreate('slug').run();
+  r.table('articles').indexCreate('authorId').run();
+  r.table('articles').indexCreate('isDraft').run();
+  r.table('articles').indexCreate('createdAt').run();
 }
 
-function createDatabase(conn) {
-  console.log(' [-] Create Database:', DATABASE);
-  return r.dbCreate(DATABASE).run(conn);
+function buildArticleRelations() {
+  r.table('articles').eq_join('authorId', r.table('users')).run();
 }
 
-function createTable(conn, table) {
-  console.log(' [-] Create Table:', table);
-  return r.db(DATABASE).tableCreate(table).run(conn);
+function initTag() {
+  r.tableCreate('tags').run().then(() => buildTagIndexes());
 }
 
-function closeConnection(conn) {
-  console.log(' [x] Close connection!');
-  return conn.close();
+function buildTagIndexes() {
+  r.table('tags').indexCreate('name').run();
 }
 
-export async function clearDatabase() {
-  const tableList = r.tableList();
-  const tables = await promisify(tableList.run, tableList)();
-
-  await tables.map(table => {
-    const del = r.table(table).delete();
-    return promisify(del.run, del)();
-  });
+function initArticleTags() {
+  r.tableCreate('articles_tags').run();
 }
+
+initDB();
+initUser();
+initArticle();
+initTag();
+initArticleTags();
+buildArticleRelations();
