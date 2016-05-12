@@ -3,7 +3,7 @@ import r from 'server/db';
 import config from 'config';
 
 function initDB() {
-  r.dbCreate('boldr_dev').run();
+  r.dbCreate(process.env.RDB_DB).run();
 }
 
 function initUser() {

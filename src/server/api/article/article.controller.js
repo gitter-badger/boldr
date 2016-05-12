@@ -53,6 +53,28 @@ export const showArticle = async (ctx) => {
  * @return {Object}        The article
  */
 export const getArticleBySlug = async (ctx, next) => {
-  const article = await r.table('articles').filter({ slug: ctx.params.slug }).run();
+  const article = await r.table('articles')
+  .filter({ slug: ctx.params.slug })
+  .eqJoin('authorId', r.table('users'))// returns left and right joins
+  .zip()// zip combines the two tables into one on request.
+  .without('password')
+  .run();
   return ctx.ok(article);
 };
+
+export async function update(ctx) {
+  const result = await r.table('articles')
+    .get(ctx.params.id)
+    .update(ctx.request.body)
+    .run();
+  return ctx.ok(result);
+}
+
+export async function destroy(ctx) {
+  const result = await r.table('articles')
+    .get(ctx.params.id)
+    .delete()
+    .run();
+
+  return ctx.ok();
+}
