@@ -11,7 +11,7 @@ const type = thinky.type;
 const r = thinky.r;
 
 const Group = thinky.createModel('Group', {
-  id: type.string().optional(),
+  id: type.string().default(r.uuid()),
   name: type.string(),
   description: type.string().optional(),
   createdAt: type.date().default(new Date())

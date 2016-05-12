@@ -10,7 +10,7 @@ import thinky from '../thinky';
 const type = thinky.type;
 const r = thinky.r;
 const Page = thinky.createModel('Page', {
-  id: type.string().optional().default(shortid.generate),
+  id: type.string().default(r.uuid()),
   title: type.string(),
   description: type.string().optional(),
   slug: type.string().min(2),

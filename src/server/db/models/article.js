@@ -6,12 +6,11 @@
  */
 
 import thinky from '../thinky';
-import shortid from 'shortid';
 const type = thinky.type;
 const r = thinky.r;
 
 const Article = thinky.createModel('Article', {
-  id: type.string().default(shortid.generate),
+  id: type.string().default(r.uuid()),
   title: type.string(),
   categoryId: type.string().optional(),
   markup: type.string(),
@@ -38,9 +37,10 @@ Article.pre('save', function(next) {
   next();
 });
 
+export default Article;
+
+const Tag = require('./tag');
 Article.relationship = () => {
   Article.belongsTo(thinky.models.User, 'user', 'userId', 'id');
   Article.hasAndBelongsToMany(thinky.models.Tag, 'tags', 'id', 'id');
 };
-
-export default Article;
