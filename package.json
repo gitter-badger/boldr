@@ -85,6 +85,7 @@
     "lost": "^6.7.2",
     "material-ui": "^0.15.0",
     "minimist": "^1.2.0",
+    "node-env-flag": "^0.1.0",
     "nodemailer": "^2.3.2",
     "nodemailer-mailgun-transport": "^1.0.2",
     "normalize.css": "^4.1.1",
@@ -113,6 +114,7 @@
     "util": "^0.10.3",
     "webpack-isomorphic-tools": "^2.2.50",
     "winston": "^2.2.0",
+    "xss": "^0.2.13",
     "yargs": "^4.7.0"
   },
   "devDependencies": {

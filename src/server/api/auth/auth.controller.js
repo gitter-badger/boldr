@@ -1,19 +1,14 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import r from 'server/db';
 import _debug from 'debug';
-import passport from 'koa-passport';
-import Promise from 'bluebird';
 import config, { paths } from 'config';
-import { signJwt } from '../../auth/signToken';
-import User from '../../db/models/user';
+
+const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
 debug('init');
-const errorMessages = {
-  authFailed: 'Authorization failed.',
-  incompleteAttributes: 'Incomplete attributes.',
-  emailTaken: 'Email already taken.'
-};
+
 /**
  * @description
  * registers a new user
@@ -22,28 +17,40 @@ const errorMessages = {
  * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
-  if (!ctx.request.body || !ctx.request.body.username || !ctx.request.body.password || !ctx.request.body.email) {
-    return ctx.throw(400, errorMessages.incompleteAttributes);
-  }
+  const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
+  const user = {
+    email: ctx.request.body.email,
+    username: ctx.request.body.username,
+    password: hash,
+    location: ctx.request.body.location,
+    bio: ctx.request.body.bio,
+    avatar: ctx.request.body.avatar,
+    name: {
+      first: ctx.request.body.first,
+      last: ctx.request.body.last
+    },
+    website: ctx.request.body.website
+  };
   try {
-    const user = await new User({
-      email: ctx.request.body.email,
-      password: ctx.request.body.password,
-      username: ctx.request.body.username,
-      name: {
-        first: ctx.request.body.first,
-        last: ctx.request.body.last
-      },
-      location: ctx.request.body.location,
-      website: ctx.request.body.website,
-      avatar: ctx.request.body.avatar,
-      bio: ctx.request.body.bio
-    }).save().then((user) => {
-      return ctx.created(user);
-    });
-  } catch (error) {
-    ctx.throw(400, error.message);
-    debug(error);
+    // check for ctx.request.body.email in the database.
+    const emailCheck = await r
+      .table('users')
+      .getAll(user.email, {
+        index: 'email'
+      })
+      .run();
+    if (emailCheck.length) {
+      // if an email matching ctx.request.body.email is found
+      // throw an error and end the function.
+      throw ctx.error();
+    }
+    r.table('users')
+      .insert(user, {
+        returnChanges: true
+      }).run();
+    return ctx.created(user);
+  } catch (err) {
+    return ctx.error(err);
   }
 };
 
@@ -60,21 +67,26 @@ export const registerUser = async ctx => {
  * }
  */
 export async function loginUser(ctx, next) {
-  return passport.authenticate('local', (user) => {
-    if (!user) {
-      ctx.unauthorized('Failed to validate login information.');
-    }
-    const payload = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      right: user.right
-    };
-    ctx.user = payload;
-    ctx.session.user = ctx.user;
-    const token = jwt.signAsync(payload, process.env.JWT_SECRET, {
-      expiresIn: '7d'
+  try {
+    const user = await r.table('users')
+    .filter({ email: ctx.request.body.email })
+    .run()
+    .then((result) => {
+      const pw = bcrypt.compareSync(ctx.request.body.password, result[0].password);
+      if (pw === false) {
+        throw ctx.error();
+      }
+      const payload = {
+        email: result[0].email,
+        username: result[0].username,
+        id: result[0].id
+      };
+      // make this data available across the app on ctx.session
+      ctx.session = payload;
+      const token = jwt.sign(payload, process.env.JWT_SECRET);
+      return ctx.ok({ token });
     });
-    return ctx.ok(token);
-  })(ctx, next);
+  } catch (err) {
+    console.log(err);
+  }
 }

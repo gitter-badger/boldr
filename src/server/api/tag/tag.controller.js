@@ -1,12 +1,11 @@
 import _debug from 'debug';
-import Article from '../../db/models/article';
-import Tag from '../../db/models/tag';
+import r from 'server/db';
 
 const debug = _debug('boldr:tag:controller');
 debug('init');
 
 export async function getAllTags(ctx) {
-  const tags = await Tag.getJoin({ article: true }).run();
+  const tags = await r.table('tags').run();
   return ctx.ok(tags);
 }
 
@@ -18,11 +17,11 @@ export async function getAllTags(ctx) {
  */
 export const createTag = async (ctx, next) => {
   try {
-    const tag = new Tag({
+    const tag = {
       name: ctx.request.body.name,
       description: ctx.request.body.description
-    });
-    await tag.save();
+    };
+    await r.table('tags').insert(tag).run();
     return ctx.created(tag);
   } catch (err) {
     return ctx.error('There was an error!');
