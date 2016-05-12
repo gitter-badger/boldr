@@ -3,7 +3,7 @@ import r from 'server/db';
 import config from 'config';
 
 function initDB() {
-  r.dbCreate('boldr').run();
+  r.dbCreate('boldr_dev').run();
 }
 
 function initUser() {
@@ -26,10 +26,12 @@ function buildArticleIndexes() {
   r.table('articles').indexCreate('authorId').run();
   r.table('articles').indexCreate('isDraft').run();
   r.table('articles').indexCreate('createdAt').run();
+
+  buildArticleRelations();
 }
 
 function buildArticleRelations() {
-  r.table('articles').eq_join('authorId', r.table('users')).run();
+  r.table('articles').eqJoin('authorId', r.table('users')).run();
 }
 
 function initTag() {
@@ -49,4 +51,3 @@ initUser();
 initArticle();
 initTag();
 initArticleTags();
-buildArticleRelations();

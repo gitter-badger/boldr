@@ -27,7 +27,8 @@ export const createArticle = async (ctx, next) => {
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
     authorId: ctx.state.user.id,
-    isDraft: ctx.request.body.isDraft
+    isDraft: ctx.request.body.isDraft,
+    createdAt: new Date()
   };
 /*
 r.table('articles_tags').eq_join('article_id', r.table('articles')).zip()
