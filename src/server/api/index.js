@@ -7,6 +7,8 @@ import uploadRouter from './upload/upload.router';
 import settingRouter from './setting/setting.router';
 import pageRouter from './page/page.router';
 import menuRouter from './menu/menu.router';
+import roleRouter from './role/role.router';
+import collectionRouter from './collection/collection.router';
 
 export default [
   versionRouter,
@@ -17,5 +19,7 @@ export default [
   uploadRouter,
   settingRouter,
   pageRouter,
-  menuRouter
+  menuRouter,
+  roleRouter,
+  collectionRouter
 ];

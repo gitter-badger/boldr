@@ -1,9 +1,9 @@
 import Router from 'koa-router';
 import * as controller from './page.controller';
 import { checkAuth } from '../../auth/validateToken';
-const pageRouter = new Router({ prefix: '/api/v1/pages' });
+const roleRouter = new Router({ prefix: '/api/v1/roles' });
 
-pageRouter
-    .get('/', controller.getAllPages)
+roleRouter
+    .get('/', controller.getAllRoles)
 
-export default pageRouter;
+export default roleRouter;
