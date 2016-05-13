@@ -8,6 +8,7 @@ import passport from 'koa-passport';
 import convert from 'koa-convert';
 import etag from 'koa-etag';
 import helmet from 'koa-helmet';
+import validator from 'koa-validate';
 import responseCalls from './responseCalls';
 import handleError from './handleError';
 import redisStore from './redisStore';
@@ -25,6 +26,7 @@ export default class BoldrMiddleware {
     application
       .use(responseCalls)
       .use(convert(logger()))
+      .use(convert(validator()))
       .use(morgan('dev'))
       .use(bodyParser)
       .use(methodOverride())

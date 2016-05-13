@@ -61,7 +61,8 @@ export const getArticleBySlug = async (ctx, next) => {
   .run();
   return ctx.ok(article);
 };
-
+// Get all articles with the tag "foo" (where the field tags contains "foo")
+// r.table("articles").getAll("foo", {index: "tags"}).run(conn, callback)
 export async function update(ctx) {
   const result = await r.table('articles')
     .get(ctx.params.id)

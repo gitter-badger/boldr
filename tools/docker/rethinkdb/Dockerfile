@@ -12,8 +12,8 @@ RUN \
     && rm -rf /var/lib/apt/lists/*
 
 
-VOLUME ["/data"]
-WORKDIR /data
+VOLUME ["/data/rethinkdb_data"]
+WORKDIR /data/rethinkdb_data
 
 EXPOSE 8080 28015 29015
 
