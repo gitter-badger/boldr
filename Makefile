@@ -7,7 +7,8 @@ DOCKER_IMAGE ?= strues/boldr
 
 # Phony targets (targets without matching file)
 .PHONY: start build doc docker-build docker-run docker-run-bash lint test
-
+init:
+		npm run init:db
 # Start a development server.
 # You need to run "npm install" before that.
 start:
