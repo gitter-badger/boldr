@@ -6,7 +6,7 @@ import config from 'config';
 const setupDB = () => {
   async.series([
     function initDB(callback) {
-      r.dbCreate(config.RDB_DB).run();
+      r.dbCreate('boldr_dev').run();
       callback();
     },
     function initUser(callback) {
