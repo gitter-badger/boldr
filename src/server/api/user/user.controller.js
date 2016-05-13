@@ -15,6 +15,7 @@ debug('init');
  */
 export async function getAll(ctx) {
   const users = await r.table('users')
+  .without('password')
   .run((err, user) => {
     if (err) {
       throw err;
@@ -33,6 +34,7 @@ export async function getId(ctx, next) {
   try {
     const user = await r.table('users')
       .get(ctx.params.id)
+      .without('password')
       .run();
     return ctx.ok(user);
   } catch (err) {

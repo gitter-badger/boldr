@@ -27,7 +27,8 @@ export const createArticle = async (ctx, next) => {
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
     authorId: ctx.state.user.id,
-    isDraft: ctx.request.body.isDraft
+    isDraft: ctx.request.body.isDraft,
+    createdAt: new Date()
   };
 /*
 r.table('articles_tags').eq_join('article_id', r.table('articles')).zip()
@@ -52,6 +53,29 @@ export const showArticle = async (ctx) => {
  * @return {Object}        The article
  */
 export const getArticleBySlug = async (ctx, next) => {
-  const article = await r.table('articles').filter({ slug: ctx.params.slug }).run();
+  const article = await r.table('articles')
+  .filter({ slug: ctx.params.slug })
+  .eqJoin('authorId', r.table('users'))// returns left and right joins
+  .zip()// zip combines the two tables into one on request.
+  .without('password')
+  .run();
   return ctx.ok(article);
 };
+// Get all articles with the tag "foo" (where the field tags contains "foo")
+// r.table("articles").getAll("foo", {index: "tags"}).run(conn, callback)
+export async function update(ctx) {
+  const result = await r.table('articles')
+    .get(ctx.params.id)
+    .update(ctx.request.body)
+    .run();
+  return ctx.ok(result);
+}
+
+export async function destroy(ctx) {
+  const result = await r.table('articles')
+    .get(ctx.params.id)
+    .delete()
+    .run();
+
+  return ctx.ok();
+}
