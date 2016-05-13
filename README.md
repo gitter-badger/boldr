@@ -32,6 +32,8 @@ Find the IP of your Docker Machine by executing `docker-machine ip $DOCKER_VM`.
 
 ## Usage
 --------
+#### API Documentation
+[View Here](docs/api/apidocs.md)  
 
 #### Development
 
