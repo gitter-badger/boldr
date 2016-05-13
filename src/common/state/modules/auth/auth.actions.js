@@ -25,7 +25,7 @@ function beginLogin() {
 }
 
 export function loginSuccess(response) {
-  localStorage.setItem('jwt', response.data.fulfillmentValue);
+  localStorage.setItem('jwt', response.data.token);
   return {
     type: types.LOGIN_USER_SUCCESS,
     payload: response.data,
