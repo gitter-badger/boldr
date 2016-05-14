@@ -1,11 +1,7 @@
 machine:
-  timezone:
-    America/Denver
+  timezone: America/Denver
   node:
     version: 5.7.0
-dependencies:
-    cache_directories:
-    - node_modules
   pre:
     - source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
     - wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
@@ -21,6 +17,9 @@ dependencies:
     - npm install --only=prod && npm install --only=dev
   post:
     - npm run setup:db
+dependencies:
+    cache_directories:
+    - node_modules
 test:
   post:
     - npm run lint

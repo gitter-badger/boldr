@@ -12,7 +12,7 @@ npm-debug.log
 temp
 .tmp
 .sass-cache
-
+uploads/
 dist
 build/*
 build_styleguide
