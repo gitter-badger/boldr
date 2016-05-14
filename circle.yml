@@ -2,24 +2,27 @@ machine:
   timezone: America/Denver
   node:
     version: 5.7.0
-  pre:
+  post:
     - source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
     - wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
-    - sudo apt-get update
+    - sudo apt-get update -o Dir::Etc::sourcelist="/etc/apt/sources.list.d/rethinkdb.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
     - sudo apt-get install rethinkdb
-    - sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
-    - sudo /etc/init.d/rethinkdb restart
-    - npm i -g npm@3.8.2
-    - npm install
+general:
+  artifacts:
+    - "npm-debug.log"
 dependencies:
   cache_directories:
     - node_modules
   override:
-    - sudo service redis-server stop
+    # Stop default services
     - sudo service postgresql stop
     - sudo service mysql stop
+    - npm i -g npm@3.8.2
+    - npm install
+
+## Customize test commands
 test:
   pre:
-    - npm run init:db
-  post:
-    - npm run lint
+    - make init
+  override:
+    - make test
