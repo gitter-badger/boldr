@@ -12,14 +12,15 @@ class Loader extends Component {
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'column'
-          }}>
+          } }
+          >
               <CircularProgress />
-              <Paper style={{
+              <Paper style={ {
                 textAlign: 'center',
                 marginTop: 10,
                 backgroundColor: 'transparent'
-              }}
-                zDepth={0}
+              } }
+                zDepth={ 0 }
               >
                   <span>Be Boldr...</span>
               </Paper>

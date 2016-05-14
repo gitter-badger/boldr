@@ -24,7 +24,8 @@ class DashboardLayout extends Component {
 }
 
 DashboardLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  dispatch: PropTypes.func
 };
 
 function mapStateToProps(state) {

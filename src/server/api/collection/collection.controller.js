@@ -4,8 +4,6 @@ const debug = _debug('boldr:collection:controller');
 debug('init');
 
 export async function getAllCollections(ctx) {
-  const collections =
-  await r.table('collections')
-  .run();
+  const collections = await r.table('collections').run();
   return ctx.ok(collections);
 }

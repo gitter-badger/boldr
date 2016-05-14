@@ -4,8 +4,6 @@ const debug = _debug('boldr:menus:controller');
 debug('init');
 
 export async function getAllMenus(ctx) {
-  const menus =
-  await r.table('menus')
-  .run();
+  const menus = await r.table('menus').run();
   return ctx.ok(menus);
 }

@@ -17,7 +17,7 @@ class CoreLayout extends Component {
   render() {
     return (
         <div>
-        <TopBar handleToggle={this.handleToggle} />
+        <TopBar handleToggle={ this.handleToggle } />
         <AppDrawer />
         { this.props.children }
     </div>
@@ -26,7 +26,8 @@ class CoreLayout extends Component {
 }
 
 CoreLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  dispatch: PropTypes.func
 };
 
 function mapStateToProps(state) {

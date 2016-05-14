@@ -7,3 +7,7 @@ export default function SiteLogo(props) {
   </div>
 );
 }
+
+SiteLogo.propTypes = {
+  SiteLogoOrTitle: React.PropTypes.string
+};

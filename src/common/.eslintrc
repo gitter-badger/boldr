@@ -1,6 +1,0 @@
-{
-"extends": ["../../.eslintrc", "axial/react"],
-"rules": {
-  "no-console": 0
-  }
-}

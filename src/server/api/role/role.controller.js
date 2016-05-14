@@ -4,8 +4,6 @@ const debug = _debug('boldr:roles:controller');
 debug('init');
 
 export async function getAllRoles(ctx) {
-  const roles =
-  await r.table('roles')
-  .run();
+  const roles = await r.table('roles').run();
   return ctx.ok(roles);
 }

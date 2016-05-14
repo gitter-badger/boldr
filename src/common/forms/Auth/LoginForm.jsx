@@ -8,14 +8,14 @@ class LoginForm extends Component {
   render() {
     const { fields: { email, password }, handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.props.authLogin.bind(this))}>
+      <form onSubmit={ handleSubmit(this.props.authLogin.bind(this)) }>
         <div>
           <TextField type="email" floatingLabelText="Email" { ...email } />
         </div>
-        <div className={`form-group ${password.touched && password.invalid ? 'has-error' : ''}`}>
+        <div className={ `form-group ${password.touched && password.invalid ? 'has-error' : ''}` }>
            <TextField type="password" floatingLabelText="Password" { ...password } />
         <div className="help-block">
-            {password.touched ? password.error : ''}
+            { password.touched ? password.error : '' }
           </div>
         </div>
         <button type="submit">Submit</button>
@@ -24,6 +24,6 @@ class LoginForm extends Component {
   }
 }
 
-const selector = (state) => ({ auth: state.auth });
+const selector = state => ({ auth: state.auth });
 
 export default LoginForm;

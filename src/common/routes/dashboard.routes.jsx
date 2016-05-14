@@ -8,6 +8,7 @@ import ArticleList from '../scenes/Dashboard/Articles/ArticleList';
 import SettingsContainer from '../scenes/Dashboard/Settings/SettingsContainer';
 import PagesContainer from '../scenes/Dashboard/Pages/PagesContainer';
 import UsersContainer from '../scenes/Dashboard/Users/UsersContainer';
+
 export default (
   <Route path="/dashboard" component={ DashboardLayout }>
     <IndexRoute component={ DashboardContainer} />
