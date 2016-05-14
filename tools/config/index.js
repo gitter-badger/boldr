@@ -7,7 +7,7 @@ export const env = (string) => {
 };
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const ROOT_DIR = path.normalize(path.join(__dirname, '..', '..'));
+export const ROOT_DIR = path.normalize(path.join(__dirname, '..', '..'));
 const config = {
 
   // Environment
@@ -48,6 +48,17 @@ const config = {
     level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'
     files: false
   },
+  AWS: {
+    config: {
+      accessKeyId: process.env.AWS_KEY_ID || '',
+      secretAccessKey: process.env.AWS_KEY_SECRET || '',
+      region: 'us-west-1',
+      endpoint: 's3.amazonaws.com'
+    },
+    s3: {
+      bucket: 'boldr'
+    }
+  },
   // Project Structure
   PATH_BASE: path.normalize(path.join(__dirname, '..', '..')),
   ENTRY_APP: 'index',
@@ -64,7 +75,7 @@ const config = {
 const paths = (dir = 'base') => {
   const resolve = path.resolve;
   const base = (...args) => (
-    resolve.apply(resolve, [config.PATH_BASE, ...args])
+  resolve.apply(resolve, [config.PATH_BASE, ...args])
   );
   const _paths = {
     base: base(),

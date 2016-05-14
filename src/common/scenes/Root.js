@@ -7,9 +7,9 @@ import routes from 'common/routes';
 function Root(props) {
   const { history, store } = props;
   return (
-    <Provider store={store}>
+    <Provider store={ store }>
       <div className="app">
-        <Router history={history} routes={routes} />
+        <Router history={ history } routes={ routes } />
       </div>
     </Provider>
   );

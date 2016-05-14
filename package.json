@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "aws-sdk": "^2.3.11",
     "axios": "^0.11.0",
     "bcryptjs": "^2.3.0",
     "better-npm-run": "0.0.8",
@@ -58,6 +59,7 @@
     "draft-js-export-html": "^0.1.13",
     "fs-extra": "^0.30.0",
     "ioredis": "^1.15.1",
+    "joi": "^8.1.0",
     "jsonwebtoken": "^6.2.0",
     "jwt-decode": "^2.0.1",
     "koa": "^2.0.0",
@@ -84,6 +86,7 @@
     "lost": "^6.7.2",
     "material-ui": "^0.15.0",
     "minimist": "^1.2.0",
+    "multer-s3": "^2.3.2",
     "nodemailer": "^2.3.2",
     "nodemailer-mailgun-transport": "^1.0.2",
     "normalize.css": "^4.1.1",
@@ -110,6 +113,7 @@
     "util": "^0.10.3",
     "webpack-isomorphic-tools": "^2.2.50",
     "winston": "^2.2.0",
+    "ws": "^1.1.0",
     "yargs": "^4.7.0"
   },
   "devDependencies": {
