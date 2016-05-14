@@ -1,9 +1,13 @@
 import config from 'config';
-// import aws from 'aws-sdk';
+// import AWS from 'aws-sdk';
 import multer from 'koa-multer';
+import _debug from 'debug';
 // import multerS3 from 'multer-s3';
+import path from 'path';
 import convert from 'koa-convert';
 
+const debug = _debug('upload');
+// const s3 = new AWS.S3();
 // const s3 = new aws.S3({
 //   secretAccessKey: config.AWS.config.secretAccessKey,
 //   accessKeyId: config.AWS.config.accessKeyId,
@@ -36,8 +40,25 @@ const storage = multer.diskStorage({
     cb(null, `${config.PATH_BASE}/uploads`);
   },
   filename(ctx, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now()); // eslint-disable-line
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // eslint-disable-line
   }
 });
+
+export const uploadFile = (ctx, next) => {
+  try {
+    debug(ctx.files);
+    const filename = Object.keys(ctx.files)[0];
+    if (!filename) {
+      ctx.type = 'json';
+      ctx.status = 400;
+      ctx.body = { error: 'upload error' };
+      return;
+    }
+    const { name, mimetype, buffer } = ctx.files[filename];
+    return ctx.created({ name, mimetype });
+  } catch (error) {
+    debug(error);
+  }
+};
 
 export const upload = multer({ storage });

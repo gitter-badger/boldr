@@ -5,7 +5,7 @@
  * @exports {Object} uploadRouter
  */
 import Router from 'koa-router';
-import { upload } from './upload.controller';
+import { upload, uploadFile } from './upload.controller';
 const uploadRouter = new Router({
   prefix: '/api/v1/uploads'
 });
