@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import AppDrawer from '../../components/AppDrawer';
+import AppDrawer from 'common/components/AppDrawer';
 import * as boldrActions from 'common/state/modules/boldr/boldr.actions';
-import TopBar from '../../components/TopBar';
-import Loader from '../../components/Loader';
+import TopBar from 'common/components/TopBar';
+import Loader from 'common/components/Loader';
 import 'common/styles/app.scss';
 
 @connect(mapStateToProps)

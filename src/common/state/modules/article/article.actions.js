@@ -81,7 +81,7 @@ const failedToUpdateArticle = (data) => ({
 export function fetchArticles(data) {
   return dispatch => {
     dispatch(requestArticles());
-    return axios.get('http://localhost:3000/api/v1/articles', {
+    return axios.get('/api/v1/articles', {
       timeout: 5000,
       responseType: 'json'
     })

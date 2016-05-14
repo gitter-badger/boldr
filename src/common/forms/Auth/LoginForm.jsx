@@ -1,29 +1,44 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import asyncValidate from './asyncValidate';
 
-@connect(selector)
-class LoginForm extends Component {
-  render() {
-    const { fields: { email, password }, handleSubmit } = this.props;
-    return (
-      <form onSubmit={ handleSubmit(this.props.authLogin.bind(this)) }>
-        <div>
-          <TextField type="email" floatingLabelText="Email" { ...email } />
-        </div>
-        <div className={ `form-group ${password.touched && password.invalid ? 'has-error' : ''}` }>
-           <TextField type="password" floatingLabelText="Password" { ...password } />
-        <div className="help-block">
-            { password.touched ? password.error : '' }
-          </div>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    );
-  }
-}
+const LoginForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props;
+  return (
+    <form onSubmit={ handleSubmit }>
+      <div>
+        <Field name="email" component={ email =>
+              <TextField
+                hintText="Email"
+                floatingLabelText="Email"
+                errorText = { email.touched && email.error }
+                { ...email }
+              />
+            }/>
+      </div>
+      <div>
+        <Field name="password" type="password" component={ password =>
+              <TextField
+                hintText="Password"
+                floatingLabelText="Password"
+                errorText = { password.touched && password.error }
+                { ...password }
+              />
+            }/>
+      </div>
+      <div>
+        <button type="submit" disabled={ pristine || submitting }>Submit</button>
+        <button type="button" disabled={ pristine || submitting } onClick={ reset }>Clear Values
+        </button>
+      </div>
+    </form>
+  );
+};
 
-const selector = state => ({ auth: state.auth });
-
-export default LoginForm;
+export default reduxForm({
+  form: 'LoginForm'
+})(LoginForm);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import { authLogin } from 'common/state/modules/auth/auth.actions';
-import { LoginForm } from '../../forms';
+import { LoginForm } from 'common/forms';
 
 class Login extends Component {
   constructor(props) {
@@ -11,9 +11,9 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
+  handleSubmit(values) {
     const { dispatch } = this.props;
-    dispatch(authLogin());
+    dispatch(authLogin(values));
   }
 
   render() {

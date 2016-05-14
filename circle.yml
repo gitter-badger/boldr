@@ -10,7 +10,7 @@ machine:
     - sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
     - sudo /etc/init.d/rethinkdb restart
     - npm i -g npm@3.8.2
-    - npm install --only=prod && npm install --only=dev
+    - npm install
 dependencies:
   cache_directories:
     - node_modules
