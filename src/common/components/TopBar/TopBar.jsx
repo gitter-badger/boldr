@@ -10,7 +10,6 @@ import * as boldrActions from 'common/state/modules/boldr/boldr.actions';
 import { browserHistory } from 'react-router';
 import SiteLogo from '../SiteLogo';
 
-@connect(state => ({ boldr: state.boldr }))
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
@@ -35,15 +34,14 @@ class TopBar extends React.Component {
             { /* @ToDo Build logic for this on the server */ }
             { /* It should be like /api/v1/boldr/settings */ }
           <AppBar title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
-
-                  onLeftIconButtonTouchTap={ this.props.handleToggle }
-                  iconElementRight={
+            onLeftIconButtonTouchTap={ this.props.handleToggle }
+            iconElementRight={
               <IconMenu
                 iconButtonElement={
                   <IconButton><MoreVertIcon /></IconButton>
                 }
-                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                targetOrigin={ { horizontal: 'right', vertical: 'top' } }
+                anchorOrigin={ { horizontal: 'right', vertical: 'top' } }
               >
                 <MenuItem onTouchTap={ this.handleClickLogin } primaryText="Login" />
                 <MenuItem onTouchTap={ this.handleClickRegister } primaryText="Register" />
@@ -58,7 +56,14 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  dispatch: React.PropTypes.func
+  dispatch: React.PropTypes.func,
+  handleToggle: React.PropTypes.func
 };
 
-export default TopBar;
+const mapStateToProps = (state) => {
+  return {
+    boldr: state.boldr
+  };
+};
+
+export default connect(mapStateToProps, null)(TopBar);

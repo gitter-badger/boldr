@@ -12,9 +12,9 @@ import CollectionsContainer from '../scenes/Dashboard/Collections/CollectionsCon
 
 export default (
   <Route path="/dashboard" component={ DashboardLayout }>
-    <IndexRoute component={ DashboardContainer} />
+    <IndexRoute component={ DashboardContainer } />
     <Route path="articles" component={ ArticlesContainer }>
-      <IndexRoute component={ ArticleList} />
+      <IndexRoute component={ ArticleList } />
       <Route path="create" component={ CreateArticle } />
     </Route>
     <Route path="settings" component={ SettingsContainer } />

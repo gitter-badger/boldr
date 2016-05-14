@@ -1,2 +1,4 @@
-export LoginForm from './Auth/LoginForm.jsx';
-export RegisterForm from './Auth/RegisterForm.jsx';
+import LoginForm from './Auth/LoginForm.jsx';
+import RegisterForm from './Auth/RegisterForm.jsx';
+
+export { LoginForm, RegisterForm };

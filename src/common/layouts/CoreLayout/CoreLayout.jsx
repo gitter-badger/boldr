@@ -8,7 +8,6 @@ import TopBar from 'common/components/TopBar';
 import Loader from 'common/components/Loader';
 import 'common/styles/app.scss';
 
-@connect(mapStateToProps)
 class CoreLayout extends Component {
   handleToggle = () => {
     this.props.dispatch(boldrActions.toggleSideBar());
@@ -37,4 +36,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default CoreLayout;
+export default connect(mapStateToProps, null)(CoreLayout);

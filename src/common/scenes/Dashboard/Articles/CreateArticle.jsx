@@ -87,23 +87,23 @@ class CreateArticle extends Component {
               </textarea>
             </div>
             <div className="editor-container">
-              <div className={className} onClick={this.focus}>
+              <div className={ className } onClick={ this.focus }>
                 <Editor
-                  blockStyleFn={getBlockStyle}
-                  customStyleMap={styleMap}
-                  editorState={this.state.editorState}
-                  onChange={this.onChange}
+                  blockStyleFn={ getBlockStyle }
+                  customStyleMap={ styleMap }
+                  editorState={ this.state.editorState }
+                  onChange={ this.onChange }
                   ref="editor"
                   placeholder="Whats your story?"
                 />
               </div>
-              <input onClick={this.logState} type="button" value="Console.log State" />
+              <input onClick={ this.logState } type="button" value="Console.log State" />
             </div>
           </div>
         <PublishingControls
-            publish={() => this.publish(this.props)}
-            showPublishButton={this.props.articleId !== -1}
-          />
+          publish={ () => this.publish(this.props) }
+          showPublishButton={ this.props.articleId !== -1 }
+        />
         </div>
     );
   }

@@ -8,7 +8,6 @@ import TopBar from '../../components/TopBar';
 import Loader from '../../components/Loader';
 import 'common/styles/app.scss';
 
-@connect(mapStateToProps)
 class DashboardLayout extends Component {
   handleToggle = () => {
     this.props.dispatch(boldrActions.toggleSideBar());
@@ -35,4 +34,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default DashboardLayout;
+export default connect(mapStateToProps, null)(DashboardLayout);

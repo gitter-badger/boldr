@@ -1,14 +1,12 @@
 {
-  "extends": "axial",
+  "extends": "axial/react",
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "node": true,
-    "mocha": true,
-    "es6": true,
-    "shared-node-browser": true
+    "node": false,
+    "es6": true
   },
-  "plugins": ["import"],
+  "plugins": ["import", "babel"],
   "globals": {
     "__CLIENT__": false,
     "__SERVER__": false,
@@ -32,6 +30,8 @@
     "import/no-unresolved": 0,
     "no-param-reassign": 0,
     "generator-star-spacing": 0,
-    "arrow-parens": 0
+    "arrow-parens": 0,
+    "react/prefer-stateless-function": 0,
+    "react/no-multi-comp": 0
   }
 }

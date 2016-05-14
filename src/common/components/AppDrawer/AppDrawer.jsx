@@ -50,7 +50,6 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-@connect(state => ({ boldr: state.boldr }))
 class AppDrawer extends React.Component {// eslint-disable-line
 
   handleToggle = () => {
@@ -105,4 +104,11 @@ AppDrawer.propTypes = {
   dispatch: React.PropTypes.func,
   routeToIndex: React.PropTypes.string
 };
-export default AppDrawer;
+
+const mapStateToProps = (state) => {
+  return {
+    boldr: state.boldr
+  };
+};
+
+export default connect(mapStateToProps, null)(AppDrawer);
