@@ -6,7 +6,7 @@ import HomeContainer from '../scenes/Home';
 
 import BlogContainer from '../scenes/Blog';
 
-import AuthContainer from '../scenes/Auth';
+import RegisterContainer from '../scenes/Auth/RegisterContainer';
 import LoginContainer from '../scenes/Auth/LoginContainer';
 import Error404 from '../components/404';
 
@@ -15,7 +15,7 @@ export default (store) => {
   <Route path="/" component={ CoreLayout }>
     <IndexRoute component={ HomeContainer } />
     <Route path="home" component={ HomeContainer } />
-    <Route path="register" component={ AuthContainer } />
+    <Route path="register" component={ RegisterContainer } />
     <Route path="login" component={ LoginContainer } />
     <Route path="blog" component={ BlogContainer } />
        { DashboardRoutes }

@@ -1,5 +1,6 @@
-import Login from './Login';
-import { authLogin } from 'common/state/modules/auth/auth.actions';
+import Register from './Register';
+
+import { authRegister } from 'common/state/modules/auth/auth.actions';
 import { reduxForm } from 'redux-form';
 
 function validate(values) {
@@ -17,15 +18,15 @@ function validate(values) {
 }
 
 // For any field errors upon submission (i.e. not instant check)
-const validateAndLoginUser = (values, dispatch) => {
+const validateAndRegisterUser = (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    dispatch(authLogin(values));
+    dispatch(authRegister(values));
   });
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authLogin: validateAndLoginUser,
+    authRegister: validateAndRegisterUser,
     resetMe: () => {
       // sign up is not reused, so we dont need to resetUserFields
       // in our case, it will remove authenticated users
@@ -45,7 +46,7 @@ function mapStateToProps(state, ownProps) {
 // connect: first argument is mapStateToProps, 2nd is mapDispatchToProps
 // reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 export default reduxForm({
-  form: 'LoginForm',
+  form: 'RegisterForm',
   fields: ['email', 'password'],
   validate
-}, mapStateToProps, mapDispatchToProps)(Login);
+}, mapStateToProps, mapDispatchToProps)(Register);

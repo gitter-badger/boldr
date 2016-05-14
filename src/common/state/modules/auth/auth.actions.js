@@ -102,15 +102,15 @@ export function authRegister(data) {
 
     return makeAuthRequest('post', data, '/api/v1/auth/register')
       .then(response => {
-        if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message));
+        if (response.status === 201) {
+          dispatch(signUpSuccess(response));
           dispatch(push('/'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
         }
       })
       .catch(err => {
-        dispatch(signUpError(err.data.message));
+        dispatch(signUpError(err));
       });
   };
 }

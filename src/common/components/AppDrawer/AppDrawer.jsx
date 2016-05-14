@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -5,6 +6,7 @@ import { Drawer, MenuItem, Colors, List, ListItem, MakeSelectable } from 'materi
 import FontIcon from 'material-ui/FontIcon';
 import * as boldrActions from 'common/state/modules/boldr/boldr.actions';
 import NavLink from '../nav-link.jsx';
+
 let SelectableList = MakeSelectable(List);
 const iconStyles = {
   marginRight: 12,
@@ -30,16 +32,16 @@ function wrapState(ComposedComponent) {
         selectedIndex: index
       });
 
-      this.props.routeToIndex(index);
+      this.props.routeToIndex(index); // eslint-disable-line
     };
 
     render() {
       return (
           <ComposedComponent
-              value={this.state.selectedIndex}
-              onChange={this.handleRequestChange}
+            value={ this.state.selectedIndex }
+            onChange={ this.handleRequestChange }
           >
-              {this.props.children}
+              { this.props.children }
           </ComposedComponent>
       );
     }
@@ -49,7 +51,7 @@ function wrapState(ComposedComponent) {
 SelectableList = wrapState(SelectableList);
 
 @connect(state => ({ boldr: state.boldr }))
-class AppDrawer extends React.Component {
+class AppDrawer extends React.Component {// eslint-disable-line
 
   handleToggle = () => {
     this.props.dispatch(boldrActions.toggleSideBar());
@@ -59,35 +61,38 @@ class AppDrawer extends React.Component {
     const { boldr, dispatch } = this.props;
     return (
       <Drawer onBlur={ this.handleToggle } width={ 240 } open={ boldr.isSideBarOpen } docked={ false }
-          onRequestChange={open => { this.handleToggle(); } }>
+        onRequestChange={ open => { this.handleToggle(); } }
+      >
 
         <SelectableList defaultValue={ boldr.selectedDrawerMenuListItem } boldr={ boldr }
-            {...bindActionCreators(boldrActions, dispatch)} >
+          {...bindActionCreators(boldrActions, dispatch)}
+        >
 
           <ListItem primaryText="Home" value={ 1 } />
           <ListItem primaryText="Blog" value={ 2 } />
           <ListItem primaryText="Dashboard" value={ 3 }
-              initiallyOpen={ false }
-              primaryTogglesNestedList={ true }
-              nestedItems={[
-                <ListItem
-                    value={ 4 }
-                    primaryText="Articles"
-                    nestedItems={[
-                      <ListItem
-                          value={ 5 }
-                          primaryText="List articles"
-                      />,
-                      <ListItem
-                          value={ 6 }
-                          primaryText="Create article"
-                      />
-                    ]}
-                />,
-                <ListItem primaryText="Settings" value={ 7 } />,
-                <ListItem primaryText="Pages" value={ 8 } />,
-                <ListItem primaryText="Users" value={ 9 } />
-              ]}
+            initiallyOpen={ false }
+            primaryTogglesNestedList
+            nestedItems={ [
+              <ListItem
+                value={ 4 }
+                primaryText="Articles"
+                nestedItems={ [
+                  <ListItem
+                    value={ 5 }
+                    primaryText="List articles"
+                  />,
+                  <ListItem
+                    value={ 6 }
+                    primaryText="Create article"
+                  />
+                ] }
+              />,
+              <ListItem primaryText="Settings" value={ 7 } />,
+              <ListItem primaryText="Pages" value={ 8 } />,
+              <ListItem primaryText="Users" value={ 9 } />,
+              <ListItem primaryText="Collections" value={ 10 } />
+            ] }
           />
         </SelectableList>
       </Drawer>
@@ -95,4 +100,9 @@ class AppDrawer extends React.Component {
   }
 }
 
+AppDrawer.propTypes = {
+  boldr: React.PropTypes.func,
+  dispatch: React.PropTypes.func,
+  routeToIndex: React.PropTypes.string
+};
 export default AppDrawer;

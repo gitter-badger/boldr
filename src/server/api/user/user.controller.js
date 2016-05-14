@@ -41,7 +41,7 @@ export async function getId(ctx, next) {
     return ctx.badRequest('User is Not Found');
   }
 }
-//
+
 export async function update(ctx) {
   const result = await r.table('users')
     .get(ctx.params.id)

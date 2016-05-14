@@ -4,7 +4,7 @@ export default function Article(props) {
   return (
     <div className="post">
     { props.articles.map(
-      (article) => {
+      article => {
         return (
           <div key={ `key-${article.slug}` }>
             <div className="post-preview">
@@ -26,7 +26,11 @@ export default function Article(props) {
         );
       })
     }
-    <hr/>
+    <hr />
     </div>
   );
 }
+
+Article.propTypes = {
+  articles: React.PropTypes.array
+};

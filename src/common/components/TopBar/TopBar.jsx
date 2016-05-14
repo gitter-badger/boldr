@@ -15,11 +15,19 @@ class TopBar extends React.Component {
   constructor(props) {
     super(props);
     this.handleClickLogin = this.handleClickLogin.bind(this);
+    this.handleClickRegister = this.handleClickRegister.bind(this);
   }
+
   handleClickLogin(event) {
     const path = '/login';
     browserHistory.push(path);
   }
+
+  handleClickRegister(event) {
+    const path = '/register';
+    browserHistory.push(path);
+  }
+
   render() {
     return (
       <div className="topbar">
@@ -38,7 +46,7 @@ class TopBar extends React.Component {
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
                 <MenuItem onTouchTap={ this.handleClickLogin } primaryText="Login" />
-                <MenuItem primaryText="Help" />
+                <MenuItem onTouchTap={ this.handleClickRegister } primaryText="Register" />
                 <MenuItem primaryText="Sign out" />
               </IconMenu>
             }

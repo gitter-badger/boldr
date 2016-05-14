@@ -5,7 +5,6 @@
  * @exports {Function} - Koa-Router Middleware
  */
 
-import User from 'server/db/models/user';
 import config from 'config';
 import logger from 'server/utils/logger';
 

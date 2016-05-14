@@ -1,7 +1,13 @@
+/**
+ * server/api/article/article.router
+ * Article route handlers
+ *
+ * @exports {articleRouter}
+ */
+
 import Router from 'koa-router';
 import * as controller from './article.controller';
 import { checkAuth } from '../../auth/validateToken';
-// import { isAuthenticated } from '../../auth/local/passport';
 const articleRouter = new Router({ prefix: '/api/v1/articles' });
 
 articleRouter
