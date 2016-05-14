@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
-
+import Joi from 'joi';
+import userSchema from '../user/user.schema';
 const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
@@ -42,15 +43,19 @@ export const registerUser = async ctx => {
     if (emailCheck.length) {
       // if an email matching ctx.request.body.email is found
       // throw an error and end the function.
-      throw ctx.error();
+      throw ctx.error('The email address is in use.');
+    }
+    // validate the tag (ctx.request.body) against the tagSchema defined
+    const parsed = Joi.validate(user, userSchema);
+    if (parsed.error !== null) {
+      throw new Error(parsed.error.details[0].message);
     }
     r.table('users')
-      .insert(user, {
-        returnChanges: true
-      }).run();
-    return ctx.created(user);
+      .insert(parsed.value)
+      .run();
+    return ctx.created(parsed.value);
   } catch (err) {
-    return ctx.error(err);
+    return ctx.error('There was a problem registering.');
   }
 };
 

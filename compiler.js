@@ -6,7 +6,9 @@ global.__DEV__ = config.__DEV__;
 const noop = (module, file) => {
   module._compile('', file);
 };
-
+global.navigator = {
+  userAgent: 'node.js'
+};
 [
   '.css', '.scss',
   '.gif', '.jpg', '.png', '.svg',

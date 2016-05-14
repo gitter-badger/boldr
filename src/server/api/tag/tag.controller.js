@@ -1,5 +1,7 @@
 import _debug from 'debug';
 import r from 'server/db';
+import Joi from 'joi';
+import tagSchema from './tag.schema';
 
 const debug = _debug('boldr:tag:controller');
 debug('init');
@@ -16,13 +18,18 @@ export async function getAllTags(ctx) {
  * @method POST
  */
 export const createTag = async (ctx, next) => {
+  const tag = {
+    name: ctx.request.body.name,
+    description: ctx.request.body.description
+  };
   try {
-    const tag = {
-      name: ctx.request.body.name,
-      description: ctx.request.body.description
-    };
-    await r.table('tags').insert(tag).run();
-    return ctx.created(tag);
+    // validate the tag (ctx.request.body) against the tagSchema defined
+    const parsed = Joi.validate(tag, tagSchema);
+    if (parsed.error !== null) {
+      throw new Error(parsed.error.details[0].message);
+    }
+    await r.table('tags').insert(parsed.value).run();
+    return ctx.created(parsed.value);
   } catch (err) {
     return ctx.error('There was an error!');
   }
