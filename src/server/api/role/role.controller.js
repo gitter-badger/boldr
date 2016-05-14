@@ -11,7 +11,7 @@ export async function getAllRoles(ctx) {
 }
 /**
  * @description
- * creates a new tag in the db.
+ * creates a new role in the db.
  * @route /api/v1/roles
  * @method POST
  */
@@ -21,7 +21,7 @@ export const createRole = async (ctx, next) => {
     description: ctx.request.body.description
   };
   try {
-    // validate the tag (ctx.request.body) against the roleSchema defined
+    // validate the role (ctx.request.body) against the roleSchema defined
     const parsed = Joi.validate(role, roleSchema);
     if (parsed.error !== null) {
       throw new Error(parsed.error.details[0].message);
