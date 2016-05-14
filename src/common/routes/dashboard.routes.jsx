@@ -8,6 +8,7 @@ import ArticleList from '../scenes/Dashboard/Articles/ArticleList';
 import SettingsContainer from '../scenes/Dashboard/Settings/SettingsContainer';
 import PagesContainer from '../scenes/Dashboard/Pages/PagesContainer';
 import UsersContainer from '../scenes/Dashboard/Users/UsersContainer';
+import CollectionsContainer from '../scenes/Dashboard/Collections/CollectionsContainer';
 
 export default (
   <Route path="/dashboard" component={ DashboardLayout }>
@@ -19,5 +20,6 @@ export default (
     <Route path="settings" component={ SettingsContainer } />
     <Route path="pages" component={ PagesContainer } />
     <Route path="users" component={ UsersContainer } />
+    <Route path="collections" component={ CollectionsContainer } />
   </Route>
 );

@@ -90,7 +90,8 @@ class AppDrawer extends React.Component {// eslint-disable-line
               />,
               <ListItem primaryText="Settings" value={ 7 } />,
               <ListItem primaryText="Pages" value={ 8 } />,
-              <ListItem primaryText="Users" value={ 9 } />
+              <ListItem primaryText="Users" value={ 9 } />,
+              <ListItem primaryText="Collections" value={ 10 } />
             ] }
           />
         </SelectableList>
