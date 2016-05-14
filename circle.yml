@@ -10,16 +10,16 @@ machine:
     - sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
     - sudo /etc/init.d/rethinkdb restart
     - npm i -g npm@3.8.2
+  post:
+    - npm run init:db
+dependencies:
+  cache_directories:
+    - node_modules
   override:
     - sudo service redis-server stop
     - sudo service postgresql stop
     - sudo service mysql stop
     - npm install --only=prod && npm install --only=dev
-  post:
-    - npm run setup:db
-dependencies:
-    cache_directories:
-    - node_modules
 test:
   post:
     - npm run lint
