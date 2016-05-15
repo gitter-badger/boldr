@@ -15,7 +15,6 @@ dependencies:
     - node_modules
   override:
     # Stop default services
-    - sudo service redis stop
     - sudo service postgresql stop
     - sudo service mysql stop
     - npm i -g npm@3.8.2
