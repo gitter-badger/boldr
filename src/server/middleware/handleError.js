@@ -2,9 +2,9 @@ import logger from '../utils/logger';
 
 export default async (ctx, next) => {
   try {
-    await next()
+    await next();
   } catch (err) {
-    logger.error('errorHandler:', err)
+    logger.error('errorHandler:', err);
     ctx.body = {
       message: err.message
     };

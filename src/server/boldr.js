@@ -9,6 +9,6 @@ export default class Boldr {
       application.use(router.routes());
       application.use(router.allowedMethods());
     }
-    application.use(handleError());
+    application.use(handleError);
   }
 }
