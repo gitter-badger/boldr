@@ -10,6 +10,7 @@ userRouter
   .get('/', userController.getAll)
   .get('/:id', userController.getId)
   .put('/:id', userController.update)
+  .post('/roles/add', userController.addRoleToUser)
   .delete('/:id', userController.destroy);
 
 export default userRouter;

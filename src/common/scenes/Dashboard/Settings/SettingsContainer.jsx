@@ -20,4 +20,8 @@ const mapStateToProps = (state) => ({
 
 });
 
+SettingsContainer.propTypes = {
+  children: React.PropTypes.node
+};
+
 export default connect(mapStateToProps, null)(Settings);

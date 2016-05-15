@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
-
+import Joi from 'joi';
+import userSchema from '../user/user.schema';
 const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
@@ -25,32 +26,29 @@ export const registerUser = async ctx => {
     location: ctx.request.body.location,
     bio: ctx.request.body.bio,
     avatar: ctx.request.body.avatar,
-    name: {
-      first: ctx.request.body.first,
-      last: ctx.request.body.last
-    },
+    firstName: ctx.request.body.firstName,
+    lastName: ctx.request.body.lastName,
     website: ctx.request.body.website
   };
   try {
     // check for ctx.request.body.email in the database.
     const emailCheck = await r
       .table('users')
-      .getAll(user.email, {
-        index: 'email'
-      })
+      .getAll(user.email, { index: 'email' })
       .run();
     if (emailCheck.length) {
       // if an email matching ctx.request.body.email is found
       // throw an error and end the function.
-      throw ctx.error();
+      throw ctx.error('The email address is in use.');
     }
+    // validate the tag (ctx.request.body) against the tagSchema defined
+
     r.table('users')
-      .insert(user, {
-        returnChanges: true
-      }).run();
+      .insert(user)
+      .run();
     return ctx.created(user);
   } catch (err) {
-    return ctx.error(err);
+    return ctx.error('There was a problem registering.');
   }
 };
 
@@ -83,6 +81,7 @@ export async function loginUser(ctx, next) {
       };
       // make this data available across the app on ctx.session
       ctx.session = payload;
+      console.log(ctx.session)
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       return ctx.ok({ token });
     });

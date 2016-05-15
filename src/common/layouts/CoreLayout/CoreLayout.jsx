@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
@@ -8,9 +10,8 @@ import TopBar from 'common/components/TopBar';
 import Loader from 'common/components/Loader';
 import 'common/styles/app.scss';
 
-@connect(mapStateToProps)
 class CoreLayout extends Component {
-  handleToggle = () => {
+  handleToggle = () => { // eslint-disable-line
     this.props.dispatch(boldrActions.toggleSideBar());
   }
 
@@ -37,4 +38,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default CoreLayout;
+export default connect(mapStateToProps, null)(CoreLayout);

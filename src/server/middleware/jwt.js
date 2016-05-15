@@ -7,9 +7,9 @@
 import jwt from 'koa-jwt';
 import convert from 'koa-convert';
 // verify jwt token and set `this.state.user`
-export default convert(jwt({
+export default jwt({
   secret: process.env.JWT_SECRET,
   cookie: 'token',
   key: 'user',
   passthrough: true
-}));
+});

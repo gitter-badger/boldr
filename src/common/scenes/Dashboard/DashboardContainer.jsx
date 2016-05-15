@@ -15,4 +15,8 @@ class DashboardContainer extends Component {
   }
 }
 
+DashboardContainer.propTypes = {
+  children: React.PropTypes.node
+};
+
 export default DashboardContainer;

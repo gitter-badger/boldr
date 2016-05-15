@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import { authRegister } from 'common/state/modules/auth/auth.actions';
@@ -24,5 +24,9 @@ class Register extends Component {
     );
   }
 }
+
+Register.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
 
 export default Register;

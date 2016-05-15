@@ -3,7 +3,7 @@ import * as constants from './user.constants';
 
 const debug = _debug('user.reducer:debug');
 
-export const INITIAL_STATE = {
+export const INITIAL_USER_STATE = {
   loading: false,
   message: '',
   error: false,
@@ -17,7 +17,7 @@ export const INITIAL_STATE = {
   }
 };
 
-export default function user(state = INITIAL_STATE, action) {
+export default function user(state = INITIAL_USER_STATE, action) {
   switch (action.type) {
     case constants.SET_USER:
       return {

@@ -35,5 +35,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
+ArticlesContainer.propTypes = {
+  children: React.PropTypes.node
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlesContainer);

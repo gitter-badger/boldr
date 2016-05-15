@@ -1,54 +1,8 @@
 import util from 'util';
-export * as mailer from './mailer';
-export logger from './logger';
-/**
- * Normalize a port into a number, string, or false.
- */
+import mailer from './mailer';
+import logger from './logger';
+import _ from 'lodash';
 
-export function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-export function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port // eslint-disable-line
-    : 'Port ' + process.env.NODE_PORT; // eslint-disable-line
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges'); // eslint-disable-line
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use'); // eslint-disable-line
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
 /**
  * Clones an object
  * @param  {Mixed}    obj        The object to clone
@@ -68,3 +22,38 @@ function clone(obj, deep = true) {
 
   return result;
 }
+
+function normalize(items) {
+  return items.reduce((normalizedItems, item) => {
+    normalizedItems[item.id] = item;
+    return normalizedItems;
+  }, {});
+}
+
+function group(items) {
+  return items.reduce((normalizedItems, item) => {
+    return {
+      left: [
+        ...normalizedItems['left'],// eslint-disable-line
+        item['left']// eslint-disable-line
+      ],
+      right: [
+        ...normalizedItems['right']// eslint-disable-line
+          .filter(rightItem => rightItem.id !== item['right'].id), // eslint-disable-line
+        item['right']// eslint-disable-line
+      ]
+    };
+  }, {
+    left: [],
+    right: []
+  });
+}
+
+function extractIds(arr) {
+  return _.map(arr, _.property('id'));
+}
+const SOFT_DURABILITY = {
+  durability: 'soft'
+};
+
+export { mailer, logger, clone, SOFT_DURABILITY, normalize, extractIds, group };

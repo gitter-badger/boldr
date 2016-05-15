@@ -62,13 +62,6 @@ const config = {
   },
   module: {
     noParse: [],
-    preLoaders: [
-      {
-        test: /\.js[x]?$/,
-        loader: 'eslint',
-        include: [srcDir]
-      }
-    ],
     loaders: [
       {
         test: /\.js[x]?$/,

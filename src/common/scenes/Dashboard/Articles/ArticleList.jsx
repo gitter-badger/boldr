@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Article from 'common/components/scenes/Dashboard/Article';
 import Loader from 'common/components/Loader';
 import { bindActionCreators } from 'redux';
 import * as articleActions from 'common/state/modules/article/article.actions';
-class ArticleList extends Component {
 
+class ArticleList extends Component {
   componentWillMount(dispatch) {
     this.props.articleActions.fetchArticles();
   }
@@ -36,5 +36,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
+ArticleList.propTypes = {
+  articleActions: PropTypes.func.isRequired,
+  article: PropTypes.object,
+  loading: PropTypes.bool
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);

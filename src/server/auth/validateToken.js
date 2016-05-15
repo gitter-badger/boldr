@@ -2,14 +2,7 @@ import jwt from 'jsonwebtoken';
 import Promise from 'bluebird';
 import config, { paths } from '../../../tools/config';
 import getToken from './getToken';
-
 Promise.promisifyAll(jwt);
-
-const EXPIRATION_AGE = 604800000; // 7 days
-
-function getExpirationDate() {
-  return new Date(Number(new Date()) + EXPIRATION_AGE);
-}
 
 export async function signJwt(payload, options) {
   return await jwt.sign(payload, process.env.JWT_SECRET, options);

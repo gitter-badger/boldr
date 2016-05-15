@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { r, QueryRequest, PropsMixin as RethinkMixin } from 'react-rethinkdb';
 import { fetchArticles } from 'common/state/modules/article/article.actions';
@@ -38,6 +38,12 @@ class BlogContainer extends Component {
       );
   }
 }
+
+BlogContainer.propTypes = {
+  loading: PropTypes.bool,
+  article: PropTypes.object
+};
+
 const mapStateToProps = (state) => ({
   article: state.article,
   loading: state.article.loading

@@ -20,13 +20,13 @@ const PublishingControls = (props) => (
         props.showPublishButton ?
             <div className="publish-section">
                   <Toggle
-      label="Public"
-      style={styles.toggle}
-      action={(e) => props.publish(e)}
-    />
+                    label="Public"
+                    style={ styles.toggle }
+                    action={ (e) => props.publish(e) }
+                  />
             </div>
             : '' }
-      <FlatButton label="Save" primary={true} onClick={(e) => props.sanitize(e)} />
+      <FlatButton label="Save" primary onClick={ (e) => props.sanitize(e) } />
       { props.loading ? <Loader /> : '' }
     </div>
 );

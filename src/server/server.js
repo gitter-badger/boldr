@@ -20,7 +20,6 @@ import BoldrMiddleware from './middleware';
 
 import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
-// import './db/models';
 dotenv.config();
 const debug = _debug('boldr:server:dev');
 // Application constants
@@ -30,6 +29,10 @@ const app = new Koa();
 app.name = 'Boldr';
 app.env = process.env.NODE_ENV;
 app.keys = [config.JWT_SECRET];
+// allow both legacy and modern middleware
+// https://www.npmjs.com/package/koa-convert
+const use = app.use;
+app.use = x => use.call(app, convert(x));
 
 export const server = createServer(app.callback());
 
@@ -49,12 +52,12 @@ export const server = createServer(app.callback());
     })));
   }
   app.use(serve('static'));
-  app.use(async function(ctx, next) {
+  app.use(async (ctx, next) => {
     const start = new Date();
     ctx.req.body = ctx.request.body;
     await next();
     const end = new Date();
-    logger.verbose(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
+    logger.info(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
   });
   // This is fired every time the server side receives a request
   app.use(handleRender);

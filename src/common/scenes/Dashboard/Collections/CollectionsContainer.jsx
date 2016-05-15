@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Collections from './Collections';
 
-@connect(mapStateToProps, null)
-export default class CollectionsContainer extends Component {
+class CollectionsContainer extends Component {
   render() {
     return (
       <div>
@@ -18,3 +17,5 @@ export default class CollectionsContainer extends Component {
 const mapStateToProps = (state) => ({
 
 });
+
+export default connect(mapStateToProps, null)(CollectionsContainer);

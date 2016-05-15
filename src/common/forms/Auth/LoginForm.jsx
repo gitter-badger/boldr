@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
@@ -18,7 +18,8 @@ const LoginForm = props => {
                 errorText = { email.touched && email.error }
                 { ...email }
               />
-            }/>
+            }
+        />
       </div>
       <div>
         <Field name="password" type="password" component={ password =>
@@ -28,7 +29,8 @@ const LoginForm = props => {
                 errorText = { password.touched && password.error }
                 { ...password }
               />
-            }/>
+            }
+        />
       </div>
       <div>
         <button type="submit" disabled={ pristine || submitting }>Submit</button>
@@ -37,6 +39,12 @@ const LoginForm = props => {
       </div>
     </form>
   );
+};
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool,
+  reset: PropTypes.func,
+  submitting: PropTypes.bool
 };
 
 export default reduxForm({
