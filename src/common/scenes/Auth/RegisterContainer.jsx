@@ -1,5 +1,5 @@
-import Register from './Register';
-
+import { RegisterForm } from 'common/forms';
+// import Login from './Login';
 import { authRegister } from 'common/state/modules/auth/auth.actions';
 import { reduxForm } from 'redux-form';
 
@@ -26,7 +26,7 @@ const validateAndRegisterUser = (values, dispatch) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authRegister: validateAndRegisterUser,
+    authLogin: validateAndRegisterUser,
     resetMe: () => {
       // sign up is not reused, so we dont need to resetUserFields
       // in our case, it will remove authenticated users
@@ -47,6 +47,6 @@ function mapStateToProps(state, ownProps) {
 // reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 export default reduxForm({
   form: 'RegisterForm',
-  fields: ['email', 'password'],
+  fields: ['email', 'username', 'location', 'bio', 'avatar', 'website', 'firstName', 'lastName', 'password'],
   validate
-}, mapStateToProps, mapDispatchToProps)(Register);
+}, mapStateToProps, mapDispatchToProps)(RegisterForm);
