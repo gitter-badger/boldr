@@ -44,21 +44,4 @@ const storage = multer.diskStorage({
   }
 });
 
-export const uploadFile = (ctx, next) => {
-  try {
-    debug(ctx.files);
-    const filename = Object.keys(ctx.files)[0];
-    if (!filename) {
-      ctx.type = 'json';
-      ctx.status = 400;
-      ctx.body = { error: 'upload error' };
-      return;
-    }
-    const { name, mimetype, buffer } = ctx.files[filename];
-    return ctx.created({ name, mimetype });
-  } catch (error) {
-    debug(error);
-  }
-};
-
 export const upload = multer({ storage });

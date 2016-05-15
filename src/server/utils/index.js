@@ -1,6 +1,7 @@
 import util from 'util';
 import mailer from './mailer';
 import logger from './logger';
+import _ from 'lodash';
 
 /**
  * Clones an object
@@ -22,4 +23,37 @@ function clone(obj, deep = true) {
   return result;
 }
 
-export { mailer, logger, clone };
+function normalize(items) {
+  return items.reduce((normalizedItems, item) => {
+    normalizedItems[item.id] = item;
+    return normalizedItems;
+  }, {});
+}
+
+function group(items) {
+  return items.reduce((normalizedItems, item) => {
+    return {
+      left: [
+        ...normalizedItems['left'],// eslint-disable-line
+        item['left']// eslint-disable-line
+      ],
+      right: [
+        ...normalizedItems['right']// eslint-disable-line
+          .filter(rightItem => rightItem.id !== item['right'].id), // eslint-disable-line
+        item['right']// eslint-disable-line
+      ]
+    };
+  }, {
+    left: [],
+    right: []
+  });
+}
+
+function extractIds(arr) {
+  return _.map(arr, _.property('id'));
+}
+const SOFT_DURABILITY = {
+  durability: 'soft'
+};
+
+export { mailer, logger, clone, SOFT_DURABILITY, normalize, extractIds, group };

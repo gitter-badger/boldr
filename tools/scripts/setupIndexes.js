@@ -1,6 +1,6 @@
-import async, { eachSeries } from 'async';
-import r from 'server/db';
-import config from 'config';
+const async = require('async');
+const r = require('server/db');
+const config = require('config');
 
 const setupIndexes = () => {
   async.series([

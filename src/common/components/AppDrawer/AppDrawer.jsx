@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -50,6 +50,7 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
+@connect(state => ({ boldr: state.boldr }))
 class AppDrawer extends React.Component {// eslint-disable-line
 
   handleToggle = () => {
@@ -104,11 +105,4 @@ AppDrawer.propTypes = {
   dispatch: React.PropTypes.func,
   routeToIndex: React.PropTypes.string
 };
-
-const mapStateToProps = (state) => {
-  return {
-    boldr: state.boldr
-  };
-};
-
-export default connect(mapStateToProps, null)(AppDrawer);
+export default AppDrawer;

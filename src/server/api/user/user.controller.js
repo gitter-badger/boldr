@@ -58,3 +58,16 @@ export async function destroy(ctx) {
 
   return ctx.ok();
 }
+
+export async function addRoleToUser(ctx) {
+  try {
+    r
+    .table('users')
+    .get(ctx.request.body.userId)
+    .update({ roles: r.row('roles').append(ctx.request.body.roleId) })
+    .run();
+    return ctx.ok();
+  } catch (error) {
+    return ctx.error('Error adding the role to the requested user.');
+  }
+}

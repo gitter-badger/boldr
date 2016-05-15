@@ -7,7 +7,5 @@ const userSchema = Joi.object().keys({
   location: Joi.string(),
   bio: Joi.string(),
   avatar: Joi.string(),
-  website: Joi.string(),
-  first: Joi.string(),
-  last: Joi.string()
+  website: Joi.string()
 });

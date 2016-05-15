@@ -2,12 +2,13 @@
   "extends": "axial",
   "parser": "babel-eslint",
   "env": {
-    "browser": false,
+    "browser": true,
     "node": true,
     "mocha": true,
-    "es6": true
+    "es6": true,
+    "shared-node-browser": true
   },
-  "plugins": ["import", "babel"],
+  "plugins": ["import"],
   "globals": {
     "__CLIENT__": false,
     "__SERVER__": false,
@@ -31,7 +32,6 @@
     "import/no-unresolved": 0,
     "no-param-reassign": 0,
     "generator-star-spacing": 0,
-    "arrow-parens": 0,
-    "no-console": 0
+    "arrow-parens": 0
   }
 }
