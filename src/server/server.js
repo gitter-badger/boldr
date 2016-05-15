@@ -29,6 +29,10 @@ const app = new Koa();
 app.name = 'Boldr';
 app.env = process.env.NODE_ENV;
 app.keys = [config.JWT_SECRET];
+// allow both legacy and modern middleware
+// https://www.npmjs.com/package/koa-convert
+const use = app.use;
+app.use = x => use.call(app, convert(x));
 
 export const server = createServer(app.callback());
 
