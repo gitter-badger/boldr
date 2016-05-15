@@ -4,6 +4,7 @@ import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
+import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
 const saltRounds = 10;
 
@@ -81,11 +82,11 @@ export async function loginUser(ctx, next) {
       };
       // make this data available across the app on ctx.session
       ctx.session = payload;
-      console.log(ctx.session)
+      logger.info(ctx.session);
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       return ctx.ok({ token });
     });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 }
