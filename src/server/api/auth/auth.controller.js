@@ -81,6 +81,7 @@ export async function loginUser(ctx, next) {
       };
       // make this data available across the app on ctx.session
       ctx.session = payload;
+      console.log(ctx.session)
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       return ctx.ok({ token });
     });
