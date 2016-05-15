@@ -44,11 +44,12 @@ const handleRender = ctx => {
       _ctx.status = 302;
       _ctx.redirect(`${redirectLocation.pathname}${redirectLocation.search}`);
     } else if (renderProps) {
-      const blueIsh = '#359AD8';
+      const blueIsh = '#272734';
+      const pinkish = '#DD144D';
       const muiTheme = getMuiTheme({
         palette: {
           primary1Color: blueIsh,
-          primary2Color: green700,
+          accent1Color: pinkish,
           primary3Color: cyanA400
         }
       }, {
