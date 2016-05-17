@@ -16,9 +16,9 @@ function createDb(next) {
   });
 }
 
-function createTable(name, next) {
+function createTable(target, next) {
   r.connect(config, (err, conn) => {
-    r.tableCreate(name)
+    r.tableCreate(target.table, { primaryKey: target.pk })
     .run(conn, (err, res) => {
       conn.close();
       next(err, res);

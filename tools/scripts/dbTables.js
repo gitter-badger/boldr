@@ -1,13 +1,40 @@
 export const dbTables = [
-  'users',
-  'roles',
-  'articles',
-  'tags',
-  'articles_tags',
-  'menus',
-  'settings',
-  'pages',
-  'collections'
+  {
+    table: 'articles',
+    pk: 'articleId'
+  },
+  {
+    table: 'users',
+    pk: 'userId'
+  },
+  {
+    table: 'roles',
+    pk: 'roleId'
+  },
+  {
+    table: 'tags',
+    pk: 'tagId'
+  },
+  {
+    table: 'articles_tags',
+    pk: 'id'
+  },
+  {
+    table: 'menus',
+    pk: 'menuId'
+  },
+  {
+    table: 'settings',
+    pk: 'settingId'
+  },
+  {
+    table: 'pages',
+    pk: 'pageId'
+  },
+  {
+    table: 'collections',
+    pk: 'collectionId'
+  }
 ];
 
 // Db Tables w/ Index

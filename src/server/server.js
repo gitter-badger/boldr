@@ -21,9 +21,9 @@ import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
 dotenv.config();
 const debug = _debug('boldr:server:dev');
-const WebSocketServer = require('ws').Server;
+
 // Application constants
-const {SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT} = config;
+const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 
 const app = new Koa();
 app.name = 'Boldr';
@@ -35,9 +35,7 @@ const use = app.use;
 app.use = x => use.call(app, convert(x));
 
 export const server = createServer(app.callback());
-const wss = new WebSocketServer({
-  server
-});
+
 (async() => {
   await BoldrMiddleware.init(app);
   await Boldr.initRoutes(app);
@@ -67,13 +65,7 @@ const wss = new WebSocketServer({
 server.listen(SERVER_PORT, () => {
   logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
 });
-wss.on('connection', socket => {
-  logger.info('A user has connected to the Web Socket Server!');
 
-  socket.on('close', () => {
-    logger.info('A user has disconnected from the Web Socket Server!');
-  });
-});
 server.on('close', () => {
   process.on('SIGINT', exitHandler);
   logger.info('Keep on, keepin on. Boldr out.');
