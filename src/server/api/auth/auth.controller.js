@@ -5,7 +5,7 @@ import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
 import logger from 'server/utils/logger';
-// import userSchema from '../user/user.schema';
+import userSchema from '../user/user.schema';
 const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
@@ -78,7 +78,7 @@ export async function loginUser(ctx, next) {
       const payload = {
         email: result[0].email,
         username: result[0].username,
-        id: result[0].id
+        userId: result[0].userId
       };
       // make this data available across the app on ctx.session
       ctx.session = payload;
