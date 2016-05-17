@@ -1,63 +1,57 @@
 /* eslint-disable no-console */
 import async, { eachSeries } from 'async';
-import r from 'server/db';
-import config from 'config';
+import r from 'rethinkdb';
+import config from 'server/db/dbConfig';
 
-const setupDB = () => {
-  async.series([
-    function initDB(callback) {
-      r.dbCreate('boldr_dev').run();
-      callback();
-    },
-    function initUser(callback) {
-      r.tableCreate('users').run();
-      callback();
-    },
+import { dbTables,
+         dbTablesWithIndex } from './dbTables';
 
-    function initRoles(callback) {
-      r.tableCreate('roles').run();
-      callback();
-    },
+function createDb(next) {
+  r.connect(config, (err, conn) => {
+    r.dbCreate('boldr_dev')
+    .run(conn, (err, res) => {
+      conn.close();
+      next(err, res);
+    });
+  });
+}
 
-    function initArticle(callback) {
-      r.tableCreate('articles').run();
-      callback();
-    },
+function createTable(name, next) {
+  r.connect(config, (err, conn) => {
+    r.tableCreate(name)
+    .run(conn, (err, res) => {
+      conn.close();
+      next(err, res);
+    });
+  });
+}
 
-    function initTag(callback) {
-      r.tableCreate('tags').run();
-      callback();
-    },
+function createTables(next) {
+  async.map(dbTables, createTable, next);
+}
 
-    function initArticleTags(callback) {
-      r.tableCreate('articles_tags').run();
-      callback();
-    },
+function createIndex(target, next) {
+  r.connect(config, (err, conn) => {
+    r.table(target.table)
+    .indexCreate(target.index)
+    .run(conn, (err, res) => {
+      conn.close();
+      next(err, res);
+    });
+  });
+}
 
+function createIndexes(next) {
+  async.map(dbTablesWithIndex, createIndex, next);
+}
 
-    function initMenus(callback) {
-      r.tableCreate('menus').run();
-      callback();
-    },
-
-    function initSettings(callback) {
-      r.tableCreate('settings').run();
-      callback();
-    },
-    function initPages(callback) {
-      r.tableCreate('pages').run();
-      callback();
-    },
-
-    function initCollections(callback) {
-      r.tableCreate('collections').run();
-      callback();
-    },
-    function exit_node(callback) {
-      process.exit();
-      callback();
-    }
-  ]);
-};
-
-setupDB();
+async.series({
+  created: createDb,
+  tables: createTables,
+  indexes: createIndexes
+}, (err, res) => {
+  console.log(err);
+  console.log('============');
+  console.log(res);
+  console.log('============');
+});

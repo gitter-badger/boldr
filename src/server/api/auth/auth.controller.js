@@ -5,7 +5,7 @@ import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
 import logger from 'server/utils/logger';
-import userSchema from '../user/user.schema';
+// import userSchema from '../user/user.schema';
 const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
