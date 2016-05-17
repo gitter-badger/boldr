@@ -43,9 +43,14 @@ class TopBar extends React.Component {
                 targetOrigin={ { horizontal: 'right', vertical: 'top' } }
                 anchorOrigin={ { horizontal: 'right', vertical: 'top' } }
               >
-                <MenuItem onTouchTap={ this.handleClickLogin } primaryText="Login" />
-                <MenuItem onTouchTap={ this.handleClickRegister } primaryText="Register" />
-                <MenuItem primaryText="Sign out" />
+              {
+                this.props.auth.isAuthenticated ?
+                  <MenuItem primaryText="Sign out" /> :
+                  <div>
+                    <MenuItem onTouchTap={ this.handleClickRegister } primaryText="Register" />
+                    <MenuItem onTouchTap={ this.handleClickLogin } primaryText="Login" />
+                  </div>
+              }
               </IconMenu>
             }
           />
@@ -62,7 +67,8 @@ TopBar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    boldr: state.boldr
+    boldr: state.boldr,
+    auth: state.auth
   };
 };
 

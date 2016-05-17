@@ -13,7 +13,6 @@ import serve from 'koa-static';
 import convert from 'koa-convert';
 import { createServer } from 'http';
 import proxy from 'koa-proxy';
-
 import config from 'config';
 import Boldr from './boldr';
 import BoldrMiddleware from './middleware';
@@ -22,6 +21,7 @@ import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
 dotenv.config();
 const debug = _debug('boldr:server:dev');
+
 // Application constants
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 
@@ -61,13 +61,22 @@ export const server = createServer(app.callback());
   });
   // This is fired every time the server side receives a request
   app.use(handleRender);
+
+  server.listen(SERVER_PORT, () => {
+    logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
+  });
+
+  server.on('close', () => {
+    process.on('SIGINT', exitHandler);
+    logger.info('Keep on, keepin on. Boldr out.');
+  });
+  function exitHandler(error) {
+    if (error) {
+      logger.error(error.stack);
+      process.exit(1);
+    }
+    process.exit(0);
+  }
 })();
-server.listen(SERVER_PORT, () => {
-  logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
-});
-server.on('close', () => {
-  // db.disconnect()
-  logger.info('Keep on, keepin on. Boldr out.');
-});
 
 export default app;

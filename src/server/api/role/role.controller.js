@@ -6,9 +6,14 @@ const debug = _debug('boldr:roles:controller');
 debug('init');
 
 export async function getAllRoles(ctx, index) {
-  const roles = await r.table('roles')
-  .run();
-  return ctx.ok(roles);
+  let query = null;
+  try {
+    query = r.table('roles');
+    const result = await query.run();
+    return ctx.ok(result);
+  } catch (error) {
+    return ctx.error(error);
+  }
 }
 
 /**
@@ -18,6 +23,7 @@ export async function getAllRoles(ctx, index) {
  * @method POST
  */
 export const createRole = async (ctx, next) => {
+  let query = null;
   const role = {
     name: ctx.request.body.name,
     description: ctx.request.body.description,
@@ -33,8 +39,13 @@ export const createRole = async (ctx, next) => {
     }
   };
   try {
-    await r.table('roles').insert(role).run();
-    return ctx.created(role);
+    query = r.table('roles').insert(role);
+    const result = await query.run();
+    let id = '';
+    if (result && result.generated_keys && result.generated_keys.length > 0) {
+      id = result.generated_keys[0];
+    }
+    return ctx.created(result, id);
   } catch (err) {
     return ctx.error('There was an error!');
   }
@@ -43,9 +54,11 @@ export const createRole = async (ctx, next) => {
 export const addUserToRole = async (ctx, next) => {
   try {
     await r.table('roles')
-    .get(ctx.request.body.roleId)
-    .update({ users: r.row('users').append(ctx.request.body.roleId) })
-    .run();
+      .get(ctx.params.roleId)
+      .update({
+        userIds: r.row('userIds').append(ctx.request.body.userId)
+      })
+      .run();
     return ctx.ok();
   } catch (error) {
     return ctx.error('Error building relationship between user and role.');
@@ -59,13 +72,14 @@ export const addUserToRole = async (ctx, next) => {
  * @return {Object}        the role object.
  */
 export async function getId(ctx, next) {
+  let query = null;
   try {
-    const role = await r.table('roles')
+    query = r.table('roles')
       .get(ctx.params.id)
-      .eqJoin('userId', r.table('users'))// returns left and right joins
-      .zip()// zip combines the two tables into one on request.
-      .run();
-    return ctx.ok(role);
+      .eqJoin('userId', r.table('users')); // returns left and right joins
+
+    const result = await query.zip().run();
+    return ctx.ok(result);
   } catch (err) {
     return ctx.badRequest('Role not available.');
   }

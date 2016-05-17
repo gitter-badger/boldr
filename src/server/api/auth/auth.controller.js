@@ -4,6 +4,7 @@ import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
+import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
 const saltRounds = 10;
 
@@ -34,16 +35,15 @@ export const registerUser = async ctx => {
     // check for ctx.request.body.email in the database.
     const emailCheck = await r
       .table('users')
-      .getAll(user.email, { index: 'email' })
+      .getAll(ctx.request.body.email, { index: 'email' })
       .run();
     if (emailCheck.length) {
       // if an email matching ctx.request.body.email is found
       // throw an error and end the function.
       throw ctx.error('The email address is in use.');
     }
-    // validate the tag (ctx.request.body) against the tagSchema defined
 
-    r.table('users')
+    await r.table('users')
       .insert(user)
       .run();
     return ctx.created(user);
@@ -77,15 +77,15 @@ export async function loginUser(ctx, next) {
       const payload = {
         email: result[0].email,
         username: result[0].username,
-        id: result[0].id
+        userId: result[0].userId
       };
       // make this data available across the app on ctx.session
       ctx.session = payload;
-      console.log(ctx.session)
+      logger.info(ctx.session);
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       return ctx.ok({ token });
     });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 }

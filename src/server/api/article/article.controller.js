@@ -8,6 +8,7 @@ export async function getAllArticles(ctx) {
   const articles =
   await r.table('articles')
   .eqJoin('authorId', r.table('users'))// returns left and right joins
+  .without('password')
   .zip()// zip combines the two tables into one on request.
   .run();
   return ctx.ok(articles);

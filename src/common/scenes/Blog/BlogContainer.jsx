@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { r, QueryRequest, PropsMixin as RethinkMixin } from 'react-rethinkdb';
 import { fetchArticles } from 'common/state/modules/article/article.actions';
 import Loader from '../../components/Loader';
 import Article from '../../components/scenes/Blog';

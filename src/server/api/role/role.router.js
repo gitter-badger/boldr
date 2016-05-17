@@ -9,5 +9,5 @@ roleRouter
     .get('/:id', controller.getId)
     .put('/:id', controller.update)
     .delete('/:id', controller.destroy)
-    .post('/add', controller.addUserToRole);
+    .post('/:id/add', controller.addUserToRole);
 export default roleRouter;

@@ -1,6 +1,6 @@
 boldr
 ====
-[![Circle CI](https://circleci.com/gh/strues/boldr.svg?style=svg)](https://circleci.com/gh/strues/boldr)
+[![Build Status][build-badge]][travis]
 [![Dependency Status][david-badge]][david]
 [![devDependency Status][david-dev-badge]][david-dev]
 
@@ -62,9 +62,9 @@ $ npm start
 
 ## Change Log
 [View Here](Changelog.md)
-
+[build-badge]: http://img.shields.io/travis/strues/boldr.svg?branch=master&style=flat
 [david-badge]: http://img.shields.io/david/strues/boldr.svg?style=flat
 [david-dev-badge]: http://img.shields.io/david/dev/strues/boldr.svg?style=flat
-
+[travis]: https://travis-ci.org/strues/boldr
 [david]: https://david-dm.org/strues/boldr
 [david-dev]: https://david-dm.org/strues/boldr#info=devDependencies

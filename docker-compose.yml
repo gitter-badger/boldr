@@ -23,16 +23,6 @@ services:
       - data-volumes
     networks:
       - boldr
-  redis:
-    image: redis:3.2-alpine
-    ports:
-     - "6379:6379/tcp"
-    expose:
-      - "6379"
-    volumes_from:
-      - data-volumes
-    networks:
-      - boldr
   # boldr1:
   #   build: ./
   #   depends_on:

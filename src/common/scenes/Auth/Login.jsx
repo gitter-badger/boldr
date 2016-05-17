@@ -4,6 +4,12 @@ import Paper from 'material-ui/Paper';
 import { authLogin } from 'common/state/modules/auth/auth.actions';
 import { LoginForm } from 'common/forms';
 
+const styles = {
+  minHeight: 'calc(100vh - 100px)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+};
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -18,9 +24,11 @@ class Login extends Component {
 
   render() {
     return (
+    <div style={styles}>
       <Paper zDepth={ 1 }>
         <LoginForm onSubmit={ this.handleSubmit } />
       </Paper>
+      </div>
       );
   }
 }

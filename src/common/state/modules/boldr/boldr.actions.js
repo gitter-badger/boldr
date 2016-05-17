@@ -78,6 +78,10 @@ export const routeToIndex = (index) => {
           path = '/dashboard/collections';
           title = 'Collections';
           break;
+        case 11:
+          path = '/dashboard/uploader';
+          title = 'Uploader';
+          break;
         default:
           path = '/404';
       }
