@@ -16,7 +16,7 @@ debug('init');
 export async function getAll(ctx) {
   const users = await r.table('users')
   .without('password')
-  .eqJoin('roleId', r.table('roles'))
+  // .eqJoin('roleId', r.table('roles'))
   // .zip()
   .run((err, user) => {
     if (err) {

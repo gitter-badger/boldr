@@ -29,14 +29,13 @@ export const registerUser = async ctx => {
     avatar: ctx.request.body.avatar,
     firstName: ctx.request.body.firstName,
     lastName: ctx.request.body.lastName,
-    website: ctx.request.body.website,
-    role: ctx.request.body.role
+    website: ctx.request.body.website
   };
   try {
     // check for ctx.request.body.email in the database.
     const emailCheck = await r
       .table('users')
-      .getAll(user.email, { index: 'email' })
+      .getAll(ctx.request.body.email, { index: 'email' })
       .run();
     if (emailCheck.length) {
       // if an email matching ctx.request.body.email is found
@@ -44,7 +43,7 @@ export const registerUser = async ctx => {
       throw ctx.error('The email address is in use.');
     }
 
-    r.table('users')
+    await r.table('users')
       .insert(user)
       .run();
     return ctx.created(user);

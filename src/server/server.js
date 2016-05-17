@@ -61,20 +61,22 @@ export const server = createServer(app.callback());
   });
   // This is fired every time the server side receives a request
   app.use(handleRender);
-})();
-server.listen(SERVER_PORT, () => {
-  logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
-});
 
-server.on('close', () => {
-  process.on('SIGINT', exitHandler);
-  logger.info('Keep on, keepin on. Boldr out.');
-});
-function exitHandler(error) {
-  if (error) {
-    logger.error(error.stack);
-    process.exit(1);
+  server.listen(SERVER_PORT, () => {
+    logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
+  });
+
+  server.on('close', () => {
+    process.on('SIGINT', exitHandler);
+    logger.info('Keep on, keepin on. Boldr out.');
+  });
+  function exitHandler(error) {
+    if (error) {
+      logger.error(error.stack);
+      process.exit(1);
+    }
+    process.exit(0);
   }
-  process.exit(0);
-}
+})();
+
 export default app;
