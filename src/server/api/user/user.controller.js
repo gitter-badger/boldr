@@ -16,6 +16,8 @@ debug('init');
 export async function getAll(ctx) {
   const users = await r.table('users')
   .without('password')
+  .eqJoin('roleId', r.table('roles'))
+  // .zip()
   .run((err, user) => {
     if (err) {
       throw err;
@@ -60,12 +62,21 @@ export async function destroy(ctx) {
 }
 
 export async function addRoleToUser(ctx) {
+  const userId = ctx.params.id;
   try {
     r
     .table('users')
-    .get(ctx.request.body.userId)
-    .update({ roles: r.row('roles').append(ctx.request.body.roleId) })
-    .run();
+    .get(userId)
+    .update({ roleId: ctx.request.body.roleId })
+    .run()
+    .then(() => {
+      return r
+       .table('users')
+       .get(userId)
+       .run()
+       .error(err => err);
+    })
+    .error(err => err);
     return ctx.ok();
   } catch (error) {
     return ctx.error('Error adding the role to the requested user.');

@@ -29,7 +29,8 @@ export const registerUser = async ctx => {
     avatar: ctx.request.body.avatar,
     firstName: ctx.request.body.firstName,
     lastName: ctx.request.body.lastName,
-    website: ctx.request.body.website
+    website: ctx.request.body.website,
+    role: ctx.request.body.role
   };
   try {
     // check for ctx.request.body.email in the database.
@@ -42,7 +43,6 @@ export const registerUser = async ctx => {
       // throw an error and end the function.
       throw ctx.error('The email address is in use.');
     }
-    // validate the tag (ctx.request.body) against the tagSchema defined
 
     r.table('users')
       .insert(user)
