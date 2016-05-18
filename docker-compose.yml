@@ -7,7 +7,7 @@ services:
     stdin_open: true
     volumes:
       - "./tools/data:/data:rw"
-      - "./tools/data/rethinkdb_data:/data/rethinkdb_data:rw"
+      - "./tools/data:/data/rethinkdb_data:rw"
       - "./docs/logs/rethinkdb:/var/logs/rethinkdb:rw"
   rethinkdb:
     build: ./tools/docker/rethinkdb

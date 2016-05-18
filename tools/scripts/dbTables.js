@@ -70,7 +70,7 @@ export const dbTablesWithIndex = [
   },
   {
     table: 'roles',
-    index: 'name'
+    index: 'role'
   },
   {
     table: 'tags',

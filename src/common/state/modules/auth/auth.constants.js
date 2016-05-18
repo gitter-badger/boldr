@@ -8,3 +8,7 @@ export const SIGNUP_ERROR_USER = '@@auth/SIGNUP_ERROR_USER';
 export const LOGOUT_USER = '@@auth/LOGOUT_USER';
 export const LOGOUT_SUCCESS_USER = '@@auth/LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = '@@auth/LOGOUT_ERROR_USER';
+export const ME_FROM_TOKEN = '@@auth/ME_FROM_TOKEN';
+export const ME_FROM_TOKEN_SUCCESS = '@@auth/ME_FROM_TOKEN_SUCCESS';
+export const ME_FROM_TOKEN_FAILURE = '@@auth/ME_FROM_TOKEN_FAILURE';
+export const RESET_TOKEN = '@@auth/RESET_TOKEN';

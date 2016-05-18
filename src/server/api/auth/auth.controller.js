@@ -29,7 +29,8 @@ export const registerUser = async ctx => {
     avatar: ctx.request.body.avatar,
     firstName: ctx.request.body.firstName,
     lastName: ctx.request.body.lastName,
-    website: ctx.request.body.website
+    website: ctx.request.body.website,
+    createdAt: r.now()
   };
   try {
     // check for ctx.request.body.email in the database.
@@ -48,7 +49,7 @@ export const registerUser = async ctx => {
       .run();
     return ctx.created(user);
   } catch (err) {
-    return ctx.error('There was a problem registering.');
+    return ctx.error(`There was a problem registering. ${err}`);
   }
 };
 
@@ -57,12 +58,6 @@ export const registerUser = async ctx => {
  * logs a user into his or her account.
  * @route /api/v1/auth/login
  * @method POST
- * Token response is
- * {
- * isFulfilled: true,
- * isRejected: false,
- * fulfillmentValue: TOKEN
- * }
  */
 export async function loginUser(ctx, next) {
   try {
@@ -84,6 +79,25 @@ export async function loginUser(ctx, next) {
       logger.info(ctx.session);
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       return ctx.ok({ token });
+    });
+  } catch (err) {
+    logger.error(err);
+  }
+}
+/**
+ * @description
+ * checks if the user is logged in and returns their information
+ * @route /api/v1/auth/check
+ * @method GET
+ */
+export async function checkUser(ctx, next) {
+  try {
+    const user = await r.table('users')
+    .get(ctx.state.user.userId)
+    .without('password')
+    .run()
+    .then((result) => {
+      return ctx.ok(result);
     });
   } catch (err) {
     logger.error(err);

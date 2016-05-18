@@ -27,19 +27,18 @@ export const createArticle = async (ctx, next) => {
     markup: ctx.request.body.markup,
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
-    authorId: ctx.state.user.id,
+    authorId: ctx.state.user.userId,
     isDraft: ctx.request.body.isDraft,
-    createdAt: new Date()
+    createdAt: r.now()
   };
-/*
-r.table('articles_tags').eq_join('article_id', r.table('articles')).zip()
-.eq_join('tag_id', r.table('tags')).zip().run();
- */
+  let query = null;
+
   try {
-    await r.table('articles').insert(article).run();
-    return ctx.created(article);
+    query = r.table('articles').insert(article);
+    const result = await query.run();
+    return ctx.created(result);
   } catch (err) {
-    return ctx.error('Something went terribly wrong creating your article. Try again.');
+    return ctx.error(`Something went terribly wrong creating your article. Try again. ${err}`);
   }
 };
 

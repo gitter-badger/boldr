@@ -129,3 +129,34 @@ export function logout() {
       });
   };
 }
+
+export function meFromToken(tokenFromStorage) {
+  // check if the token is still valid, if so, get user from the server
+  request.get('/api/v1/auth/check');
+
+  return {
+    type: types.ME_FROM_TOKEN,
+    payload: request
+  };
+}
+
+export function meFromTokenSuccess(currentUser) {
+  return {
+    type: types.ME_FROM_TOKEN_SUCCESS,
+    payload: currentUser
+  };
+}
+
+export function meFromTokenFailure(error) {
+  return {
+    type: types.ME_FROM_TOKEN_FAILURE,
+    payload: error
+  };
+}
+
+
+export function resetToken() {
+  return {
+    type: types.RESET_TOKEN
+  };
+}

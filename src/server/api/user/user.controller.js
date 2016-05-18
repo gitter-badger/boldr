@@ -1,6 +1,7 @@
 import _debug from 'debug';
 import r from 'server/db';
 // import User from '../../db/models/user';
+import logger from '../../utils/logger';
 import jwt from 'jsonwebtoken';
 import config, { paths } from '../../../../tools/config';
 import getToken from '../../auth/getToken';
@@ -9,6 +10,8 @@ debug('init');
 
 /**
  * Returns a listing of all the user users in the database.
+ * r.db('boldr_dev').table('users').eqJoin('roleId', r.db('boldr_dev').table('roles'))
+ * .without([{left: ['password']}, {right: 'roleId'}]).zip()
  * @method getUsers
  * @param  {[type]} ctx [description]
  * @return {[type]}     [description]

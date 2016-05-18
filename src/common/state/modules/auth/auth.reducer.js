@@ -46,6 +46,33 @@ export default function auth(state = INITIAL_STATE, action) {
         loading: false,
         message: 'There was a problem logging you in.'
       };
+    case constants.ME_FROM_TOKEN:
+      return {
+        ...state,
+        error: false,
+        isAuthenticating: true,
+        isAuthenticated: false,
+        loading: true,
+        message: 'Verifying your token.'
+      };
+    case constants.ME_FROM_TOKEN_SUCCESS:
+      return {
+        ...state,
+        error: false,
+        isAuthenticating: false,
+        isAuthenticated: true,
+        loading: false,
+        message: action.payload.data.user
+      };
+    case constants.ME_FROM_TOKEN_FAILURE:
+      return {
+        ...state,
+        error: action.payload.data,
+        isAuthenticating: false,
+        isAuthenticated: false,
+        loading: false,
+        message: 'There was a problem logging you in.'
+      };
     default:
       return state;
   }
