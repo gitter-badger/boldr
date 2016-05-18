@@ -30,7 +30,7 @@ export const registerUser = async ctx => {
     firstName: ctx.request.body.firstName,
     lastName: ctx.request.body.lastName,
     website: ctx.request.body.website,
-    createdAt: r.now()
+    createdAt: Date.toString()
   };
   try {
     // check for ctx.request.body.email in the database.
