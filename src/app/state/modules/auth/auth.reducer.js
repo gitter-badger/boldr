@@ -6,7 +6,7 @@ export const INITIAL_STATE = {
   error: false,
   isAuthenticated: false,
   isAuthenticating: false,
-  token: {}
+  token: null
 };
 
 export default function auth(state = INITIAL_STATE, action) {

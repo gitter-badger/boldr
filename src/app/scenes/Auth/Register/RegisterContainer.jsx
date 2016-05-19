@@ -1,5 +1,5 @@
 import { reduxForm } from 'redux-form';
-import RegisterForm from './RegisterForm';
+import Register from './Register';
 import { authRegister } from 'app/state/modules/auth/auth.actions';
 
 function validate(values) {
@@ -46,6 +46,5 @@ function mapStateToProps(state, ownProps) {
 // reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 export default reduxForm({
   form: 'RegisterForm',
-  fields: ['email', 'username', 'location', 'bio', 'avatar', 'website', 'firstName', 'lastName', 'password'],
   validate
-}, mapStateToProps, mapDispatchToProps)(RegisterForm);
+}, mapStateToProps, mapDispatchToProps)(Register);

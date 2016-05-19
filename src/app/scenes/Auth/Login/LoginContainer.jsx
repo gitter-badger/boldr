@@ -1,5 +1,5 @@
 import LoginForm from './LoginForm';
-// import Login from './Login';
+import Login from './Login';
 import { authLogin } from 'app/state/modules/auth/auth.actions';
 import { reduxForm } from 'redux-form';
 
@@ -47,6 +47,5 @@ function mapStateToProps(state, ownProps) {
 // reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 export default reduxForm({
   form: 'LoginForm',
-  fields: ['email', 'password'],
   validate
-}, mapStateToProps, mapDispatchToProps)(LoginForm);
+}, mapStateToProps, mapDispatchToProps)(Login);

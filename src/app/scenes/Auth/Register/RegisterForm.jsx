@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,56 +23,110 @@ const cardStyle = {
   justifyContent: 'center'
 };
 
-@connect(selector)
-class RegisterForm extends Component {
-  render() {
-    const { fields: {
-      email, username, location, bio, avatar, website, firstName, lastName, password
-    }, handleSubmit } = this.props;
-    return (
+const RegisterForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props;
+  return (
       <div style={ styles }>
         <Card style={ cardStyle }>
           <CardTitle title="Register an account" />
-            <form onSubmit={handleSubmit(this.props.authLogin.bind(this))}>
+            <form onSubmit={ handleSubmit }>
               <div>
-                <TextField type="email" floatingLabelText="Email" { ...email } />
+              <Field name="email" component={ email =>
+                <TextField hintText = "Email"
+                  floatingLabelText="Email"
+                  errorText = { email.touched && email.error }
+                  { ...email }
+                />
+                }/>
               </div>
               <div>
-                <TextField type="text" floatingLabelText="Username" { ...username } />
+              <Field name="username" component={ username =>
+                <TextField hintText = "Username"
+                  floatingLabelText="Username"
+                  errorText = { username.touched && username.error }
+                  { ...username }
+                />
+                }/>
               </div>
-                <div className={`form-group ${password.touched && password.invalid ? 'has-error' : ''}`}>
-                 <TextField type="password" floatingLabelText="Password" { ...password } />
-                   <div className="help-block">
-                      { password.touched ? password.error : '' }
-                  </div>
-                </div>
-                <div>
-                  <TextField type="text" floatingLabelText="First Name" { ...firstName } />
-                </div>
-                <div>
-                  <TextField type="text" floatingLabelText="Last Name" { ...lastName } />
-                </div>
-                <div>
-                  <TextField type="text" floatingLabelText="Location" { ...location } />
-                </div>
-                <div>
-                  <TextField type="text" floatingLabelText="Avatar" { ...avatar } />
-                </div>
-                <div>
-                  <TextField type="text" floatingLabelText="Website" { ...website } />
-                </div>
-                <div>
-                  <TextField multiLine type="text" floatingLabelText="Bio" { ...bio } />
-                </div>
+              <div>
+              <Field name="password" component={ password =>
+                <TextField hintText = "****"
+                  type="password"
+                  floatingLabelText="Password"
+                  errorText = { password.touched && password.error }
+                  { ...password }
+                />
+                }/>
+              </div>
+              <div>
+                <Field name="firstName" component={ firstName =>
+                  <TextField hintText = "First Name"
+                    floatingLabelText="First Name"
+                    errorText = { firstName.touched && firstName.error }
+                    { ...firstName }
+                  />
+                }/>
+              </div>
+              <div>
+                <Field name="lastName" component={ lastName =>
+                      <TextField
+                        hintText = "Last Name"
+                        floatingLabelText="Last Name"
+                        errorText = { lastName.touched && lastName.error }
+                        { ...lastName }
+                      />
+                    }/>
+              </div>
+              <div>
+                <Field name="location" component={ location =>
+                      <TextField
+                        hintText = "Location"
+                        floatingLabelText="Location"
+                        errorText = { location.touched && location.error }
+                        { ...location }
+                      />
+                    }/>
+              </div>
+              <div>
+                <Field name="avatar" component={ avatar =>
+                      <TextField
+                        hintText = "Avatar url"
+                        floatingLabelText="Avatar"
+                        errorText = { avatar.touched && avatar.error }
+                        { ...avatar }
+                      />
+                    }/>
+              </div>
+              <div>
+                <Field name="website" component={ website =>
+                      <TextField
+                        hintText = "Website"
+                        floatingLabelText="Website"
+                        errorText = { website.touched && website.error }
+                        { ...website }
+                      />
+                    }/>
+              </div>
+              <div>
+                <Field name="bio" component={ bio =>
+                      <TextField
+                        multiLine
+                        hintText = "A few words about yourself"
+                        floatingLabelText="Bio"
+                        errorText = { bio.touched && bio.error }
+                        { ...bio }
+                      />
+                    }/>
+              </div>
                  <CardActions>
-                  <RaisedButton label="Register" type="submit" secondary={true} style={style} />
+                  <RaisedButton label="Register" type="submit"
+                    secondary={true} disabled={ pristine || submitting } style={style} />
                 </CardActions>
             </form>
           </Card>
       </div>
     );
-  }
-}
+};
 
 const selector = (state) => ({ auth: state.auth });
 

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
@@ -20,34 +20,52 @@ const cardStyle = {
   alignItems: 'center',
   justifyContent: 'center'
 };
-@connect(selector)
-class LoginForm extends Component {
-  render() {
-    const { fields: { email, password }, handleSubmit } = this.props;
-    return (
+const LoginForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props;
+  return (
       <div style={ styles }>
       <Card style={ cardStyle }>
         <CardTitle title="Login" />
-          <form onSubmit={handleSubmit(this.props.authLogin.bind(this))}>
-            <div>
-              <TextField type="email" floatingLabelText="Email" { ...email } />
-            </div>
-            <div className={`form-group ${password.touched && password.invalid ? 'has-error' : ''}`}>
-               <TextField type="password" floatingLabelText="Password" { ...password } />
-            <div className="help-block">
-                {password.touched ? password.error : ''}
-              </div>
-            </div>
-            <CardActions>
-             <RaisedButton label="Login" type="submit" secondary={true} style={style} />
-           </CardActions>
-       </form>
+        <form onSubmit={ handleSubmit }>
+      <div>
+        <Field name="email" component={ email =>
+              <TextField
+                hintText="Email"
+                floatingLabelText="Email"
+                errorText = { email.touched && email.error }
+                { ...email }
+              />
+            }
+        />
+      </div>
+      <div>
+        <Field name="password" type="password" component={ password =>
+              <TextField
+                hintText="Password"
+                floatingLabelText="Password"
+                errorText = { password.touched && password.error }
+                { ...password }
+              />
+            }
+        />
+      </div>
+
+      <CardActions>
+       <RaisedButton label="Login" type="submit" secondary={true} style={style} />
+     </CardActions>
+    </form>
        </Card>
       </div>
     );
-  }
-}
+};
 
-const selector = (state) => ({ auth: state.auth });
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool,
+  reset: PropTypes.func,
+  submitting: PropTypes.bool
+};
 
-export default LoginForm;
+export default reduxForm({
+  form: 'LoginForm'
+})(LoginForm);

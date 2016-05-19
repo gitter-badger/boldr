@@ -4,6 +4,7 @@ import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
+import Boom from 'boom';
 import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
 const saltRounds = 10;
@@ -29,19 +30,22 @@ export const registerUser = async ctx => {
     avatar: ctx.request.body.avatar,
     firstName: ctx.request.body.firstName,
     lastName: ctx.request.body.lastName,
-    website: ctx.request.body.website
+    website: ctx.request.body.website,
+    createdAt: new Date().toISOString()
   };
+  // check for ctx.request.body.email in the database.
+  const emailCheck = await r
+    .table('users')
+    .getAll(ctx.request.body.email, {
+      index: 'email'
+    })
+    .run();
+  if (emailCheck.length !== 0) {
+    // if an email matching ctx.request.body.email is found
+    // throw an error and end the function.
+    throw Boom.badRequest('The email address is in use.');
+  }
   try {
-    // check for ctx.request.body.email in the database.
-    const emailCheck = await r
-      .table('users')
-      .getAll(ctx.request.body.email, { index: 'email' })
-      .run();
-    if (emailCheck.length) {
-      // if an email matching ctx.request.body.email is found
-      // throw an error and end the function.
-      throw ctx.error('The email address is in use.');
-    }
     await Joi.validate(user, userSchema, (err, value) => {
       if (err) {
         logger.info(err);
@@ -52,7 +56,7 @@ export const registerUser = async ctx => {
       return ctx.created(value);
     });
   } catch (err) {
-    return ctx.error(`There was a problem registering. ${err}`);
+    throw Boom.badRequest('Unable to register user.');
   }
 };
 
@@ -65,26 +69,31 @@ export const registerUser = async ctx => {
 export async function loginUser(ctx, next) {
   try {
     const user = await r.table('users')
-    .filter({ email: ctx.request.body.email })
-    .run()
-    .then((result) => {
-      const pw = bcrypt.compareSync(ctx.request.body.password, result[0].password);
-      if (pw === false) {
-        throw ctx.error();
-      }
-      const payload = {
-        email: result[0].email,
-        username: result[0].username,
-        userId: result[0].userId
-      };
-      // make this data available across the app on ctx.session
-      ctx.session = payload;
-      logger.info(ctx.session);
-      const token = jwt.sign(payload, process.env.JWT_SECRET);
-      return ctx.ok({ token });
+      .filter({
+        email: ctx.request.body.email
+      })
+      .run();
+    if (!user) {
+      throw Boom.notFound('email/password not found');
+    }
+    const pw = bcrypt.compareSync(ctx.request.body.password, user[0].password);
+    if (pw === false) {
+      throw Boom.unauthorized();
+    }
+    const payload = {
+      email: user[0].email,
+      username: user[0].username,
+      userId: user[0].userId
+    };
+    // make this data available across the app on ctx.session
+    ctx.session = payload;
+    logger.info(ctx.session);
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
+    return ctx.ok({
+      token
     });
   } catch (err) {
-    logger.error(err);
+    throw Boom.badRequest('Unable to log in.', err);
   }
 }
 /**
@@ -96,13 +105,13 @@ export async function loginUser(ctx, next) {
 export async function checkUser(ctx, next) {
   try {
     const user = await r.table('users')
-    .get(ctx.state.user.userId)
-    .without('password')
-    .run()
-    .then((result) => {
-      return ctx.ok(result);
-    });
+      .get(ctx.state.user.userId)
+      .without('password')
+      .run()
+      .then((result) => {
+        return ctx.ok(result);
+      });
   } catch (err) {
-    logger.error(err);
+    throw Boom.unauthorized(err);
   }
 }
