@@ -29,8 +29,7 @@ export const registerUser = async ctx => {
     avatar: ctx.request.body.avatar,
     firstName: ctx.request.body.firstName,
     lastName: ctx.request.body.lastName,
-    website: ctx.request.body.website,
-    createdAt: Date.toString()
+    website: ctx.request.body.website
   };
   try {
     // check for ctx.request.body.email in the database.
@@ -43,11 +42,15 @@ export const registerUser = async ctx => {
       // throw an error and end the function.
       throw ctx.error('The email address is in use.');
     }
-
-    await r.table('users')
-      .insert(user)
-      .run();
-    return ctx.created(user);
+    await Joi.validate(user, userSchema, (err, value) => {
+      if (err) {
+        logger.info(err);
+      }
+      r.table('users')
+        .insert(value)
+        .run();
+      return ctx.created(value);
+    });
   } catch (err) {
     return ctx.error(`There was a problem registering. ${err}`);
   }

@@ -1,6 +1,6 @@
 import _debug from 'debug';
 import r from 'server/db';
-// import User from '../../db/models/user';
+
 import logger from '../../utils/logger';
 import jwt from 'jsonwebtoken';
 import config, { paths } from '../../../../tools/config';
