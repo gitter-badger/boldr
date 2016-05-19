@@ -5,9 +5,7 @@ import CoreLayout from '../layouts/CoreLayout';
 import HomeContainer from '../scenes/Home';
 
 import BlogContainer from '../scenes/Blog';
-
-import RegisterContainer from '../scenes/Auth/RegisterContainer';
-import LoginContainer from '../scenes/Auth/LoginContainer';
+import { RegisterContainer, LoginContainer } from 'common/scenes/Auth';
 import Error404 from '../components/404';
 
 export default (store) => {

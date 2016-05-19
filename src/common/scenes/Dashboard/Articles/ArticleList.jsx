@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import Article from 'common/components/scenes/Dashboard/Article';
+import Article from './components/Article';
 import Loader from 'common/components/Loader';
 import { bindActionCreators } from 'redux';
 import * as articleActions from 'common/state/modules/article/article.actions';

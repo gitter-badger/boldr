@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import { authLogin } from 'common/state/modules/auth/auth.actions';
-import { LoginForm } from 'common/forms';
+import LoginForm from './LoginForm';
 
 const styles = {
   minHeight: 'calc(100vh - 100px)',

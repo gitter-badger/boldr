@@ -55,8 +55,6 @@
     "common": "^0.2.5",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
-    "draft-js": "^0.7.0",
-    "draft-js-export-html": "^0.1.13",
     "fs-extra": "^0.30.0",
     "joi": "^8.1.0",
     "jsonwebtoken": "^6.2.0",

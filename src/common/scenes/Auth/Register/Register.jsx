@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import { authRegister } from 'common/state/modules/auth/auth.actions';
-import { RegisterForm } from 'common/forms';
+import RegisterForm from './RegisterForm';
 
 class Register extends Component {
   constructor(props) {

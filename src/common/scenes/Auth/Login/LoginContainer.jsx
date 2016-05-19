@@ -1,4 +1,4 @@
-import { LoginForm } from 'common/forms';
+import LoginForm from './LoginForm';
 // import Login from './Login';
 import { authLogin } from 'common/state/modules/auth/auth.actions';
 import { reduxForm } from 'redux-form';

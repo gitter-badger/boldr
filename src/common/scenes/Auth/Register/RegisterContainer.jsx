@@ -1,7 +1,6 @@
-import { RegisterForm } from 'common/forms';
-// import Login from './Login';
-import { authRegister } from 'common/state/modules/auth/auth.actions';
 import { reduxForm } from 'redux-form';
+import RegisterForm from './RegisterForm';
+import { authRegister } from 'common/state/modules/auth/auth.actions';
 
 function validate(values) {
   const errors = {};

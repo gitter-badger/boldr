@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchArticles } from 'common/state/modules/article/article.actions';
 import Loader from '../../components/Loader';
-import Article from '../../components/scenes/Blog';
+import Article from './components/Article';
 
 // Data that needs to be called before rendering the component
 // This is used for server side rending via the fetchComponentDataBeforeRending() method
