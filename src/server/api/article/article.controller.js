@@ -4,7 +4,13 @@ import r from 'server/db';
 const debug = _debug('boldr:article:controller');
 debug('init');
 
-export async function getAllArticles(ctx) {
+/**
+ * Gets all articles
+ * @method getAllArticles
+ * @param  {request} ctx
+ * @return {Array}     array containing all article objects.
+ */
+export const getAllArticles = async (ctx) => {
   const articles =
   await r.table('articles')
   .eqJoin('authorId', r.table('users'))// returns left and right joins
@@ -12,13 +18,20 @@ export async function getAllArticles(ctx) {
   .zip()// zip combines the two tables into one on request.
   .run();
   return ctx.ok(articles);
-}
+};
 
 /**
- * @description
- * creates a new article
- * @route /api/v1/articles
- * @method POST
+ * Creates a new article and saves it to the database.
+ * @method createArticle
+ * @param {String}  title          the title of the article
+ * @param {String}  slug           the title normalized without spaces.
+ * @param {String}  markup         any HTML from the post body
+ * @param {String}  content        the article body
+ * @param {String}  featureImage   an image to go along with the article
+ * @param {Number}  authorId       the userId associated with the creator of the article
+ * @param {Boolean} isDraft        whether or not the article is published
+ * @param {Date}    createdAt      the time the article was saved.
+ * @return {Object}                the article object
  */
 export const createArticle = async (ctx, next) => {
   const article = {
@@ -42,6 +55,12 @@ export const createArticle = async (ctx, next) => {
   }
 };
 
+/**
+ * Show a specific article
+ * @method showArticle
+ * @param  {String} ctx the articleId passed as a param
+ * @return {Object}     the article.
+ */
 export const showArticle = async (ctx) => {
   const article = await r.table('articles').get(ctx.params.id).run();
   return ctx.ok(article);
@@ -49,7 +68,8 @@ export const showArticle = async (ctx) => {
 
 /**
  * looks up an article by the slug, which is a sanitized version of its title.
- * @param  {Object}   ctx  slug
+ * @method getArticleBySlug
+ * @param  {String}   ctx  the slug param.
  * @return {Object}        The article
  */
 export const getArticleBySlug = async (ctx, next) => {
@@ -61,21 +81,44 @@ export const getArticleBySlug = async (ctx, next) => {
   .run();
   return ctx.ok(article);
 };
-// Get all articles with the tag "foo" (where the field tags contains "foo")
-// r.table("articles").getAll("foo", {index: "tags"}).run(conn, callback)
-export async function update(ctx) {
+
+/**
+ * looks up all articles by the userId (authorId)
+ * @method getArticleByAuthor
+ * @param  {String}   ctx  the userId param
+ * @return {Array}        Articles
+ */
+export const getArticleByAuthor = async (ctx, next) => {
+  const articles = await r.table('articles')
+  .getAll(ctx.params.userId, { index: 'authorId' })
+  .run();
+  return ctx.ok(articles);
+};
+
+/**
+ * Updates an article
+ * @method update
+ * @param  {String} ctx the articleId param
+ * @return {Object}     Updated article.
+ */
+export const update = async (ctx) => {
   const result = await r.table('articles')
     .get(ctx.params.id)
     .update(ctx.request.body)
     .run();
   return ctx.ok(result);
-}
+};
 
-export async function destroy(ctx) {
+/**
+ * Remove an article from the database.
+ * @method destroy
+ * @param  {String} ctx the articleId passed as a param
+ * @return {Number}     should return 204.
+ */
+export const destroy = async (ctx) => {
   const result = await r.table('articles')
     .get(ctx.params.id)
     .delete()
     .run();
-
-  return ctx.ok();
-}
+  ctx.status = 204;
+};

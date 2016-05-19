@@ -16,6 +16,7 @@ articleRouter
     .get('/:id', controller.showArticle)
     .get('/slug/:slug', controller.getArticleBySlug)
     .put('/:id', checkAuth(), controller.update)
-    .delete('/:id', checkAuth(), controller.destroy);
+    .delete('/:id', checkAuth(), controller.destroy)
+    .get('/author/:userId', controller.getArticleByAuthor);
 
 export default articleRouter;
