@@ -2,7 +2,7 @@ import Koa from 'koa';
 import _debug from 'debug';
 import serve from 'koa-static';
 
-import projectConfig from '../../config';
+import projectConfig from 'config';
 import { handleRender } from './utils/renderReact';
 
 const debug = _debug('app:server:prod');

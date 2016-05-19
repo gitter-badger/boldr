@@ -61,9 +61,9 @@ const config = {
   },
   // Project Structure
   PATH_BASE: path.normalize(path.join(__dirname, '..', '..')),
-  ENTRY_APP: 'index',
+  ENTRY_APP: 'client',
   DIR_SRC: 'src',
-  DIR_CLIENT: 'client',
+  DIR_CLIENT: 'app',
   DIR_STATIC: 'static',
   DIR_DIST: 'dist',
   DIR_BUILD: 'build',
