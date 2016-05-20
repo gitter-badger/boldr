@@ -15,10 +15,6 @@ services:
      - "8080:8080/tcp"
      - "28015:28015/tcp"
      - "29015:29015/tcp"
-    expose:
-      - "8080"
-      - "28015"
-      - "29015"
     volumes_from:
       - data-volumes
     networks:

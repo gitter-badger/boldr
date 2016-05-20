@@ -9,14 +9,12 @@ export const env = (string) => {
 const NODE_ENV = process.env.NODE_ENV || 'development';
 export const ROOT_DIR = path.normalize(path.join(__dirname, '..', '..'));
 const config = {
-
   // Environment
   __CLIENT__: true,
   __SERVER__: false,
   __DEV__: NODE_ENV === 'development',
   __PROD__: NODE_ENV === 'production',
   __DEBUG__: !!argv.debug,
-
   // Server Configuration
   SERVER_HOST: 'localhost',
   SERVER_PORT: process.env.PORT || 3000,
@@ -35,14 +33,9 @@ const config = {
     'classnames',
     'axios'
   ],
-  RDB_HOST: process.env.RDB_HOST || 'localhost',
+  RDB_HOST: process.env.RDB_HOST || '10.211.55.7',
   RDB_PORT: process.env.RDB_PORT || 28015,
   RDB_DB: process.env.RDB_DB || 'boldr_dev',
-  TESTDB_HOST: process.env.TEST_DB_HOST || '10.211.55.7',
-  TESTDB_NAME: process.env.TEST_DB_NAME || 'boldr_test',
-  TESTDB_PORT: process.env.TEST_DB_PORT || 28015,
-  REDIS_HOST: process.env.REDIS_HOST || 'localhost',
-  REDIS_PORT: process.env.REDIS_PORT || 6379,
   logger: {
     console: true,
     level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'
@@ -60,7 +53,7 @@ const config = {
     }
   },
   // Project Structure
-  PATH_BASE: path.normalize(path.join(__dirname, '..', '..')),
+  PATH_BASE: ROOT_DIR,
   ENTRY_APP: 'client',
   DIR_SRC: 'src',
   DIR_CLIENT: 'app',

@@ -5,12 +5,12 @@ import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 
 import isomorphicToolsConfig from './isomorphic.tools.config';
-import projectConfig, { paths } from '../config';
+import boldrCfg, { paths } from '../config';
 
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
-const srcDir = paths('src');
-const nodeModulesDir = paths('nodeModules');
+const SRC_DIR = paths('src');
+const NODE_MODULES_DIR = paths('nodeModules');
 
 const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
@@ -33,7 +33,7 @@ const {
   __DEV__,
   __PROD__,
   __DEBUG__
-} = projectConfig;
+} = boldrCfg;
 
 debug('Create configuration.');
 const config = {
@@ -48,15 +48,13 @@ const config = {
   },
   output: {
     path: paths('build'),
-    filename: '[name]-[hash].js',
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     publicPath: `http://localhost:${WEBPACK_DEV_SERVER_PORT}/build/`
   },
   resolve: {
     alias: {},
-
-    // Resolve the `./src` directory so we can avoid writing
-    // ../../styles/base.css but styles/base.css
-    root: [srcDir],
+    root: [SRC_DIR],
 
     extensions: ['', '.js', '.jsx']
   },
@@ -66,8 +64,8 @@ const config = {
       {
         test: /\.js[x]?$/,
         loader: 'babel',
-        exclude: [nodeModulesDir],
-        include: [srcDir],
+        exclude: [NODE_MODULES_DIR],
+        include: [SRC_DIR],
         query: {
           cacheDirectory: true
         }
@@ -78,7 +76,7 @@ const config = {
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('styles'),
-        include: [srcDir],
+        include: [SRC_DIR],
         loaders: [
           'style',
           cssLoader,
@@ -106,7 +104,7 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
+    new webpack.optimize.CommonsChunkPlugin('vendors'),
     // new NpmInstallPlugin({ save: true }),
     new webpack.DefinePlugin({
       __CLIENT__,
@@ -122,7 +120,7 @@ const config = {
 
 // Optimizing rebundling
 deps.forEach(dep => {
-  const depPath = path.resolve(nodeModulesDir, dep);
+  const depPath = path.resolve(NODE_MODULES_DIR, dep);
 
   config.resolve.alias[dep.split(path.sep)[0]] = depPath;
   config.module.noParse.push(depPath);
