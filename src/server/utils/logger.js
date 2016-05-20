@@ -24,6 +24,7 @@ if (config.logger.console) {
       handleExceptions: false,
       prettyPrint: true,
       colorize: true,
+      json: false,
       level: config.logger.level,
       label: getFilePath(module),
       timestamp: () => new Date().toLocaleString()
