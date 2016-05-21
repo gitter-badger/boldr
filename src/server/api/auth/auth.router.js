@@ -2,10 +2,9 @@ import Router from 'koa-router';
 import passport from 'koa-passport';
 import config, { paths } from '../../../../tools/config';
 import { registerUser, loginUser, checkUser } from './auth.controller';
-// import { checkAuth } from '../../auth/validateToken';
+import generateToken from '../../auth/generateToken';
 import {
   authEmail,
-  generateToken,
   isAuthenticated
 } from '../../auth';
 const authRouter = new Router();

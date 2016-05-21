@@ -16,7 +16,7 @@ import proxy from 'koa-proxy';
 import config from 'config';
 import Boldr from './boldr';
 import BoldrMiddleware from './middleware';
-
+import Problem from './utils/problem';
 import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
 dotenv.config();
@@ -54,10 +54,11 @@ export const server = createServer(app.callback());
   app.use(serve('static'));
   app.use(async (ctx, next) => {
     const start = new Date();
+    ctx.Problem = Problem;
     ctx.req.body = ctx.request.body;
-    await next();
     const end = new Date();
     logger.info(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
+    await next();
   });
   // This is fired every time the server side receives a request
   app.use(handleRender);

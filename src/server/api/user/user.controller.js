@@ -4,7 +4,7 @@ import r from 'server/db';
 import logger from '../../utils/logger';
 import jwt from 'jsonwebtoken';
 import config, { paths } from '../../../../tools/config';
-import getToken from '../../auth/getToken';
+
 const debug = _debug('boldr:user:controller');
 debug('init');
 

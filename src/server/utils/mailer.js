@@ -5,8 +5,8 @@ import config, { paths } from '../../../tools/config';
 
 const auth = {
   auth: {
-    api_key: 'config.mg.apiKey',
-    domain: 'config.mg.domain'
+    api_key: config.mg.apiKey,
+    domain: config.mg.domain
   }
 };
 const nodemailerMailgun = nodemailer.createTransport(mg(auth));
@@ -20,7 +20,7 @@ export function generateVerifyCode() {
 
 export function sendEmail(to, subject, html) {
   return nodemailerMailgun.sendMail({
-    from: config.email.from,
+    from: config.mg.from,
     to,
     subject,
     html

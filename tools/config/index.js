@@ -52,6 +52,11 @@ const config = {
       bucket: 'boldr'
     }
   },
+  mg: {
+    api_key: process.env.MG_KEY || '',
+    domain: process.env.MG_DOMAIN || 'boldr.io',
+    from: 'noreploy@boldr.io'
+  },
   // Project Structure
   PATH_BASE: ROOT_DIR,
   ENTRY_APP: 'client',

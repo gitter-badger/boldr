@@ -9,7 +9,8 @@ const userSchema = Joi.object().keys({
   avatar: Joi.string(),
   website: Joi.string(),
   firstName: Joi.string(),
-  lastName: Joi.string()
+  lastName: Joi.string(),
+  createdAt: Joi.date()
 });
 
 export default userSchema;

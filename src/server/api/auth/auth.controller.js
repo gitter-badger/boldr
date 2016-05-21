@@ -7,6 +7,7 @@ import Joi from 'joi';
 import Boom from 'boom';
 import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
+import { sendVerifyEmail } from '../../utils/mailer';
 const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
@@ -53,6 +54,7 @@ export const registerUser = async ctx => {
       r.table('users')
         .insert(value)
         .run();
+
       return ctx.created(value);
     });
   } catch (err) {

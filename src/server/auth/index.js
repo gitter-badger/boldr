@@ -1,3 +1,11 @@
+/**
+ * server/auth/index.js
+ * Sets up Passport authentication
+ *
+ * @exports {Function} isAuthenticated - Authentication check
+ * @exports {Object} - Koa router objects
+ */
+
 import passport from 'koa-passport';
 import compose from 'koa-compose';
 import importDir from 'import-dir';
@@ -14,6 +22,7 @@ passport.use('email', emailStrategy);
 passport.serializeUser((user, done) => {
   done(null, user.userId);
 });
+
 passport.deserializeUser((userId, done) => {
   (async () => {
     try {
@@ -25,37 +34,10 @@ passport.deserializeUser((userId, done) => {
   })();
 });
 
-export default function auth() {
-  return compose([
-    passport.initialize()
-  ]);
-}
-
 export function isAuthenticated() {
   return passport.authenticate('jwt');
 }
 
 export function authEmail() {
   return passport.authenticate('email');
-}
-
-// After autentication using one of the strategies, generate a JWT token
-export function generateToken() {
-  return async ctx => {
-    const { user } = ctx.passport;
-    if (user === false) {
-      ctx.status = 401;
-    } else {
-      const _token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: EXPIRATION_AGE });
-      const token = _token;
-
-      const currentUser = await r.table('users').get(user.userId).without('password').run();
-
-      ctx.status = 200;
-      ctx.body = {
-        token,
-        user: currentUser
-      };
-    }
-  };
 }

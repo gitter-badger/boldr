@@ -1,6 +1,6 @@
 /**
- * boldr/server/middleware/jwt
- * Session configuration
+ * boldr/server/middleware/bodyParser
+ * Body parsing
  *
  * @exports {Function} bodyParser - Middleware for parsing request bodies.
  */
