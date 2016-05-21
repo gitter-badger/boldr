@@ -16,14 +16,15 @@ import proxy from 'koa-proxy';
 import config from 'config';
 import Boldr from './boldr';
 import BoldrMiddleware from './middleware';
-
+import Problem from './utils/problem';
 import logger from './utils/logger';
 import { handleRender } from './utils/renderReact';
+const RethinkdbWebsocketServer = require('rethinkdb-websocket-server');
 dotenv.config();
 const debug = _debug('boldr:server:dev');
 
 // Application constants
-const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
+const {SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT} = config;
 
 const app = new Koa();
 app.name = 'Boldr';
@@ -35,7 +36,6 @@ const use = app.use;
 app.use = x => use.call(app, convert(x));
 
 export const server = createServer(app.callback());
-
 (async() => {
   await BoldrMiddleware.init(app);
   await Boldr.initRoutes(app);
@@ -54,10 +54,11 @@ export const server = createServer(app.callback());
   app.use(serve('static'));
   app.use(async (ctx, next) => {
     const start = new Date();
+    ctx.Problem = Problem;
     ctx.req.body = ctx.request.body;
-    await next();
     const end = new Date();
     logger.info(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
+    await next();
   });
   // This is fired every time the server side receives a request
   app.use(handleRender);
@@ -78,5 +79,11 @@ export const server = createServer(app.callback());
     process.exit(0);
   }
 })();
-
+RethinkdbWebsocketServer.listen({
+  httpServer: server,
+  httpPath: '/db',
+  dbHost: '168.235.72.129',
+  dbPort: 28015,
+  unsafelyAllowAnyQuery: true
+});
 export default app;

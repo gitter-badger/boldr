@@ -25,19 +25,20 @@ export async function getAllRoles(ctx, index) {
 export const createRole = async (ctx, next) => {
   let query = null;
   const role = {
-    name: ctx.request.body.name,
+    role: ctx.request.body.role,
     description: ctx.request.body.description,
     permissions: {
-      editContent: ctx.request.body.permissions.editContent,
-      createContent: ctx.request.body.permissions.createContent,
-      deleteContent: ctx.request.body.permissions.deleteContent,
-      manageMedia: ctx.request.body.permissions.manageMedia,
-      manageUsers: ctx.request.body.permissions.manageUsers,
-      manageRoles: ctx.request.body.permissions.manageRoles,
-      manageSettings: ctx.request.body.permissions.manageSettings,
-      allPrivilages: ctx.request.body.permissions.allPrivilages
+      editContent: ctx.request.body.permissions.editContent || false,
+      createContent: ctx.request.body.permissions.createContent || false,
+      deleteContent: ctx.request.body.permissions.deleteContent || false,
+      manageMedia: ctx.request.body.permissions.manageMedia || false,
+      manageUsers: ctx.request.body.permissions.manageUsers || false,
+      manageRoles: ctx.request.body.permissions.manageRoles || false,
+      manageSettings: ctx.request.body.permissions.manageSettings || false,
+      allPrivilages: ctx.request.body.permissions.allPrivilages || false
     }
   };
+
   try {
     query = r.table('roles').insert(role);
     const result = await query.run();
@@ -52,14 +53,15 @@ export const createRole = async (ctx, next) => {
 };
 
 export const addUserToRole = async (ctx, next) => {
+  let query = null;
+
   try {
-    await r.table('roles')
-      .get(ctx.params.roleId)
-      .update({
-        userIds: r.row('userIds').append(ctx.request.body.userId)
-      })
-      .run();
-    return ctx.ok();
+    query = r.table('roles').get(ctx.params.id).insert({
+      membership: ctx.request.body.userId
+    });
+
+    const result = await query.run();
+    return ctx.ok(result);
   } catch (error) {
     return ctx.error('Error building relationship between user and role.');
   }

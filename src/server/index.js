@@ -1,7 +1,9 @@
+require('source-map-support').install();
+require('dotenv').config();
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 import isomorphicToolsConfig from '../../tools/webpack/isomorphic.tools.config';
-import projectConfig, { paths } from '../../tools/config';
+import projectConfig, { paths } from 'config';
 
 const projectBasePath = paths('base');
 

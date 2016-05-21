@@ -17,10 +17,8 @@ describe('API: v1/auth', () => {
       avatar: 'http://placehold.it/250x250',
       website: 'boldr.io',
       bio: 'this is my bio',
-      name: {
-        first: 'Bobbo',
-        last: 'smith'
-      }
+      firstName: 'Bobbo',
+      lastName: 'smith'
     };
     request()
       .post('/api/v1/auth/register')

@@ -1,13 +1,13 @@
 import Router from 'koa-router';
 import * as controller from './collection.controller';
-import { checkAuth } from '../../auth/validateToken';
+import { isAuthenticated } from '../../auth';
 const collectionRouter = new Router({ prefix: '/api/v1/collections' });
 
 collectionRouter
     .get('/', controller.getAllCollections)
-    .post('/', controller.createCollection)
+    .post('/', isAuthenticated(), controller.createCollection)
     .get('/:id', controller.getId)
-    .put('/:id', controller.update)
-    .delete('/:id', controller.destroy);
+    .put('/:id', isAuthenticated(), controller.update)
+    .delete('/:id', isAuthenticated(), controller.destroy);
 
 export default collectionRouter;

@@ -7,7 +7,7 @@ services:
     stdin_open: true
     volumes:
       - "./tools/data:/data:rw"
-      - "./tools/data/rethinkdb_data:/data/rethinkdb_data:rw"
+      - "./tools/data:/data/rethinkdb_data:rw"
       - "./docs/logs/rethinkdb:/var/logs/rethinkdb:rw"
   rethinkdb:
     build: ./tools/docker/rethinkdb
@@ -16,9 +16,9 @@ services:
      - "28015:28015/tcp"
      - "29015:29015/tcp"
     expose:
-      - "8080"
-      - "28015"
-      - "29015"
+      - "8080/tcp"
+      - "28015/tcp"
+      - "29015/tcp"
     volumes_from:
       - data-volumes
     networks:
