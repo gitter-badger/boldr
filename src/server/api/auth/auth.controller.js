@@ -7,7 +7,7 @@ import Joi from 'joi';
 import Boom from 'boom';
 import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
-import { sendVerifyEmail } from '../../utils/mailer';
+import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 const saltRounds = 10;
 
 const debug = _debug('boldr:auth:controller');
@@ -53,8 +53,10 @@ export const registerUser = async ctx => {
       }
       r.table('users')
         .insert(value)
-        .run();
-
+        .run().then((value) => {
+          const verificationToken = generateVerifyCode();
+          sendVerifyEmail(user.email, verificationToken);
+        });
       return ctx.created(value);
     });
   } catch (err) {

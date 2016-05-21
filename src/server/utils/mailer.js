@@ -5,8 +5,8 @@ import config, { paths } from '../../../tools/config';
 
 const auth = {
   auth: {
-    api_key: config.mg.apiKey,
-    domain: config.mg.domain
+    api_key: process.env.MG_API,
+    domain: 'boldr.io'
   }
 };
 const nodemailerMailgun = nodemailer.createTransport(mg(auth));
@@ -27,11 +27,12 @@ export function sendEmail(to, subject, html) {
   });
 }
 
-export function sendVerifyEmail(to, verifyCode) {
+export function sendVerifyEmail(email, verifyCode) {
   const subject = '[Boldr] Confirmation mail';
+  const to = email;
   const html = `
     <p>
-      Click link: ${config.site.url}/account/register/email-check?code=${verifyCode}
+      Click link: https://boldr.io/account/register/email-check?code=${verifyCode}
     </p>
   `;
 

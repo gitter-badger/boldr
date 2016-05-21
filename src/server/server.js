@@ -67,15 +67,15 @@ app.use = x => use.call(app, convert(x));
     ctx.req.body = ctx.request.body;
     await next();
   });
-
-  app.use(serve('static'));
-  // This is fired every time the server side receives a request
-  app.use(handleRender);
   // Load the routers.
   for (const router of routers) {
     app.use(router.routes());
     app.use(router.allowedMethods());
   }
+  app.use(serve('static'));
+  // This is fired every time the server side receives a request
+  app.use(handleRender);
+
   app.use(handleError);
 })();
 
