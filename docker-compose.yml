@@ -10,7 +10,8 @@ services:
       - "./tools/data:/data/rethinkdb_data:rw"
       - "./docs/logs/rethinkdb:/var/logs/rethinkdb:rw"
   rethinkdb:
-    build: ./tools/docker/rethinkdb
+    image: strues/rethinkdb
+    #build: ./tools/docker/rethinkdb
     ports:
      - "8080:8080/tcp"
      - "28015:28015/tcp"

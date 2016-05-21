@@ -6,3 +6,4 @@ static/**
 docs/**
 backup/**
 src/server/__tests__/**/*.js
+tools/gulp/**

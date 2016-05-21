@@ -9,26 +9,29 @@ boldr
 ## Tech Stack
 
 * Node
-* Koa v2
-* React
-* RethinkDB
+* [Koa v2](http://koajs.com/)
+* [React](http://facebook.github.io/react/)
+* [RethinkDB](http://rethinkdb.com)
 
 ## Getting Started
 The first thing you'll want to do is double check your version of Node.js. Boldr requires at least version 4.
 
 ```bash
+$ node -v
+$ git clone git@github.com:strues/boldr.git
 $ npm install
 ```
 
 Rename `example.env` to `.env`  and modify the values to match your environment.
 
-#### Starting the RethinkDB Docker container
-Running RethinkDB from a Docker container is simple and saves you from installing RethinkDB on your own computer.
+#### Starting the RethinkDB :whale: container
+Running RethinkDB from a Docker container is simple and saves you from installing RethinkDB on your own computer for development.
 
-`docker-compose build`  
 `docker-compose up -d`
 
-Find the IP of your Docker Machine by executing `docker-machine ip $DOCKER_VM`.
+Find the IP of your Docker Machine by executing `docker-machine ip $DOCKER_VM`.  
+
+**If Docker isnt your thing**, you can install RethinkDB from homebrew or download it from their website.
 
 ## Usage
 --------
