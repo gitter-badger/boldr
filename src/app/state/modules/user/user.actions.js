@@ -1,5 +1,6 @@
 import * as types from './user.constants';
 import jwtDecode from 'jwt-decode';
+import cookie from 'react-cookie';
 
 const persistUser = (user) => {
   localStorage.setItem(types.LOCAL_STORAGE_KEY, JSON.stringify(user));
@@ -17,29 +18,11 @@ export const getUser = () => {
 
   return user;
 };
-export function populateUser() {
-  const jwt = localStorage.getItem('jwt');
+export function partialPopulateUser() {
+  const jwt = localStorage.getItem('boldr:jwt') || cookie.load('boldr:jwt');
   const user = jwtDecode(jwt);
   return {
     type: types.PARTIAL_POPULATE_USER,
     user
   };
 }
-
-export const setUser = (user) => {
-  persistUser(user);
-
-  return {
-    type: types.SET_USER,
-    user
-  };
-};
-
-export const clearUser = () => {
-  persistUser(null);
-
-  return {
-    type: types.CLEAR_USER,
-    user: undefined
-  };
-};

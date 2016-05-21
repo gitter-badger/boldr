@@ -109,6 +109,7 @@
     "react-rethinkdb": "^0.5.5",
     "react-router": "^2.4.0",
     "react-router-redux": "^4.0.4",
+    "react-router-scroll": "^0.2.0",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
     "redux-form": "^6.0.0-alpha.13",

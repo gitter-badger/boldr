@@ -1,7 +1,8 @@
 import request from 'axios';
 import { push } from 'react-router-redux';
-import { populateUser } from '../user/user.actions';
+import { partialPopulateUser } from '../user/user.actions';
 import * as types from './auth.constants';
+import cookie from 'react-cookie';
 /**
  * Utility function to make AJAX requests using isomorphic fetch.
  * You can also use jquery's $.ajax({}) if you do not want to use the
@@ -25,7 +26,8 @@ function beginLogin() {
 }
 
 export function loginSuccess(response) {
-  localStorage.setItem('jwt', response.data.token);
+  localStorage.setItem('boldr:jwt', response.data.token);
+  cookie.save('boldr:jwt', response.data.token);
   return {
     type: types.LOGIN_USER_SUCCESS,
     payload: response.data,
@@ -84,7 +86,7 @@ export function authLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response));
-          dispatch(populateUser(response));
+          dispatch(partialPopulateUser(response));
           dispatch(push('/'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));

@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import r from '../db';
-const EXPIRATION_AGE = 604800000; // 7 days
 
 // After autentication using one of the strategies, generate a JWT token
 export default function generateToken() {
@@ -9,7 +8,10 @@ export default function generateToken() {
     if (user === false) {
       ctx.status = 401;
     } else {
-      const _token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: EXPIRATION_AGE });
+      const _token = jwt.sign({ userId: user.userId
+      }, process.env.JWT_SECRET, {
+        expiresIn: process.env.TOKEN_EXPIRATION
+      });
       const token = _token;
 
       const currentUser = await r.table('users').get(user.userId).without('password').run();
