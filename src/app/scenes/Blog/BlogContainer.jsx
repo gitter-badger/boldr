@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { fetchArticles } from 'app/state/modules/article/article.actions';
 import Loader from '../../components/Loader';
 import Article from './components/Article';
+import ReactRethinkdb from 'react-rethinkdb';
+import reactMixin from 'react-mixin';
 
+const r = ReactRethinkdb.r;
 // Data that needs to be called before rendering the component
 // This is used for server side rending via the fetchComponentDataBeforeRending() method
 Article.need = [
@@ -18,13 +21,21 @@ class BlogContainer extends Component {
     const { dispatch } = props;
     dispatch(fetchArticles());
   }
-
+  observe(props, state) { // eslint-disable-line no-unused-vars
+    return {
+      articles: new ReactRethinkdb.QueryRequest({
+        query: r.table('articles'), // RethinkDB query
+        changes: true, // subscribe to realtime changefeed
+        initial: []
+      })
+    };
+  }
   render() {
     const { loading, article } = this.props;
     const articlesMap = () => {
       return (
-       <Article articles={ this.props.article.articles } />
-      );
+        <Article articles={ this.props.article.articles } />
+        );
     };
     return (
       <div>
@@ -47,5 +58,5 @@ const mapStateToProps = (state) => ({
   article: state.article,
   loading: state.article.loading
 });
-
+reactMixin.onClass(BlogContainer, ReactRethinkdb.DefaultMixin);
 export default connect(mapStateToProps, null)(BlogContainer);

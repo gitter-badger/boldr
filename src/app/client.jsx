@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import ReactRethinkdb from 'react-rethinkdb';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
@@ -45,9 +45,15 @@ function onUpdate() {
   const { state: { components, params } } = this;
   preRenderMiddleware(store.dispatch, components, params);
 }
-
+ReactRethinkdb.DefaultSession.connect({
+  host: 'localhost', // hostname of the websocket server
+  port: 3000, // port number of the websocket server
+  path: '/db', // HTTP path to websocket route
+  secure: false, // set true to use secure TLS websockets
+  db: 'boldr_dev' // default database, passed to rethinkdb.connect
+});
 const root = (
-  <Provider store={store}>
+<Provider store={store}>
     <MuiThemeProvider muiTheme={ muiTheme }>
       <Router history={history} onUpdate={onUpdate}>
         { routes }
