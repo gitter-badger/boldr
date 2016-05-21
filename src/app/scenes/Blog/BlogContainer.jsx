@@ -7,19 +7,14 @@ import ReactRethinkdb from 'react-rethinkdb';
 import reactMixin from 'react-mixin';
 
 const r = ReactRethinkdb.r;
-// Data that needs to be called before rendering the component
-// This is used for server side rending via the fetchComponentDataBeforeRending() method
-Article.need = [
-  fetchArticles
-];
 
 class BlogContainer extends Component {
+  static loadAsyncData(dispatch) {
+    return dispatch(fetchArticles());
+  }
 
-  constructor(props) {
-    super(props);
-
-    const { dispatch } = props;
-    dispatch(fetchArticles());
+  componentDidMount() {
+    this.constructor.loadAsyncData(this.props.dispatch);
   }
   observe(props, state) { // eslint-disable-line no-unused-vars
     return {

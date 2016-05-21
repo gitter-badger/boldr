@@ -17,11 +17,11 @@ class CoreLayout extends Component {
 
   render() {
     return (
-        <div>
-        <TopBar handleToggle={ this.handleToggle } />
-        <AppDrawer />
-        { this.props.children }
-    </div>
+          <div>
+          <TopBar handleToggle={ this.handleToggle } />
+          <AppDrawer />
+          { this.props.children }
+        </div>
     );
   }
 }

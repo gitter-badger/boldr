@@ -5,12 +5,10 @@ import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 
 import isomorphicToolsConfig from './isomorphic.tools.config';
-import boldrCfg, { paths } from '../config';
-
+import boldrCfg from '../config';
+import paths from '../config/paths';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
-const SRC_DIR = paths('src');
-const NODE_MODULES_DIR = paths('nodeModules');
 
 const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
@@ -26,6 +24,7 @@ const cssLoader = [
 
 const {
   SERVER_HOST,
+  BLDR_ENTRY,
   VENDOR_DEPENDENCIES,
   WEBPACK_DEV_SERVER_PORT,
   __CLIENT__,
@@ -35,26 +34,28 @@ const {
   __DEBUG__
 } = boldrCfg;
 
+const HOT_MW_PATH = `http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}/__webpack_hmr`;
+const HOT_MW = `webpack-hot-middleware/client?path=${HOT_MW_PATH}&reload=true&timeout=20000`;
+
 debug('Create configuration.');
 const config = {
-  context: paths('base'),
+  context: paths.ROOT_DIR,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: [
-      `webpack-hot-middleware/client?reload=true&path=http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}/__webpack_hmr`,
-      paths('entryApp')
+    app: [HOT_MW,
+      boldrCfg.BLDR_ENTRY
     ],
     vendors: VENDOR_DEPENDENCIES
   },
   output: {
-    path: paths('build'),
+    path: paths.BUILD_DIR,
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
     publicPath: `http://localhost:${WEBPACK_DEV_SERVER_PORT}/build/`
   },
   resolve: {
     alias: {},
-    root: [SRC_DIR],
+    root: [paths.SRC_DIR],
 
     extensions: ['', '.js', '.jsx']
   },
@@ -64,8 +65,8 @@ const config = {
       {
         test: /\.js[x]?$/,
         loader: 'babel',
-        exclude: [NODE_MODULES_DIR],
-        include: [SRC_DIR],
+        exclude: [paths.NODE_MODULES_DIR],
+        include: [paths.SRC_DIR],
         query: {
           cacheDirectory: true
         }
@@ -76,7 +77,7 @@ const config = {
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('styles'),
-        include: [SRC_DIR],
+        include: [paths.SRC_DIR],
         loaders: [
           'style',
           cssLoader,
@@ -101,10 +102,10 @@ const config = {
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
+    // new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
     // new NpmInstallPlugin({ save: true }),
     new webpack.DefinePlugin({
       __CLIENT__,
@@ -113,14 +114,13 @@ const config = {
       __PROD__,
       __DEBUG__
     }),
-    new webpack.optimize.DedupePlugin(),
     webpackIsomorphicToolsPlugin.development()
   ]
 };
 
 // Optimizing rebundling
 deps.forEach(dep => {
-  const depPath = path.resolve(NODE_MODULES_DIR, dep);
+  const depPath = path.resolve(paths.NODE_MODULES_DIR, dep);
 
   config.resolve.alias[dep.split(path.sep)[0]] = depPath;
   config.module.noParse.push(depPath);

@@ -3,9 +3,10 @@ import 'source-map-support/register';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 import isomorphicToolsConfig from '../../tools/webpack/isomorphic.tools.config';
-import boldrConfig, { paths } from 'config';
+import boldrConfig from 'config';
+import paths from 'config/paths';
 
-const projectBasePath = paths('base');
+const projectBasePath = paths.ROOT_DIR;
 
 /**
  * Define isomorphic constants.

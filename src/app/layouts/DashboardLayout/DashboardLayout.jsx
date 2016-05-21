@@ -2,10 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import AppDrawer from '../../components/AppDrawer';
+
+import AppDrawer from 'app/components/AppDrawer';
 import * as boldrActions from 'app/state/modules/boldr/boldr.actions';
-import TopBar from '../../components/TopBar';
-import Loader from '../../components/Loader';
+
+import TopBar from 'app/components/TopBar';
+import DashboardContainer from 'app/scenes/Dashboard/DashboardContainer';
+import Loader from 'app/components/Loader';
 import 'app/styles/app.scss';
 
 class DashboardLayout extends Component {
@@ -15,10 +18,10 @@ class DashboardLayout extends Component {
 
   render() {
     return (
-    <div>
+      <div>
         { this.props.children }
     </div>
-    );
+      );
   }
 }
 

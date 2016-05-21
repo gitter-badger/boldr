@@ -14,10 +14,10 @@ import serve from 'koa-static';
 import convert from 'koa-convert';
 import proxy from 'koa-proxy';
 import Router from 'koa-router';
-
+import IO from 'socket.io';
 import BoldrMiddleware from './middleware';
 import config from 'config';
-import handleError from './middleware/handleError';
+import { handleError } from './middleware/handleError';
 import rethinkdbSocket from './lib/socket/rethinkdbSocket';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
@@ -30,6 +30,7 @@ const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 
 const app = new Koa();
 const server = createServer(app.callback());
+app.io = new IO(server);
 app.name = 'Boldr';
 app.proxy = true;
 app.env = process.env.NODE_ENV;
@@ -46,6 +47,7 @@ app.use = x => use.call(app, convert(x));
  */
 (async() => {
   await BoldrMiddleware.init(app);
+  app.use(handleError);
   /**
    * Loads the development specific functions
    * @param  {Boolean} __DEV__ Global variable for development environment
@@ -75,8 +77,6 @@ app.use = x => use.call(app, convert(x));
   app.use(serve('static'));
   // This is fired every time the server side receives a request
   app.use(handleRender);
-
-  app.use(handleError);
 })();
 
 /**

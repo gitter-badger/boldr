@@ -22,7 +22,9 @@ function makeAuthRequest(method, data, api) {
 
 // Log In Action Creators
 function beginLogin() {
-  return { type: types.LOGIN_USER_REQUEST };
+  return {
+    type: types.LOGIN_USER_REQUEST
+  };
 }
 
 export function loginSuccess(response) {
@@ -51,7 +53,9 @@ function signUpError(response) {
 }
 
 function beginSignUp() {
-  return { type: types.SIGNUP_USER };
+  return {
+    type: types.SIGNUP_USER
+  };
 }
 
 function signUpSuccess(message) {
@@ -63,19 +67,27 @@ function signUpSuccess(message) {
 
 // Log Out Action Creators
 function beginLogout() {
-  return { type: types.LOGOUT_USER };
+  return {
+    type: types.LOGOUT_USER
+  };
 }
 
 function logoutSuccess() {
-  return { type: types.LOGOUT_SUCCESS_USER };
+  return {
+    type: types.LOGOUT_SUCCESS_USER
+  };
 }
 
 function logoutError() {
-  return { type: types.LOGOUT_ERROR_USER };
+  return {
+    type: types.LOGOUT_ERROR_USER
+  };
 }
 
 export function toggleLoginMode() {
-  return { type: types.TOGGLE_LOGIN_MODE };
+  return {
+    type: types.TOGGLE_LOGIN_MODE
+  };
 }
 
 export function authLogin(data) {
@@ -131,14 +143,32 @@ export function logout() {
       });
   };
 }
-
-export function meFromToken(tokenFromStorage) {
+export function authCheck() {
+  return dispatch => {
+    // check if the token is still valid, if so, get user from the server
+    return makeAuthRequest('get', '/api/v1/auth/check')
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(meFromTokenSuccess(response));
+        } else {
+          dispatch(meFromTokenFailure());
+        }
+      });
+  };
+}
+export function checkAuth() {
+  if (cookie.load('boldr:jwt')) {
+    return true;
+  }
+  return false;
+}
+export function meFromToken(response) {
   // check if the token is still valid, if so, get user from the server
   request.get('/api/v1/auth/check');
 
   return {
     type: types.ME_FROM_TOKEN,
-    payload: request
+    payload: response
   };
 }
 

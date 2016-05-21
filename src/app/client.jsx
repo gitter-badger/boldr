@@ -6,14 +6,21 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ReactRethinkdb from 'react-rethinkdb';
 import useScroll from 'react-router-scroll';
-
+import axios from 'axios';
+import cookie from 'react-cookie';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 
+import { checkAuth, authCheck } from 'app/state/modules/auth/auth.actions';
 import preRenderMiddleware from 'app/state/middleware/preRenderMiddleware';
 import createRoutes from 'app/routes';
 import configureStore from 'app/state/store';
+
+// If localStorage is unavailable, fallback to cookie.
+const token = localStorage.getItem('boldr:jwt') || cookie.load('boldr:jwt');
+// If its available, always send the token in the header.
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;  // eslint-disable-line
 
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, browserHistory);
