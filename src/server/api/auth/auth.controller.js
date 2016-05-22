@@ -4,7 +4,6 @@ import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
-import Boom from 'boom';
 import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
@@ -44,7 +43,8 @@ export const registerUser = async ctx => {
   if (emailCheck.length !== 0) {
     // if an email matching ctx.request.body.email is found
     // throw an error and end the function.
-    throw Boom.badRequest('The email address is in use.');
+    ctx.status = 422;
+    ctx.body = 'Unable to register user.';
   }
   try {
     await Joi.validate(user, userSchema, (err, value) => {
@@ -60,7 +60,8 @@ export const registerUser = async ctx => {
       return ctx.created(value);
     });
   } catch (err) {
-    throw Boom.badRequest('Unable to register user.');
+    ctx.status = 500;
+    ctx.body = 'Unable to register user.';
   }
 };
 
@@ -78,7 +79,8 @@ export async function loginUser(ctx, next) {
       })
       .run();
     if (!user) {
-      throw Boom.notFound('email/password not found');
+      ctx.status = 403;
+      ctx.body = 'Unable to log in.';
     }
     const pw = bcrypt.compareSync(ctx.request.body.password, user[0].password);
     if (pw === false) {
@@ -97,7 +99,8 @@ export async function loginUser(ctx, next) {
       token
     });
   } catch (err) {
-    throw Boom.badRequest('Unable to log in.', err);
+    ctx.status = 403;
+    ctx.body = 'Unable to log in.';
   }
 }
 /**

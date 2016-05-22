@@ -15,7 +15,7 @@ function handleLink(contentBlock, callback) {
 
 const HandleLinkSpan = (props) => {
   const href = props.children[0].props.text;
-  return <a href={href}>{props.children}</a>;
+  return <a href={ href }>{ props.children }</a>;
 };
 
 function findWithRegex(regex, contentBlock, callback) {
@@ -59,6 +59,17 @@ export default class BoldrEditor extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.defaultContentState) {
+      const newRawContent = {
+        ...this.props.defaultContentState,
+        entityMap: {}
+      };
+      const newContentState = convertFromRaw(newRawContent);
+      this.onChange(EditorState.createWithContent(newContentState, this.decorator));
+    }
+  }
+
   _toggleBlockType(blockType) {
     this.onChange(
       RichUtils.toggleBlockType(
@@ -100,17 +111,6 @@ export default class BoldrEditor extends React.Component {
     this.focus();
   }
 
-  componentDidMount() {
-    if (this.props.defaultContentState) {
-      const newRawContent = {
-        ...this.props.defaultContentState,
-        entityMap: {}
-      };
-      const newContentState = convertFromRaw(newRawContent);
-      this.onChange(EditorState.createWithContent(newContentState, this.decorator));
-    }
-  }
-
   render() {
     const { editorState } = this.state;
 
@@ -123,27 +123,27 @@ export default class BoldrEditor extends React.Component {
     }
 
     return (
-      <div className={!this.props.readOnly ? 'RichEditor-root' : null}>
-                {!this.props.readOnly &&
+      <div className={ !this.props.readOnly ? 'RichEditor-root' : null }>
+                { !this.props.readOnly &&
       <div>
-                    <BlockStyleControls editorState={editorState} onToggle={this._toggleBlockType.bind(this)}/>
-                    <InlineStyleControls editorState={editorState} onToggle={this._toggleInlineStyle.bind(this)}/>
+                    <BlockStyleControls editorState={ editorState } onToggle={ ::this._toggleBlockType } />
+                    <InlineStyleControls editorState={ editorState } onToggle={ ::this._toggleInlineStyle } />
                 </div>
       }
-                <div className={className} onClick={this.focus}>
-                    <Editor editorState={editorState}
-      onChange={this.onChange}
-      placeholder="Enter some text ..."
-      customStyleMap={styleMap}
-      handleKeyCommand={this.handleKeyCommand.bind(this)}
-      onTab={this.handleTab.bind(this)}
-      keyBindingFn={myKeyBindingFn}
-      ref="editor"
-      readOnly={this.props.readOnly}
-      contentEditable={true}
-      disableContentEditableWarning
-      suppressContentEditableWarning
-      />
+                <div className={ className } onClick={ this.focus }>
+                  <Editor editorState={ editorState }
+                    onChange={ this.onChange }
+                    placeholder="Enter some text ..."
+                    customStyleMap={ styleMap }
+                    handleKeyCommand={ ::this.handleKeyCommand }
+                    onTab={ ::this.handleTab }
+                    keyBindingFn={ myKeyBindingFn }
+                    ref="editor"
+                    readOnly={ this.props.readOnly }
+                    contentEditable
+                    disableContentEditableWarning
+                    suppressContentEditableWarning
+                  />
                 </div>
             </div>
     );
@@ -174,14 +174,15 @@ const BlockStyleControls = (props) => {
     .getType();
   return (
     <div className="RichEditor-controls">
-            {BLOCK_TYPES.map(type => <StyleButton
-      key={type.label}
-      active={type.style === blockType}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      />
-    )}
+      { BLOCK_TYPES.map(type =>
+        <StyleButton
+          key={ type.label }
+          active={ type.style === blockType }
+          label={ type.label }
+          onToggle={ props.onToggle }
+          style={ type.style }
+        />
+    ) }
         </div>
   );
 };
@@ -191,14 +192,15 @@ const InlineStyleControls = (props) => {
   const curentStyle = editorState.getCurrentInlineStyle();
   return (
     <div className="RichEditor-controls">
-            {INLINE_STYLES.map(type => <StyleButton
-      key={type.label}
-      active={curentStyle.has(type.style)}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      />
-    )}
+            { INLINE_STYLES.map(type =>
+              <StyleButton
+                key={ type.label }
+                active={ curentStyle.has(type.style) }
+                label={ type.label }
+                onToggle={ props.onToggle }
+                style={ type.style }
+              />
+    ) }
         </div>
   );
 };
@@ -207,4 +209,13 @@ BoldrEditor.defaultProps = {
   onChange: () => {
 
   }
+};
+
+BoldrEditor.propTypes = {
+  editorState: React.PropTypes.object,
+  children: React.PropTypes.element,
+  onChange: React.PropTypes.func,
+  defaultContentState: React.PropTypes.object,
+  readOnly: React.PropTypes.bool,
+  onToggle: React.PropTypes.func
 };
