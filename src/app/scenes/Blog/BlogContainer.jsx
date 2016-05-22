@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchArticles } from 'app/state/modules/article/article.actions';
 import Loader from '../../components/Loader';
-import Article from './components/Article';
+// import Article from './components/Article';
 
 class BlogContainer extends Component {
   constructor(props) {
