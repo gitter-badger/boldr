@@ -1,8 +1,9 @@
 import util from 'util';
+import _ from 'lodash';
 import mailer from './mailer';
 import logger from './logger';
-import _ from 'lodash';
-
+import Problem from './problem';
+import { handleRender } from './renderReact';
 /**
  * Clones an object
  * @param  {Mixed}    obj        The object to clone
@@ -56,4 +57,4 @@ const SOFT_DURABILITY = {
   durability: 'soft'
 };
 
-export { mailer, logger, clone, SOFT_DURABILITY, normalize, extractIds, group };
+export { Problem, handleRender, mailer, logger, clone, SOFT_DURABILITY, normalize, extractIds, group };

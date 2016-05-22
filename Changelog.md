@@ -5,13 +5,14 @@
 #### Bugs Fixed
 
 #### New Additions
+- Draft.js editor is working, albeit a work in progress.
+- Articles are able to be posted.
 
 #### ToDo
 - Associate Tags with an Article.
 - Create settings for the user to modify.
 - Implementation of role based access control.
 - Flow Typing?
-
 
 # 0.1.0-alpha.1.3 (05/15/2016)
 

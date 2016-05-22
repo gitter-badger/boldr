@@ -51,7 +51,7 @@ const LoginForm = props => {
       </div>
 
       <CardActions>
-       <RaisedButton label="Login" type="submit" secondary={true} style={style} />
+       <RaisedButton label="Login" type="submit" secondary style={ style } />
      </CardActions>
     </form>
        </Card>

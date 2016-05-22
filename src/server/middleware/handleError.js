@@ -1,14 +1,14 @@
 import logger from '../utils/logger';
 
-export default async (ctx, next) => {
+export const handleError = async (ctx, next) => {
   try {
     await next();
   } catch (err) {
     ctx.status = err.status || 500;
-    logger.error('errorHandler:', err);
     ctx.body = {
-      message: err.message
+      message: err.toString()
     };
     ctx.app.emit('error', err, ctx);
+    logger.error('errorHandler:', err);
   }
 };

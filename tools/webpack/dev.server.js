@@ -4,7 +4,7 @@ import _debug from 'debug';
 
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHotMiddleware from './middleware/webpack-hot';
-import projectConfig from '../config';
+import boldrConfig from '../config';
 import webpackConfig from './dev.config';
 
 const debug = _debug('app:webpack:dev:server');
@@ -16,6 +16,6 @@ const serverOptions = { publicPath: webpackConfig.output.publicPath };
 app.use(webpackDevMiddleware(compiler, serverOptions));
 app.use(webpackHotMiddleware(compiler));
 
-app.listen(projectConfig.WEBPACK_DEV_SERVER_PORT, () => {
-  debug(`Webpack dev server listening on port ${projectConfig.WEBPACK_DEV_SERVER_PORT}`);
+app.listen(boldrConfig.WEBPACK_DEV_SERVER_PORT, () => {
+  debug(`Webpack dev server listening on port ${boldrConfig.WEBPACK_DEV_SERVER_PORT}`);
 });

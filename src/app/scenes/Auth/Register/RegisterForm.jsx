@@ -37,7 +37,8 @@ const RegisterForm = props => {
                   errorText = { email.touched && email.error }
                   { ...email }
                 />
-                }/>
+                }
+              />
               </div>
               <div>
               <Field name="username" component={ username =>
@@ -46,7 +47,8 @@ const RegisterForm = props => {
                   errorText = { username.touched && username.error }
                   { ...username }
                 />
-                }/>
+                }
+              />
               </div>
               <div>
               <Field name="password" component={ password =>
@@ -56,7 +58,8 @@ const RegisterForm = props => {
                   errorText = { password.touched && password.error }
                   { ...password }
                 />
-                }/>
+                }
+              />
               </div>
               <div>
                 <Field name="firstName" component={ firstName =>
@@ -65,7 +68,8 @@ const RegisterForm = props => {
                     errorText = { firstName.touched && firstName.error }
                     { ...firstName }
                   />
-                }/>
+                }
+                />
               </div>
               <div>
                 <Field name="lastName" component={ lastName =>
@@ -75,7 +79,8 @@ const RegisterForm = props => {
                         errorText = { lastName.touched && lastName.error }
                         { ...lastName }
                       />
-                    }/>
+                    }
+                />
               </div>
               <div>
                 <Field name="location" component={ location =>
@@ -85,17 +90,19 @@ const RegisterForm = props => {
                         errorText = { location.touched && location.error }
                         { ...location }
                       />
-                    }/>
+                    }
+                />
               </div>
               <div>
                 <Field name="avatar" component={ avatar =>
-                      <TextField
-                        hintText = "Avatar url"
-                        floatingLabelText="Avatar"
-                        errorText = { avatar.touched && avatar.error }
-                        { ...avatar }
-                      />
-                    }/>
+                  <TextField
+                    hintText = "Avatar url"
+                    floatingLabelText="Avatar"
+                    errorText = { avatar.touched && avatar.error }
+                    { ...avatar }
+                  />
+                  }
+                />
               </div>
               <div>
                 <Field name="website" component={ website =>
@@ -105,22 +112,25 @@ const RegisterForm = props => {
                         errorText = { website.touched && website.error }
                         { ...website }
                       />
-                    }/>
+                    }
+                />
               </div>
               <div>
                 <Field name="bio" component={ bio =>
-                      <TextField
-                        multiLine
-                        hintText = "A few words about yourself"
-                        floatingLabelText="Bio"
-                        errorText = { bio.touched && bio.error }
-                        { ...bio }
-                      />
-                    }/>
+                    <TextField
+                      multiLine
+                      hintText = "A few words about yourself"
+                      floatingLabelText="Bio"
+                      errorText = { bio.touched && bio.error }
+                      { ...bio }
+                    />
+                  }
+                />
               </div>
                  <CardActions>
                   <RaisedButton label="Register" type="submit"
-                    secondary={true} disabled={ pristine || submitting } style={style} />
+                    secondary disabled={ pristine || submitting } style={ style }
+                  />
                 </CardActions>
             </form>
           </Card>
