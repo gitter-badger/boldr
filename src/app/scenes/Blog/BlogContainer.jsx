@@ -2,13 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchArticles } from 'app/state/modules/article/article.actions';
 import Loader from '../../components/Loader';
-import Article from './components/Article';
+import Article from './Article';
 import ReactRethinkdb from 'react-rethinkdb';
 import reactMixin from 'react-mixin';
 
 const r = ReactRethinkdb.r;
 
 class BlogContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.createArticleList = (articleList) => this._createArticleList(articleList);
+  }
   static loadAsyncData(dispatch) {
     return dispatch(fetchArticles());
   }
@@ -25,19 +29,34 @@ class BlogContainer extends Component {
       })
     };
   }
+  _createArticleList(articles) {
+    let articleList = [];
+    for (var article of articles) {
+      articleList.push(
+        <div key={article.articleUrl}>
+                <Article
+        blockStyleFn={this.blockStyleFn}
+        blockRendererFn={this.blockRendererFn}
+        customStyleMap={this.customStyleMap}
+        rawDraft={article.content}
+        articleUrl={article.articleUrl}
+        />
+                <div className="section"/>
+            </div>
+      )
+    }
+    return articleList;
+  }
   render() {
-    const { loading, article } = this.props;
-    const articlesMap = () => {
-      return (
-        <Article articles={ this.props.article.articles } />
-        );
-    };
+    const {loading, article} = this.props;
+    let articleList = this.createArticleList(this.props.article.articles);
+
     return (
       <div>
 
        <div className="container">
          BlogContainer?
-         { loading ? <Loader /> : <Article articles={ this.props.article.articles } /> }
+          {articleList}
        </div>
       </div>
       );
