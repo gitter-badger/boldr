@@ -3,7 +3,7 @@ import StyleButton from '../StyleButton';
 import { BLOCK_TYPES } from '../BlockTypes';
 
 export const BlockStyleHeaderControls = (props) => {
-  const {editorState} = props;
+  const { editorState } = props;
   const selection = editorState.getSelection();
   const blockType = editorState
     .getCurrentContent()
@@ -12,14 +12,16 @@ export const BlockStyleHeaderControls = (props) => {
 
   return (
     <div className="RichEditor-header-controls">
-            {BLOCK_TYPES.map((type) => <StyleButton
-      key={type.label}
-      active={type.style === blockType}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      />
-    )}
-        </div>
-    );
+      { BLOCK_TYPES.map((type) =>
+          <StyleButton
+            key={type.label}
+            active={type.style === blockType}
+            label={type.label}
+            onToggle={props.onToggle}
+            style={type.style}
+          />
+        )
+      }
+    </div>
+  );
 };

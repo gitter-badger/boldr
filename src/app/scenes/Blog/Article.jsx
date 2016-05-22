@@ -1,41 +1,41 @@
 import React from 'react';
 import { Editor, EditorState } from 'draft-js';
-import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';
+// import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';.
 import _ from 'lodash';
-import { articleTypes } from 'app/components/Editor/utilities';
+// import { articleTypes } from 'app/components/Editor/utilities';
 
 class Article extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      editorState: createEditorStateFromRawDraft(this.prepareDraft(props.rawDraft))
-    };
-    this.getChildContext = () => {
-      return {
-        articleState: articleTypes.FULL,
-        articleUrl: this.props.articleUrl
-      }
-    }
+    // this.state = {
+    //   editorState: createEditorStateFromRawDraft(this.prepareDraft(props.rawDraft))
+    // };
+    // this.getChildContext = () => {
+    //   return {
+    //     articleState: articleTypes.FULL,
+    //     articleUrl: this.props.articleUrl
+    //   }
+    // }
   }
 
   /** OVERWRITTEN IN ArticleOverview **/
-  prepareDraft(draft) {
-    return draft;
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.rawDraft !== this.props.rawDraft) {
-      this.setState({
-        editorState: createEditorStateFromRawDraft(
-          this.prepareDraft(newProps.rawDraft)
-        )
-      });
-    }
-
-
-  }
+  // prepareDraft(draft) {
+  //   return draft;
+  // }
+  //
+  // componentWillReceiveProps(newProps) {
+  //   if (newProps.rawDraft !== this.props.rawDraft) {
+  //     this.setState({
+  //       editorState: createEditorStateFromRawDraft(
+  //         this.prepareDraft(newProps.rawDraft)
+  //       )
+  //     });
+  //   }
+  //
+  //
+  // }
 
   render() {
     const {editorState} = this.state;
@@ -56,13 +56,7 @@ class Article extends React.Component {
                 {titleHeader}
                 <div className={className}>
                     <div className="card-content">
-                    <Editor
-      blockStyleFn={blockStyleFn}
-      blockRendererFn={blockRendererFn}
-      readOnly={true}
-      customStyleMap={customStyleMap}
-      editorState={editorState}
-      />
+
                     </div>
                 </div>
             </div>

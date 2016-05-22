@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import ReactRethinkdb from 'react-rethinkdb';
+
 import useScroll from 'react-router-scroll';
 import axios from 'axios';
 import cookie from 'react-cookie';
@@ -55,15 +55,6 @@ function onUpdate() {
   const { state: { components, params } } = this;
   preRenderMiddleware(store.dispatch, components, params);
 }
-
-// TODO: extract out config vars.
-ReactRethinkdb.DefaultSession.connect({
-  host: 'localhost', // hostname of the websocket server
-  port: 3000, // port number of the websocket server
-  path: '/db', // HTTP path to websocket route
-  secure: false, // set true to use secure TLS websockets
-  db: 'boldr_dev' // default database, passed to rethinkdb.connect
-});
 
 const root = (
 <Provider store={store}>

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import FlatButton from 'material-ui/FlatButton';
 class StyleButton extends React.Component {
   constructor() {
     super();
@@ -16,9 +16,7 @@ class StyleButton extends React.Component {
     }
 
     return (
-      <span className={className} onMouseDown={this.onToggle}>
-              {this.props.label}
-            </span>
+      <FlatButton className={className} label={this.props.label} onMouseDown={this.onToggle} />
       );
   }
 }

@@ -13,7 +13,7 @@ class MoreInfo extends React.Component {
         <div>
                     {moreInfo}
                     <div className="divider"/>
-                    <div style={styleMap.DESCRIPTION}> Hier wordt het artikel afgebroken in het overzicht</div>
+                    <div style={styleMap.DESCRIPTION}>Style map?</div>
                     <div className="divider"/>
                 </div>
       )

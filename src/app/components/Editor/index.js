@@ -1,2 +1,2 @@
-import BoldrEditor from './Editor';
+import BoldrEditor from './BoldrEditor';
 export default BoldrEditor;

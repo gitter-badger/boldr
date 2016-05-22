@@ -18,7 +18,7 @@ import IO from 'socket.io';
 import BoldrMiddleware from './middleware';
 import config from 'config';
 import { handleError } from './middleware/handleError';
-import rethinkdbSocket from './lib/socket/rethinkdbSocket';
+// import rethinkdbSocket from './lib/socket/rethinkdbSocket';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
 // Load environment variables.
@@ -88,7 +88,7 @@ function init() {
     logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
   });
 
-  rethinkdbSocket(server);
+  // rethinkdbSocket(server);
 
   server.on('close', () => {
     process.on('SIGINT', exitHandler);

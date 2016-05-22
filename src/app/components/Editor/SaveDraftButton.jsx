@@ -1,13 +1,16 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
-class SaveDraftButton extends React.Component {
-
-  render() {
-    return (
-      <a className="waves-effect waves-light red lighten-1 btn" onClick={this.props.onSaveDraft} >Save Draft</a>
-    )
-  }
-}
+const SaveDraftButton = (props) => {
+  return (
+    <RaisedButton
+      label="Save Draft"
+      linkButton={false}
+      secondary={true}
+      onClick={ props.onSaveDraft }
+    />
+  );
+};
 
 SaveDraftButton.propTypes = {
   onSaveDraft: React.PropTypes.func.isRequired

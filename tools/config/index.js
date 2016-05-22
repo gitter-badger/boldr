@@ -36,7 +36,6 @@ const config = {
     'lodash',
     'classnames',
     'axios',
-    'react-rethinkdb',
     'react-router-scroll',
     'react-cookie',
     'redux-form'

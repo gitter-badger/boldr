@@ -1,8 +1,7 @@
-
-import React from 'react';
+import React, { Component } from 'react';
 import { Editor, RichUtils } from 'draft-js';
 
-class EditorContent extends React.Component {
+class EditorContent extends Component {
 
   constructor(props) {
     super(props);
@@ -22,11 +21,7 @@ class EditorContent extends React.Component {
   }
 
   render() {
-    const { blockStyleFn } = this.props;
-    const { blockRendererFn } = this.props;
-    const { customStyleMap } = this.props;
-    const { onChange } = this.props;
-    const { editorState } = this.props;
+    const { blockStyleFn, blockRendererFn, customStyleMap, onChange, editorState } = this.props;
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -39,19 +34,19 @@ class EditorContent extends React.Component {
     }
 
     return (
-      <div className={className} onClick={this.focus}>
-                <Editor
-      blockRendererFn={blockRendererFn}
-      blockStyleFn={blockStyleFn}
-      customStyleMap={customStyleMap}
-      editorState={editorState}
-      handleKeyCommand={this.handleKeyCommand}
-      onChange={onChange}
-      placeholder="Tell a story..."
-      ref="editor"
-      spellCheck={true}
-      />
-            </div>
+      <div className={ className } onClick={ this.focus }>
+        <Editor
+          blockRendererFn={ blockRendererFn }
+          blockStyleFn={ blockStyleFn}
+          customStyleMap={ customStyleMap }
+          editorState={ editorState }
+          handleKeyCommand={ this.handleKeyCommand }
+          onChange={ onChange }
+          placeholder="Tell a story..."
+          ref="editor"
+          spellCheck={ true }
+        />
+      </div>
     );
   }
 }
