@@ -61,72 +61,7 @@ const RegisterForm = props => {
                 }
               />
               </div>
-              <div>
-                <Field name="firstName" component={ firstName =>
-                  <TextField hintText = "First Name"
-                    floatingLabelText="First Name"
-                    errorText = { firstName.touched && firstName.error }
-                    { ...firstName }
-                  />
-                }
-                />
-              </div>
-              <div>
-                <Field name="lastName" component={ lastName =>
-                      <TextField
-                        hintText = "Last Name"
-                        floatingLabelText="Last Name"
-                        errorText = { lastName.touched && lastName.error }
-                        { ...lastName }
-                      />
-                    }
-                />
-              </div>
-              <div>
-                <Field name="location" component={ location =>
-                      <TextField
-                        hintText = "Location"
-                        floatingLabelText="Location"
-                        errorText = { location.touched && location.error }
-                        { ...location }
-                      />
-                    }
-                />
-              </div>
-              <div>
-                <Field name="avatar" component={ avatar =>
-                  <TextField
-                    hintText = "Avatar url"
-                    floatingLabelText="Avatar"
-                    errorText = { avatar.touched && avatar.error }
-                    { ...avatar }
-                  />
-                  }
-                />
-              </div>
-              <div>
-                <Field name="website" component={ website =>
-                      <TextField
-                        hintText = "Website"
-                        floatingLabelText="Website"
-                        errorText = { website.touched && website.error }
-                        { ...website }
-                      />
-                    }
-                />
-              </div>
-              <div>
-                <Field name="bio" component={ bio =>
-                    <TextField
-                      multiLine
-                      hintText = "A few words about yourself"
-                      floatingLabelText="Bio"
-                      errorText = { bio.touched && bio.error }
-                      { ...bio }
-                    />
-                  }
-                />
-              </div>
+
                  <CardActions>
                   <RaisedButton label="Register" type="submit"
                     secondary disabled={ pristine || submitting } style={ style }

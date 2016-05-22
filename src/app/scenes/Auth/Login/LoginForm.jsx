@@ -6,7 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 const style = {
-  margin: 12
+  margin: 12,
+  align: 'right'
 };
 const styles = {
   minHeight: 'calc(100vh - 100px)',

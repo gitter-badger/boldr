@@ -25,9 +25,7 @@ class Login extends Component {
   render() {
     return (
     <div style={ styles }>
-      <Paper zDepth={ 1 }>
         <LoginForm onSubmit={ this.handleSubmit } />
-      </Paper>
       </div>
       );
   }

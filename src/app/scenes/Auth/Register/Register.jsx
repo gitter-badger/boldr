@@ -17,10 +17,7 @@ class Register extends Component {
   }
   render() {
     return (
-
-      <Paper zDepth={ 1 }>
-        <RegisterForm onSubmit={ this.handleSubmit } />
-      </Paper>
+      <RegisterForm onSubmit={ this.handleSubmit } />
     );
   }
 }

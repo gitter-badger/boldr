@@ -34,6 +34,7 @@ class TopBar extends React.Component {
             { /* @ToDo Build logic for this on the server */ }
             { /* It should be like /api/v1/boldr/settings */ }
           <AppBar title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
+            zDepth={ 2 }
             onLeftIconButtonTouchTap={ this.props.handleToggle }
             iconElementRight={
               <IconMenu
@@ -62,7 +63,8 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
   dispatch: React.PropTypes.func,
-  handleToggle: React.PropTypes.func
+  handleToggle: React.PropTypes.func,
+  auth: React.PropTypes.object
 };
 
 const mapStateToProps = (state) => {

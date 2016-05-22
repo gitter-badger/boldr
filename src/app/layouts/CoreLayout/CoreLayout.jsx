@@ -8,6 +8,7 @@ import AppDrawer from 'app/components/AppDrawer';
 import * as boldrActions from 'app/state/modules/boldr/boldr.actions';
 import TopBar from 'app/components/TopBar';
 import Loader from 'app/components/Loader';
+
 import 'app/styles/app.scss';
 
 class CoreLayout extends Component {
