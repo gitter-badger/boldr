@@ -18,7 +18,7 @@ import createRoutes from 'app/routes';
 import configureStore from 'app/state/store';
 
 // If localStorage is unavailable, fallback to cookie.
-const token = localStorage.getItem('boldr:jwt') || cookie.load('boldr:jwt');
+const token = cookie.load('boldr:jwt');
 // If its available, always send the token in the header.
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;  // eslint-disable-line
 

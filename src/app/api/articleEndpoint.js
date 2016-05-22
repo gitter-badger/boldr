@@ -15,8 +15,8 @@ export const getArticleByTitle = (articleTitle, receiveArticle, failedToReceiveA
 export const changeArticlePublishSetting = (id, isDraft) =>
   axios.put(`${ARTICLE_ENDPOINT}/${id}`, { isDraft });
 
-export const createArticleCall = (title, content, markup, articleCreated, failedToCreateArticle) =>
-  axios.post(`${ARTICLE_ENDPOINT}`, { title, content, markup })
+export const createArticleCall = (values, articleCreated, failedToCreateArticle) =>
+  axios.post(`${ARTICLE_ENDPOINT}`, values)
     .then(response => store.dispatch(articleCreated(response.data)))
     .catch(response => store.dispatch(failedToCreateArticle(response)));
 

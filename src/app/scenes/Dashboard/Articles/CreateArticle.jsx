@@ -5,30 +5,36 @@ import Paper from 'material-ui/Paper';
 import * as articleActions from 'app/state/modules/article/article.actions';
 import Loader from 'app/components/Loader';
 import { changeArticlePublishSetting } from 'app/api/articleEndpoint';
-import Editor from 'app/components/Editor';
+
+import WrapTransitions from 'app/components/WrapTransitions';
+import NewArticleForm from './components/NewArticleForm';
 
 class CreateArticle extends Component {
   constructor() {
     super();
-    this.contentState = this.contentState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  contentState() {
-    const boldrEditor = this.refs.boldrEditor;
-    const content = boldrEditor.getContent();
-    console.log(content); // eslint-disable-line
+  handleSubmit(values) {
+    console.log(values);
+    // const boldrEditor = this.refs.boldrEditor;
+    // const content = boldrEditor.getContent().toJS();
+    // console.log(content); // eslint-disable-line
+    this.props.articleActions.createArticle(values);
   }
   render() {
     const { article, loading } = this.props;
 
     return (
       <div>
+      <WrapTransitions animateIn="fadeIn">
       <Paper
           zDepth={3}
           style={{ padding: 40 }}
           className="col-md-offset-3 col-md-6">
-            <Editor ref="boldrEditor" placeholder="Write your content..." />
-            <button onClick={ this.contentState }> Content </button>
+          <NewArticleForm onSubmit={this.handleSubmit} />
+
         </Paper>
+          </WrapTransitions>
       </div>
       );
   }

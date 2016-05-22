@@ -112,9 +112,9 @@ export const fetchArticleByTitle = (articleTitle) => dispatch => {
   return getArticleByTitle(articleTitle, articleReceived, failedToReceiveArticle);
 };
 
-export const createArticle = (title, content, markup) => dispatch => {
+export const createArticle = (values) => dispatch => {
   dispatch(creatingArticle());
-  return createArticleCall(title, content, markup, articleCreated, failedToCreateArticle);
+  return createArticleCall(values, articleCreated, failedToCreateArticle);
 };
 
 export const updateArticle = (id, isDraft, content, body, markup) => dispatch => {
