@@ -22,7 +22,7 @@ class Users extends Component {
             </TableRow>
           </TableHeader>
           <TableBody>
-           { user.users.map((user, i) => <User key={ i } user={ user } />) }
+           { user.users.map((user, i) => <User key={ user.userId } user={ user } />) }
           </TableBody>
         </Table>
        </div>

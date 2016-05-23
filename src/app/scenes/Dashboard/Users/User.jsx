@@ -3,7 +3,7 @@ import { TableRow, TableRowColumn } from 'material-ui/Table';
 
 const User = (props) => {
   return (
-    <TableRow>
+    <TableRow hoverable>
       <TableRowColumn>{ props.user.userId }</TableRowColumn>
       <TableRowColumn>{ props.user.username }</TableRowColumn>
       <TableRowColumn>{ props.user.email }</TableRowColumn>
