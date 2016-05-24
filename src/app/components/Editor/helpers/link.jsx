@@ -3,11 +3,16 @@ import { Entity } from 'draft-js';
 import { styleMap } from '../utilities';
 
 export const Link = (props) => {
-  const {url} = Entity.get(props.entityKey).getData();
+  const { url } = Entity.get(props.entityKey).getData();
 
   return (
-    <a href={url} style={styleMap.LINK} target="_blank">
-            {props.children}
+    <a href={ url } style={ styleMap.LINK } target="_blank">
+            { props.children }
         </a>
     );
+};
+
+Link.propTypes = {
+  entityKey: React.PropTypes.string,
+  children: React.PropTypes.element
 };
