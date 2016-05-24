@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Users from './Users';
-import { getUsersList } from 'app/state/modules/user/user.actions';
+import { getUsersList } from 'app/state/user/user.actions';
 import Loader from 'app/components/Loader';
 class UsersContainer extends Component {
   static loadAsyncData(dispatch) {

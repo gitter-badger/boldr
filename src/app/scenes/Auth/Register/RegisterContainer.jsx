@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 import Register from './Register';
-import { authRegister } from 'app/state/modules/auth/auth.actions';
+import { authRegister } from 'app/state/auth/auth.actions';
 
 function validate(values) {
   const errors = {};

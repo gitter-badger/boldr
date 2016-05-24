@@ -6,9 +6,9 @@ import { Provider } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
-import configureStore from 'app/state/store';
-import createRoutes from 'app/routes';
-import Html from 'app/components/Html';
+import configureStore from 'app/core/store';
+import createRoutes from 'app/core/routes';
+import Html from 'app/core/Html';
 
 const renderFullPage = (component, store) => {
   const assets = webpackIsomorphicTools.assets();

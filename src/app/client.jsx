@@ -12,10 +12,10 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 
-import { checkAuth, authCheck } from 'app/state/modules/auth/auth.actions';
-import preRenderMiddleware from 'app/state/middleware/preRenderMiddleware';
-import createRoutes from 'app/routes';
-import configureStore from 'app/state/store';
+import { checkAuth, authCheck } from 'app/state/auth/auth.actions';
+import preRenderMiddleware from 'app/core/util/preRenderMiddleware';
+import createRoutes from 'app/core/routes';
+import configureStore from 'app/core/store';
 
 // If localStorage is unavailable, fallback to cookie.
 const token = cookie.load('boldr:jwt');

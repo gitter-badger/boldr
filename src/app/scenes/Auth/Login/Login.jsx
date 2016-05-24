@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import { authLogin } from 'app/state/modules/auth/auth.actions';
+import { authLogin } from 'app/state/auth/auth.actions';
 import LoginForm from './LoginForm';
 
 const styles = {

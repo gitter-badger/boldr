@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Article from './components/Article';
 import Loader from 'app/components/Loader';
 import { bindActionCreators } from 'redux';
-import * as articleActions from 'app/state/modules/article/article.actions';
+import * as articleActions from 'app/state/article/article.actions';
 
 class ArticleList extends Component {
   componentWillMount(dispatch) {

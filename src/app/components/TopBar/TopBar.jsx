@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as boldrActions from 'app/state/modules/boldr/boldr.actions';
+import * as boldrActions from 'app/state/boldr/boldr.actions';
 import { browserHistory } from 'react-router';
 import SiteLogo from '../SiteLogo';
 

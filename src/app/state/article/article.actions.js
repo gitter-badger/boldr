@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as types from './article.constants';
 import { getArticleByTitle, createArticleCall, updateArticleCall } from 'app/api/articleEndpoint';
-import configureStore from 'app/state/store';
+import configureStore from 'app/core/store';
 
 const store = configureStore();
 

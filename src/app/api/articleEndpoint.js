@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { API_BASE } from 'app/api/index';
-import configureStore from 'app/state/store';
+import configureStore from 'app/core/store';
 
 const store = configureStore();
 export const ARTICLE_ENDPOINT = `${API_BASE}/articles`;
