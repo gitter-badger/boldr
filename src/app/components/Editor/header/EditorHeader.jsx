@@ -54,7 +54,7 @@ class EditorHeader extends React.Component {
         editorState={ editorState }
         onChange={ this.onChange }
         onFocus={ onFocus }
-        />
+      />
     </div>
     );
   }

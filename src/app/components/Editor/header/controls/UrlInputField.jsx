@@ -18,6 +18,10 @@ class UrlInputField extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this._input.focus();
+  }
+
   _confirmLink() {
     const { urlValue } = this.state;
     const linkEntity = null;
@@ -39,34 +43,30 @@ class UrlInputField extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this._input.focus();
-  }
-
   render() {
     return (
       <div style={ styles.urlInputContainer }>
       <input
         onChange={ this.onURLChange }
-        ref={ (c) => this._input = c }
-        style={styles.urlInput}
+        ref={ (c) => this._input = c } // eslint-disable-line
+        style={ styles.urlInput }
         type="text"
         value={ this.state.urlValue }
         onKeyDown={ this.onLinkInputKeyDown }
       />
       <StyleButton
         key="Confirm"
-        active={ true }
+        activ
         label="Confirm"
         onToggle={ this.confirmLink }
-        style={ true }
+        style
       />
       <StyleButton
         key="Cancel"
-        active={ true }
+        active
         label="Cancel"
         onToggle={ this.cancelLink }
-        style={ true }
+        style
       />
   </div>
     );

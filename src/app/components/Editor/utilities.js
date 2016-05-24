@@ -24,7 +24,25 @@ export const styleMap = {
     color: '#999'
   }
 };
+const HANDLE_LINK = /http:\/\/(?:\[[^\]]+\]|\S+)/g;
+export function handleLink(contentBlock, callback) {
+  findWithRegex(HANDLE_LINK, contentBlock, callback);
+}
 
+export const HandleLinkSpan = (props) => {
+  const href = props.children[0].props.text; // eslint-disable-line
+  return <a href={ href }>{ props.children }</a>; // eslint-disable-line
+};
+
+export function findWithRegex(regex, contentBlock, callback) {
+  const text = contentBlock.getText();
+  let matchArr;
+  let start;
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    callback(start, start + matchArr[0].length);
+  }
+}
 export function getBlockStyle(block) {
   switch (block.getType()) {
     case 'blockquote':
@@ -33,68 +51,6 @@ export function getBlockStyle(block) {
       return null;
   }
 }
-
-export const BLOCK_TYPES = [
-  {
-    label: 'H1',
-    style: 'header-one'
-  },
-  {
-    label: 'H2',
-    style: 'header-two'
-  },
-  {
-    label: 'H3',
-    style: 'header-three'
-  },
-  {
-    label: 'H4',
-    style: 'header-four'
-  },
-  {
-    label: 'H5',
-    style: 'header-five'
-  },
-  {
-    label: 'H6',
-    style: 'header-six'
-  },
-  {
-    label: 'Blockquote',
-    style: 'blockquote'
-  },
-  {
-    label: 'UL',
-    style: 'unordered-list-item'
-  },
-  {
-    label: 'OL',
-    style: 'ordered-list-item'
-  },
-  {
-    label: 'Code Block',
-    style: 'code-block'
-  }
-];
-
-export const INLINE_STYLES = [
-  {
-    label: 'Bold',
-    style: 'BOLD'
-  },
-  {
-    label: 'Italic',
-    style: 'ITALIC'
-  },
-  {
-    label: 'Underline',
-    style: 'UNDERLINE'
-  },
-  {
-    label: 'Monospace',
-    style: 'CODE'
-  }
-];
 
 export function getMediaBlockObject(block) {
   switch (block.getType()) {
