@@ -1,9 +1,10 @@
 import React from 'react';
+import { articleTypes } from 'app/components/Editor/utilities';
+import { Editor, EditorState } from 'draft-js';
 import Display from 'app/components/Editor/Display';
 import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';
 import _ from 'lodash';
-import { articleTypes } from 'app/components/Editor/utilities';
-import { Editor, EditorState } from 'draft-js';
+
 class Article extends React.Component {
 
   constructor(props) {
@@ -12,10 +13,11 @@ class Article extends React.Component {
     this.state = {
       editorState: createEditorStateFromRawDraft(this.prepareDraft(props.content))
     };
+
     this.getChildContext = () => {
       return {
         articleState: articleTypes.FULL,
-        articleUrl: this.props.articleUrl
+        slug: this.props.slug
       };
     };
   }
@@ -37,9 +39,7 @@ class Article extends React.Component {
   render() {
     const { editorState } = this.state;
 
-    const { blockStyleFn } = this.props;
-    const { blockRendererFn } = this.props;
-    const { customStyleMap } = this.props;
+    const { customStyleMap, content, title, slug } = this.props;
 
     let className = 'card RichEditor-content';
 
@@ -50,34 +50,29 @@ class Article extends React.Component {
 
     return (
       <div>
-                { titleHeader }
-                <div className={ className }>
-                    <div className="card-content">
-                    <Editor
-                        blockStyleFn={blockStyleFn}
-                        blockRendererFn={blockRendererFn}
-                        readOnly={true}
-                        customStyleMap={customStyleMap}
-                        editorState={editorState}
-                    />
-                    </div>
-                </div>
+        { titleHeader }
+          <div className={ className }>
+            <div className="card-content">
+              <Editor readOnly
+                customStyleMap={ customStyleMap }
+                editorState={ editorState }
+              />
             </div>
+          </div>
+        </div>
       );
   }
 }
 
 Article.childContextTypes = {
   articleState: React.PropTypes.string,
-  articleUrl: React.PropTypes.string
+  slug: React.PropTypes.string
 };
 
 Article.propTypes = {
-  blockStyleFn: React.PropTypes.func.isRequired,
-  blockRendererFn: React.PropTypes.func.isRequired,
-  customStyleMap: React.PropTypes.object.isRequired,
-  rawDraft: React.PropTypes.object.isRequired,
-  articleUrl: React.PropTypes.string.isRequired,
+  content: React.PropTypes.object.isRequired,
+  customStyleMap: React.PropTypes.object,
+  slug: React.PropTypes.string.isRequired,
   title: React.PropTypes.string
 };
 
