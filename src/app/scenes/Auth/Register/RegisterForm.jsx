@@ -61,7 +61,6 @@ const RegisterForm = props => {
                 }
               />
               </div>
-
                  <CardActions>
                   <RaisedButton label="Register" type="submit"
                     secondary disabled={ pristine || submitting } style={ style }

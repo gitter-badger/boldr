@@ -144,6 +144,7 @@ export function logout() {
       });
   };
 }
+
 export function checkTokenValidityRequest() {
   return { type: types.CHECK_TOKEN_VALIDITY_REQUEST };
 }
