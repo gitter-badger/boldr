@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import jwtDecode from 'jwt-decode';
 import cookie from 'react-cookie';
-import { API_BASE } from 'app/api/index';
+const API_BASE = '/api/v1';
 export const USERS_ENDPOINT = `${API_BASE}/users`;
 const persistUser = (user) => {
   localStorage.setItem(types.LOCAL_STORAGE_KEY, JSON.stringify(user));
@@ -22,7 +22,7 @@ export const getUser = () => {
   return user;
 };
 export function partialPopulateUser() {
-  const jwt = localStorage.getItem('boldr:jwt') || cookie.load('boldr:jwt');
+  const jwt = localStorage.getItem('boldr:jwt');
   const user = jwtDecode(jwt);
   return {
     type: types.PARTIAL_POPULATE_USER,

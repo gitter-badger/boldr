@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Table, TableBody, TableHeader, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import User from './User';
+
 class Users extends Component {
   render() {
     const { user } = this.props;
@@ -10,7 +11,7 @@ class Users extends Component {
 
        <div className="container">
 
-       <Table>
+       <Table fixedHeader fixedFooter>
           <TableHeader>
             <TableRow>
               <TableHeaderColumn>User ID</TableHeaderColumn>
@@ -35,5 +36,8 @@ const mapStateToProps = (state) => ({
   loading: state.user.loading
 });
 
-export default connect(mapStateToProps, null)(Users);
+Users.propTypes = {
+  user: PropTypes.object.isRequired
+};
 
+export default connect(mapStateToProps, null)(Users);

@@ -148,10 +148,10 @@ export function checkTokenValidityRequest() {
   return { type: types.CHECK_TOKEN_VALIDITY_REQUEST };
 }
 
-export function checkTokenValiditySuccess(user) {
+export function checkTokenValiditySuccess(response) {
   return {
     type: types.SIGNIN_USER_SUCCESS,
-    payload: user
+    payload: response
   };
 }
 
@@ -164,14 +164,15 @@ export function checkTokenValidityFailure(error) {
 
 export function checkTokenValidity() {
   return dispatch => {
-    const token = cookie.load('boldr:jwt');
+    const token = localStorage.getItem('boldr:jwt');
     if (!token || token === '') { return; }
     dispatch(checkTokenValidityRequest());
     request.get(`${API_URL}/auth/check`, {
-      headers: { Authorization: token }
+      headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      dispatch(checkTokenValiditySuccess(response.data.user));
+      dispatch(partialPopulateUser(response));
+      dispatch(checkTokenValiditySuccess(response));
     })
     .catch(() => {
       dispatch(checkTokenValidityFailure('Token is invalid'));
@@ -180,7 +181,7 @@ export function checkTokenValidity() {
   };
 }
 export function checkAuth() {
-  if (cookie.load('boldr:jwt')) {
+  if (localStorage.getItem('boldr:jwt')) {
     return true;
   }
   return false;

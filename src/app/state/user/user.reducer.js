@@ -7,6 +7,7 @@ export const INITIAL_USER_STATE = {
   loading: false,
   message: '',
   error: false,
+  userId: '',
   profile: {
     email: '',
     username: '',
@@ -23,6 +24,7 @@ export default function user(state = INITIAL_USER_STATE, action) {
     case constants.SET_USER:
       return {
         ...state,
+        userId: action.user.userId,
         profile: {
           email: action.user.email,
           username: action.user.username,
@@ -35,11 +37,9 @@ export default function user(state = INITIAL_USER_STATE, action) {
     case constants.PARTIAL_POPULATE_USER:
       return {
         ...state,
-        profile: {
-          email: action.user.email,
-          username: action.user.username,
-          id: action.user.id
-        }
+        loading: false,
+        error: false,
+        userId: action.user.userId
       };
     case constants.REQUEST_USERS:
       return {

@@ -26,7 +26,10 @@ class TopBar extends React.Component {
     const path = '/register';
     browserHistory.push(path);
   }
-
+  handleHome() {
+    const path = '/';
+    browserHistory.push(path);
+  }
   render() {
     return (
       <div className="topbar">
@@ -35,6 +38,7 @@ class TopBar extends React.Component {
             { /* It should be like /api/v1/boldr/settings */ }
           <AppBar title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
             zDepth={ 2 }
+            onTitleTouchTap={ ::this.handleHome }
             onLeftIconButtonTouchTap={ this.props.handleToggle }
             iconElementRight={
               <IconMenu
