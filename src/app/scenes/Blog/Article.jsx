@@ -1,62 +1,65 @@
 import React from 'react';
-import { Editor, EditorState } from 'draft-js';
-// import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';.
+import Display from 'app/components/Editor/Display';
+import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';
 import _ from 'lodash';
-// import { articleTypes } from 'app/components/Editor/utilities';
-
+import { articleTypes } from 'app/components/Editor/utilities';
+import { Editor, EditorState } from 'draft-js';
 class Article extends React.Component {
 
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   editorState: createEditorStateFromRawDraft(this.prepareDraft(props.rawDraft))
-    // };
-    // this.getChildContext = () => {
-    //   return {
-    //     articleState: articleTypes.FULL,
-    //     articleUrl: this.props.articleUrl
-    //   }
-    // }
+    this.state = {
+      editorState: createEditorStateFromRawDraft(this.prepareDraft(props.content))
+    };
+    this.getChildContext = () => {
+      return {
+        articleState: articleTypes.FULL,
+        articleUrl: this.props.articleUrl
+      };
+    };
   }
 
-  /** OVERWRITTEN IN ArticleOverview **/
-  // prepareDraft(draft) {
-  //   return draft;
-  // }
-  //
-  // componentWillReceiveProps(newProps) {
-  //   if (newProps.rawDraft !== this.props.rawDraft) {
-  //     this.setState({
-  //       editorState: createEditorStateFromRawDraft(
-  //         this.prepareDraft(newProps.rawDraft)
-  //       )
-  //     });
-  //   }
-  //
-  //
-  // }
+  componentWillReceiveProps(newProps) {
+    if (newProps.content !== this.props.content) {
+      this.setState({
+        editorState: createEditorStateFromRawDraft(
+          this.prepareDraft(newProps.content)
+        )
+      });
+    }
+  }
+
+  prepareDraft(draft) {
+    return draft;
+  }
 
   render() {
-    const {editorState} = this.state;
+    const { editorState } = this.state;
 
-    const {blockStyleFn} = this.props;
-    const {blockRendererFn} = this.props;
-    const {customStyleMap} = this.props;
+    const { blockStyleFn } = this.props;
+    const { blockRendererFn } = this.props;
+    const { customStyleMap } = this.props;
 
     let className = 'card RichEditor-content';
 
     let titleHeader;
     if (this.props.title) {
-      titleHeader = <h4 className="header"> {this.props.title} </h4>
+      titleHeader = <h4 className="header"> { this.props.title } </h4>;
     }
 
     return (
       <div>
-                {titleHeader}
-                <div className={className}>
+                { titleHeader }
+                <div className={ className }>
                     <div className="card-content">
-
+                    <Editor
+                        blockStyleFn={blockStyleFn}
+                        blockRendererFn={blockRendererFn}
+                        readOnly={true}
+                        customStyleMap={customStyleMap}
+                        editorState={editorState}
+                    />
                     </div>
                 </div>
             </div>
