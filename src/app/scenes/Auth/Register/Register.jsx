@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import { authRegister } from 'app/state/modules/auth/auth.actions';
+import { authRegister } from 'app/state/auth/auth.actions';
 import RegisterForm from './RegisterForm';
 
 class Register extends Component {
@@ -17,10 +17,7 @@ class Register extends Component {
   }
   render() {
     return (
-
-      <Paper zDepth={ 1 }>
-        <RegisterForm onSubmit={ this.handleSubmit } />
-      </Paper>
+      <RegisterForm onSubmit={ this.handleSubmit } />
     );
   }
 }

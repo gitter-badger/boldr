@@ -5,20 +5,27 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AppDrawer from 'app/components/AppDrawer';
-import * as boldrActions from 'app/state/modules/boldr/boldr.actions';
+import * as boldrActions from 'app/state/boldr/boldr.actions';
 import TopBar from 'app/components/TopBar';
 import Loader from 'app/components/Loader';
+import { checkTokenValidity } from 'app/state/auth/auth.actions';
+
 import 'app/styles/app.scss';
 
 class CoreLayout extends Component {
-  handleToggle = () => { // eslint-disable-line
+
+  componentDidMount() {
+    this.props.dispatch(checkTokenValidity)
+  }
+
+  handleToggle() { // eslint-disable-line
     this.props.dispatch(boldrActions.toggleSideBar());
   }
 
   render() {
     return (
           <div>
-          <TopBar handleToggle={ this.handleToggle } />
+          <TopBar handleToggle={ ::this.handleToggle } />
           <AppDrawer />
           { this.props.children }
         </div>

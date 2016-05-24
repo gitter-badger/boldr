@@ -46,7 +46,7 @@ export default function auth(state = INITIAL_STATE, action) {
         loading: false,
         message: 'There was a problem logging you in.'
       };
-    case constants.ME_FROM_TOKEN:
+    case constants.CHECK_TOKEN_VALIDITY_REQUEST:
       return {
         ...state,
         error: false,
@@ -55,16 +55,16 @@ export default function auth(state = INITIAL_STATE, action) {
         loading: true,
         message: 'Verifying your token.'
       };
-    case constants.ME_FROM_TOKEN_SUCCESS:
+    case constants.SIGNIN_USER_SUCCESS:
       return {
         ...state,
         error: false,
         isAuthenticating: false,
         isAuthenticated: true,
         loading: false,
-        message: action.payload.data.user
+        message: action.payload.data
       };
-    case constants.ME_FROM_TOKEN_FAILURE:
+    case constants.SIGNIN_USER_FAILURE:
       return {
         ...state,
         error: action.payload.data,

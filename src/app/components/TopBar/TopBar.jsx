@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as boldrActions from 'app/state/modules/boldr/boldr.actions';
+import * as boldrActions from 'app/state/boldr/boldr.actions';
 import { browserHistory } from 'react-router';
 import SiteLogo from '../SiteLogo';
 
@@ -26,7 +26,10 @@ class TopBar extends React.Component {
     const path = '/register';
     browserHistory.push(path);
   }
-
+  handleHome() {
+    const path = '/';
+    browserHistory.push(path);
+  }
   render() {
     return (
       <div className="topbar">
@@ -34,6 +37,8 @@ class TopBar extends React.Component {
             { /* @ToDo Build logic for this on the server */ }
             { /* It should be like /api/v1/boldr/settings */ }
           <AppBar title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
+            zDepth={ 2 }
+            onTitleTouchTap={ ::this.handleHome }
             onLeftIconButtonTouchTap={ this.props.handleToggle }
             iconElementRight={
               <IconMenu
@@ -62,7 +67,8 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
   dispatch: React.PropTypes.func,
-  handleToggle: React.PropTypes.func
+  handleToggle: React.PropTypes.func,
+  auth: React.PropTypes.object
 };
 
 const mapStateToProps = (state) => {

@@ -2,6 +2,7 @@ import request from 'axios';
 import { push } from 'react-router-redux';
 import { partialPopulateUser } from '../user/user.actions';
 import * as types from './auth.constants';
+const API_URL = '/api/v1';
 import cookie from 'react-cookie';
 /**
  * Utility function to make AJAX requests using isomorphic fetch.
@@ -143,21 +144,45 @@ export function logout() {
       });
   };
 }
-export function authCheck() {
+
+export function checkTokenValidityRequest() {
+  return { type: types.CHECK_TOKEN_VALIDITY_REQUEST };
+}
+
+export function checkTokenValiditySuccess(response) {
+  return {
+    type: types.SIGNIN_USER_SUCCESS,
+    payload: response
+  };
+}
+
+export function checkTokenValidityFailure(error) {
+  return {
+    type: types.SIGNIN_USER_FAILURE,
+    payload: error
+  };
+}
+
+export function checkTokenValidity() {
   return dispatch => {
-    // check if the token is still valid, if so, get user from the server
-    return makeAuthRequest('get', '/api/v1/auth/check')
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(meFromTokenSuccess(response));
-        } else {
-          dispatch(meFromTokenFailure());
-        }
-      });
+    const token = localStorage.getItem('boldr:jwt');
+    if (!token || token === '') { return; }
+    dispatch(checkTokenValidityRequest());
+    request.get(`${API_URL}/auth/check`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      dispatch(partialPopulateUser(response));
+      dispatch(checkTokenValiditySuccess(response));
+    })
+    .catch(() => {
+      dispatch(checkTokenValidityFailure('Token is invalid'));
+      cookie.remove('boldr:jwt');
+    });
   };
 }
 export function checkAuth() {
-  if (cookie.load('boldr:jwt')) {
+  if (localStorage.getItem('boldr:jwt')) {
     return true;
   }
   return false;

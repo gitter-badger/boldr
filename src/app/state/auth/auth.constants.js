@@ -12,3 +12,6 @@ export const ME_FROM_TOKEN = '@@auth/ME_FROM_TOKEN';
 export const ME_FROM_TOKEN_SUCCESS = '@@auth/ME_FROM_TOKEN_SUCCESS';
 export const ME_FROM_TOKEN_FAILURE = '@@auth/ME_FROM_TOKEN_FAILURE';
 export const RESET_TOKEN = '@@auth/RESET_TOKEN';
+export const CHECK_TOKEN_VALIDITY_REQUEST = '@@auth/CHECK_TOKEN_VALIDITY_REQUEST';
+export const SIGNIN_USER_SUCCESS = '@@auth/SIGNIN_USER_SUCCESS';
+export const SIGNIN_USER_FAILURE = '@@auth/SIGNIN_USER_FAILURE';

@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Paper from 'material-ui/Paper';
-import * as articleActions from 'app/state/modules/article/article.actions';
+import * as articleActions from 'app/state/article/article.actions';
 import Loader from 'app/components/Loader';
-import { changeArticlePublishSetting } from 'app/api/articleEndpoint';
+import { changeArticlePublishSetting } from 'app/core/api/articleEndpoint';
 
 import WrapTransitions from 'app/components/WrapTransitions';
 import NewArticleForm from './components/NewArticleForm';

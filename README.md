@@ -63,8 +63,11 @@ $ npm start
 
 ## Contribute
 
+## Structure
+[View Here](docs/structure.md)
+
 ## Change Log
-[View Here](Changelog.md)
+[View Here](docs/Changelog.md)
 [build-badge]: http://img.shields.io/travis/strues/boldr.svg?branch=master&style=flat
 [david-badge]: http://img.shields.io/david/strues/boldr.svg?style=flat
 [david-dev-badge]: http://img.shields.io/david/dev/strues/boldr.svg?style=flat

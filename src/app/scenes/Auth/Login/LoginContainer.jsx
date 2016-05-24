@@ -1,6 +1,6 @@
 import LoginForm from './LoginForm';
 import Login from './Login';
-import { authLogin } from 'app/state/modules/auth/auth.actions';
+import { authLogin } from 'app/state/auth/auth.actions';
 import { reduxForm } from 'redux-form';
 
 function validate(values) {

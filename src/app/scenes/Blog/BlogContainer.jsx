@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchArticles } from 'app/state/modules/article/article.actions';
+import { fetchArticles } from 'app/state/article/article.actions';
 import Loader from '../../components/Loader';
 // import Article from './components/Article';
 

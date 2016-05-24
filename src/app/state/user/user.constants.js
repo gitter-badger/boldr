@@ -5,3 +5,6 @@ export const UPDATE_USER_SUCCESS = '@@user/UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = '@@user/UPDATE_USER_FAILURE';
 export const LOCAL_STORAGE_KEY = 'boldr:user';
 export const PARTIAL_POPULATE_USER = '@@user/PARTIAL_POPULATE_USER';
+export const REQUEST_USERS = '@@user/REQUEST_USERS';
+export const RECEIVE_USERS = '@@user/RECEIVE_USERS';
+export const RECEIVE_USERS_FAILED = '@@user/RECEIVE_USERS_FAILED';
