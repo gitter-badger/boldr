@@ -9,6 +9,7 @@ export const env = (string) => {
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 export const ROOT_DIR = path.normalize(path.join(__dirname, '..', '..'));
+export const API_BASE = '/api/v1';
 const config = {
   // Environment
   __CLIENT__: true,

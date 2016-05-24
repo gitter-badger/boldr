@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-import { API_BASE } from 'app/api/index';
+import { API_BASE } from 'config';
 import configureStore from 'app/core/store';
 
 const store = configureStore();
