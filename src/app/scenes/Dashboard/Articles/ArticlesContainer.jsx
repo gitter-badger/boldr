@@ -8,19 +8,13 @@ ArticleList.need = [
   articleActions.fetchArticles
 ];
 
-class ArticlesContainer extends Component {
-  render() {
-    return (
-      <div>
-
-       <div className="container">
-       ArticlesContainer
-       { this.props.children }
-       </div>
-      </div>
-    );
-  }
-}
+const ArticlesContainer = (props) => {
+  return (
+     <div className="container">
+     { props.children }
+     </div>
+  );
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {

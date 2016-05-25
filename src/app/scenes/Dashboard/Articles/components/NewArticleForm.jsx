@@ -3,11 +3,13 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import BoldrEditor from 'app/components/Editor';
-
+const style = {
+  margin: 12
+};
 const NewArticleForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={ handleSubmit }>
       <div>
         <Field name="title" component={ title =>
           <TextField hintText= "Give it a name"
@@ -15,7 +17,8 @@ const NewArticleForm = (props) => {
             errorText = { title.touched && title.error }
             { ...title }
           />
-          }/>
+          }
+        />
       </div>
       <div>
         <Field name="slug" component={ slug =>
@@ -24,16 +27,20 @@ const NewArticleForm = (props) => {
             errorText = { slug.touched && slug.error }
             { ...slug }
           />
-          }/>
+          }
+        />
       </div>
       <div>
       <Field name="content" component={ content =>
         <BoldrEditor placeholder="Write your content..." { ...content } />
-      }/>
+      }
+      />
       </div>
       <div>
-        <button type="submit" disabled={pristine || submitting}>Submit</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <RaisedButton type="submit" secondary label="Publish" disabled={ pristine || submitting } style={ style } />
+        <RaisedButton type="button" onClick={ reset } label="Reset"
+          disabled={ pristine || submitting } style={ style }
+        />
       </div>
     </form>
   );
