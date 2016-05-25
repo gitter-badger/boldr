@@ -1,22 +1,7 @@
 export const INLINE_STYLES = [
-  {
-    label: 'Bold',
-    style: 'BOLD'
-  },
-  {
-    label: 'Italic',
-    style: 'ITALIC'
-  },
-  {
-    label: 'Underline',
-    style: 'UNDERLINE'
-  },
-  {
-    label: 'Monospace',
-    style: 'CODE'
-  },
-  {
-    label: 'Strikethrough',
-    style: 'STRIKETHROUGH'
-  }
+  { label: 'B', icon: 'icons.Bold', style: 'BOLD' },
+  { label: 'I', icon: 'format_italic', style: 'ITALIC' },
+  { label: 'U', icon: 'format_underlined', style: 'UNDERLINE' },
+  { label: 'Strike', icon: 'strikethrough_s', style: 'STRIKETHROUGH' },
+  { label: 'Code', icon: 'code', style: 'CODE' }
 ];

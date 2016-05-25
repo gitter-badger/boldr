@@ -5,8 +5,8 @@ const SaveDraftButton = (props) => {
   return (
     <RaisedButton
       label="Save Draft"
-      linkButton={false}
-      secondary={true}
+      linkButton={ false }
+      secondary
       onClick={ props.onSaveDraft }
     />
   );

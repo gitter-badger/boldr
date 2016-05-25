@@ -7,7 +7,7 @@ const STYLE_MAP = new Map([
   ['BOLD', 'rich-bold'],
   ['ITALIC', 'rich-italic'],
   ['UNDERLINE', 'rich-underline'],
-  ['CODE', false],
+  ['CODE', false]
 ]);
 
 /**
@@ -28,7 +28,7 @@ const FILTER_MAP = new Map([
   ['&', '&amp;'],
   ['"', '&quot;'],
   ['\'', '&#x27;'],
-  ['/', '&#x2F;'],
+  ['/', '&#x2F;']
 ]);
 
 /**
