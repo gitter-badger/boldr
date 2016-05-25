@@ -49,6 +49,7 @@ export default class Html extends Component {
           <meta name="apple-mobile-web-app-status-bar-style" content="black" />
           <title>Boldr</title>
           <link rel="shortcut icon" href="/favicon.ico" />
+          <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300,400italic|Roboto+Condensed:400,300" rel="stylesheet" type="text/css"/>
           {this.styles}
         </head>
 

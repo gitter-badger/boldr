@@ -10,12 +10,8 @@ import WrapTransitions from 'app/components/WrapTransitions';
 import NewArticleForm from './components/NewArticleForm';
 
 class CreateArticle extends Component {
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+
   handleSubmit(values) {
-    console.log(values);
     // const boldrEditor = this.refs.boldrEditor;
     // const content = boldrEditor.getContent().toJS();
     // console.log(content); // eslint-disable-line
@@ -28,10 +24,11 @@ class CreateArticle extends Component {
       <div>
       <WrapTransitions animateIn="fadeIn">
       <Paper
-          zDepth={3}
-          style={{ padding: 40 }}
-          className="col-md-offset-3 col-md-6">
-          <NewArticleForm onSubmit={this.handleSubmit} />
+        zDepth={ 3 }
+        style={ { padding: 40 } }
+        className="col-md-offset-3 col-md-6"
+      >
+          <NewArticleForm onSubmit={ ::this.handleSubmit } />
 
         </Paper>
           </WrapTransitions>
@@ -50,6 +47,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     articleActions: bindActionCreators(articleActions, dispatch)
   };
+};
+
+CreateArticle.propTypes = {
+  articleActions: PropTypes.func,
+  article: PropTypes.object,
+  loading: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);
