@@ -1,8 +1,8 @@
 import _debug from 'debug';
 import r from 'server/db';
 
-import logger from '../../utils/logger';
 import jwt from 'jsonwebtoken';
+import logger from '../../utils/logger';
 import config, { paths } from '../../../../tools/config';
 
 const debug = _debug('boldr:user:controller');

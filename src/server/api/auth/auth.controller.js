@@ -4,11 +4,12 @@ import r from 'server/db';
 import _debug from 'debug';
 import config, { paths } from 'config';
 import Joi from 'joi';
+import shortid from 'shortid';
 import logger from 'server/utils/logger';
 import userSchema from '../user/user.schema';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 const saltRounds = 10;
-
+shortid.worker(process.pid % 16);
 const debug = _debug('boldr:auth:controller');
 debug('init');
 
@@ -22,6 +23,7 @@ debug('init');
 export const registerUser = async ctx => {
   const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
   const user = {
+    userId: shortid.generate(),
     email: ctx.request.body.email,
     username: ctx.request.body.username,
     password: hash,
@@ -84,7 +86,8 @@ export async function loginUser(ctx, next) {
     }
     const pw = bcrypt.compareSync(ctx.request.body.password, user[0].password);
     if (pw === false) {
-      throw Boom.unauthorized();
+      ctx.status = 403;
+      ctx.body = 'Unable to log in.';
     }
     const payload = {
       email: user[0].email,
@@ -119,6 +122,7 @@ export async function checkUser(ctx, next) {
         return ctx.ok(result);
       });
   } catch (err) {
-    throw Boom.unauthorized(err);
+    ctx.status = 403;
+    ctx.body = 'Unable to log in.';
   }
 }

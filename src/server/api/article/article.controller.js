@@ -1,6 +1,7 @@
 import _debug from 'debug';
 import slug from 'slugg';
 import r from 'server/db';
+import shortid from 'shortid';
 const debug = _debug('boldr:article:controller');
 debug('init');
 
@@ -14,8 +15,8 @@ export const getAllArticles = async (ctx) => {
   const articles =
   await r.table('articles')
   .eqJoin('authorId', r.table('users'))// returns left and right joins
-  .without('password')
   .zip()// zip combines the two tables into one on request.
+  .without('password', 'userId', 'email')
   .run();
   return ctx.ok(articles);
 };
@@ -35,6 +36,7 @@ export const getAllArticles = async (ctx) => {
  */
 export const createArticle = async (ctx, next) => {
   const article = {
+    articleId: shortid.generate(),
     title: ctx.request.body.title,
     slug: slug(ctx.request.body.slug),
     markup: ctx.request.body.markup,
@@ -42,7 +44,8 @@ export const createArticle = async (ctx, next) => {
     featureImage: ctx.request.body.featureImage,
     authorId: ctx.state.user.userId,
     isDraft: ctx.request.body.isDraft,
-    createdAt: r.now()
+    createdAt: r.now(),
+    tagId: ctx.request.body.tagId
   };
   let query = null;
 

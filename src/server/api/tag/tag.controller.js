@@ -19,7 +19,7 @@ export async function getAllTags(ctx) {
  */
 export const createTag = async (ctx, next) => {
   const tag = {
-    name: ctx.request.body.name,
+    tag: ctx.request.body.tag,
     description: ctx.request.body.description
   };
   try {

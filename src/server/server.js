@@ -21,6 +21,7 @@ import { handleError } from './middleware/handleError';
 // import rethinkdbSocket from './lib/socket/rethinkdbSocket';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
+import initialize from './db/initialize';
 // Load environment variables.
 dotenv.config();
 const debug = _debug('boldr:server:dev');
@@ -104,6 +105,6 @@ function init() {
   }
 }
 
-init();
+initialize().then(init());
 
 export { app as default, server };

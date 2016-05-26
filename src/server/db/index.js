@@ -1,4 +1,6 @@
 import rethinkdbdash from 'rethinkdbdash';
 import dbConfig from './dbConfig';
 
-export default rethinkdbdash(dbConfig);
+const r = rethinkdbdash(dbConfig);
+
+export default r;
