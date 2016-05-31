@@ -1,21 +1,14 @@
 import _debug from 'debug';
-import * as constants from './user.constants';
+import * as constants from './user.actions';
 
 const debug = _debug('user.reducer:debug');
 
 export const INITIAL_USER_STATE = {
   loading: false,
+  isAuthenticated: false,
   message: '',
   error: false,
   userId: '',
-  profile: {
-    email: '',
-    username: '',
-    firstName: '',
-    lastName: '',
-    avatar: '',
-    role: ''
-  },
   users: []
 };
 
@@ -24,15 +17,7 @@ export default function user(state = INITIAL_USER_STATE, action) {
     case constants.SET_USER:
       return {
         ...state,
-        userId: action.user.userId,
-        profile: {
-          email: action.user.email,
-          username: action.user.username,
-          firstName: action.user.firstName,
-          lastName: action.user.lastName,
-          avatar: action.user.avatar,
-          role: action.user.role
-        }
+        userId: action.user.userId
       };
     case constants.PARTIAL_POPULATE_USER:
       return {
@@ -61,6 +46,89 @@ export default function user(state = INITIAL_USER_STATE, action) {
         loading: false,
         error: action.payload,
         users: []
+      };
+    case constants.TOGGLE_LOGIN_MODE:
+      return {
+        ...state,
+        isLogin: !state.isLogin,
+        message: ''
+      };
+    case constants.MANUAL_LOGIN_USER:
+      return {
+        ...state,
+        loading: true,
+        message: ''
+      };
+    case constants.LOGIN_SUCCESS_USER:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+        message: ''
+      };
+    case constants.LOGIN_ERROR_USER:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        message: action.message
+      };
+    case constants.SIGNUP_USER:
+      return {
+        ...state,
+        loading: true,
+        message: ''
+      };
+    case constants.SIGNUP_SUCCESS_USER:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true
+      };
+    case constants.SIGNUP_ERROR_USER:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        message: action.message
+      };
+    case constants.LOGOUT_USER:
+      return {
+        ...state,
+        loading: true,
+        message: ''
+      };
+    case constants.LOGOUT_SUCCESS_USER:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false
+      };
+    case constants.LOGOUT_ERROR_USER:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true
+      };
+    case constants.CHECK_TOKEN_VALIDITY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        message: ''
+      };
+    case constants.TOKEN_VALID:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+        message: ''
+      };
+    case constants.TOKEN_INVALID_OR_MISSING:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        message: action.message
       };
     default:
       return state;

@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 CreateArticle.propTypes = {
-  articleActions: PropTypes.func,
+  articleActions: PropTypes.object,
   article: PropTypes.object,
   loading: PropTypes.bool
 };
