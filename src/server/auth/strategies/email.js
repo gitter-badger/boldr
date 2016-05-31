@@ -1,21 +1,23 @@
 import r from '../../db';
 import { Strategy as CustomStrategy } from 'passport-custom';
 import bcrypt from 'bcryptjs';
+import Models from '../../db/models';
+const User = Models.User;
 export default new CustomStrategy(async (ctx, done) => {
   try {
     // Test whether is a login using email and password
     if (ctx.body.email && ctx.body.password) {
-      const user = await r.table('users').getAll(ctx.body.email, { index: 'email' }).run();
+      const user = await User.findOne({ where: { email: ctx.body.email } });
 
-      if (!user[0]) {
-        done(null, false, { message: `Email ${ctx.body.email} not found` });
+      if (!user) {
+        return done(null, false, { message: `Email ${ctx.body.email} not found` });
       }
-      const pw = bcrypt.compareSync(ctx.body.password, user[0].password);
+      const pw = user.comparePassword(ctx.body.password, user.password);
       if (pw === false) {
         done(null, false);
       }
 
-      done(null, user[0]);
+      done(null, user);
     } else {
       done(null, false);
     }

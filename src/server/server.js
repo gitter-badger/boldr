@@ -22,6 +22,7 @@ import { handleError } from './middleware/handleError';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
 import initialize from './db/initialize';
+import connector from './db/connector';
 // Load environment variables.
 dotenv.config();
 const debug = _debug('boldr:server:dev');
@@ -36,7 +37,7 @@ app.name = 'Boldr';
 app.proxy = true;
 app.env = process.env.NODE_ENV;
 app.keys = [config.JWT_SECRET];
-
+connector();
 // allow both legacy and modern middleware
 // https://www.npmjs.com/package/koa-convert
 const use = app.use;

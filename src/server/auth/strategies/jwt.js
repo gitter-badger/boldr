@@ -1,13 +1,13 @@
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
-import r from '../../db';
-
+import Models from '../../db/models';
+const User = Models.User;
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
   secretOrKey: process.env.JWT_SECRET
 };
 
 export default new JWTStrategy(opts, async (jwt_payload, done) => {
-  const user = await r.table('users').get(jwt_payload.userId).run();
+  const user = await User.findById(jwt_payload.id);
   if (user) {
     done(null, user);
   } else {
