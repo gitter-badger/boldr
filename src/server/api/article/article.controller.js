@@ -2,9 +2,12 @@ import _debug from 'debug';
 import slug from 'slugg';
 import r from 'server/db';
 import shortid from 'shortid';
+import Models from '../../db/models';
+const Article = Models.Article;
+const Tag = Models.Tag;
 const debug = _debug('boldr:article:controller');
 debug('init');
-
+const MAX_TAGS = 15;
 /**
  * Gets all articles
  * @method getAllArticles
@@ -35,24 +38,42 @@ export const getAllArticles = async (ctx) => {
  * @return {Object}                the article object
  */
 export const createArticle = async (ctx, next) => {
-  const article = {
-    articleId: shortid.generate(),
+  const body = {
     title: ctx.request.body.title,
     slug: slug(ctx.request.body.slug),
     markup: ctx.request.body.markup,
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
-    authorId: ctx.state.user.userId,
+    authorId: ctx.state.user.id,
     isDraft: ctx.request.body.isDraft,
-    createdAt: r.now(),
-    tagId: ctx.request.body.tagId
+    tags: ctx.request.body.tags
   };
-  let query = null;
+
+  if (ctx.request.body.tags) {
+    ctx.request.body.tags = ctx.request.body.tags.split(',', MAX_TAGS).map(tag => tag.substr(0, 15));
+  }
+
+  const articleFields = {
+    title: ctx.request.body.title,
+    slug: slug(ctx.request.body.slug),
+    markup: ctx.request.body.markup,
+    content: ctx.request.body.content,
+    featureImage: ctx.request.body.featureImage,
+    authorId: ctx.state.user.id,
+    isDraft: ctx.request.body.isDraft
+  };
 
   try {
-    query = r.table('articles').insert(article);
-    const result = await query.run();
-    return ctx.created(result);
+    const article = await Article.create(articleFields);
+    for (let i = 0; i < ctx.request.body.tags.length; i++) {
+      // console.log('MADE IT')
+      const newTag = await Tag.create({ tagname: ctx.request.body.tags[i] });
+      await article.addTag(newTag);
+    }
+    if (ctx.request.body.tags) {
+      article.Tags = ctx.request.body.tags.map(tag => ({ tagname: tag }));
+    }
+    return ctx.created(article);
   } catch (err) {
     return ctx.error(`Something went terribly wrong creating your article. Try again. ${err}`);
   }

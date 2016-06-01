@@ -42,12 +42,11 @@ export const registerUser = async ctx => {
       email: ctx.request.body.email
     }
   });
-
+  if (existingUser) {
+    ctx.status = 409;
+    ctx.body = 'Account with this email address already exists!';
+  }
   try {
-    if (existingUser) {
-      ctx.status = 409;
-      ctx.body = 'Account with this email address already exists!';
-    }
     user.save()
       .then((user) => {
         const verificationToken = generateVerifyCode();
@@ -83,9 +82,8 @@ export async function loginUser(ctx, next) {
       ctx.body = 'Unable to log in.';
     }
     const payload = {
-      email: user[0].email,
-      username: user[0].username,
-      userId: user[0].userId
+      email: user.email,
+      id: user.id
     };
     // make this data available across the app on ctx.session
     ctx.session = payload;

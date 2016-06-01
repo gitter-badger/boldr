@@ -18,7 +18,6 @@ import IO from 'socket.io';
 import BoldrMiddleware from './middleware';
 import config from 'config';
 import { handleError } from './middleware/handleError';
-// import rethinkdbSocket from './lib/socket/rethinkdbSocket';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
 import initialize from './db/initialize';
@@ -48,8 +47,9 @@ app.use = x => use.call(app, convert(x));
  * and context for Boldr.
  */
 (async() => {
-  await BoldrMiddleware.init(app);
   app.use(handleError);
+  await BoldrMiddleware.init(app);
+
   /**
    * Loads the development specific functions
    * @param  {Boolean} __DEV__ Global variable for development environment

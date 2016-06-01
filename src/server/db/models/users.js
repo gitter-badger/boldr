@@ -54,9 +54,9 @@ module.exports = (sequelize, DataTypes) => {
 
     classMethods: {
       associate(models) {
-        // User.hasMany(models.Token, {
-        //   foreignKey: 'userId'
-        // });
+        User.hasMany(models.Article, {
+          foreignKey: 'authorId'
+        });
       }
     },
 
