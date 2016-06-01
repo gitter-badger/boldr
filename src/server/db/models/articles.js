@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
-  const Article = sequelize.define('Article', {
+  const Article = sequelize.define('article', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     timestamps: true,
-
+    tableName: 'articles',
     classMethods: {
       associate(models) {
         Article.belongsToMany(models.Tag,
@@ -54,6 +54,9 @@ module.exports = (sequelize, DataTypes) => {
           },
           constraints: false,
           onDelete: 'cascade'
+        });
+        Article.belongsTo(models.User, {
+          foreignKey: 'authorId'
         });
       }
     }

@@ -1,7 +1,7 @@
 module.exports = {
   up(queryInterface, DataTypes) {
     return queryInterface.createTable(
-      'Articles', {
+      'articles', {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
@@ -53,6 +53,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Articles');
+    return queryInterface.dropTable('articles');
   }
 };

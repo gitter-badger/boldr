@@ -1,7 +1,7 @@
 module.exports = {
   up(queryInterface, DataTypes) {
     return queryInterface.createTable(
-      'Tags', {
+      'tags', {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
@@ -14,20 +14,12 @@ module.exports = {
         description: {
           type: DataTypes.STRING,
           allowNull: true
-        },
-        createdAt: {
-          allowNull: false,
-          type: DataTypes.DATE
-        },
-        updatedAt: {
-          allowNull: false,
-          type: DataTypes.DATE
         }
       }
     );
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Tags');
+    return queryInterface.dropTable('tags');
   }
 };

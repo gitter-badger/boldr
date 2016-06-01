@@ -1,9 +1,8 @@
 import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
-
 module.exports = (sequelize, DataTypes) => {
-  const Tag = sequelize.define('Tag', {
+  const Tag = sequelize.define('tags', {
     tagname: {
       type: DataTypes.TEXT
     },
@@ -11,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     }
   }, {
-    timestamps: true,
+    timestamps: false,
+    tableName: 'tags',
     classMethods: {
       associate(models) {
         Tag.belongsToMany(models.Article,

@@ -1,9 +1,8 @@
 import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
-
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('users', {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -50,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   }, {
-    timestamps: false,
-
+    timestamps: true,
+    tableName: 'users',
     classMethods: {
       associate(models) {
         User.hasMany(models.Article, {

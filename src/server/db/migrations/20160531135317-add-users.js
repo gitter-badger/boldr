@@ -1,7 +1,7 @@
 module.exports = {
   up(queryInterface, DataTypes) {
     return queryInterface.createTable(
-      'Users', {
+      'users', {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
@@ -47,7 +47,7 @@ module.exports = {
       }
     ).then(() =>
       queryInterface.addIndex(
-        'Users',
+        'users',
         [DataTypes.fn('lower', DataTypes.col('email'))],
         {
           indexName: 'users_email',
@@ -58,6 +58,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('users');
   }
 };

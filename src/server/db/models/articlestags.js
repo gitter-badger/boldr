@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 
 module.exports = (sequelize, DataTypes) => {
-  const ArticlesTags = sequelize.define('ArticlesTags', {
+  const ArticlesTags = sequelize.define('articlesTags', {
     tagId: {
       type: DataTypes.INTEGER
     },
@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     }
   }, {
-    timestamps: true
+    timestamps: false,
+    tableName: 'articlesTags'
   });
 
   return ArticlesTags;

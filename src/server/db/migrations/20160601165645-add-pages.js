@@ -1,24 +1,21 @@
 module.exports = {
   up(queryInterface, DataTypes) {
     return queryInterface.createTable(
-      'articlesTags', {
+      'pages', {
         id: {
           type: DataTypes.INTEGER,
-          allowNull: false,
           primaryKey: true,
           autoIncrement: true
         },
-        tagId: {
-          type: DataTypes.INTEGER
-        },
-        articleId: {
-          type: DataTypes.INTEGER
+        name: {
+          type: DataTypes.STRING,
+          allowNull: false
         }
       }
     );
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('articlesTags');
+    return queryInterface.dropTable('pages');
   }
 };
