@@ -32,9 +32,9 @@ module.exports = {
         authorId: {
           type: DataTypes.INTEGER
         },
-        isDraft: {
-          type: DataTypes.BOOLEAN,
-          defaultValue: true
+        status: {
+          type: DataTypes.ENUM('published', 'draft', 'archived'),
+          allowNull: false
         },
         views: {
           type: DataTypes.INTEGER,

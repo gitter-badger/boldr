@@ -45,20 +45,7 @@ const handleRender = ctx => {
       _ctx.status = 302;
       _ctx.redirect(`${redirectLocation.pathname}${redirectLocation.search}`);
     } else if (renderProps) {
-      const blueIsh = '#272734';
-      const pinkish = '#DD144D';
-      const muiTheme = getMuiTheme({
-        palette: {
-          primary1Color: blueIsh,
-          accent1Color: pinkish,
-          primary3Color: cyanA400
-        }
-      }, {
-        avatar: {
-          borderColor: null
-        },
-        userAgent: ctx.headers['user-agent']
-      });
+      const muiTheme = getMuiTheme({ userAgent: ctx.headers['user-agent'] });
       const component = (
         <Provider store={store}>
         <MuiThemeProvider muiTheme={ muiTheme }>
