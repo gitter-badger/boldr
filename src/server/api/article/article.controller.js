@@ -36,7 +36,7 @@ export const getAllArticles = async (ctx) => {
  * @param {String}  content        the article body
  * @param {String}  featureImage   an image to go along with the article
  * @param {Number}  authorId       the userId associated with the creator of the article
- * @param {Boolean} isDraft        whether or not the article is published
+ * @param {ENUM} status        whether or not the article is published
  * @param {Date}    createdAt      the time the article was saved.
  * @return {Object}                the article object
  */
@@ -48,7 +48,7 @@ export const createArticle = async (ctx, next) => {
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
     authorId: ctx.state.user.id,
-    isDraft: ctx.request.body.isDraft,
+    status: ctx.request.body.status,
     tags: ctx.request.body.tags
   };
   // Split the ctx.request.body.tags at each , as a tag
@@ -63,7 +63,7 @@ export const createArticle = async (ctx, next) => {
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
     authorId: ctx.state.user.id,
-    isDraft: ctx.request.body.isDraft
+    status: ctx.request.body.status
   };
 
   try {

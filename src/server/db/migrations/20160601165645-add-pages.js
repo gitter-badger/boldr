@@ -26,6 +26,12 @@ module.exports = {
         showInMenu: {
           type: DataTypes.BOOLEAN,
           allowNull: false
+        },
+        createdAt: {
+          type: DataTypes.DATE
+        },
+        updatedAt: {
+          type: DataTypes.DATE
         }
       }
     );

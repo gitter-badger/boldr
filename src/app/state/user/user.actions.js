@@ -116,6 +116,7 @@ export function manualLogin(data) {
       });
   };
 }
+
 function signUpError(message) {
   return {
     type: SIGNUP_ERROR_USER,

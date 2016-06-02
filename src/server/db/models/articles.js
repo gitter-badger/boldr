@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     authorId: {
       type: DataTypes.INTEGER
     },
-    isDraft: {
-      type: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.ENUM('published', 'archived', 'draft'),
       defaultValue: true
     },
     views: {

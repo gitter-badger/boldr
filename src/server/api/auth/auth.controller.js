@@ -39,12 +39,13 @@ export const registerUser = async ctx => {
     ctx.body = 'Account with this email address already exists!';
   }
   try {
-    user.save()
+    const newUser = await user.save()
       .then((user) => {
         const verificationToken = generateVerifyCode();
         sendVerifyEmail(user.email, verificationToken);
-        return ctx.created(user);
       });
+    ctx.status = 201;
+    ctx.body = user;
   } catch (err) {
     ctx.status = 500;
     ctx.body = 'Unable to register user.';

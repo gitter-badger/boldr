@@ -53,6 +53,7 @@ const handleRender = ctx => {
           </MuiThemeProvider>
         </Provider>
       );
+      console.log(ctx.state.user)
       // Send the rendered page back to the client
       _ctx.type = 'html';
       _ctx.status = 200;

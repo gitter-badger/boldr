@@ -7,6 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import promiseMiddleware from 'redux-promise';
+
 import rootReducer from 'app/state/index';
 
 /**

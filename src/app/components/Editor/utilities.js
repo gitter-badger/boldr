@@ -18,15 +18,6 @@ export const HandleLinkSpan = (props) => {
   const href = props.children[0].props.text; // eslint-disable-line
   return <a href={ href }>{ props.children }</a>; // eslint-disable-line
 };
-const HANDLE_LINK = /http:\/\/(?:\[[^\]]+\]|\S+)/g;
-export function handleLink(contentBlock, callback) {
-  findWithRegex(HANDLE_LINK, contentBlock, callback);
-}
-
-export const HandleLinkSpan = (props) => {
-  const href = props.children[0].props.text; // eslint-disable-line
-  return <a href={ href }>{ props.children }</a>; // eslint-disable-line
-};
 
 export function findWithRegex(regex, contentBlock, callback) {
   const text = contentBlock.getText();
