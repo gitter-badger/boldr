@@ -1,5 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
-import r from '../db';
+import Models from '../db/models';
+const User = Models.User;
 const COOKIE_NAME = 'koa.sid';
 
 function getExpirationDate() {
@@ -53,7 +54,7 @@ export async function requireAuthentication(ctx, next) {
 
 export async function fetchAuthenticatedUserData(ctx, next) {
   if (ctx.isAuthenticated()) {
-    const user = await r.table('users').get(ctx.req.user.id);
+    const user = await User.findById(ctx.req.user.id);
     ctx.req.user = user;
   }
 

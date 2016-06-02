@@ -50,7 +50,7 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-@connect(state => ({ boldr: state.boldr, auth: state.auth }))
+@connect(state => ({ boldr: state.boldr, user: state.user }))
 class AppDrawer extends React.Component {// eslint-disable-line
 
   handleToggle = () => {
@@ -58,7 +58,7 @@ class AppDrawer extends React.Component {// eslint-disable-line
   }
 
   render() {
-    const { boldr, dispatch, auth } = this.props;
+    const { boldr, dispatch, user } = this.props;
     return (
       <Drawer onBlur={ this.handleToggle } width={ 240 } open={ boldr.isSideBarOpen } docked={ false }
         onRequestChange={ open => { this.handleToggle(); } }
@@ -70,7 +70,7 @@ class AppDrawer extends React.Component {// eslint-disable-line
 
           <ListItem primaryText="Home" value={ 1 } />
           <ListItem primaryText="Blog" value={ 2 } />
-          { this.props.auth.isAuthenticated ?
+          { this.props.user.isAuthenticated ?
           <ListItem primaryText="Dashboard" value={ 3 }
             initiallyOpen={ false }
             primaryTogglesNestedList

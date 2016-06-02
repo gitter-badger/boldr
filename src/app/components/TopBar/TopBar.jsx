@@ -49,7 +49,7 @@ class TopBar extends React.Component {
                 anchorOrigin={ { horizontal: 'right', vertical: 'top' } }
               >
               {
-                this.props.auth.isAuthenticated ?
+                this.props.user.isAuthenticated ?
                   <MenuItem primaryText="Sign out" /> :
                   <div>
                     <MenuItem onTouchTap={ this.handleClickRegister } primaryText="Register" />
@@ -68,13 +68,13 @@ class TopBar extends React.Component {
 TopBar.propTypes = {
   dispatch: React.PropTypes.func,
   handleToggle: React.PropTypes.func,
-  auth: React.PropTypes.object
+  user: React.PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
     boldr: state.boldr,
-    auth: state.auth
+    user: state.user
   };
 };
 

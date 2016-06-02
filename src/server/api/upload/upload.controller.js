@@ -34,6 +34,28 @@ const debug = _debug('upload');
 //     cb(null, true);
 //   }
 // };
+
+/*
+saveAttachments: Promise.method(function(r, attachments) {
+  var arrayOfAttachments = [];
+  return Promise.map(attachments, function(attachment) {
+    if (typeof attachment.content !== 'undefined') {
+      delete attachment.content; // We don't want to store the content in the database
+    }
+    if (typeof attachment.stream !== 'undefined') {
+      delete attachment.stream; // We don't want to store unreadable stream
+    }
+    return self
+    .insertAttachment(r, attachment)
+    .then(function(attachmentId) {
+      return arrayOfAttachments.push(attachmentId);
+    })
+  }, { concurrency: 3 })
+  .then(function() {
+    return arrayOfAttachments;
+  })
+})
+ */
 // This uploads locally
 const storage = multer.diskStorage({
   destination(ctx, file, cb) {

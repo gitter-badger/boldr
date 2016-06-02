@@ -1,9 +1,12 @@
 import _debug from 'debug';
 import slug from 'slugg';
-import r from 'server/db';
+import Models from '../../db/models';
+const Article = Models.Article;
+const User = Models.User;
+const Tag = Models.Tag;
 const debug = _debug('boldr:article:controller');
 debug('init');
-
+const MAX_TAGS = 15;
 /**
  * Gets all articles
  * @method getAllArticles
@@ -12,11 +15,15 @@ debug('init');
  */
 export const getAllArticles = async (ctx) => {
   const articles =
-  await r.table('articles')
-  .eqJoin('authorId', r.table('users'))// returns left and right joins
-  .without('password')
-  .zip()// zip combines the two tables into one on request.
-  .run();
+  await Article.findAll({
+    include: [{
+      model: User,
+      attributes: ['id', 'firstName', 'lastName', 'email']
+    }, {
+      model: Tag,
+      attributes: ['tagname']
+    }]
+  });
   return ctx.ok(articles);
 };
 
@@ -34,22 +41,47 @@ export const getAllArticles = async (ctx) => {
  * @return {Object}                the article object
  */
 export const createArticle = async (ctx, next) => {
-  const article = {
+  const body = {
     title: ctx.request.body.title,
     slug: slug(ctx.request.body.slug),
     markup: ctx.request.body.markup,
     content: ctx.request.body.content,
     featureImage: ctx.request.body.featureImage,
-    authorId: ctx.state.user.userId,
+    authorId: ctx.state.user.id,
     isDraft: ctx.request.body.isDraft,
-    createdAt: r.now()
+    tags: ctx.request.body.tags
   };
-  let query = null;
+  // Split the ctx.request.body.tags at each , as a tag
+  if (ctx.request.body.tags) {
+    ctx.request.body.tags = ctx.request.body.tags.split(',', MAX_TAGS).map(tag => tag.substr(0, 15));
+  }
+
+  const articleFields = {
+    title: ctx.request.body.title,
+    slug: slug(ctx.request.body.slug),
+    markup: ctx.request.body.markup,
+    content: ctx.request.body.content,
+    featureImage: ctx.request.body.featureImage,
+    authorId: ctx.state.user.id,
+    isDraft: ctx.request.body.isDraft
+  };
 
   try {
-    query = r.table('articles').insert(article);
-    const result = await query.run();
-    return ctx.created(result);
+    // Creates an article with all fields except for tags
+    const article = await Article.create(articleFields);
+    // creates a new "Tag" for every tag in the ctx.request.body.tags
+    for (let i = 0; i < ctx.request.body.tags.length; i++) {
+      const newTag = await Tag.create({ tagname: ctx.request.body.tags[i] });
+      // Adds articleId of the previously created Article and
+      // adds the tagId of each created Tag to the ArticlesTags table.
+      await article.addTag(newTag);
+    }
+    // Performs a quick get to save an api req.
+    if (ctx.request.body.tags) {
+      article.Tags = ctx.request.body.tags.map(tag => ({ tagname: tag }));
+    }
+    // Send the article and 201.
+    return ctx.created(article);
   } catch (err) {
     return ctx.error(`Something went terribly wrong creating your article. Try again. ${err}`);
   }
@@ -62,7 +94,15 @@ export const createArticle = async (ctx, next) => {
  * @return {Object}     the article.
  */
 export const showArticle = async (ctx) => {
-  const article = await r.table('articles').get(ctx.params.id).run();
+  const article = await Article.findById(ctx.params.id, {
+    include: [{
+      model: User,
+      attributes: ['id', 'firstName', 'lastName', 'email']
+    }, {
+      model: Tag,
+      attributes: ['tagname']
+    }]
+  });
   return ctx.ok(article);
 };
 
@@ -73,12 +113,15 @@ export const showArticle = async (ctx) => {
  * @return {Object}        The article
  */
 export const getArticleBySlug = async (ctx, next) => {
-  const article = await r.table('articles')
-  .filter({ slug: ctx.params.slug })
-  .eqJoin('authorId', r.table('users'))// returns left and right joins
-  .zip()// zip combines the two tables into one on request.
-  .without('password')
-  .run();
+  const article = await Article.findOne({ where: { slug: ctx.params.slug },
+    include: [{
+      model: User,
+      attributes: ['id', 'firstName', 'lastName', 'email']
+    }, {
+      model: Tag,
+      attributes: ['tagname']
+    }] });
+
   return ctx.ok(article);
 };
 
@@ -89,9 +132,15 @@ export const getArticleBySlug = async (ctx, next) => {
  * @return {Array}        Articles
  */
 export const getArticleByAuthor = async (ctx, next) => {
-  const articles = await r.table('articles')
-  .getAll(ctx.params.userId, { index: 'authorId' })
-  .run();
+  const articles = await Article.findAll({ where: { authorId: ctx.params.userId },
+    include: [{
+      model: User,
+      attributes: ['id', 'firstName', 'lastName', 'email']
+    }, {
+      model: Tag,
+      attributes: ['tagname']
+    }]
+  });
   return ctx.ok(articles);
 };
 
@@ -102,10 +151,7 @@ export const getArticleByAuthor = async (ctx, next) => {
  * @return {Object}     Updated article.
  */
 export const update = async (ctx) => {
-  const result = await r.table('articles')
-    .get(ctx.params.id)
-    .update(ctx.request.body)
-    .run();
+  const result = await Article.update(ctx.request.body, { where: { id: ctx.params.id } });
   return ctx.ok(result);
 };
 
@@ -114,11 +160,12 @@ export const update = async (ctx) => {
  * @method destroy
  * @param  {String} ctx the articleId passed as a param
  * @return {Number}     should return 204.
+ *        if(!req.user.isAdmin()){
+            delete req.body.enabled;
+        }
  */
 export const destroy = async (ctx) => {
-  const result = await r.table('articles')
-    .get(ctx.params.id)
-    .delete()
-    .run();
+  const found = await Article.findById(ctx.params.id);
+  found.destroy();
   ctx.status = 204;
 };

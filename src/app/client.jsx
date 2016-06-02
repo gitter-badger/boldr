@@ -11,8 +11,8 @@ import cookie from 'react-cookie';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
+import { checkTokenValidity } from 'app/state/user/user.actions';
 
-import { checkAuth, checkTokenValidity } from 'app/state/auth/auth.actions';
 import preRenderMiddleware from 'app/core/util/preRenderMiddleware';
 import createRoutes from 'app/core/routes';
 import configureStore from 'app/core/store';

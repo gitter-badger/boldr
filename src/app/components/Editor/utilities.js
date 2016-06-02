@@ -7,22 +7,16 @@ export const articleTypes = {
   FULL: 'full',
   EDIT: 'edit'
 };
-export const styleMap = {
-  CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2
-  },
-  STRIKETHROUGH: {
-    textDecoration: 'line-through'
-  },
-  LINK: {
-    color: '#8bc34a'
-  },
-  DESCRIPTION: {
-    color: '#999'
-  }
+// Custom overrides for "code" style.
+
+const HANDLE_LINK = /http:\/\/(?:\[[^\]]+\]|\S+)/g;
+export function handleLink(contentBlock, callback) {
+  findWithRegex(HANDLE_LINK, contentBlock, callback);
+}
+
+export const HandleLinkSpan = (props) => {
+  const href = props.children[0].props.text; // eslint-disable-line
+  return <a href={ href }>{ props.children }</a>; // eslint-disable-line
 };
 const HANDLE_LINK = /http:\/\/(?:\[[^\]]+\]|\S+)/g;
 export function handleLink(contentBlock, callback) {

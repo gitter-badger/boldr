@@ -18,9 +18,9 @@ import IO from 'socket.io';
 import BoldrMiddleware from './middleware';
 import config from 'config';
 import { handleError } from './middleware/handleError';
-// import rethinkdbSocket from './lib/socket/rethinkdbSocket';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
+import connector from './db/connector';
 // Load environment variables.
 dotenv.config();
 const debug = _debug('boldr:server:dev');
@@ -35,7 +35,7 @@ app.name = 'Boldr';
 app.proxy = true;
 app.env = process.env.NODE_ENV;
 app.keys = [config.JWT_SECRET];
-
+connector();
 // allow both legacy and modern middleware
 // https://www.npmjs.com/package/koa-convert
 const use = app.use;
@@ -46,8 +46,9 @@ app.use = x => use.call(app, convert(x));
  * and context for Boldr.
  */
 (async() => {
-  await BoldrMiddleware.init(app);
   app.use(handleError);
+  await BoldrMiddleware.init(app);
+
   /**
    * Loads the development specific functions
    * @param  {Boolean} __DEV__ Global variable for development environment
@@ -87,8 +88,6 @@ function init() {
   server.listen(SERVER_PORT, () => {
     logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
   });
-
-  // rethinkdbSocket(server);
 
   server.on('close', () => {
     process.on('SIGINT', exitHandler);

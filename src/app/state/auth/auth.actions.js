@@ -1,4 +1,4 @@
-import request from 'axios';
+import axios from 'axios';
 import { push } from 'react-router-redux';
 import { partialPopulateUser } from '../user/user.actions';
 import * as types from './auth.constants';
@@ -95,7 +95,7 @@ export function authLogin(data) {
   return dispatch => {
     dispatch(beginLogin());
 
-    return makeAuthRequest('post', data, '/api/v1/auth/login')
+    return axios.post('/api/v1/auth/login', data)
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response));
@@ -115,7 +115,7 @@ export function authRegister(data) {
   return dispatch => {
     dispatch(beginSignUp());
 
-    return makeAuthRequest('post', data, '/api/v1/auth/register')
+    return axios.post('/api/v1/auth/register', data)
       .then(response => {
         if (response.status === 201) {
           dispatch(signUpSuccess(response));
@@ -134,7 +134,7 @@ export function logout() {
   return dispatch => {
     dispatch(beginLogout());
 
-    return makeAuthRequest('post', null, '/logout')
+    return axios.post('/api/v1/auth/logout', null)
       .then(response => {
         if (response.status === 200) {
           dispatch(logoutSuccess());
@@ -168,16 +168,15 @@ export function checkTokenValidity() {
     const token = localStorage.getItem('boldr:jwt');
     if (!token || token === '') { return; }
     dispatch(checkTokenValidityRequest());
-    request.get(`${API_URL}/auth/check`, {
+    axios.get(`${API_URL}/auth/check`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      dispatch(partialPopulateUser(response));
       dispatch(checkTokenValiditySuccess(response));
     })
     .catch(() => {
       dispatch(checkTokenValidityFailure('Token is invalid'));
-      cookie.remove('boldr:jwt');
+      localStorage.removeItem('boldr:jwt');
     });
   };
 }
@@ -189,7 +188,7 @@ export function checkAuth() {
 }
 export function meFromToken(response) {
   // check if the token is still valid, if so, get user from the server
-  request.get('/api/v1/auth/check');
+  axios.get('/api/v1/auth/check');
 
   return {
     type: types.ME_FROM_TOKEN,

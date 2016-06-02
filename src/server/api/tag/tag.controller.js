@@ -1,13 +1,10 @@
-import _debug from 'debug';
-import r from 'server/db';
-import Joi from 'joi';
-import tagSchema from './tag.schema';
-
-const debug = _debug('boldr:tag:controller');
-debug('init');
+import Models from '../../db/models';
+const Article = Models.Article;
+const User = Models.User;
+const Tag = Models.Tag;
 
 export async function getAllTags(ctx) {
-  const tags = await r.table('tags').run();
+  const tags = await Tag.findAll({});
   return ctx.ok(tags);
 }
 
@@ -19,42 +16,13 @@ export async function getAllTags(ctx) {
  */
 export const createTag = async (ctx, next) => {
   const tag = {
-    name: ctx.request.body.name,
+    tagname: ctx.request.body.tagname,
     description: ctx.request.body.description
   };
   try {
-    // validate the tag (ctx.request.body) against the tagSchema defined
-    const parsed = Joi.validate(tag, tagSchema);
-    if (parsed.error !== null) {
-      throw new Error(parsed.error.details[0].message);
-    }
-    await r.table('tags').insert(parsed.value).run();
-    return ctx.created(parsed.value);
+    const newTag = await Tag.create(tag);
+    return ctx.created(newTag);
   } catch (err) {
     return ctx.error('There was an error!');
   }
 };
-
-/**
- * Performs a lookup of a user by their username.
- * @param  {[type]}   ctx  context of the request
- * @param  {Function} next continue to the next middleware
- * @return {Object}        the User object.
- */
-// export async function getPostsByAuthor(ctx, next) {
-//   try {
-//     const user = await User.where('username', ctx.params.username).fetch({
-//       columns: ['display_name', 'username', 'id', 'avatar', 'email']
-//     });
-
-//     await Post.query('where', 'author_id', user.id).fetchAll()
-//       .then((posts) => {
-//         if (posts) {
-//           ctx.status = 200;
-//           ctx.body = posts;
-//         }
-//       });
-//   } catch (err) {
-//     ctx.body = err;
-//   }
-// }

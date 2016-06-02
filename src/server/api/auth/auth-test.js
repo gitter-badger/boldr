@@ -11,7 +11,6 @@ describe('API: v1/auth', () => {
   it('should register an account with the provided data.', (done) => {
     const accountData = {
       email: 'test@boldr.io',
-      username: 'boldr',
       password: 'boldr123',
       location: 'boldr',
       avatar: 'http://placehold.it/250x250',

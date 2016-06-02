@@ -1,32 +1,23 @@
-import _debug from 'debug';
-import r from 'server/db';
-
-import logger from '../../utils/logger';
 import jwt from 'jsonwebtoken';
+import Models from '../../db/models';
+import logger from '../../utils/logger';
 import config, { paths } from '../../../../tools/config';
 
-const debug = _debug('boldr:user:controller');
-debug('init');
+const User = Models.User;
 
 /**
  * Returns a listing of all the user users in the database.
- * r.db('boldr_dev').table('users').eqJoin('roleId', r.db('boldr_dev').table('roles'))
- * .without([{left: ['password']}, {right: 'roleId'}]).zip()
  * @method getUsers
  * @param  {[type]} ctx [description]
  * @return {[type]}     [description]
  */
 export async function getAll(ctx) {
-  const users = await r.table('users')
-  .without('password')
-  // .eqJoin('roleId', r.table('roles'))
-  // .zip()
-  .run((err, user) => {
-    if (err) {
-      throw err;
-    }
-    return ctx.ok(user);
-  });
+  try {
+    const users = await User.findAll({});
+    return ctx.ok(users);
+  } catch (err) {
+    return ctx.badRequest('Users dont exist?');
+  }
 }
 
 /**
@@ -37,10 +28,7 @@ export async function getAll(ctx) {
  */
 export async function getId(ctx, next) {
   try {
-    const user = await r.table('users')
-      .get(ctx.params.id)
-      .without('password')
-      .run();
+    const user = await User.findById(ctx.params.id);
     return ctx.ok(user);
   } catch (err) {
     return ctx.badRequest('User is Not Found');
@@ -48,40 +36,14 @@ export async function getId(ctx, next) {
 }
 
 export async function update(ctx) {
-  const result = await r.table('users')
-    .get(ctx.params.id)
-    .update(ctx.request.body)
-    .run();
+  const query = { id: ctx.params.id };
+  const result = await User.update(ctx.request.body, { where: query });
   return ctx.ok(result);
 }
 
 export async function destroy(ctx) {
-  const result = await r.table('users')
-    .get(ctx.params.id)
-    .delete()
-    .run();
+  const result = await User.findById(ctx.params.id);
+  result.destroy();
 
   return ctx.ok();
-}
-
-export async function addRoleToUser(ctx) {
-  const userId = ctx.params.id;
-  try {
-    r
-    .table('users')
-    .get(userId)
-    .update({ roleId: ctx.request.body.roleId })
-    .run()
-    .then(() => {
-      return r
-       .table('users')
-       .get(userId)
-       .run()
-       .error(err => err);
-    })
-    .error(err => err);
-    return ctx.ok();
-  } catch (error) {
-    return ctx.error('Error adding the role to the requested user.');
-  }
 }
