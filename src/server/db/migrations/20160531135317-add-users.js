@@ -43,6 +43,12 @@ module.exports = {
         },
         resetPasswordExpires: {
           type: DataTypes.DATE
+        },
+        createdAt: {
+          type: DataTypes.DATE
+        },
+        updatedAt: {
+          type: DataTypes.DATE
         }
       }
     ).then(() =>

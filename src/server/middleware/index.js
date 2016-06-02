@@ -13,7 +13,7 @@ import handleError from './handleError';
 import bodyParser from './bodyParser';
 import session from './session';
 import jwt from './jwt';
-
+import loggedIn from './loggedIn';
 /**
  * Boldr middleware bootstraps the majority of middleware for the app.
  * @class BoldrMiddleware
@@ -33,5 +33,6 @@ export default class BoldrMiddleware {
       .use(helmet());
     application.use(passport.initialize());
     application.use(passport.session());
+    application.use(loggedIn());
   }
 }
