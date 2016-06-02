@@ -1,26 +1,25 @@
-import r from 'server/db';
-import _debug from 'debug';
-const debug = _debug('boldr:settings:controller');
-debug('init');
+import slug from 'slugg';
+import Models from '../../db/models';
+const Settings = Models.Settings;
 
 export async function getAllSettings(ctx) {
-  const settings = await r.table('settings').run();
+  const settings = await Settings.findAll({});
   return ctx.ok(settings);
 }
 /**
  * @description
- * creates a new role in the db.
- * @route /api/v1/roles
+ * creates a new setting in the db.
+ * @route /api/v1/settings
  * @method POST
  */
-export const createSetting = async (ctx, next) => {
+export const createSettings = async (ctx, next) => {
   const setting = {
     name: ctx.request.body.name,
     description: ctx.request.body.description
   };
   try {
-    await r.table('settings').insert(setting).run();
-    return ctx.created(setting);
+    const newSetting = await Settings.create(setting);
+    return ctx.created(newSetting);
   } catch (err) {
     return ctx.error('There was an error!');
   }
@@ -33,28 +32,20 @@ export const createSetting = async (ctx, next) => {
  */
 export async function getId(ctx, next) {
   try {
-    const setting = await r.table('settings')
-      .get(ctx.params.id)
-      .run();
+    const setting = await Settings.findById(ctx.params.id);
     return ctx.ok(setting);
   } catch (err) {
-    return ctx.badRequest('Role not available.');
+    return ctx.badRequest('Collection not available.');
   }
 }
 
 export async function update(ctx) {
-  const result = await r.table('settings')
-    .get(ctx.params.id)
-    .update(ctx.request.body)
-    .run();
+  const result = await Settings.update(ctx.request.body, { where: { id: ctx.params.id } });
   return ctx.ok(result);
 }
 
 export async function destroy(ctx) {
-  const result = await r.table('settings')
-    .get(ctx.params.id)
-    .delete()
-    .run();
-
-  return ctx.ok();
+  const found = await Settings.findById(ctx.params.id);
+  found.destroy();
+  ctx.status = 204;
 }

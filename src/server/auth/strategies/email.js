@@ -1,4 +1,3 @@
-import r from '../../db';
 import { Strategy as CustomStrategy } from 'passport-custom';
 import bcrypt from 'bcryptjs';
 import Models from '../../db/models';

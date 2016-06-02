@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
   const Settings = sequelize.define('Settings', {
-    tagname: {
+    name: {
       type: DataTypes.TEXT
     },
     description: {

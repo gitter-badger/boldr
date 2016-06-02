@@ -20,7 +20,6 @@ import config from 'config';
 import { handleError } from './middleware/handleError';
 import routers from './api';
 import { Problem, logger, handleRender } from './utils';
-import initialize from './db/initialize';
 import connector from './db/connector';
 // Load environment variables.
 dotenv.config();
@@ -90,8 +89,6 @@ function init() {
     logger.info(`Doing Boldr things on port ${SERVER_PORT}`);
   });
 
-  // rethinkdbSocket(server);
-
   server.on('close', () => {
     process.on('SIGINT', exitHandler);
     logger.info('Keep on, keepin on. Boldr out.');
@@ -106,6 +103,6 @@ function init() {
   }
 }
 
-initialize().then(init());
+init();
 
 export { app as default, server };

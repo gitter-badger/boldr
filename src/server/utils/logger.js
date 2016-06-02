@@ -61,6 +61,7 @@ const errorConsole = new (winston.transports.Console)({
   name: 'error-console',
   level: 'error',
   handleExceptions: true,
+  json: false,
   prettyPrint: true,
   formatter,
   colorize: true
@@ -78,6 +79,7 @@ const debugFile = new (winston.transports.File)({
 const debugConsole = new (winston.transports.Console)({
   level: 'debug',
   prettyPrint: true,
+  json: false,
   handleExceptions: true,
   formatter,
   colorize: true

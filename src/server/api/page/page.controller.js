@@ -1,16 +1,14 @@
-import r from 'server/db';
-import _debug from 'debug';
-const debug = _debug('boldr:pages:controller');
-debug('init');
+import Models from '../../db/models';
+const Page = Models.Page;
 
 export async function getAllPages(ctx) {
-  const pages = await r.table('pages').run();
+  const pages = await Page.findAll({});
   return ctx.ok(pages);
 }
 /**
  * @description
- * creates a new role in the db.
- * @route /api/v1/roles
+ * creates a new page in the db.
+ * @route /api/v1/pages
  * @method POST
  */
 export const createPage = async (ctx, next) => {
@@ -19,23 +17,21 @@ export const createPage = async (ctx, next) => {
     description: ctx.request.body.description
   };
   try {
-    await r.table('pages').insert(page).run();
+    await Page.create(page);
     return ctx.created(page);
   } catch (err) {
     return ctx.error('There was an error!');
   }
 };
 /**
- * Performs a lookup of a role by its id.
+ * Performs a lookup of a page by its id.
  * @param  {[type]}   ctx  context of the request
  * @param  {Function} next continue to the next middleware
- * @return {Object}        the role object.
+ * @return {Object}        the page object.
  */
 export async function getId(ctx, next) {
   try {
-    const page = await r.table('pages')
-      .get(ctx.params.id)
-      .run();
+    const page = await Page.findById(ctx.params.id);
     return ctx.ok(page);
   } catch (err) {
     return ctx.badRequest('Page not available.');
@@ -43,18 +39,12 @@ export async function getId(ctx, next) {
 }
 
 export async function update(ctx) {
-  const result = await r.table('pages')
-    .get(ctx.params.id)
-    .update(ctx.request.body)
-    .run();
+  const result = await Page.update(ctx.request.body, { where: { id: ctx.params.id } });
   return ctx.ok(result);
 }
 
 export async function destroy(ctx) {
-  const result = await r.table('pages')
-    .get(ctx.params.id)
-    .delete()
-    .run();
-
-  return ctx.ok();
+  const found = await Page.findById(ctx.params.id);
+  found.destroy();
+  ctx.status = 204;
 }

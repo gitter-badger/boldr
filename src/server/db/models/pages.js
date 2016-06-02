@@ -2,12 +2,26 @@ import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
-  const Page = sequelize.define('pages', {
-    tagname: {
-      type: DataTypes.TEXT
+  const Page = sequelize.define('Pages', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    description: {
-      type: DataTypes.TEXT
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    content: {
+      type: DataTypes.JSONB,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.ENUM('published', 'draft', 'archived'),
+      allowNull: false
+    },
+    showInMenu: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   }, {
     timestamps: false,

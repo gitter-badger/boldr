@@ -1,11 +1,7 @@
-import _debug from 'debug';
 import Models from '../../db/models';
 const Article = Models.Article;
 const User = Models.User;
 const Tag = Models.Tag;
-
-const debug = _debug('boldr:tag:controller');
-debug('init');
 
 export async function getAllTags(ctx) {
   const tags = await Tag.findAll({});

@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
-  const Menu = sequelize.define('menu', {
+  const Menu = sequelize.define('Menu', {
     tagname: {
       type: DataTypes.TEXT
     },

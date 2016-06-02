@@ -1,19 +1,11 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import r from 'server/db';
-import _debug from 'debug';
 import config, { paths } from 'config';
-import Joi from 'joi';
-import shortid from 'shortid';
 import logger from 'server/utils/logger';
-import userSchema from '../user/user.schema';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 import Models from '../../db/models';
 const User = Models.User;
 const saltRounds = 10;
-shortid.worker(process.pid % 16);
-const debug = _debug('boldr:auth:controller');
-debug('init');
 
 /**
  * @description

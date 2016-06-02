@@ -1,5 +1,4 @@
 import jsonwebtoken from 'jsonwebtoken';
-import r from '../db';
 import Models from '../db/models';
 const User = Models.User;
 const COOKIE_NAME = 'koa.sid';

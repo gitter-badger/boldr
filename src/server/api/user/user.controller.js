@@ -1,16 +1,12 @@
-import _debug from 'debug';
-import Models from '../../db/models';
 import jwt from 'jsonwebtoken';
+import Models from '../../db/models';
 import logger from '../../utils/logger';
 import config, { paths } from '../../../../tools/config';
+
 const User = Models.User;
-const debug = _debug('boldr:user:controller');
-debug('init');
 
 /**
  * Returns a listing of all the user users in the database.
- * r.db('boldr_dev').table('users').eqJoin('roleId', r.db('boldr_dev').table('roles'))
- * .without([{left: ['password']}, {right: 'roleId'}]).zip()
  * @method getUsers
  * @param  {[type]} ctx [description]
  * @return {[type]}     [description]

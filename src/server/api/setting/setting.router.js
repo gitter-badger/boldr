@@ -4,7 +4,7 @@ import * as controller from './setting.controller';
 const settingRouter = new Router({ prefix: '/api/v1/settings' });
 
 settingRouter
-  .post('/', controller.createSetting)
+  .post('/', controller.createSettings)
   .get('/', controller.getAllSettings)
   .get('/:id', controller.getId)
   .put('/:id', controller.update)

@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
-  const Article = sequelize.define('article', {
+  const Article = sequelize.define('Article', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
