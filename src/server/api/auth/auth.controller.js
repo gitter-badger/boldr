@@ -1,7 +1,7 @@
 import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config, { paths } from 'config';
-import logger from 'server/utils/logger';
+import logger from 'server/lib/logger';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 import Models from '../../db/models';
 const User = Models.User;
@@ -17,7 +17,6 @@ const saltRounds = 10;
 export const registerUser = async ctx => {
   const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
   const user = User.build({
-    // userId: shortid.generate(),
     email: ctx.request.body.email,
     username: ctx.request.body.username,
     password: hash,
@@ -98,7 +97,7 @@ export async function loginUser(ctx, next) {
  */
 export async function checkUser(ctx, next) {
   try {
-    const user = await User.findById(ctx.state.user.userId)
+    const user = await User.findById(ctx.state.user.id)
       .then((result) => {
         return ctx.ok(result);
       });

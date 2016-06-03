@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import Models from '../../db/models';
-import logger from '../../utils/logger';
+import logger from '../../lib/logger';
 import config, { paths } from '../../../../tools/config';
 
 const User = Models.User;

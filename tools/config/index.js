@@ -41,9 +41,13 @@ const config = {
     'react-cookie',
     'redux-form'
   ],
-  RDB_HOST: process.env.RDB_HOST || 'localhost',
-  RDB_PORT: process.env.RDB_PORT || 28015,
-  RDB_DB: process.env.RDB_DB || 'boldr_dev',
+  PG_USER: 'postgres',
+  PG_HOST: 'localhost',
+  PG_PORT: 5432,
+  PG_DB_NAME: 'boldr',
+  REDIS_HOST: 'localhost',
+  REDIS_PORT: 6379,
+
   logger: {
     console: true,
     level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'

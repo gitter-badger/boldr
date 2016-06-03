@@ -1,5 +1,4 @@
-import logger from '../utils/logger';
-import errors from '../lib/errors';
+import { errors, logger } from '../lib';
 
 export const handleError = async (ctx, next) => {
   try {

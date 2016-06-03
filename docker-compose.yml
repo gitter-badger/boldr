@@ -1,15 +1,6 @@
 version: '2'
 
 services:
-  datastore:
-    image: busybox
-    container_name: ${PROJECT_ID}-storage
-    tty: true
-    stdin_open: true
-    volumes:
-      - "./tools/data:/data:rw"
-      - "./tools/data:/data/rethinkdb_data:rw"
-      - "./docs/logs/rethinkdb:/var/logs/rethinkdb:rw"
   dbstore:
     image: busybox
     container_name: ${PROJECT_ID}-dbstore
@@ -25,6 +16,7 @@ services:
       - "6379:6379"
     networks:
       - boldr
+
   postgres:
     image: postgres:9.5
     volumes_from:
@@ -35,21 +27,11 @@ services:
       - boldr
     depends_on:
       - dbstore
-  # boldr1:
-  #   build: ./
-  #   depends_on:
-  #       - db
-  #   ports:
-  #     - 3000:3000/tcp
-  #     - 5858:5858/tcp
-  #   networks:
-  #     - boldr
+
 networks:
   boldr:
     driver: bridge
 
 volumes:
-  datastore:
-    driver: local
   dbstore:
     driver: local

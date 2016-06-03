@@ -2,8 +2,6 @@ import webpack from 'webpack';
 import path from 'path';
 import _debug from 'debug';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
-import NpmInstallPlugin from 'npm-install-webpack-plugin';
-
 import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../config';
 import paths from '../config/paths';
@@ -102,11 +100,8 @@ const config = {
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
   plugins: [
-    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    // new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
-    // new NpmInstallPlugin({ save: true }),
     new webpack.DefinePlugin({
       __CLIENT__,
       __SERVER__,

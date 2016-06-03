@@ -2,7 +2,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
-
+import { API_BASE } from 'core/api';
 polyfill();
 
 export const SET_USER = '@@user/SET_USER';
@@ -29,7 +29,6 @@ export const CHECK_TOKEN_VALIDITY_REQUEST = '@@user/CHECK_TOKEN_VALIDITY_REQUEST
 export const TOKEN_VALID = '@@user/TOKEN_VALID';
 export const TOKEN_INVALID_OR_MISSING = '@@user/TOKEN_INVALID_OR_MISSING';
 
-const API_BASE = '/api/v1';
 export const USERS_ENDPOINT = `${API_BASE}/users`;
 
 export function partialPopulateUser() {
@@ -62,7 +61,7 @@ const failedToReceiveUsers = (data) => ({
 export function getUsersList(data) {
   return dispatch => {
     dispatch(requestUsers());
-    return axios.get('/api/v1/users', {
+    return axios.get(`${API_BASE}/users`, {
       timeout: 5000,
       responseType: 'json'
     })
