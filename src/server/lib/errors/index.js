@@ -1,41 +1,26 @@
-const inherits = require('util').inherits;
+import { STATUS_CODES } from 'http';
 
-const AppError = function AppError(message, extra) {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = this.constructor.name;
-  this.message = message;
-  this.extra = extra;
-};
-inherits(AppError, Error);
+export default () => {
+  return async (ctx, next) => {
+    try {
+      await next();
+    } catch (err) {
+      if (err.isBoom) {
+        ctx.body = err.output.payload;
+        ctx.status = err.output.statusCode;
 
-const HttpError = function HttpError(status, message, extra) {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = this.constructor.name;
-  this.status = status;
-  this.message = message;
-  this.extra = extra;
-};
-inherits(HttpError, AppError);
+        return;
+      }
+      ctx.app.emit('error', err, ctx);
+        // others
+      ctx.status = ctx.status || 500;
+      const message = err.message;
 
-const ServiceError = function ServiceError(message, extra) {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = this.constructor.name;
-  this.message = message;
-  this.extra = extra;
-};
-inherits(ServiceError, AppError);
-
-const ModelError = function ModelError(message, extra) {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = this.constructor.name;
-  this.message = message;
-  this.extra = extra;
-};
-inherits(ModelError, AppError);
-
-module.exports = {
-  AppError,
-  HttpError,
-  ServiceError,
-  ModelError
+      ctx.type = 'application/json';
+      ctx.body = {
+        code: STATUS_CODES[ctx.status],
+        message
+      };
+    }
+  };
 };
