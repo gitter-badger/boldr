@@ -100,11 +100,8 @@ const config = {
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
   plugins: [
-    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    // new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash].js'),
-    // new NpmInstallPlugin({ save: true }),
     new webpack.DefinePlugin({
       __CLIENT__,
       __SERVER__,

@@ -9,7 +9,8 @@ import * as boldrActions from 'app/state/boldr/boldr.actions';
 import TopBar from 'app/components/TopBar';
 import Loader from 'app/components/Loader';
 import { checkTokenValidity } from 'app/state/auth/auth.actions';
-
+import Helmet from 'react-helmet';
+import meta from '../../meta';
 import 'app/styles/app.scss';
 
 class CoreLayout extends Component {
@@ -25,6 +26,7 @@ class CoreLayout extends Component {
   render() {
     return (
           <div>
+           <Helmet {...meta.app.head}/>
           <TopBar handleToggle={ ::this.handleToggle } />
           <AppDrawer />
           { this.props.children }

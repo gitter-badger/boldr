@@ -1,7 +1,6 @@
 import util from 'util';
 import _ from 'lodash';
 import mailer from './mailer';
-import logger from './logger';
 import Problem from './problem';
 import { handleRender } from './renderReact';
 /**
@@ -31,30 +30,8 @@ function normalize(items) {
   }, {});
 }
 
-function group(items) {
-  return items.reduce((normalizedItems, item) => {
-    return {
-      left: [
-        ...normalizedItems['left'],// eslint-disable-line
-        item['left']// eslint-disable-line
-      ],
-      right: [
-        ...normalizedItems['right']// eslint-disable-line
-          .filter(rightItem => rightItem.id !== item['right'].id), // eslint-disable-line
-        item['right']// eslint-disable-line
-      ]
-    };
-  }, {
-    left: [],
-    right: []
-  });
-}
-
 function extractIds(arr) {
   return _.map(arr, _.property('id'));
 }
-const SOFT_DURABILITY = {
-  durability: 'soft'
-};
 
-export { Problem, handleRender, mailer, logger, clone, SOFT_DURABILITY, normalize, extractIds, group };
+export { Problem, handleRender, mailer, clone, normalize, extractIds };

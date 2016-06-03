@@ -9,11 +9,12 @@ import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 import configureStore from 'app/core/store';
 import createRoutes from 'app/core/routes';
 import Html from 'app/core/Html';
-
+import Helmet from 'react-helmet';
+const head = Helmet.rewind();
 const renderFullPage = (component, store) => {
   const assets = webpackIsomorphicTools.assets();
   // Render the component to a string
-  const html = renderToString(<Html assets={assets} component={component} store={store} />);
+  const html = renderToString(<Html head={ head } assets={ assets } component={ component } store={ store } />);
 
   return `<!doctype html>\n${html}`;
 };
@@ -53,7 +54,6 @@ const handleRender = ctx => {
           </MuiThemeProvider>
         </Provider>
       );
-      console.log(ctx.state.user)
       // Send the rendered page back to the client
       _ctx.type = 'html';
       _ctx.status = 200;
