@@ -16,7 +16,7 @@
   "author": "Steven Truesdell <steven@strues.io>",
   "scripts": {
     "clean:dist": "rm -rf static/dist",
-    "compile": "NODE_ENV=production babel-node ./node_modules/.bin/webpack --optimize-minimize --progress --config ./webpack/prod.config",
+    "compile": "NODE_ENV=production babel-node ./node_modules/.bin/webpack --optimize-minimize --progress --config ./tools/webpack/prod.config",
     "compile:server": "better-npm-run compile:server",
     "deploy": "npm run clean:dist && npm run compile && npm run prod",
     "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
@@ -64,7 +64,7 @@
     "draft-js": "^0.7.0",
     "draft-js-export-html": "^0.2.2",
     "es6-promise": "^3.2.1",
-    "fbjs": "^0.8.3",
+
     "fs-extra": "^0.30.0",
     "immutable": "^3.8.1",
     "import-dir": "0.0.1",

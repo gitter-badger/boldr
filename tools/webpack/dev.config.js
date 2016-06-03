@@ -2,8 +2,6 @@ import webpack from 'webpack';
 import path from 'path';
 import _debug from 'debug';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
-import NpmInstallPlugin from 'npm-install-webpack-plugin';
-
 import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../config';
 import paths from '../config/paths';

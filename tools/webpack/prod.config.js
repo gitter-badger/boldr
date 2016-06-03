@@ -4,12 +4,11 @@ import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 import isomorphicToolsConfig from './isomorphic.tools.config';
-import projectConfig, { paths } from '../config';
-
+import boldrCfg from '../config';
+import paths from '../config/paths';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:prod');
-const srcDir = paths('src');
-const nodeModulesDir = paths('nodeModules');
+
 const cssLoader = [
   'css?modules',
   'sourceMap',
@@ -23,23 +22,23 @@ const {
   __DEV__,
   __PROD__,
   __DEBUG__
-} = projectConfig;
+} = boldrCfg;
 
 debug('Create configuration.');
 const config = {
-  context: paths('base'),
-  devtool: 'source-ma',
+  context: paths.ROOT_DIR,
+  devtool: 'source-map',
   entry: {
-    app: paths('entryApp'),
+    app: boldrCfg.BLDR_ENTRY,
     vendors: VENDOR_DEPENDENCIES
   },
   output: {
-    path: paths('dist'),
+    path: paths.DIST_DIR,
     filename: '[name]-[hash].js',
     publicPath: '/dist/'
   },
   resolve: {
-    root: [srcDir],
+    root: [paths.srcDir],
     extensions: ['', '.js', '.jsx']
   },
   module: {
@@ -47,8 +46,8 @@ const config = {
       {
         test: /\.js[x]?$/,
         loader: 'babel',
-        exclude: [nodeModulesDir],
-        include: [srcDir],
+        exclude: [paths.NODE_MODULES_DIR],
+        include: [paths.SRC_DIR],
         query: {
           cacheDirectory: true
         }
@@ -59,7 +58,8 @@ const config = {
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('styles'),
-        loader: ExtractTextPlugin.extract('style', `${cssLoader}!postcss!sass?sourceMap`)
+        include: [paths.SRC_DIR],
+        loader: ExtractTextPlugin.extract('style', `${cssLoader}!postcss!sass`)
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
