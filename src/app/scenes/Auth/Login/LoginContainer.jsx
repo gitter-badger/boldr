@@ -1,51 +1,87 @@
-import LoginForm from './LoginForm';
-import Login from './Login';
-import { authLogin } from 'app/state/auth/auth.actions';
+import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import { bindActionCreators } from 'redux';
 
-function validate(values) {
-  const errors = {};
-  let hasErrors = false;
-  if (!values.email || values.email.trim() === '') {
-    errors.email = 'Enter an email';
-    hasErrors = true;
+import { manualLogin } from 'state/user/user.actions';
+
+class LoginContainer extends Component {
+
+  handleFormSubmit(formProps) {
+    // Call action creator to sign up user (properties with no errors)
+    this.props.manualLogin(formProps);
   }
-  if (!values.password || values.password.trim() === '') {
-    errors.password = 'Enter a password';
-    hasErrors = true;
+
+  render() {
+    const { handleSubmit, fields: { email, password } } = this.props;
+
+    return (
+      <Card>
+        <CardHeader
+          title="Log in"
+          actAsExpander={ false }
+          showExpandableButton={ false }
+        />
+        <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
+        <CardText>
+            <div>
+            <TextField
+              hintText=""
+              floatingLabelText="Email"
+              errorText={ email.touched && email.error && <span>{ email.error }</span> }
+              {...email}
+            />
+            </div>
+            <div>
+              <TextField
+                type="password"
+                floatingLabelText="Password"
+                {...password}
+              />
+            </div>
+            </CardText>
+          <CardActions expandable={ false }>
+          <RaisedButton secondary type="submit" label="Login" />
+          </CardActions>
+        </form>
+        </Card>
+    );
   }
-  return hasErrors && errors;
 }
 
-// For any field errors upon submission (i.e. not instant check)
-const validateAndLoginUser = (values, dispatch) => {
-  return new Promise((resolve, reject) => {
-    dispatch(authLogin(values));
-  });
-};
+// Calls this function on any action on the form (click the field, type, etc..)
+function validate(formProps) {
+  const errors = {};
+
+  if (!formProps.email) {
+    errors.email = 'Please enter an email';
+  }
+
+  if (!formProps.password) {
+    errors.password = 'Please enter a password';
+  }
+
+  return errors;
+}
+
+function mapStateToProps(state) {
+  return { errorMessage: state.user.error };
+}
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    authLogin: validateAndLoginUser,
-    resetMe: () => {
-      // sign up is not reused, so we dont need to resetUserFields
-      // in our case, it will remove authenticated users
-      // dispatch(resetUserFields());
-    }
-  };
+  return bindActionCreators({ manualLogin }, dispatch);
 };
 
-
-function mapStateToProps(state, ownProps) {
-  return {
-    auth: state.auth
-  };
-}
-
-
-// connect: first argument is mapStateToProps, 2nd is mapDispatchToProps
-// reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 export default reduxForm({
-  form: 'LoginForm',
-  validate
-}, mapStateToProps, mapDispatchToProps)(Login);
+  form: 'login',
+  fields: ['email', 'password'],
+  validate // ES6 - Value and key with same name
+}, mapStateToProps, mapDispatchToProps)(LoginContainer);
+
+LoginContainer.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.object.isRequired,
+  manualLogin: PropTypes.func.isRequired
+};

@@ -16,13 +16,14 @@ import Models from '../db/models';
 // Strategies
 import jwtStrategy from './strategies/jwt';
 import emailStrategy from './strategies/email';
+import googleStrategy from './strategies/google';
 const EXPIRATION_AGE = 604800000; // 7 days
 
 const User = Models.User;
 
 passport.use('jwt', jwtStrategy);
 passport.use('email', emailStrategy);
-
+passport.use('google', googleStrategy);
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

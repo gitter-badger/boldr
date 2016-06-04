@@ -38,10 +38,19 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '',
       allowNull: true
     },
+    bio: {
+      type: DataTypes.STRING,
+      defaultValue: '',
+      allowNull: true
+    },
     acl: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    google: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
     resetPasswordToken: {
       type: DataTypes.STRING

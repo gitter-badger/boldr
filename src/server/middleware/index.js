@@ -10,7 +10,6 @@ import etag from 'koa-etag';
 import helmet from 'koa-helmet';
 import conditional from 'koa-conditional-get';
 import responseCalls from './responseCalls';
-import handleError from './handleError';
 import bodyParser from './bodyParser';
 import session from './session';
 import jwt from './jwt';

@@ -1,11 +1,10 @@
-require('dotenv').config();
-import 'source-map-support/register';
+require('dotenv').config({ silent: true });
+import { install } from 'source-map-support';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
-
 import isomorphicToolsConfig from '../../tools/webpack/isomorphic.tools.config';
 import boldrConfig from 'config';
 import paths from 'config/paths';
-
+install();
 const projectBasePath = paths.ROOT_DIR;
 
 /**

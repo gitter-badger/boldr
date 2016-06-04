@@ -22,6 +22,7 @@ import routers from './api';
 import { logger } from './lib';
 import { Problem, handleRender } from './utils';
 import connector from './db/connector';
+import sockets from './lib/socket';
 // Load environment variables.
 dotenv.config();
 const debug = _debug('boldr:server:dev');
@@ -41,13 +42,12 @@ connector();
 // https://www.npmjs.com/package/koa-convert
 const use = app.use;
 app.use = x => use.call(app, convert(x));
-
+sockets.register(app);
 /**
  * Asynchronous function that sets up the middleware
  * and context for Boldr.
  */
 (async() => {
-  app.use(handleError);
   await BoldrMiddleware.init(app);
 
   /**

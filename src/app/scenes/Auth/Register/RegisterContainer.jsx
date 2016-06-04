@@ -1,120 +1,88 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
+import { reduxForm } from 'redux-form';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import { connect } from 'react-redux';
-import { manualLogin, signUp, toggleLoginMode } from 'app/state/user/user.actions';
-const style = {
-  margin: 12,
-  align: 'right'
-};
-const styles = {
-  minHeight: 'calc(100vh - 100px)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-const cardStyle = {
-  minWidth: 'calc(33vw)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-class LoginOrRegister extends Component {
-  constructor(props) {
-    super(props);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
-  }
+import TextField from 'material-ui/TextField';
+import { bindActionCreators } from 'redux';
 
-  handleOnSubmit(event) {
-    event.preventDefault();
+import { signUp } from 'state/user/user.actions';
 
-    const { manualLogin, signUp, user: { isLogin } } = this.props;
-    const email = ReactDOM.findDOMNode(this.refs.email).value;
-    const password = ReactDOM.findDOMNode(this.refs.password).value;
+class RegisterContainer extends Component {
 
-    if (isLogin) {
-      manualLogin({ email, password });
-    } else {
-      signUp({ email, password });
-    }
-  }
-
-  renderHeader() {
-    const { user: { isLogin }, toggleLoginMode } = this.props;
-    if (isLogin) {
-      return (
-        <div>
-        <CardTitle title="Login to your account" />
-          <div>
-            Not what you want?
-            <a onClick={ toggleLoginMode }> Register an Account</a>
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        <CardTitle title="Register an account" />
-        <div>
-          Already have an account?
-          <a onClick={ toggleLoginMode }> Login</a>
-        </div>
-      </div>
-    );
+  handleFormSubmit(formProps) {
+    // Call action creator to sign up user (properties with no errors)
+    this.props.signUp(formProps);
   }
 
   render() {
-    const { isWaiting, message, isLogin } = this.props.user;
+    const { handleSubmit, fields: { email, password } } = this.props;
 
     return (
-      <div style={ styles }>
-        <Card style={ cardStyle }>
-        <div>
-          { this.renderHeader() }
-
-          <div>
-            <form onSubmit={ this.handleOnSubmit }>
+      <Card>
+        <CardHeader
+          title="Register"
+          subtitle="Geting an account is easy"
+          actAsExpander={ false }
+          showExpandableButton={ false }
+        />
+        <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
+        <CardText>
+            <div>
             <TextField
-              hintText="Enter your email"
-              fullWidth
-              ref="email"
+              hintText=""
               floatingLabelText="Email"
+              errorText={ email.touched && email.error && <span>{ email.error }</span> }
+              {...email}
             />
-            <TextField
-              fullWidth
-              hintText="Enter your password"
-              ref="password"
-              floatingLabelText="Password"
-            />
-              <p>{ message }</p>
-              <CardActions>
-               <RaisedButton label={ isLogin ? 'Login' : 'Register' }
-                 type="submit" secondary style={ style }
-               />
-             </CardActions>
-            </form>
-          </div>
-        </div>
+            </div>
+            <div>
+              <TextField
+                type="password"
+                floatingLabelText="Password"
+                {...password}
+              />
+            </div>
+            </CardText>
+          <CardActions expandable={ false }>
+          <RaisedButton secondary type="submit" label="Create account" />
+          </CardActions>
+        </form>
         </Card>
-      </div>
     );
   }
 }
 
-LoginOrRegister.propTypes = {
-  user: PropTypes.object,
-  manualLogin: PropTypes.func.isRequired,
-  signUp: PropTypes.func.isRequired,
-  toggleLoginMode: PropTypes.func.isRequired
-};
+// Calls this function on any action on the form (click the field, type, etc..)
+function validate(formProps) {
+  const errors = {};
 
-function mapStateToProps({ user }) {
-  return {
-    user
-  };
+  if (!formProps.email) {
+    errors.email = 'Please enter an email';
+  }
+
+  if (!formProps.password) {
+    errors.password = 'Please enter a password';
+  }
+
+  return errors;
 }
 
-export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(LoginOrRegister);
+function mapStateToProps(state) {
+  return { errorMessage: state.user.error };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ signUp }, dispatch);
+};
+
+export default reduxForm({
+  form: 'signup',
+  fields: ['email', 'password', 'passwordConfirm'],
+  validate // ES6 - Value and key with same name
+}, mapStateToProps, mapDispatchToProps)(RegisterContainer);
+
+RegisterContainer.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.object.isRequired,
+  signUp: PropTypes.func.isRequired
+};

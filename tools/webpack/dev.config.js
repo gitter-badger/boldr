@@ -40,7 +40,7 @@ const config = {
   context: paths.ROOT_DIR,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: [HOT_MW,
+    app: ['react-hot-loader/patch', HOT_MW,
       boldrCfg.BLDR_ENTRY
     ],
     vendors: VENDOR_DEPENDENCIES
@@ -99,6 +99,7 @@ const config = {
     require('lost')(),
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
