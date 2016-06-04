@@ -8,9 +8,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import useScroll from 'react-router-scroll';
 import axios from 'axios';
 import cookie from 'react-cookie';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { cyanA400, lightBlue500, green700 } from 'material-ui/styles/colors';
 import { checkTokenValidity } from 'app/state/user/user.actions';
 
 import preRenderMiddleware from 'app/core/util/preRenderMiddleware';
@@ -32,15 +29,7 @@ if (token) {
 const history = syncHistoryWithStore(browserHistory, store);
 const routes = createRoutes(store);
 injectTapEventPlugin();
-const blueIsh = '#272734';
-const pinkish = '#DD144D';
-const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: blueIsh,
-    accent1Color: pinkish,
-    primary3Color: cyanA400
-  }
-});
+
 
 /**
  * Callback function handling frontend route changes.
@@ -62,11 +51,9 @@ function onUpdate() {
 
 const root = (
 <Provider store={ store }>
-    <MuiThemeProvider muiTheme={ muiTheme }>
       <Router history={ history } onUpdate={ onUpdate } render={ applyRouterMiddleware(useScroll()) }>
         { routes }
       </Router>
-    </MuiThemeProvider>
   </Provider>
 );
 

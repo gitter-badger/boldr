@@ -8,7 +8,12 @@ export const INITIAL_USER_STATE = {
   isAuthenticated: false,
   message: '',
   error: false,
-  userId: '',
+  id: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  avatar: '',
+  acl: '',
   users: []
 };
 
@@ -17,14 +22,14 @@ export default function user(state = INITIAL_USER_STATE, action) {
     case constants.SET_USER:
       return {
         ...state,
-        userId: action.user.userId
+        id: action.user.id
       };
     case constants.PARTIAL_POPULATE_USER:
       return {
         ...state,
         loading: false,
         error: false,
-        userId: action.user.userId
+        id: action.user.id
       };
     case constants.REQUEST_USERS:
       return {

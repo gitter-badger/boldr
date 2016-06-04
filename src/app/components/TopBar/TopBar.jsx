@@ -9,7 +9,9 @@ import { bindActionCreators } from 'redux';
 import * as boldrActions from 'app/state/boldr/boldr.actions';
 import { browserHistory } from 'react-router';
 import SiteLogo from '../SiteLogo';
-
+const inlineStyle = {
+  backgroundColor: '#fff'
+};
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +40,7 @@ class TopBar extends React.Component {
             { /* It should be like /api/v1/boldr/settings */ }
           <AppBar title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
             zDepth={ 2 }
+            style={ inlineStyle }
             onTitleTouchTap={ ::this.handleHome }
             onLeftIconButtonTouchTap={ this.props.handleToggle }
             iconElementRight={

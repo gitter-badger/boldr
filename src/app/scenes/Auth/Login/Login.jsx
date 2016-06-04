@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
-import { authLogin } from 'app/state/auth/auth.actions';
+import { manualLogin } from 'app/state/user/user.actions';
 import LoginForm from './LoginForm';
 
 const styles = {
@@ -19,7 +19,7 @@ class Login extends Component {
 
   handleSubmit(values) {
     const { dispatch } = this.props;
-    dispatch(authLogin(values));
+    dispatch(manualLogin(values));
   }
 
   render() {

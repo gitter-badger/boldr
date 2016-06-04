@@ -1,4 +1,4 @@
-import LoginContainer from './Login/LoginContainer.jsx';
+import LoginContainer from './Login/LoginContainer';
 import RegisterContainer from './Register/RegisterContainer';
 
 export { LoginContainer, RegisterContainer };

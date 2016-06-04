@@ -1,4 +1,4 @@
-import bcrypt, { genSaltSync, hashSync, compareSync } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config, { paths } from 'config';
 import logger from 'server/lib/logger';
@@ -15,10 +15,10 @@ const saltRounds = 10;
  * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
+  console.info(ctx);
   const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
   const user = User.build({
     email: ctx.request.body.email,
-    username: ctx.request.body.username,
     password: hash,
     location: ctx.request.body.location,
     bio: ctx.request.body.bio,

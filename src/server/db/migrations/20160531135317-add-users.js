@@ -34,9 +34,17 @@ module.exports = {
           type: DataTypes.STRING,
           defaultValue: ''
         },
+        bio: {
+          type: DataTypes.STRING,
+          defaultValue: '',
+          allowNull: true
+        },
         acl: {
           type: DataTypes.INTEGER,
           defaultValue: 0
+        },
+        google: {
+          type: DataTypes.STRING
         },
         resetPasswordToken: {
           type: DataTypes.STRING

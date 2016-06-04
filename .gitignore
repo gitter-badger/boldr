@@ -1,22 +1,16 @@
 # OSX
-#
 .DS_Store
 
 # node.js
-#
 node_modules/
 npm-debug.log
-docs/whiteboard/node_modules
-# tmp
-#
-temp
+
 .tmp
-.sass-cache
+
 uploads/
-dist
+dist/*
 build/*
-build_styleguide
-styleguide
+
 reports
 docs/logs
 tools/data
