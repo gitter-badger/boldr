@@ -33,8 +33,6 @@ const handleRender = ctx => {
   // Grab the initial state from our Redux store
   const finalState = store.getState();
   const routes = createRoutes(store);
-
-
   const _ctx = ctx;
   const { url: location } = _ctx;
 

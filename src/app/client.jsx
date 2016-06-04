@@ -4,15 +4,15 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
 import useScroll from 'react-router-scroll';
 import axios from 'axios';
-import cookie from 'react-cookie';
-import { checkTokenValidity } from 'app/state/user/user.actions';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import preRenderMiddleware from 'app/core/util/preRenderMiddleware';
-import createRoutes from 'app/core/routes';
-import configureStore from 'app/core/store';
+import { checkTokenValidity } from 'state/user/user.actions';
+import preRenderMiddleware from 'core/util/preRenderMiddleware';
+import createRoutes from 'core/routes';
+import configureStore from 'core/store';
+import muiTheme from 'core/theme';
 
 // If localStorage is unavailable, fallback to cookie.
 const token = localStorage.getItem('boldr:jwt');
@@ -30,17 +30,10 @@ const history = syncHistoryWithStore(browserHistory, store);
 const routes = createRoutes(store);
 injectTapEventPlugin();
 
-
 /**
  * Callback function handling frontend route changes.
  */
 function onUpdate() {
-  // Prevent duplicate fetches when first loaded.
-  // Explanation: On server-side render, we already have __INITIAL_STATE__
-  // So when the client side onUpdate kicks in, we do not need to fetch twice.
-  // We set it to null so that every subsequent client-side navigation will
-  // still trigger a fetch data.
-  // Read more: https://github.com/choonkending/react-webpack-node/pull/203#discussion_r60839356
   if (window.__INITIAL_STATE__ !== null) {
     window.__INITIAL_STATE__ = null;
     return;
@@ -51,10 +44,12 @@ function onUpdate() {
 
 const root = (
 <Provider store={ store }>
-      <Router history={ history } onUpdate={ onUpdate } render={ applyRouterMiddleware(useScroll()) }>
+  <MuiThemeProvider muiTheme={ muiTheme }>
+    <Router history={ history } onUpdate={ onUpdate } render={ applyRouterMiddleware(useScroll()) }>
         { routes }
-      </Router>
-  </Provider>
+    </Router>
+  </MuiThemeProvider>
+</Provider>
 );
 
 const MOUNT_DOM = document.getElementById('root');

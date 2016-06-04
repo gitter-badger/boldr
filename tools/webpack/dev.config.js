@@ -40,7 +40,7 @@ const config = {
   context: paths.ROOT_DIR,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: ['react-hot-loader/patch', HOT_MW,
+    app: [HOT_MW,
       boldrCfg.BLDR_ENTRY
     ],
     vendors: VENDOR_DEPENDENCIES
