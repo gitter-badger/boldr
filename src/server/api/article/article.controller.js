@@ -116,7 +116,7 @@ export const getArticleBySlug = async (ctx, next) => {
   const article = await Article.findOne({ where: { slug: ctx.params.slug },
     include: [{
       model: User,
-      attributes: ['id', 'firstName', 'lastName', 'email']
+      attributes: ['id', 'firstname', 'lastname', 'email']
     }, {
       model: Tag,
       attributes: ['tagname']
@@ -135,7 +135,7 @@ export const getArticleByAuthor = async (ctx, next) => {
   const articles = await Article.findAll({ where: { authorId: ctx.params.userId },
     include: [{
       model: User,
-      attributes: ['id', 'firstName', 'lastName', 'email']
+      attributes: ['id', 'firstname', 'lastname', 'email']
     }, {
       model: Tag,
       attributes: ['tagname']

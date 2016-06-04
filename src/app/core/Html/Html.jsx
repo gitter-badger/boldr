@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { renderToString } from 'react-dom/server';
 import Helmet from 'react-helmet';
+
 export default class Html extends Component {
   static propTypes = {
     assets: PropTypes.object,
@@ -48,7 +49,6 @@ export default class Html extends Component {
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-          <title>Boldr</title>
           <link rel="shortcut icon" href="/favicon.ico" />
           <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300,400italic|Roboto+Condensed:400,300"
             rel="stylesheet" type="text/css"

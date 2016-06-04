@@ -15,7 +15,6 @@ class Users extends Component {
           <TableHeader>
             <TableRow>
               <TableHeaderColumn>User ID</TableHeaderColumn>
-              <TableHeaderColumn>Username</TableHeaderColumn>
               <TableHeaderColumn>Email</TableHeaderColumn>
               <TableHeaderColumn>First Name</TableHeaderColumn>
               <TableHeaderColumn>Last Name</TableHeaderColumn>
