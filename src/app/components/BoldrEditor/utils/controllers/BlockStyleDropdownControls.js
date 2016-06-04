@@ -15,19 +15,24 @@ const BLOCK_TYPES = [
 ];
 
 export const BlockStyleDropdownControls = (props) => {
-    const { editorState } = props;
-    const selection = editorState.getSelection();
-    const blockType = editorState
+  const { editorState } = props;
+  const selection = editorState.getSelection();
+  const blockType = editorState
         .getCurrentContent()
         .getBlockForKey(selection.getStartKey())
         .getType();
 
-    return (
+  return (
         <div className="TextEditor-controls-bar">
             <StyleDropdown
-                blockTypes={BLOCK_TYPES}
-                onChange={props.onChange}
+              blockTypes={ BLOCK_TYPES }
+              onChange={ props.onChange }
             />
         </div>
   );
+};
+
+BlockStyleDropdownControls.propTypes = {
+  editorState: React.PropTypes.func,
+  onChange: React.PropTypes.func
 };
