@@ -32,7 +32,7 @@ export const BlockStyleDropdownControls = (props) => {
   );
 };
 
-BlockStyleDropdownControls.propTypes = {
-  editorState: React.PropTypes.func,
-  onChange: React.PropTypes.func
-};
+// BlockStyleDropdownControls.propTypes = {
+//   editorState: React.PropTypes.func,
+//   onChange: React.PropTypes.func
+// };

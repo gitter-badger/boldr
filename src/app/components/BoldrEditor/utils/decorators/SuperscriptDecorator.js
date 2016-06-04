@@ -10,6 +10,6 @@ export const Superscript = (props) => {
   );
 };
 
-Superscript.propTypes = {
-  children: React.PropTypes.object
-};
+// Superscript.propTypes = {
+//   children: React.PropTypes.object
+// };

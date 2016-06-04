@@ -129,9 +129,9 @@ export class CreateLinkControl extends React.Component {
       );
   }
 }
-CreateLinkControl.propTypes = {
-  onSubmit: React.PropTypes.func.isRequired,
-  editorState: React.PropTypes.func,
-  showInput: React.PropTypes.func,
-  onToggle: React.PropTypes.func
-};
+// CreateLinkControl.propTypes = {
+//   onSubmit: React.PropTypes.func.isRequired,
+//   editorState: React.PropTypes.func,
+//   showInput: React.PropTypes.func,
+//   onToggle: React.PropTypes.func
+// };

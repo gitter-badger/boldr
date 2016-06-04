@@ -65,7 +65,6 @@ class NewArticleForm extends Component {
       </div>
       <div>
         <RaisedButton type="submit" secondary label="Publish" style={ style } />
-
       </div>
     </form>
       );

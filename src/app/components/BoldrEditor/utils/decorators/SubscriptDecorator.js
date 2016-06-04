@@ -9,7 +9,7 @@ export const Subscript = (props) => {
     </span>
   );
 };
-
-Subscript.propTypes = {
-  children: React.PropTypes.object
-};
+// 
+// Subscript.propTypes = {
+//   children: React.PropTypes.object
+// };

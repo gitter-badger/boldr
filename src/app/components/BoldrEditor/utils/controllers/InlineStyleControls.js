@@ -1,22 +1,25 @@
 // @flow
 import React from 'react';
 import StyleButton from '../StyleButton';
-
+import FormatBold from 'material-ui/svg-icons/editor/format-bold';
+import FormatItalic from 'material-ui/svg-icons/editor/format-italic';
+import FormatUnderlined from 'material-ui/svg-icons/editor/format-underlined';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 const BOLD = (
     <span className="TextEditor-controls-button">
-        <i className="fa fa-bold" aria-hidden="true"></i>
+        <FormatBold />
     </span>
 );
 
 const ITALIC = (
     <span className="TextEditor-controls-button">
-        <i className="fa fa-italic" aria-hidden="true"></i>
+      <FormatItalic />
     </span>
 );
 
 const UNDERLINE = (
     <span className="TextEditor-controls-button">
-        <i className="fa fa-underline" aria-hidden="true"></i>
+        <FormatUnderlined />
     </span>
 );
 
@@ -41,20 +44,20 @@ const INLINE_STYLES = [
 ];
 
 export const InlineStyleControls = (props) => {
-    const currentStyle = props.editorState.getCurrentInlineStyle();
-    return (
+  const currentStyle = props.editorState.getCurrentInlineStyle();
+  return (
         <div className="TextEditor-controls-bar">
-            <div>
-                {INLINE_STYLES.map((type) =>
+
+                { INLINE_STYLES.map((type) =>
                     <StyleButton
-                        key={type.style}
-                        active={currentStyle.has(type.style)}
-                        label={type.label}
-                        onToggle={props.onToggle}
-                        style={type.style}
+                      key={ type.style }
+                      active={ currentStyle.has(type.style) }
+                      label={ type.label }
+                      onToggle={ props.onToggle }
+                      style={ type.style }
                     />
-                )}
-            </div>
+                ) }
+
         </div>
    );
 };

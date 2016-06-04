@@ -24,15 +24,15 @@ export const getSelectedLink = (editorState, selectionState) => {
   const entityKey = currentBlock.getEntityAt(selectionState.getStartOffset());
   return (entityKey !== null && Entity.get(entityKey).getType() === 'LINK') ? entityKey : null;
 };
-
-Link.propTypes = {
-  entityKey: React.PropTypes.string,
-  children: React.PropTypes.Object
-};
-ImplicitLink.propTypes = {
-  decoratedText: React.PropTypes.Object,
-  children: React.PropTypes.Object
-};
-getSelectedLink.propTypes = {
-
-};
+// 
+// Link.propTypes = {
+//   entityKey: React.PropTypes.string,
+//   children: React.PropTypes.Object
+// };
+// ImplicitLink.propTypes = {
+//   decoratedText: React.PropTypes.Object,
+//   children: React.PropTypes.Object
+// };
+// getSelectedLink.propTypes = {
+//
+// };

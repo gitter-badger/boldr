@@ -27,10 +27,10 @@ export default class StyleButton extends React.Component {
       );
   }
 }
-
-StyleButton.propTypes = {
-  onToggle: React.PropTypes.function,
-  style: React.PropTypes.boolean,
-  active: React.PropTypes.boolean,
-  label: React.PropTypes.string
-};
+// 
+// StyleButton.propTypes = {
+//   onToggle: React.PropTypes.function,
+//   style: React.PropTypes.boolean,
+//   active: React.PropTypes.boolean,
+//   label: React.PropTypes.string
+// };

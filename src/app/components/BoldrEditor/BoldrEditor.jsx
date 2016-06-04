@@ -3,6 +3,8 @@ import { Editor, EditorState, Entity, ContentState, RichUtils, convertToRaw,
   convertFromRaw, convertFromHTML
 } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-markup';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import Paper from 'material-ui/Paper';
 import { InlineStyleControls } from './utils/controllers/InlineStyleControls';
 import { CreateLinkControl } from './utils/controllers/LinkControls';
 import { BlockStyleControls } from './utils/controllers/BlockStyleControls';
@@ -19,7 +21,12 @@ const INLINE_MAP = {
     SUBSCRIPT: 'sub'
   }
 };
-
+const style = {
+  backgroundColor: '#fff',
+  color: '#222',
+  margin: 20,
+  minHeight: '200px'
+};
 export default class BoldrEditor extends Component {
   constructor(props) {
     super(props);
@@ -116,25 +123,38 @@ export default class BoldrEditor extends Component {
 
     return (
       <div className="TextEditor-controls-container">
-                <InlineStyleControls
-                  editorState={editorState}
-                  onToggle={this.toggleInlineStyle}
-                />
-                <CreateLinkControl
-                  editorState={editorState}
-                  onToggle={this.noop}
-                  onSubmit={this.submitLink}
-                  showInput={true}
-                />
-                <BlockStyleControls
-                  editorState={editorState}
-                  onToggle={this.toggleBlockType}
-                />
-                <BlockStyleDropdownControls
-                  editorState={editorState}
-                  onChange={this.toggleBlockType}
-                />
-            </div>
+        <Toolbar>
+          <ToolbarGroup>
+            <InlineStyleControls
+              editorState={ editorState }
+              onToggle={ this.toggleInlineStyle }
+            />
+          </ToolbarGroup>
+          <ToolbarSeparator />
+          <ToolbarGroup>
+            <CreateLinkControl
+              editorState={ editorState }
+              onToggle={ this.noop }
+              onSubmit={ this.submitLink }
+              showInput
+            />
+          </ToolbarGroup>
+          <ToolbarSeparator />
+          <ToolbarGroup>
+            <BlockStyleControls
+              editorState={ editorState }
+              onToggle={ this.toggleBlockType }
+            />
+          </ToolbarGroup>
+          <ToolbarSeparator />
+          <ToolbarGroup>
+            <BlockStyleDropdownControls
+              editorState={ editorState }
+              onChange={ this.toggleBlockType }
+            />
+          </ToolbarGroup>
+        </Toolbar>
+      </div>
       );
   }
 
@@ -168,15 +188,17 @@ export default class BoldrEditor extends Component {
 
     return (
       <div className="TextEditor-root">
-                {this.renderControls()}
-                <div className={className} onClick={this.focus}>
+                { this.renderControls() }
+                <div className={ className } onClick={ this.focus }>
+                <Paper style={ style } zDepth={ 1 }>
                     <Editor
-                      editorState={editorState}
-                      handleKeyCommand={this.handleKeyCommand}
-                      onChange={this.onChange}
+                      editorState={ editorState }
+                      handleKeyCommand={ this.handleKeyCommand }
+                      onChange={ this.onChange }
                       ref="editor"
                       spellCheck
                     />
+                    </Paper>
                 </div>
             </div>
       );
@@ -205,9 +227,9 @@ Object.assign(BoldrEditor, {
 
 export { createEmptyValue };
 
-BoldrEditor.propTypes = {
-  value: PropTypes.func,
-  returnHTML: PropTypes.func,
-  onValueChange: PropTypes.func,
-  editorState: PropTypes.func
-};
+// BoldrEditor.propTypes = {
+//   value: PropTypes.func,
+//   returnHTML: PropTypes.func,
+//   onValueChange: PropTypes.func,
+//   editorState: PropTypes.func
+// };
