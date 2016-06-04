@@ -4,8 +4,8 @@ module.exports = {
       {
         id: 1,
         email: 'test@test.com',
-        firstName: 'Bob',
-        lastName: 'Smith',
+        firstname: 'Bob',
+        lastname: 'Smith',
         password: '$2a$10$fj4wRaC0bckoVJW0CPylD.4pLemyNhEjxFz1wH5Mfpr5EdOIORL5u',
         location: 'Somewhere',
         acl: 0,

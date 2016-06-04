@@ -9,30 +9,39 @@ module.exports = {
         },
         email: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
+          unique: true,
+          validate: {
+            isEmail: true
+          }
         },
         password: {
           type: DataTypes.STRING
         },
-        firstName: {
+        firstname: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
+          allowNull: true
         },
-        lastName: {
+        lastname: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
+          allowNull: true
         },
         location: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
+          allowNull: true
         },
         website: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
+          allowNull: true
         },
         avatar: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
+          allowNull: true
         },
         bio: {
           type: DataTypes.STRING,
@@ -41,10 +50,17 @@ module.exports = {
         },
         acl: {
           type: DataTypes.INTEGER,
+          allowNull: false,
           defaultValue: 0
         },
         google: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        verified: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false
         },
         resetPasswordToken: {
           type: DataTypes.STRING

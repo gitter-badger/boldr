@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isEmail: true
       }
@@ -13,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
-    firstName: {
+    firstname: {
       type: DataTypes.STRING,
       defaultValue: '',
       allowNull: true
     },
-    lastName: {
+    lastname: {
       type: DataTypes.STRING,
       defaultValue: '',
       allowNull: true
@@ -52,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     resetPasswordToken: {
       type: DataTypes.STRING
     },
@@ -65,6 +71,9 @@ module.exports = (sequelize, DataTypes) => {
       associate(models) {
         User.hasMany(models.Article, {
           foreignKey: 'authorId'
+        });
+        User.hasOne(models.VerificationToken, {
+          foreignKey: 'userId'
         });
       }
     },
