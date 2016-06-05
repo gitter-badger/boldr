@@ -5,6 +5,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import BEditor from 'app/components/Editor/BoldrEditor';
+
 const style = {
   block: {
     maxWidth: 250
@@ -36,9 +37,8 @@ class NewArticleForm extends Component {
     this.state = {
     };
   }
-  handleChange = (event, index, value) => this.setState({value});
   render() {
-    const { handleSubmit, fields: { title, slug, content, status } } = this.props;
+    const { handleSubmit, fields: { title, slug, content, status, tags } } = this.props;
     return (
       <form onSubmit={ handleSubmit }>
       <div>
@@ -52,14 +52,20 @@ class NewArticleForm extends Component {
 
       </div>
       <div>
-
           <TextField hintText= "This will be used as the URL"
             floatingLabelText="Slug"
             fullWidth
             errorText = { slug.touched && slug.error }
             { ...slug }
           />
-
+      </div>
+      <div>
+      <TextField hintText= "Separate using a ,"
+        floatingLabelText="Tags"
+        fullWidth
+        errorText = { tags.touched && tags.error }
+        { ...tags }
+      />
       </div>
       <div>
 
@@ -68,11 +74,11 @@ class NewArticleForm extends Component {
         />
       </div>
       <label>
-            <input type="radio" { ...status } value="draft" checked={ status.value === 'draft' } /> Draft
-          </label>
-          <label>
-            <input type="radio" { ...status } value="published" checked={ status.value === 'published' } /> Published
-          </label>
+        <input type="radio" { ...status } value="draft" checked={ status.value === 'draft' } /> Draft
+      </label>
+      <label>
+        <input type="radio" { ...status } value="published" checked={ status.value === 'published' } /> Published
+      </label>
       <div>
         <RaisedButton type="submit" secondary label="Publish" style={ style } />
       </div>
@@ -83,7 +89,7 @@ class NewArticleForm extends Component {
 
 export default reduxForm({
   form: 'NewArticleForm',
-  fields: ['title', 'slug', 'content', 'status']
+  fields: ['title', 'slug', 'content', 'status', 'tags']
 }, null, null)(NewArticleForm);
 
 NewArticleForm.propTypes = {
