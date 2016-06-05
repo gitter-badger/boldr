@@ -19,7 +19,7 @@ module.exports = Object.assign({
         { name: 'description', content: 'Why shouldnt your CMS be a little Boldr?' },
         { charset: 'utf-8' },
         { property: 'og:site_name', content: 'Boldr' },
-        { property: 'og:image', content: '' },
+        { property: 'og:image', content: 'https://boldr.io/favicon-96x96.png' },
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:title', content: 'Boldr' },
         { property: 'og:description', content: 'Why shouldnt your CMS be a little Boldr?' },
