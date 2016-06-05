@@ -53,13 +53,13 @@ export default function article(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
-        articles: [...state.articles].filter((article) => article.articleId !== parseInt(action.articleId, 10))
+        articles: [...state.articles].filter((article) => article.id !== parseInt(action.id, 10))
       };
     case constants.ARTICLE_CREATED:
       return {
         ...state,
         loading: false,
-        editArticleId: action.payload.articleId
+        editArticleId: action.payload.id
       };
     default:
       return state;

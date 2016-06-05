@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import StyleButton from '../StyleButton';
 import FormatBold from 'material-ui/svg-icons/editor/format-bold';

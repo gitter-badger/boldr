@@ -10,6 +10,7 @@ import DashboardContainer from 'app/scenes/Dashboard/DashboardContainer';
 import Loader from 'app/components/Loader';
 
 class DashboardLayout extends Component {
+
   handleToggle = () => {
     this.props.dispatch(boldrActions.toggleSideBar());
   }
@@ -23,11 +24,6 @@ class DashboardLayout extends Component {
   }
 }
 
-DashboardLayout.propTypes = {
-  children: PropTypes.node,
-  dispatch: PropTypes.func
-};
-
 function mapStateToProps(state) {
   return {
     router: state.router,
@@ -36,3 +32,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(DashboardLayout);
+
+DashboardLayout.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  children: PropTypes.object
+};

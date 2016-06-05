@@ -20,6 +20,31 @@ const cssLoader = [
   'localIdentName=[name]__[local]___[hash:base64:5]'
 ].join('&');
 
+const babelLoaderConfiguration = {
+  cacheDirectory: true,
+  plugins: [
+    ['transform-runtime', { polyfill: false, regenerator: false }],
+    'transform-decorators-legacy',
+    ['babel-plugin-module-alias', [
+      { src: './tools/config', expose: 'config' },
+      { src: './src/app', expose: 'app' },
+      { src: './src/app/state', expose: 'state' },
+      { src: './src/app/core', expose: 'core' },
+      { src: './src/app/scenes', expose: 'scenes' },
+      { src: './src/app/components', expose: 'components' },
+      { src: './src/server', expose: 'server' }
+    ]]
+  ],
+  presets: ['es2015', 'react', 'stage-0'],
+  env: {
+    development: {
+      presets: ['react-hmre']
+    },
+    production: {
+      presets: ['react-optimize']
+    }
+  }
+};
 const {
   SERVER_HOST,
   BLDR_ENTRY,
@@ -65,9 +90,7 @@ const config = {
         loader: 'babel',
         exclude: [paths.NODE_MODULES_DIR],
         include: [paths.SRC_DIR],
-        query: {
-          cacheDirectory: true
-        }
+        query: babelLoaderConfiguration
       },
       {
         test: /\.json$/,
@@ -101,9 +124,12 @@ const config = {
   ]),
 
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', 2),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
       __CLIENT__,
       __SERVER__,
       __DEV__,

@@ -58,10 +58,17 @@ const config = {
       accessKeyId: process.env.AWS_KEY_ID || '',
       secretAccessKey: process.env.AWS_KEY_SECRET || '',
       region: 'us-west-1',
-      endpoint: 's3.amazonaws.com'
+      endpoint: 's3.amazonaws.com',
+      prefix: 'uploads/',
+      supportedImageFormats: [
+        'image/jpeg',
+        'image/png',
+        'image/gif'
+      ]
     },
     s3: {
-      bucket: 'boldr'
+      bucket: 'boldr',
+      ACL: 'public-read'
     }
   },
   mg: {

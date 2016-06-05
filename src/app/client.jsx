@@ -22,6 +22,7 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;  // eslint-d
 
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, browserHistory);
+
 if (token) {
   store.dispatch(checkTokenValidity());
 }

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
@@ -17,7 +16,7 @@ import 'app/styles/app.scss';
 class CoreLayout extends Component {
 
   componentDidMount() {
-    this.props.dispatch(checkTokenValidity)
+    this.props.dispatch(checkTokenValidity);
   }
 
   handleToggle() { // eslint-disable-line
@@ -27,19 +26,14 @@ class CoreLayout extends Component {
   render() {
     return (
           <div>
-           <Helmet {...meta.app.head}/>
-          <TopBar handleToggle={ ::this.handleToggle } />
-          <AppDrawer />
-          { this.props.children }
+           <Helmet {...meta.app.head} />
+            <TopBar handleToggle={ ::this.handleToggle } />
+            <AppDrawer />
+            { this.props.children }
         </div>
     );
   }
 }
-
-CoreLayout.propTypes = {
-  children: PropTypes.node,
-  dispatch: PropTypes.func
-};
 
 function mapStateToProps(state) {
   return {
@@ -49,3 +43,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(CoreLayout);
+
+CoreLayout.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  children: PropTypes.object
+};

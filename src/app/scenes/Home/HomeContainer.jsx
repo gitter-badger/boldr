@@ -7,7 +7,7 @@ const HomeContainer = () => {
     <div>
     <Helmet title="Home" />
        <div className="container">
-       Home?
+        HEY THIS IS HOME
        </div>
       </div>
   );

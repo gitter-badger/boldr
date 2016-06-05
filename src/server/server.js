@@ -1,14 +1,13 @@
 import http from 'http';
-import IO from 'socket.io';
 import app from './boldr';
-
+import sockets from './lib/socket';
 import logger from './lib/logger';
 import { connectDatabase } from './db/connector';
 import config from 'config';
 
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 const server = http.createServer(app.callback());
-app.io = new IO(server);
+sockets.register(app);
 
 (async() => {
   try {
