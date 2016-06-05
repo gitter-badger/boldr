@@ -1,15 +1,15 @@
-/* eslint-disable */
-
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Helmet from 'react-helmet';
+
 import AppDrawer from 'app/components/AppDrawer';
 import * as boldrActions from 'app/state/boldr/boldr.actions';
 import TopBar from 'app/components/TopBar';
 import Loader from 'app/components/Loader';
 import { checkTokenValidity } from 'app/state/auth/auth.actions';
-import Helmet from 'react-helmet';
+
 import meta from '../../meta';
 import dark from 'app/theme';
 import 'app/styles/app.scss';
@@ -58,7 +58,7 @@ fontFamily: 'Roboto, sans-serif',
 class CoreLayout extends Component {
 
   componentDidMount() {
-    this.props.dispatch(checkTokenValidity)
+    this.props.dispatch(checkTokenValidity);
   }
 
   handleToggle() { // eslint-disable-line
@@ -70,20 +70,15 @@ class CoreLayout extends Component {
     return (
           <MuiThemeProvider muiTheme={ muiTheme }>
           <div>
-           <Helmet {...meta.app.head}/>
-          <TopBar handleToggle={ ::this.handleToggle } />
-          <AppDrawer />
-          { this.props.children }
+           <Helmet {...meta.app.head} />
+            <TopBar handleToggle={ ::this.handleToggle } />
+            <AppDrawer />
+            { this.props.children }
         </div>
         </MuiThemeProvider>
     );
   }
 }
-
-CoreLayout.propTypes = {
-  children: PropTypes.node,
-  dispatch: PropTypes.func
-};
 
 function mapStateToProps(state) {
   return {
@@ -93,3 +88,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(CoreLayout);
+
+CoreLayout.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  children: PropTypes.object
+};

@@ -15,19 +15,6 @@ const saltRounds = 10;
  * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
-  console.info(ctx);
-  const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
-  const user = User.build({
-    email: ctx.request.body.email,
-    password: hash,
-    location: ctx.request.body.location,
-    bio: ctx.request.body.bio,
-    avatar: ctx.request.body.avatar,
-    firstName: ctx.request.body.firstName,
-    lastName: ctx.request.body.lastName,
-    website: ctx.request.body.website
-  });
-
   const existingUser = await User.findOne({
     where: {
       email: ctx.request.body.email
@@ -38,6 +25,18 @@ export const registerUser = async ctx => {
     ctx.body = 'Account with this email address already exists!';
   }
   try {
+    const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
+    const user = User.build({
+      email: ctx.request.body.email,
+      password: hash,
+      location: ctx.request.body.location,
+      bio: ctx.request.body.bio,
+      avatar: ctx.request.body.avatar,
+      firstname: ctx.request.body.firstname,
+      lastname: ctx.request.body.lastname,
+      website: ctx.request.body.website
+    });
+
     const newUser = await user.save()
       .then((user) => {
         const verificationToken = generateVerifyCode();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -12,11 +12,13 @@ import SiteLogo from '../SiteLogo';
 const inlineStyle = {
   backgroundColor: '#fff'
 };
+
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
     this.handleClickLogin = this.handleClickLogin.bind(this);
     this.handleClickRegister = this.handleClickRegister.bind(this);
+    this.handleHome = this.handleHome.bind(this);
   }
 
   handleClickLogin(event) {
@@ -32,7 +34,7 @@ class TopBar extends React.Component {
     const path = '/';
     browserHistory.push(path);
   }
-  render() {
+  render(): any {
     return (
       <div className="topbar">
         <div className="topbar__content">
@@ -41,7 +43,7 @@ class TopBar extends React.Component {
           <AppBar title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
             zDepth={ 2 }
             style={ inlineStyle }
-            onTitleTouchTap={ ::this.handleHome }
+            onTitleTouchTap={ this.handleHome }
             onLeftIconButtonTouchTap={ this.props.handleToggle }
             iconElementRight={
               <IconMenu
@@ -68,12 +70,6 @@ class TopBar extends React.Component {
   }
 }
 
-TopBar.propTypes = {
-  dispatch: React.PropTypes.func,
-  handleToggle: React.PropTypes.func,
-  user: React.PropTypes.object
-};
-
 const mapStateToProps = (state) => {
   return {
     boldr: state.boldr,
@@ -82,3 +78,12 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, null)(TopBar);
+
+TopBar.propTypes = {
+  dispatch: PropTypes.func,
+  handleToggle: PropTypes.func,
+  handleClickLogin: PropTypes.func,
+  handleClickRegister: PropTypes.func,
+  handleHome: PropTypes.func,
+  user: PropTypes.object
+};

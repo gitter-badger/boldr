@@ -48,7 +48,7 @@ const styleMap = {
   }
 };
 
-export default class BoldrEditor extends React.Component {
+export default class BEditor extends React.Component {
   static propTypes = {
     editorState: React.PropTypes.object,
     children: React.PropTypes.element,
@@ -219,7 +219,7 @@ export default class BoldrEditor extends React.Component {
   }
 }
 
-BoldrEditor.defaultProps = {
+BEditor.defaultProps = {
   onChange: () => {
 
   }

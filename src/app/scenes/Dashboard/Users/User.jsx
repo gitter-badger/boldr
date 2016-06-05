@@ -5,10 +5,9 @@ const User = (props) => {
   return (
     <TableRow hoverable>
       <TableRowColumn>{ props.user.userId }</TableRowColumn>
-      <TableRowColumn>{ props.user.username }</TableRowColumn>
       <TableRowColumn>{ props.user.email }</TableRowColumn>
-      <TableRowColumn>{ props.user.firstName }</TableRowColumn>
-      <TableRowColumn>{ props.user.lastName }</TableRowColumn>
+      <TableRowColumn>{ props.user.firstname }</TableRowColumn>
+      <TableRowColumn>{ props.user.lastname }</TableRowColumn>
       <TableRowColumn>{ props.user.createdAt }</TableRowColumn>
     </TableRow>
   );

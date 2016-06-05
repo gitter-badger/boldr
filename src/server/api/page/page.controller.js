@@ -1,9 +1,16 @@
 import Models from '../../db/models';
+import slugg from 'slugg';
 const Page = Models.Page;
 
 export async function getAllPages(ctx) {
-  const pages = await Page.findAll({});
-  return ctx.ok(pages);
+  try {
+    const pages = await Page.findAll();
+    ctx.status = 200;
+    ctx.body = { pages };
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+  }
 }
 /**
  * @description
@@ -12,15 +19,21 @@ export async function getAllPages(ctx) {
  * @method POST
  */
 export const createPage = async (ctx, next) => {
-  const page = {
+  const pageBody = {
     name: ctx.request.body.name,
-    description: ctx.request.body.description
+    slug: slugg(ctx.request.body.slug),
+    description: ctx.request.body.description,
+    content: ctx.request.body.content,
+    showInMenu: ctx.request.body.showInMenu,
+    status: ctx.request.body.status
   };
   try {
-    await Page.create(page);
-    return ctx.created(page);
+    const page = await Page.create(pageBody);
+    ctx.status = 201;
+    ctx.body = { page };
   } catch (err) {
-    return ctx.error('There was an error!');
+    ctx.status = 500;
+    ctx.body = err;
   }
 };
 /**
@@ -32,15 +45,18 @@ export const createPage = async (ctx, next) => {
 export async function getId(ctx, next) {
   try {
     const page = await Page.findById(ctx.params.id);
-    return ctx.ok(page);
+    ctx.status = 200;
+    ctx.body = { page };
   } catch (err) {
-    return ctx.badRequest('Page not available.');
+    ctx.status = 500;
+    ctx.body = err;
   }
 }
 
 export async function update(ctx) {
   const result = await Page.update(ctx.request.body, { where: { id: ctx.params.id } });
-  return ctx.ok(result);
+  ctx.status = 202;
+  ctx.body = { result };
 }
 
 export async function destroy(ctx) {

@@ -1,45 +1,58 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import { fetchArticles } from 'state/article/article.actions';
+import Loader from 'components/Loader';
 import Article from './components/Article';
-import Loader from 'app/components/Loader';
-import { bindActionCreators } from 'redux';
-import * as articleActions from 'app/state/article/article.actions';
-
+import Paper from 'material-ui/Paper';
 class ArticleList extends Component {
-  componentWillMount(dispatch) {
-    this.props.articleActions.fetchArticles();
+  static loadAsyncData(dispatch) {
+    return dispatch(fetchArticles());
   }
 
+  constructor(props) {
+    super(props);
+    this.createArticleList = (articleList) => this._createArticleList(articleList);
+  }
+
+  componentDidMount() {
+    this.constructor.loadAsyncData(this.props.dispatch);
+  }
+
+  _createArticleList(articles) {
+    const articleList = [];
+    for (let article of articles) { // eslint-disable-line
+      articleList.push(
+        <div key={ article.id }>
+          <Article {...article} />
+        </div>
+      );
+    }
+    return articleList;
+  }
   render() {
-    const { article, loading } = this.props;
+    const { loading, article } = this.props;
+    let articleList = this.createArticleList(this.props.article.articles);
 
     return (
       <div>
 
-       <div className="container">
-         { loading ? <Loader /> : <Article articles={ this.props.article.articles } /> }
-       </div>
+       <Paper zDepth={ 2 }>
+         { articleList }
+       </Paper>
       </div>
       );
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  return {
-    article: state.article,
-    loading: state.article.loading
-  };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    articleActions: bindActionCreators(articleActions, dispatch)
-  };
-};
 
 ArticleList.propTypes = {
-  articleActions: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
   article: PropTypes.object,
-  loading: PropTypes.bool
+  dispatch: PropTypes.func
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);
+const mapStateToProps = (state) => ({
+  article: state.article,
+  loading: state.article.loading
+});
+
+export default connect(mapStateToProps, null)(ArticleList);
