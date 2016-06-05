@@ -18,7 +18,7 @@ export const getAllArticles = async (ctx) => {
   await Article.findAll({
     include: [{
       model: User,
-      attributes: ['id', 'firstName', 'lastName', 'email']
+      attributes: ['id', 'firstname', 'lastname', 'email']
     }, {
       model: Tag,
       attributes: ['tagname']
@@ -97,7 +97,7 @@ export const showArticle = async (ctx) => {
   const article = await Article.findById(ctx.params.id, {
     include: [{
       model: User,
-      attributes: ['id', 'firstName', 'lastName', 'email']
+      attributes: ['id', 'firstname', 'lastname', 'email']
     }, {
       model: Tag,
       attributes: ['tagname']

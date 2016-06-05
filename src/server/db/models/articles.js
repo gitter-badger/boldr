@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM('published', 'archived', 'draft'),
-      defaultValue: true
+      defaultValue: 'draft'
     },
     views: {
       type: DataTypes.INTEGER,

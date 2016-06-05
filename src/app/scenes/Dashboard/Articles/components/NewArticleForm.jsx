@@ -2,9 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
+import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
-import BoldrEditor from 'app/components/BoldrEditor/BoldrEditor';
+import BEditor from 'app/components/Editor/BoldrEditor';
 const style = {
+  block: {
+    maxWidth: 250
+  },
+  toggle: {
+    marginBottom: 16
+  },
   margin: 12
 };
 class NewArticleForm extends Component {
@@ -29,6 +36,7 @@ class NewArticleForm extends Component {
     this.state = {
     };
   }
+  handleChange = (event, index, value) => this.setState({value});
   render() {
     const { handleSubmit, fields: { title, slug, content, status } } = this.props;
     return (
@@ -55,14 +63,16 @@ class NewArticleForm extends Component {
       </div>
       <div>
 
-        <BoldrEditor placeholder="Write your content..."
-          value={ this.state.value }
-          onValueChange={ this.onChange }
-          returnHTML={ this.getMarkup }
+        <BEditor placeholder="Write your content..."
           { ...content }
         />
-
       </div>
+      <label>
+            <input type="radio" { ...status } value="draft" checked={ status.value === 'draft' } /> Draft
+          </label>
+          <label>
+            <input type="radio" { ...status } value="published" checked={ status.value === 'published' } /> Published
+          </label>
       <div>
         <RaisedButton type="submit" secondary label="Publish" style={ style } />
       </div>
@@ -73,7 +83,7 @@ class NewArticleForm extends Component {
 
 export default reduxForm({
   form: 'NewArticleForm',
-  fields: ['title', 'slug', 'content']
+  fields: ['title', 'slug', 'content', 'status']
 }, null, null)(NewArticleForm);
 
 NewArticleForm.propTypes = {
