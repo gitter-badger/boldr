@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ![alt text][logo] Boldr
+=======
+![boldr](static/favicon-96x96.png) Boldr
+>>>>>>> develop
 ====
 
 > Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little, **Boldr**?
@@ -14,8 +18,9 @@ ____
 * Node 6
 * [Koa v2](http://koajs.com/)
 * [React](http://facebook.github.io/react/) 15
-* Postgres 9.5
+* Postgres 9.5  
 ____
+
 ### Current Version: Alpha 2
 6/5/2016  
 
