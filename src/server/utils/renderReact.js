@@ -47,12 +47,14 @@ const handleRender = ctx => {
       const muiTheme = getMuiTheme({ userAgent: ctx.headers['user-agent'] });
       const component = (
         <Provider store={store}>
-        <MuiThemeProvider muiTheme={ muiTheme }>
+        <div className="app">
+          <MuiThemeProvider muiTheme={ muiTheme }>
             <RouterContext { ...renderProps } />
           </MuiThemeProvider>
+          </div>
         </Provider>
       );
-      console.log(ctx.state.user)
+
       // Send the rendered page back to the client
       _ctx.type = 'html';
       _ctx.status = 200;

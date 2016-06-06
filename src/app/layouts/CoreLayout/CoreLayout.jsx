@@ -55,8 +55,12 @@ const muiTheme = getMuiTheme({
     clockCircleColor: fade(fullWhite, 0.12)
   }
 });
-class CoreLayout extends Component {
 
+class CoreLayout extends Component {
+  static propTypes = {
+    children: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
+  };
   componentDidMount() {
     this.props.dispatch(checkTokenValidity);
   }
@@ -87,8 +91,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(CoreLayout);
-
-CoreLayout.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  children: PropTypes.object
-};
