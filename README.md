@@ -1,5 +1,4 @@
 ![boldr](static/favicon-96x96.png) Boldr
->>>>>>> develop
 ====
 
 > Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little, **Boldr**?
