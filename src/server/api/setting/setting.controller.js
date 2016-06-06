@@ -3,8 +3,13 @@ import Models from '../../db/models';
 const Settings = Models.Settings;
 
 export async function getAllSettings(ctx) {
-  const settings = await Settings.findAll({});
-  return ctx.ok(settings);
+  try {
+    const settings = await Settings.findAll({});
+    return ctx.ok(settings);
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+  }
 }
 /**
  * @description

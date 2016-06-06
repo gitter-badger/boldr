@@ -1,10 +1,15 @@
-import * as constants from './boldr.constants';
+import * as constants from './boldr.actions';
 
 const INITIAL_STATE = {
   isLoading: true,
   isSideBarOpen: false,
   selectedDrawerMenuListItem: 1,
-  title: 'Boldr'
+  error: false,
+  title: 'Boldr',
+  url: '',
+  analyticsId: '',
+  sitename: '',
+  logo: ''
 };
 
 export default function boldr(state = INITIAL_STATE, action) {

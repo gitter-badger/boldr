@@ -1,7 +1,7 @@
 {
   "name": "boldr",
   "description": "Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little Boldr?",
-  "version": "0.1.0-alpha.1.4",
+  "version": "0.1.0-alpha.2",
   "engines": {
     "node": ">=6",
     "npm": ">=3"
@@ -20,7 +20,7 @@
     "compile:server": "better-npm-run compile:server",
     "deploy": "npm run clean:dist && npm run compile && npm run prod",
     "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
-    "lint:flow": "./node_modules/.bin/flow check",
+    "migrate": "npm run sequelize db:migrate",
     "prod": "NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
     "sequelize": "node_modules/.bin/sequelize",
     "start": "concurrently --kill-others --raw \"npm run start:client\" \"npm run start:server\"",
@@ -53,10 +53,8 @@
     }
   },
   "dependencies": {
-    "assert": "^1.4.1",
     "aws-sdk": "^2.3.16",
     "axios": "^0.12.0",
-    "bcrypt-as-promised": "^1.1.0",
     "bcryptjs": "^2.3.0",
     "better-npm-run": "0.0.8",
     "bluebird": "^3.4.0",
@@ -117,7 +115,6 @@
     "radium": "^0.17.1",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
-    "react-cookie": "^0.4.6",
     "react-dom": "^15.1.0",
     "react-helmet": "^3.1.0",
     "react-redux": "^4.4.5",

@@ -3,11 +3,21 @@ import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
   const Settings = sequelize.define('Settings', {
-    name: {
-      type: DataTypes.TEXT
+    sitename: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
-    description: {
-      type: DataTypes.TEXT
+    url: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    logo: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    analyticsId: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     timestamps: false,
