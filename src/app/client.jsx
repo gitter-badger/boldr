@@ -14,7 +14,6 @@ import createRoutes from 'core/routes';
 import configureStore from 'core/store';
 import muiTheme from 'core/theme';
 
-// If localStorage is unavailable, fallback to cookie.
 const token = localStorage.getItem('boldr:jwt');
 
 // If its available, always send the token in the header.

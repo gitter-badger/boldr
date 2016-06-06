@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { PropTypes, Component } from 'react';
+import Radium from 'radium';
 import { Editor, EditorState, ContentState, RichUtils, getDefaultKeyBinding,
   KeyBindingUtil, Entity, convertToRaw, CompositeDecorator, convertFromRaw,
   AtomicBlockUtils, Modifier, DefaultDraftBlockRenderMap
@@ -26,7 +26,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-
 import { handleLink,
 HandleLinkSpan,
 findWithRegex } from './utilities';
-
+import BoldrTheme from './style/BoldrTheme';
 
 function myKeyBindingFn(e) {
   if (e.keyCode === 69 && KeyBindingUtil.hasCommandModifier(e)) {
@@ -48,6 +48,7 @@ const styleMap = {
   }
 };
 
+@Radium
 export default class BEditor extends React.Component {
   static propTypes = {
     editorState: React.PropTypes.object,
@@ -86,6 +87,7 @@ export default class BEditor extends React.Component {
     this.focus = () => {
       this.refs.editor.focus();
     };
+
   }
 
   componentDidMount() {
@@ -180,7 +182,7 @@ export default class BEditor extends React.Component {
     }
 
     return (
-      <div className={ !this.props.readOnly ? 'RichEditor-root' : null }>
+      <div style={ BoldrTheme.base } className={ !this.props.readOnly ? 'RichEditor-root' : null }>
         { !this.props.readOnly &&
           <div>
           <Toolbar>
