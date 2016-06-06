@@ -1,4 +1,4 @@
-![boldr][https://boldr.io/favicon-96x96.png] Boldr
+![boldr](https://boldr.io/favicon-96x96.png) Boldr
 ====
 
 > Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little, **Boldr**?
