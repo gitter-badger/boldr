@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-![alt text][logo] Boldr
-=======
 ![boldr](static/favicon-96x96.png) Boldr
 >>>>>>> develop
 ====
