@@ -6,6 +6,7 @@
  */
 import Router from 'koa-router';
 import { upload } from './upload.controller';
+
 const uploadRouter = new Router({
   prefix: '/api/v1/uploads'
 });
@@ -14,5 +15,8 @@ uploadRouter
   .get('/test', async ctx => {
     ctx.body = 'Hello uploads';
   })
-  .post('/', upload.single('image'));
+  .post('/', upload.single('image'), (ctx) => {
+    console.info(ctx.req.file.location)
+    return ctx.created();
+  });
 export default uploadRouter;

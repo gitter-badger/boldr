@@ -11,11 +11,11 @@ import Loader from 'app/components/Loader';
 import { checkTokenValidity } from 'app/state/auth/auth.actions';
 
 import meta from '../../meta';
-import dark from 'app/theme';
+
 import 'app/styles/app.scss';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {fade} from 'material-ui/utils/colorManipulator';
+import { fade } from 'material-ui/utils/colorManipulator';
 import {
   cyan700,
   grey600,
@@ -26,19 +26,19 @@ const blueIsh = '#272734';
 const pinkish = '#DD144D';
 const muiTheme = getMuiTheme({
   spacing: {
-  iconSize: 24,
-  desktopGutter: 24,
-  desktopGutterMore: 32,
-  desktopGutterLess: 16,
-  desktopGutterMini: 8,
-  desktopKeylineIncrement: 64,
-  desktopDropDownMenuItemHeight: 32,
-  desktopDropDownMenuFontSize: 15,
-  desktopDrawerMenuItemHeight: 48,
-  desktopSubheaderHeight: 48,
-  desktopToolbarHeight: 56,
-},
-fontFamily: 'Roboto, sans-serif',
+    iconSize: 24,
+    desktopGutter: 24,
+    desktopGutterMore: 32,
+    desktopGutterLess: 16,
+    desktopGutterMini: 8,
+    desktopKeylineIncrement: 64,
+    desktopDropDownMenuItemHeight: 32,
+    desktopDropDownMenuFontSize: 15,
+    desktopDrawerMenuItemHeight: 48,
+    desktopSubheaderHeight: 48,
+    desktopToolbarHeight: 56
+  },
+  fontFamily: 'Roboto, sans-serif',
   palette: {
     primary1Color: cyan700,
     primary2Color: cyan700,
@@ -66,7 +66,6 @@ class CoreLayout extends Component {
   }
 
   render() {
-
     return (
           <MuiThemeProvider muiTheme={ muiTheme }>
           <div>
