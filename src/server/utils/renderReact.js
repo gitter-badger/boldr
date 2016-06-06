@@ -44,7 +44,7 @@ const handleRender = ctx => {
       _ctx.status = 302;
       _ctx.redirect(`${redirectLocation.pathname}${redirectLocation.search}`);
     } else if (renderProps) {
-      const muiTheme = getMuiTheme({ userAgent: ctx.headers['user-agent'] });
+      const muiTheme = getMuiTheme(null, { userAgent: 'all' });
       const component = (
         <Provider store={store}>
         <div className="app">
