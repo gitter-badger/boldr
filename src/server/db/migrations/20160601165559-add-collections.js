@@ -20,8 +20,10 @@ module.exports = {
           allowNull: false
         },
         status: {
-          type: DataTypes.ENUM('published', 'draft', 'archived'),
-          allowNull: false
+          type: DataTypes.ENUM,
+          allowNull: false,
+          values: ['draft', 'published', 'archived'],
+          defaultValue: 'draft'
         },
         showInMenu: {
           type: DataTypes.BOOLEAN,

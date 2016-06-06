@@ -20,8 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM('published', 'draft', 'archived'),
-      allowNull: true
+      type: DataTypes.ENUM,
+      allowNull: false,
+      values: ['draft', 'published', 'archived'],
+      defaultValue: 'draft'
     },
     showInMenu: {
       type: DataTypes.BOOLEAN,

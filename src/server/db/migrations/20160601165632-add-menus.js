@@ -8,8 +8,13 @@ module.exports = {
           autoIncrement: true
         },
         name: {
-          type: DataTypes.STRING,
-          allowNull: false
+          type: DataTypes.TEXT
+        },
+        description: {
+          type: DataTypes.TEXT
+        },
+        position: {
+          type: DataTypes.TEXT
         }
       }
     );

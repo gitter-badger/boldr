@@ -26,9 +26,7 @@ import sockets from './lib/socket';
 // Load environment variables.
 dotenv.config();
 const debug = _debug('boldr:server:dev');
-// Useful for Material-UI CSS
-global.navigator = global.navigator || {};
-global.navigator.userAgent = global.navigator.userAgent || 'all';
+
 // Application constants
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 

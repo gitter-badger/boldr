@@ -8,11 +8,11 @@ module.exports = {
           autoIncrement: true
         },
         tagname: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(20),
           allowNull: false
         },
         description: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           allowNull: true
         }
       }

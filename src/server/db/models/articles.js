@@ -4,16 +4,16 @@ import bcrypt from 'bcryptjs';
 module.exports = (sequelize, DataTypes) => {
   const Article = sequelize.define('Article', {
     title: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       allowNull: false
     },
     slug: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       allowNull: false,
       unique: true
     },
     featureImage: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       defaultValue: ''
     },
     content: {
@@ -29,7 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     status: {
-      type: DataTypes.ENUM('published', 'archived', 'draft'),
+      type: DataTypes.ENUM,
+      allowNull: false,
+      values: ['draft', 'published', 'archived'],
       defaultValue: 'draft'
     },
     views: {

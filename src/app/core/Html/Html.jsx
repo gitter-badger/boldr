@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import Helmet from 'react-helmet';
 
 export default class Html extends Component {
@@ -61,7 +61,7 @@ export default class Html extends Component {
         </head>
 
         <body>
-          <div id="root" dangerouslySetInnerHTML={ { __html: renderToStaticMarkup(component) } } />
+          <div id="root" dangerouslySetInnerHTML={ { __html: renderToString(component) } } />
           <script dangerouslySetInnerHTML={
             { __html: `window.__INITIAL_STATE__=${JSON.stringify(store.getState())};` } }
           />

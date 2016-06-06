@@ -15,32 +15,32 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     firstname: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       defaultValue: '',
       allowNull: true
     },
     lastname: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       defaultValue: '',
       allowNull: true
     },
     location: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       defaultValue: '',
       allowNull: true
     },
     website: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       defaultValue: '',
       allowNull: true
     },
     avatar: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       defaultValue: '',
       allowNull: true
     },
     bio: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(512),
       defaultValue: '',
       allowNull: true
     },

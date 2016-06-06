@@ -4,11 +4,11 @@ import bcrypt from 'bcryptjs';
 module.exports = (sequelize, DataTypes) => {
   const Settings = sequelize.define('Settings', {
     sitename: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       allowNull: true
     },
     url: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       allowNull: true
     },
     logo: {
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     analyticsId: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       allowNull: true
     }
   }, {
