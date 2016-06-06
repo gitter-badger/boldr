@@ -1,37 +1,39 @@
+import { polyfill } from 'es6-promise';
+import axios from 'axios';
 import { push } from 'react-router-redux';
-import * as constants from './boldr.constants';
+import { API_BASE } from 'core/api';
+
+polyfill();
+
+export const TOGGLE_SIDE_BAR = '@@boldr/TOGGLE_SIDE_BAR';
+export const CHANGE_SELECTED_DRAWER_ITEM = '@@boldr/CHANGE_SELECTED_DRAWER_ITEM';
+export const DONE_LOADING = '@@boldr/DONE_LOADING';
+export const LOAD_SETTINGS = '@@boldr/LOAD_SETTINGS';
+export const LOAD_SETTINGS_SUCCESS = '@@boldr/LOAD_SETTINGS_SUCCESS';
+export const LOAD_SETTINGS_FAILURE = '@@boldr/LOAD_SETTINGS_FAILURE';
+
+export const SETTINGS_ENDPOINT = `${API_BASE}/settings`;
 
 export const finishLoading = status => {
   return {
-    type: constants.DONE_LOADING
+    type: DONE_LOADING
   };
 };
 
 export const toggleSideBar = () => {
   return {
-    type: constants.TOGGLE_SIDE_BAR
+    type: TOGGLE_SIDE_BAR
   };
 };
 
-export const changeSelectedDrawerMenuListItem = (index, title) => {
+const changeSelectedDrawerMenuListItem = (index, title) => {
   return {
-    type: constants.CHANGE_SELECTED_DRAWER_ITEM,
+    type: CHANGE_SELECTED_DRAWER_ITEM,
     index,
     title
   };
 };
-// export const loadApp = () => {
-//   return (dispatch) => {
-//     setTimeout(function() {
-//       if (localStorage.getItem('isSignedIn') && localStorage.getItem('user')) {
-//         dispatch(finishLoading());
-//         // dispatch(authenticationActions.completeSignIn(JSON.parse(localStorage.getItem('user'))));
-//         return;
-//       }
-//       return dispatch(finishLoading());
-//     }, 100);
-//   };
-// };
+
 export const routeToIndex = (index) => {
   return (dispatch) => {
     setTimeout(() => {
@@ -96,3 +98,41 @@ export const routeToIndex = (index) => {
     }, 500);
   };
 };
+
+const loadSettings = () => ({
+  type: LOAD_SETTINGS
+});
+
+const loadSettingsSuccess = (response) => ({
+  type: LOAD_SETTINGS_SUCCESS,
+  loading: false,
+  payload: response.data
+});
+
+// Fail receivers
+const failedToLoadSettings = (data) => ({
+  type: LOAD_SETTINGS_FAILURE,
+  loading: false,
+  data
+});
+
+// Public action creators
+export function loadBoldrSettings(data) {
+  return dispatch => {
+    dispatch(loadSettings());
+    return axios.get(`${SETTINGS_ENDPOINT}`, {
+      timeout: 5000,
+      responseType: 'json'
+    })
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(loadSettingsSuccess(response));
+        } else {
+          dispatch(failedToLoadSettings('Oops! Something went wrong!'));
+        }
+      })
+      .catch(err => {
+        dispatch(failedToLoadSettings(err));
+      });
+  };
+}

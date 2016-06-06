@@ -1,27 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Settings from './Settings.jsx';
-
+import Paper from 'material-ui/Paper';
+import Settings from './Settings';
+import { loadBoldrSettings } from 'state/boldr/boldr.actions';
+const style = {
+  backgroundColor: '#40404E',
+  margin: 20,
+  padding: 20
+};
 class SettingsContainer extends Component {
+  static loadAsyncData(dispatch) {
+    return dispatch(loadBoldrSettings());
+  }
+
+  componentDidMount() {
+    this.constructor.loadAsyncData(this.props.dispatch);
+  }
   render() {
     return (
-      <div>
-
        <div className="container">
-       SettingsContainer
-       { this.props.children }
+        <Paper style={ style } zDepth={ 3 }>
+         SettingsContainer
+         <Settings />
+       </Paper>
        </div>
-      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-
-});
-
-SettingsContainer.propTypes = {
-  children: React.PropTypes.node
+const mapStateToProps = (state) => {
+  return {
+    boldr: state.boldr,
+    loading: state.boldr.loading
+  };
 };
 
-export default connect(mapStateToProps, null)(Settings);
+SettingsContainer.propTypes = {
+  dispatch: React.PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, null)(SettingsContainer);
