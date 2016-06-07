@@ -5,7 +5,10 @@ import multerS3 from 'multer-s3';
 import convert from 'koa-convert';
 import crypto from 'crypto';
 import path from 'path';
-
+import Models from '../../db/models';
+const Upload = Models.Upload;
+const User = Models.User;
+const Tag = Models.Tag;
 const s3 = new aws.S3({
   secretAccessKey: config.aws.config.secretAccessKey,
   accessKeyId: config.aws.config.accessKeyId,

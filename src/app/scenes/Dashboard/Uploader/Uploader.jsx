@@ -13,40 +13,37 @@ class Uploader extends Component {
     };
   }
   onDropAccepted(func, files) {
-    console.log(files)
-    this.props.uploadActions.uploadFile(files[0]);
+    console.log(files) // eslint-disable-line
   }
 
   onDrop(file) {
     const image = new FormData();
-    image.append('image', file[0])
+    image.append('image', file[0]);
     axios.post('/api/v1/uploads', image)
       .then(response => {
         if (response.status === 201) {
-          console.log(response)
+          console.log(response, '--- is this it')// eslint-disable-line
         }
       })
       .catch(err => {
-        console.log(err)
+        console.log(err)// eslint-disable-line
       });
   }
   onOpenClick() {
     this.refs.dropzone.open();
   }
   render() {
-
     return (
       <div>
        <div className="container">
        UploaderContainer
        <div>
-            <Dropzone ref="dropzone" multiple={false} accept={'image/*'} onDrop={::this.onDrop}>
-                <div>Try dropping some files here, or click to select files to upload.</div>
-            </Dropzone>
-            <button type="button" onClick={::this.onOpenClick}>
-                Open Dropzone
-            </button>
-
+      <Dropzone ref="dropzone" multiple={ false } accept={ 'image/*' } onDrop={ ::this.onDrop }>
+          <div>Try dropping some files here, or click to select files to upload.</div>
+      </Dropzone>
+      <button type="button" onClick={ ::this.onOpenClick }>
+          Open Dropzone
+      </button>
         </div>
        </div>
       </div>
@@ -55,3 +52,7 @@ class Uploader extends Component {
 }
 
 export default Uploader;
+
+Uploader.propTypes = {
+  uploadActions: React.PropTypes.object
+};

@@ -75,6 +75,9 @@ module.exports = (sequelize, DataTypes) => {
         User.hasOne(models.VerificationToken, {
           foreignKey: 'userId'
         });
+        User.hasMany(models.Upload, {
+          foreignKey: 'userId'
+        });
       }
     },
 
