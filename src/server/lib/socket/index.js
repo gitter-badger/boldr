@@ -1,6 +1,6 @@
 import SocketIO from 'socket.io';
-
 import logger from '../logger';
+
 const io = new SocketIO();
 const NOOP = () => { };
 

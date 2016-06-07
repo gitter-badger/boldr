@@ -87,7 +87,6 @@ export default class BEditor extends React.Component {
     this.focus = () => {
       this.refs.editor.focus();
     };
-
   }
 
   componentDidMount() {

@@ -31,6 +31,14 @@ const config = {
   PG_DB_NAME: process.env.PG_DB_NAME || 'boldr',
   REDIS_HOST: 'localhost',
   REDIS_PORT: 6379,
+  session: {
+    ttl: 3600,
+    db: 0,
+    cookiekey: 'bldr',
+    secure: false,
+    http_only: false,
+    domain: undefined
+  },
   logger: {
     console: true,
     level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'

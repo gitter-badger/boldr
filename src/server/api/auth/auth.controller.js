@@ -4,6 +4,7 @@ import config, { paths } from 'config';
 import logger from 'server/lib/logger';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 import Models from '../../db/models';
+import redisClient from '../../db/redis';
 const User = Models.User;
 const saltRounds = 10;
 
@@ -78,8 +79,8 @@ export async function loginUser(ctx, next) {
     };
     // make this data available across the app on ctx.session
     ctx.session = payload;
-    logger.info(ctx.session);
     const token = jwt.sign(payload, process.env.JWT_SECRET);
+    await redisClient.set(token, true);
     return ctx.ok({
       token
     });

@@ -1,28 +1,27 @@
 import Redis from 'ioredis';
-import { Store } from 'koa-session2';
+import logger from 'server/lib/logger';
 
-export default class RedisStore extends Store {
-  constructor() {
-    super();
-    this.redis = new Redis({
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT
-    });
-  }
+const redisClient = new Redis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT
+});
 
-  async get(sid) {
-    return await this.redis.get(`SESSION:${sid}`);
-  }
+redisClient.on('connect', () => {
+  logger.info('redis has connected');
+});
 
-  async set(session, opts) {
-    if (!opts.sid) {
-      opts.sid = this.getID(24);
-    }
-    await this.redis.set(`SESSION:${opts.sid}`, session);
-    return opts.sid;
-  }
+redisClient.on('error', err => {
+  logger.error(err);
+  process.exit(1);
+});
 
-  async destory(sid) {
-    return await this.redis.del(sid);
-  }
-}
+redisClient.on('close', () => {
+  logger.warn('redis has closed.');
+  process.exit(1);
+});
+
+redisClient.on('reconnecting', () => {
+  logger.info('redis has reconnecting');
+});
+
+export default redisClient;

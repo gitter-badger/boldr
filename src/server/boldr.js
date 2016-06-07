@@ -17,7 +17,6 @@ import mount from 'koa-mount';
 import Router from 'koa-router';
 import BoldrMiddleware from './middleware';
 import config from 'config';
-import { handleError } from './middleware/handleError';
 import routers from './api';
 import { logger } from './lib';
 import { Problem, handleRender } from './utils';
@@ -42,6 +41,7 @@ connector();
 // https://www.npmjs.com/package/koa-convert
 const use = app.use;
 app.use = x => use.call(app, convert(x));
+
 sockets.register(app);
 /**
  * Asynchronous function that sets up the middleware
