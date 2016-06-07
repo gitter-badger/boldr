@@ -38,6 +38,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
       allowNull: true
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
     }
   }, {
     timestamps: true,
@@ -61,7 +69,12 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'authorId'
         });
       }
-    }
+    },
+    indexes: [
+      {
+        fields: ['slug', 'createdAt', 'status']
+      }
+    ]
   });
 
   return Article;

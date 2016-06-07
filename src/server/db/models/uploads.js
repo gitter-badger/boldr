@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
   const Upload = sequelize.define('Upload', {
-    fieldname: {
+    filename: {
       type: DataTypes.STRING(256),
       allowNull: true
     },
@@ -19,11 +19,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(56),
       allowNull: true
     },
-    location: {
+    meta: {
+      type: DataTypes.JSONB
+    },
+    size: {
+      type: DataTypes.INTEGER
+    },
+    s3url: {
       type: DataTypes.STRING,
       allowNull: false
     },
     userId: {
+      type: DataTypes.INTEGER
+    },
+    categoryId: {
       type: DataTypes.INTEGER
     },
     createdAt: {

@@ -28,6 +28,9 @@ module.exports = {
         showInMenu: {
           type: DataTypes.BOOLEAN,
           allowNull: false
+        },
+        categoryId: {
+          type: DataTypes.INTEGER
         }
       }
     );

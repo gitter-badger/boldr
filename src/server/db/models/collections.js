@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
-  const Collection = sequelize.define('Collections', {
+  const Collection = sequelize.define('Collection', {
     name: {
       type: DataTypes.STRING(20)
     },
@@ -14,12 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       values: ['draft', 'published', 'archived'],
       defaultValue: 'draft'
+    },
+    categoryId: {
+      type: DataTypes.INTEGER
     }
   }, {
     timestamps: false,
     tableName: 'collections',
     classMethods: {
       associate(models) {
+        Collection.belongsTo(models.Category, {
+          foreignKey: 'categoryId'
+        });
       }
     }
   });
