@@ -16,7 +16,7 @@ uploadRouter
     ctx.body = 'Hello uploads';
   })
   .post('/', upload.single('image'), (ctx) => {
-    console.info(ctx.req.file.location)
-    return ctx.created();
+    console.info(ctx.req)
+    return ctx.created(ctx.req);
   });
 export default uploadRouter;

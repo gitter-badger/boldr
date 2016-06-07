@@ -11,7 +11,6 @@ export const DONE_LOADING = '@@boldr/DONE_LOADING';
 export const LOAD_SETTINGS = '@@boldr/LOAD_SETTINGS';
 export const LOAD_SETTINGS_SUCCESS = '@@boldr/LOAD_SETTINGS_SUCCESS';
 export const LOAD_SETTINGS_FAILURE = '@@boldr/LOAD_SETTINGS_FAILURE';
-
 export const SETTINGS_ENDPOINT = `${API_BASE}/settings`;
 
 export const finishLoading = status => {

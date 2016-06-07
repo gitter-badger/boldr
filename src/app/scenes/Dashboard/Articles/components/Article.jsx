@@ -54,9 +54,9 @@ class Article extends React.Component {
           <div className={ className }>
             <div className="card-content">
               { this.props.id }
-              { this.props.Tags.map(tag => {
+              { this.props.Tags.map((tag, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                 <h3>  {tag.tagname}</h3>
                   <p> {tag.ArticlesTags.tagId }</p>
                   </div>

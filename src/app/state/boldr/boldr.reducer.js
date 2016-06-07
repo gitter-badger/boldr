@@ -29,6 +29,7 @@ export default function boldr(state = INITIAL_STATE, action) {
         ...state,
         selectedDrawerMenuListItem: action.index, title: action.title
       };
+
     default:
       return state;
   }

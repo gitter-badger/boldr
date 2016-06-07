@@ -36,7 +36,7 @@ const handleRender = ctx => {
   const { url: location } = _ctx;
 
   global.navigator = {
-    userAgent: ctx.headers['user-agent']
+    userAgent: ctx.request.headers['user-agent']
   };
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     if (error) {

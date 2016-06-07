@@ -8,7 +8,7 @@ import boldr from './boldr/boldr.reducer';
 import setting from './setting/setting.reducer';
 import page from './page/page.reducer';
 import collection from './collection/collection.reducer';
-
+import upload from './upload/upload.reducer';
 const rootReducer = combineReducers({
   routing,
   boldr,
@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
   page,
   collection,
   setting,
+  upload,
   form: formReducer
 });
 

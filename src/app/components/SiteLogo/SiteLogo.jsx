@@ -4,10 +4,13 @@ import BoldrLogo from './BoldrLogo';
 const inlineStyles = {
   verticalAlign: 'top'
 };
+const inlineStyle = {
+  paddingTop: '5px'
+};
 export default function SiteLogo(props) {
   return (
-  <div className="sitelogo">
-  <BoldrLogo width="60px" height="60px" />
+  <div className="sitelogo" style={ inlineStyle }>
+  <BoldrLogo width="50px" height="50px" />
     <span style={ inlineStyles }>{ props.SiteLogoOrTitle }</span>
   </div>
 );
