@@ -22,14 +22,14 @@ class LinkHeaderControls extends React.Component {
         type: undefined,
         urlValue: undefined
       }
-    }
+    };
   }
 
   _openLinkInput() {
-    const {editorState} = this.props;
+    const { editorState } = this.props;
 
     if (!editorState.getSelection().isCollapsed()) {
-      //TODO notice that you need to select something!
+      // TODO notice that you need to select something!
       this.setState({
         urlInputField: {
           isActive: true,
@@ -51,14 +51,13 @@ class LinkHeaderControls extends React.Component {
       }
     }, () => {
       setTimeout(() => this.props.onFocus(), 0);
-    })
+    });
   }
 
   _confirmLink(urlValue) {
     if (urlValue && urlValue !== '') {
       // TODO add check if valid link!
       this.addLink(urlValue);
-
     }
     this.collapseLinkBlock();
   }
@@ -78,10 +77,10 @@ class LinkHeaderControls extends React.Component {
   }
 
   _removeLink() {
-    const {editorState} = this.props;
+    const { editorState } = this.props;
     const selection = editorState.getSelection();
     if (!selection.isCollapsed()) {
-      //TODO notice that you need to select something!
+      // TODO notice that you need to select something!
       this.props.onChange(
         RichUtils.toggleLink(
           this.props.editorState,
@@ -94,34 +93,22 @@ class LinkHeaderControls extends React.Component {
 
   render() {
     let urlInput;
-    const {isActive, type, urlValue} = this.state.urlInputField;
+    const { isActive, type, urlValue } = this.state.urlInputField;
     if (isActive) {
-      urlInput = <UrlInputField
-      currentUrl={urlValue}
-      onConfirm={this.confirmLink}
-      onCancel={this.cancelLink}
-      />;
+      urlInput = <UrlInputField currentUrl={ urlValue } onConfirm={ this.confirmLink } onCancel={ this.cancelLink } />;
     }
 
     return (
       <div>
-                <StyleButton
-      key='add_link'
-      active={type === 'add_link'}
-      label='Add Link'
-      onToggle={this.openLinkInput}
-      style={true}
-      />
-                <StyleButton
-      key='remove_link'
-      active={false}
-      label='Remove Link'
-      onToggle={this.removeLink}
-      style={false}
-      />
-                    {urlInput}
-            </div>
-    )
+        <StyleButton key="add_link" active={ type === 'add_link' } label="Add Link"
+          onToggle={ this.openLinkInput } style
+        />
+        <StyleButton key="remove_link" active={ false } label="Remove Link" onToggle={ this.removeLink }
+          style={ false }
+        />
+          { urlInput }
+      </div>
+    );
   }
 }
 

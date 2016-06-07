@@ -25,46 +25,33 @@ const config = {
   JWT_SECRET: process.env.JWT_SECRET || 'boldr',
   // Webpack Configuration
   WEBPACK_DEV_SERVER_PORT: 3001,
-  VENDOR_DEPENDENCIES: [
-    'react',
-    'react-dom',
-    'redux-thunk',
-    'react-redux',
-    'react-router',
-    'react-router-redux',
-    'material-ui',
-    'redux',
-    'lodash',
-    'classnames',
-    'axios',
-    'react-router-scroll',
-    'react-cookie',
-    'redux-form'
-  ],
-  PG_USER: 'postgres',
-  PG_HOST: 'localhost',
-  PG_PORT: 5432,
-  PG_DB_NAME: 'boldr',
+  PG_USER: process.env.PG_USER || 'postgres',
+  PG_HOST: process.env.PG_HOST || 'localhost',
+  PG_PORT: process.env.PG_PORT || 5432,
+  PG_DB_NAME: process.env.PG_DB_NAME || 'boldr',
   REDIS_HOST: 'localhost',
   REDIS_PORT: 6379,
-
+  session: {
+    ttl: 3600,
+    db: 0,
+    cookiekey: 'bldr',
+    secure: false,
+    http_only: false,
+    domain: undefined
+  },
   logger: {
     console: true,
     level: 'silly', // 'silly' 'debug' 'verbose' 'info' 'warn' 'error'
     files: false
   },
-  AWS: {
+  aws: {
     config: {
-      accessKeyId: process.env.AWS_KEY_ID || '',
-      secretAccessKey: process.env.AWS_KEY_SECRET || '',
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+      bucket: process.env.AWS_BUCKET || 'boldr',
+      ACL: 'public-read',
       region: 'us-west-1',
-      endpoint: 's3.amazonaws.com',
-      prefix: 'uploads/',
-      supportedImageFormats: [
-        'image/jpeg',
-        'image/png',
-        'image/gif'
-      ]
+      endpoint: 's3.amazonaws.com'
     },
     s3: {
       bucket: 'boldr',

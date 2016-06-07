@@ -3,11 +3,17 @@ import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
   const Collection = sequelize.define('Collections', {
-    tagname: {
-      type: DataTypes.TEXT
+    name: {
+      type: DataTypes.STRING(20)
     },
     description: {
       type: DataTypes.TEXT
+    },
+    status: {
+      type: DataTypes.ENUM,
+      allowNull: false,
+      values: ['draft', 'published', 'archived'],
+      defaultValue: 'draft'
     }
   }, {
     timestamps: false,

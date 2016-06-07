@@ -54,7 +54,6 @@ export const articleStyle = {
   lineHeight: '2rem'
 };
 export function findLinkEntities(contentBlock, callback) {
-  console.log(callback);
   contentBlock.findEntityRanges(
     (character) => {
       const entityKey = character.getEntity();
@@ -68,8 +67,7 @@ export function findLinkEntities(contentBlock, callback) {
 }
 
 export const Link = (props) => {
-  const {url} = Entity.get(props.entityKey).getData();
-
+  const { url } = Entity.get(props.entityKey).getData();
   return (
     <a href={url} className={styles.link}>
       {props.children}

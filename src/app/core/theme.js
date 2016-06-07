@@ -1,9 +1,14 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { fade } from 'material-ui/utils/colorManipulator';
 import { cyan700, grey600, pinkA100, pinkA200, pinkA400, fullWhite } from 'material-ui/styles/colors';
+import Spacing from 'material-ui/styles/spacing';
+import zIndex from 'material-ui/styles/zIndex';
+
 const blueIsh = '#272734';
 const pinkish = '#DD144D';
-const muiTheme = getMuiTheme({
+
+export default {
+  zIndex,
   spacing: {
     iconSize: 24,
     desktopGutter: 24,
@@ -33,5 +38,4 @@ const muiTheme = getMuiTheme({
     pickerHeaderColor: fade(fullWhite, 0.12),
     clockCircleColor: fade(fullWhite, 0.12)
   }
-});
-export default muiTheme;
+};

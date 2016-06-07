@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 import { partialPopulateUser } from '../user/user.actions';
 import * as types from './auth.constants';
 const API_URL = '/api/v1';
-import cookie from 'react-cookie';
+
 /**
  * Utility function to make AJAX requests using isomorphic fetch.
  * You can also use jquery's $.ajax({}) if you do not want to use the
@@ -30,7 +30,6 @@ function beginLogin() {
 
 export function loginSuccess(response) {
   localStorage.setItem('boldr:jwt', response.data.token);
-  cookie.save('boldr:jwt', response.data.token);
   return {
     type: types.LOGIN_USER_SUCCESS,
     payload: response.data,

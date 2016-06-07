@@ -12,7 +12,21 @@ const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
   'redux/dist/redux.min.js'
 ];
-
+const VENDOR_DEPENDENCIES = [
+  'react',
+  'react-dom',
+  'redux-thunk',
+  'react-redux',
+  'react-router',
+  'react-router-redux',
+  'material-ui',
+  'redux',
+  'lodash',
+  'classnames',
+  'axios',
+  'react-router-scroll',
+  'redux-form'
+];
 const cssLoader = [
   'css?modules',
   'sourceMap',
@@ -48,7 +62,6 @@ const babelLoaderConfiguration = {
 const {
   SERVER_HOST,
   BLDR_ENTRY,
-  VENDOR_DEPENDENCIES,
   WEBPACK_DEV_SERVER_PORT,
   __CLIENT__,
   __SERVER__,

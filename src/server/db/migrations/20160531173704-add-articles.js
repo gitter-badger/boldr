@@ -5,19 +5,20 @@ module.exports = {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true
+          autoIncrement: true,
+          unique: true
         },
         title: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           allowNull: false
         },
         slug: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           allowNull: false,
           unique: true
         },
         featureImage: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           defaultValue: ''
         },
         content: {
@@ -33,8 +34,10 @@ module.exports = {
           type: DataTypes.INTEGER
         },
         status: {
-          type: DataTypes.ENUM('published', 'draft', 'archived'),
-          allowNull: false
+          type: DataTypes.ENUM,
+          allowNull: false,
+          values: ['draft', 'published', 'archived'],
+          defaultValue: 'draft'
         },
         views: {
           type: DataTypes.INTEGER,

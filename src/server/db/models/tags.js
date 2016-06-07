@@ -4,10 +4,12 @@ import bcrypt from 'bcryptjs';
 module.exports = (sequelize, DataTypes) => {
   const Tag = sequelize.define('Tag', {
     tagname: {
-      type: DataTypes.TEXT
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     description: {
-      type: DataTypes.TEXT
+      type: DataTypes.STRING(256),
+      allowNull: true
     }
   }, {
     timestamps: false,

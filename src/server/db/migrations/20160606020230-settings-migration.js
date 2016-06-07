@@ -8,11 +8,11 @@ module.exports = {
           autoIncrement: true
         },
         sitename: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           allowNull: true
         },
         url: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           allowNull: true
         },
         logo: {
@@ -20,7 +20,7 @@ module.exports = {
           allowNull: true
         },
         analyticsId: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(256),
           allowNull: true
         }
       }
