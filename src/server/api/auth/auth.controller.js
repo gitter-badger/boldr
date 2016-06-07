@@ -38,11 +38,9 @@ export const registerUser = async ctx => {
       website: ctx.request.body.website
     });
 
-    const newUser = await user.save()
-      .then((user) => {
-        const verificationToken = generateVerifyCode();
-        sendVerifyEmail(user.email, verificationToken);
-      });
+    const newUser = await user.save();
+    const verificationToken = await generateVerifyCode();
+    sendVerifyEmail(newUser.email, verificationToken);
     ctx.status = 201;
     ctx.body = user;
   } catch (err) {
