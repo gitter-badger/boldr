@@ -8,7 +8,7 @@ module.exports = {
           autoIncrement: true,
           unique: true
         },
-        fieldname: {
+        filename: {
           type: DataTypes.STRING(256),
           allowNull: true
         },
@@ -24,11 +24,20 @@ module.exports = {
           type: DataTypes.STRING(56),
           allowNull: true
         },
-        location: {
+        meta: {
+          type: DataTypes.JSONB
+        },
+        size: {
+          type: DataTypes.INTEGER
+        },
+        s3url: {
           type: DataTypes.STRING,
           allowNull: false
         },
         userId: {
+          type: DataTypes.INTEGER
+        },
+        categoryId: {
           type: DataTypes.INTEGER
         },
         createdAt: {

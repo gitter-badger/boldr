@@ -20,11 +20,13 @@ uploadRouter
   })
   .post('/', upload.single('image'), async (ctx, next) => {
     const fields = {
-      fieldname: ctx.req.file.fieldname,
+      filename: ctx.req.file.fieldname,
       originalname: ctx.req.file.originalname,
       mimetype: ctx.req.file.mimetype,
       key: ctx.req.file.key,
-      location: ctx.req.file.location,
+      s3url: ctx.req.file.location,
+      size: ctx.req.file.size,
+      meta: ctx.req.file.metadata,
       userId: ctx.state.user.id
     };
 
