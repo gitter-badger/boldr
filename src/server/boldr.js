@@ -8,6 +8,7 @@
 global.Promise = require('bluebird');
 import dotenv from 'dotenv';
 import Koa from 'koa';
+import IO from 'koa-socket';
 import _debug from 'debug';
 import serve from 'koa-static';
 import convert from 'koa-convert';
@@ -19,9 +20,9 @@ import BoldrMiddleware from './middleware';
 import config from 'config';
 import routers from './api';
 import { logger } from './lib';
-import { Problem, handleRender } from './utils';
+import { handleRender } from './utils';
 import connector from './db/connector';
-import sockets from './lib/socket';
+// import { register, io } from './lib/socket';
 // Load environment variables.
 dotenv.config();
 const debug = _debug('boldr:server:dev');
@@ -30,19 +31,19 @@ const debug = _debug('boldr:server:dev');
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 
 const app = new Koa();
-
+const io = new IO();
 app.name = 'Boldr';
 app.proxy = true;
 app.env = process.env.NODE_ENV;
 app.keys = [config.JWT_SECRET];
-
+io.attach(app);
 connector();
 // allow both legacy and modern middleware
 // https://www.npmjs.com/package/koa-convert
 const use = app.use;
 app.use = x => use.call(app, convert(x));
-
-sockets.register(app);
+// io.attach(app);
+// register(app);
 /**
  * Asynchronous function that sets up the middleware
  * and context for Boldr.
@@ -67,8 +68,10 @@ sockets.register(app);
    * @method use
    */
   app.use(async (ctx, next) => {
-    ctx.Problem = Problem;
     ctx.req.body = ctx.request.body;
+    global.navigator = {
+      userAgent: ctx.request.headers['user-agent']
+    };
     await next();
   });
   // Load the routers.

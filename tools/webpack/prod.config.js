@@ -4,8 +4,8 @@ import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 import isomorphicToolsConfig from './isomorphic.tools.config';
-import boldrCfg from '../config';
-import paths from '../config/paths';
+import boldrCfg from '../../src/config';
+import paths from '../../src/config/paths';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:prod');
 

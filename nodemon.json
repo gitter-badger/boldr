@@ -5,11 +5,15 @@
     "ignore": [
       "backup",
       "docs",
-      "seeds",
+      "src/app",
       "src/common",
       "static",
       "tools"
     ],
+    "ext": "js json",
+    "env": {
+      "DEBUG":"boldr*"
+    },
     "watch": [
       "src/server/**/*.js",
       "tools/webpack/"

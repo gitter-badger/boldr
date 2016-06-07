@@ -1,6 +1,6 @@
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
-import projectConfig from '../config';
+import projectConfig from '../../src/config';
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools#configuration
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools#style-loader-css-stylesheets-with-css-modules-feature

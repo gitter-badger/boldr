@@ -9,6 +9,7 @@ import convert from 'koa-convert';
 import etag from 'koa-etag';
 import helmet from 'koa-helmet';
 import conditional from 'koa-conditional-get';
+import error from 'koa-json-error';
 import responseCalls from './responseCalls';
 import bodyParser from './bodyParser';
 import session from './session';
@@ -24,6 +25,7 @@ export default class BoldrMiddleware {
     application
       .use(responseCalls)
       .use(convert(logger()))
+      .use(error())
       .use(morgan('dev'))
       .use(bodyParser)
       .use(methodOverride())

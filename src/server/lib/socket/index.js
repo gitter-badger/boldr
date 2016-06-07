@@ -1,7 +1,7 @@
-import SocketIO from 'socket.io';
+import IO from 'koa-socket';
 import logger from '../logger';
 
-const io = new SocketIO();
+const io = new IO();
 const NOOP = () => { };
 
 let socketsConnected = 0;

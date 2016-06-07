@@ -5,7 +5,8 @@
 node_modules/
 npm-debug.log
 
-.tmp
+.tmp/
+.data/
 
 uploads/
 dist/*
@@ -14,6 +15,7 @@ build/*
 reports
 docs/logs
 tools/data
+
 # webpack-isomorphic-tools
 webpack-assets.json
 webpack-stats.json

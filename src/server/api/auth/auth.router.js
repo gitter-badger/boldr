@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import passport from 'koa-passport';
-import config, { paths } from '../../../../tools/config';
+import config, { paths } from '../../../config';
 import { registerUser, loginUser, checkUser } from './auth.controller';
 import generateToken from '../../auth/generateToken';
 import {

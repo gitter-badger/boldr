@@ -4,7 +4,7 @@ import _debug from 'debug';
 
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHotMiddleware from './middleware/webpack-hot';
-import boldrConfig from '../config';
+import boldrConfig from '../../src/config';
 import webpackConfig from './dev.config';
 
 const debug = _debug('app:webpack:dev:server');

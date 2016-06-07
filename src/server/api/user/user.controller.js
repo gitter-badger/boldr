@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import Models from '../../db/models';
 import logger from '../../lib/logger';
-import config, { paths } from '../../../../tools/config';
+import config, { paths } from 'config';
 
 const User = Models.User;
 

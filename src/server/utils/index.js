@@ -1,7 +1,6 @@
 import util from 'util';
 import _ from 'lodash';
 import mailer from './mailer';
-import Problem from './problem';
 import { handleRender } from './renderReact';
 /**
  * Clones an object
@@ -34,4 +33,4 @@ function extractIds(arr) {
   return _.map(arr, _.property('id'));
 }
 
-export { Problem, handleRender, mailer, clone, normalize, extractIds };
+export { handleRender, mailer, clone, normalize, extractIds };

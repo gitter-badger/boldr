@@ -1,6 +1,6 @@
 import http from 'http';
 import app from './boldr';
-import sockets from './lib/socket';
+
 import logger from './lib/logger';
 import redisClient from './db/redis';
 import { connectDatabase } from './db/connector';
@@ -10,7 +10,7 @@ const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 
 (async() => {
   const server = await http.createServer(app.callback());
-  await sockets.register(app);
+
   try {
     server.listen(SERVER_PORT);
     logger.info(`Server started on port ${SERVER_PORT}`);
