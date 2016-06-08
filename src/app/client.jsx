@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import useScroll from 'react-router-scroll';
 import axios from 'axios';
+import io from 'socket.io-client';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { checkTokenValidity } from 'state/user/user.actions';

@@ -17,7 +17,7 @@ ____
 * Postgres 9.5  
 ____
 
-### Current Version: Alpha 2
+### Current Version: Alpha 2.1
 6/5/2016  
 
 **Alpha 2** is an appropriate title for the current state of Boldr. Lots has changed since the earlier versions, which to me,
@@ -61,11 +61,6 @@ $ npm start
 #### Production
 > No way. Not yet.
 
-## Immediate ToDos
-
-## Road Map to Release
-
-
 ## Contribute
 Looking for an open source project to contribute to? We could use a hand developing Boldr.
 
@@ -73,9 +68,7 @@ Looking for an open source project to contribute to? We could use a hand develop
 #### API Documentation
 [View Here](docs/api/apidocs.md)  
 
-#### Structure
-[View Here](docs/structure.md)
-
 #### Change Log
 [View Here](docs/Changelog.md)
+
 [logo]: https://boldr.io/favicon-96x96.png "Boldr"

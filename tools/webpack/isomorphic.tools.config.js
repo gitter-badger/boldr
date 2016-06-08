@@ -1,17 +1,17 @@
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
-import projectConfig from '../config';
+import projectConfig from '../../src/config';
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools#configuration
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools#style-loader-css-stylesheets-with-css-modules-feature
 export default {
-  debug: projectConfig.__DEBUG__,
+  // debug: projectConfig.__DEBUG__,
   assets: {
     images: {
       extensions: ['png', 'jpg', 'jpeg', 'gif', 'ico', 'svg']
     },
     styles: {
-      extensions: ['scss'],
+      extensions: ['scss', 'css'],
       filter(module, regex, options, log) {
         if (options.development) {
           return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log);

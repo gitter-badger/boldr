@@ -16,8 +16,6 @@ import meta from 'core/meta';
 import BoldrTheme from 'core/theme';
 import 'app/styles/app.scss';
 
-
-
 const muiTheme = getMuiTheme(BoldrTheme);
 class CoreLayout extends Component {
   static propTypes = {

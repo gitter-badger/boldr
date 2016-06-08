@@ -3,8 +3,8 @@ import path from 'path';
 import _debug from 'debug';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import isomorphicToolsConfig from './isomorphic.tools.config';
-import boldrCfg from '../config';
-import paths from '../config/paths';
+import boldrCfg from '../../src/config';
+import paths from '../../src/config/paths';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
 
@@ -40,7 +40,7 @@ const babelLoaderConfiguration = {
     ['transform-runtime', { polyfill: false, regenerator: false }],
     'transform-decorators-legacy',
     ['babel-plugin-module-alias', [
-      { src: './tools/config', expose: 'config' },
+      { src: './src/config', expose: 'config' },
       { src: './src/app', expose: 'app' },
       { src: './src/app/state', expose: 'state' },
       { src: './src/app/core', expose: 'core' },

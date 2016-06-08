@@ -1,6 +1,6 @@
 require('babel-core/register');
 require('jsdom-global')();
-const config = require('./tools/config');
+const config = require('./src/config');
 global.nodeRequire = require;
 global.__DEV__ = config.__DEV__;
 const noop = (module, file) => {

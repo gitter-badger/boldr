@@ -1,9 +1,9 @@
 {
-  "presets": ["es2015", "react", "stage-0"],
+  "presets": ["react", "es2015", "stage-0"],
   "plugins": [
     "transform-runtime", "transform-decorators-legacy",
     ["babel-plugin-module-alias", [
-      { "src": "./tools/config", "expose": "config" },
+      { "src": "./src/config", "expose": "config" },
       { "src": "./src/app", "expose": "app" },
       { "src": "./src/app/state", "expose": "state" },
       { "src": "./src/app/core", "expose": "core" },

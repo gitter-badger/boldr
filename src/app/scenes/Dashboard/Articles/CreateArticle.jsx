@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { bindActionCreators } from 'redux';
 import Paper from 'material-ui/Paper';
 import * as articleActions from 'app/state/article/article.actions';
@@ -22,7 +23,7 @@ class CreateArticle extends Component {
 
     return (
       <div>
-      <WrapTransitions animateIn="fadeIn">
+      <Helmet title="New Article" />
       <Paper
         zDepth={ 3 }
         style={ { padding: 40 } }
@@ -31,7 +32,6 @@ class CreateArticle extends Component {
           <NewArticleForm onSubmit={ ::this.handleSubmit } />
 
         </Paper>
-          </WrapTransitions>
       </div>
       );
   }
