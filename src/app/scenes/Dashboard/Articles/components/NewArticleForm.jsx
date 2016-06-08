@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
+import { Field, reduxForm } from 'redux-form';
+import { TextField, RadioButtonGroup } from 'redux-form-material-ui';
 import Checkbox from 'material-ui/Checkbox';
-import Toggle from 'material-ui/Toggle';
+import { RadioButton } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import BEditor from 'app/components/Editor/BoldrEditor';
 
@@ -38,47 +38,31 @@ class NewArticleForm extends Component {
     };
   }
   render() {
-    const { handleSubmit, fields: { title, slug, content, status, tags } } = this.props;
+    const { handleSubmit } = this.props;
     return (
       <form onSubmit={ handleSubmit }>
       <div>
-
-          <TextField hintText= "Give it a name"
-            floatingLabelText="Title"
-            fullWidth
-            errorText = { title.touched && title.error }
-            { ...title }
-          />
+      <Field name="title" component={ TextField } hintText= "Give it a name" floatingLabelText="Title" />
 
       </div>
       <div>
-          <TextField hintText= "This will be used as the URL"
-            floatingLabelText="Slug"
-            fullWidth
-            errorText = { slug.touched && slug.error }
-            { ...slug }
-          />
+      <Field name="slug" component={ TextField } hintText= "This will be used as the URL" floatingLabelText="Slug" />
+
       </div>
       <div>
-      <TextField hintText= "Separate using a ,"
-        floatingLabelText="Tags"
-        fullWidth
-        errorText = { tags.touched && tags.error }
-        { ...tags }
+      <Field name="tags" component={ TextField } hintText= "Separate using a comma" floatingLabelText="Tags" />
+      </div>
+      <div>
+
+      <Field name="content" component={ props =>
+        <BEditor placeholder="Write your content..." {...props} />
+        }
       />
       </div>
-      <div>
-
-        <BEditor placeholder="Write your content..."
-          { ...content }
-        />
-      </div>
-      <label>
-        <input type="radio" { ...status } value="draft" checked={ status.value === 'draft' } /> Draft
-      </label>
-      <label>
-        <input type="radio" { ...status } value="published" checked={ status.value === 'published' } /> Published
-      </label>
+      <Field name="status" component={ RadioButtonGroup }>
+        <RadioButton value="draft" label="Draft" />
+        <RadioButton value="published" label="Publish" />
+      </Field>
       <div>
         <RaisedButton type="submit" secondary label="Publish" style={ style } />
       </div>
@@ -88,9 +72,8 @@ class NewArticleForm extends Component {
 }
 
 export default reduxForm({
-  form: 'NewArticleForm',
-  fields: ['title', 'slug', 'content', 'status', 'tags']
-}, null, null)(NewArticleForm);
+  form: 'NewArticleForm'
+})(NewArticleForm);
 
 NewArticleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,

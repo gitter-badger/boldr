@@ -1,35 +1,8 @@
 {
   "name": "boldr",
   "description": "Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little Boldr?",
-  "version": "0.1.0-alpha.2",
-  "engines": {
-    "node": ">=6",
-    "npm": ">=3"
-  },
-  "license": "MIT",
-  "homepage": "https://github.com/strues/boldr",
-  "bugs": "https://github.com/strues/boldr/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/strues/boldr.git"
-  },
+  "version": "0.1.0-alpha.2.1",
   "author": "Steven Truesdell <steven@strues.io>",
-  "scripts": {
-    "clean:dist": "rm -rf static/dist",
-    "compile": "NODE_ENV=production babel-node ./node_modules/.bin/webpack --optimize-minimize --progress --config ./tools/webpack/prod.config",
-    "compile:server": "better-npm-run compile:server",
-    "deploy": "npm run clean:dist && npm run compile && npm run prod",
-    "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
-    "migrate": "npm run sequelize db:migrate",
-    "prod": "NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
-    "sequelize": "node_modules/.bin/sequelize",
-    "start": "concurrently --kill-others --raw \"npm run start:client\" \"npm run start:server\"",
-    "start:client": "babel-node -- tools/webpack/dev.server.js",
-    "start:server": "better-npm-run start:server",
-    "test": "better-npm-run test:api",
-    "test:api": "better-npm-run test:api",
-    "update-deps": "bash tools/scripts/updateDeps.sh"
-  },
   "betterScripts": {
     "start:server": {
       "command": "nodemon",
@@ -52,6 +25,7 @@
       }
     }
   },
+  "bugs": "https://github.com/strues/boldr/issues",
   "dependencies": {
     "aws-sdk": "^2.3.17",
     "axios": "^0.12.0",
@@ -117,7 +91,8 @@
     "react-router-scroll": "^0.2.0",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
-    "redux-form": "^5.2.5",
+    "redux-form": "^6.0.0-alpha.15",
+    "redux-form-material-ui": "^2.0.0",
     "redux-logger": "^2.6.1",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.1.0",
@@ -167,7 +142,6 @@
     "koa-webpack-dev-middleware": "^1.2.1",
     "koa-webpack-hot-middleware": "^1.0.3",
     "mocha": "^2.5.3",
-    "node-libs-browser": "^1.0.0",
     "node-sass": "^3.7.0",
     "nodemon": "^1.9.2",
     "npm-install-webpack-plugin": "^4.0.1",
@@ -185,7 +159,33 @@
     "supertest": "^1.2.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
-    "webpack-node-externals": "^1.2.0",
+    "webpack-dev-server": "^1.14.1",
     "yargs": "^4.7.1"
+  },
+  "engines": {
+    "node": ">=6",
+    "npm": ">=3"
+  },
+  "homepage": "https://github.com/strues/boldr",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strues/boldr.git"
+  },
+  "scripts": {
+    "clean:dist": "rm -rf static/dist",
+    "compile": "NODE_ENV=production babel-node ./node_modules/.bin/webpack --optimize-minimize --progress --config ./tools/webpack/prod.config",
+    "compile:server": "better-npm-run compile:server",
+    "deploy": "npm run clean:dist && npm run compile && npm run prod",
+    "lint": "./node_modules/.bin/eslint src/common/**/*.js src/common/**/*.jsx src/server/**/*.js",
+    "migrate": "npm run sequelize db:migrate",
+    "prod": "NODE_PATH=src NODE_ENV=production babel-node src/server/index.js",
+    "sequelize": "node_modules/.bin/sequelize",
+    "start": "concurrently --kill-others --raw \"npm run start:client\" \"npm run start:server\"",
+    "start:client": "babel-node -- tools/webpack/dev.server.js",
+    "start:server": "better-npm-run start:server",
+    "test": "better-npm-run test:api",
+    "test:api": "better-npm-run test:api",
+    "update-deps": "bash tools/scripts/updateDeps.sh"
   }
 }

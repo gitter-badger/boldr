@@ -1,62 +1,38 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
+import { CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import {
+  TextField
+} from 'redux-form-material-ui';
 
 const style = {
-  margin: 12,
-  align: 'right'
+  margin: 12
 };
-const styles = {
-  minHeight: 'calc(100vh - 100px)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-const cardStyle = {
-  minWidth: 'calc(33vw)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
+
 const LoginForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
-      <div style={ styles }>
-      <Card style={ cardStyle }>
-        <CardTitle title="Login" />
-        <form onSubmit={ handleSubmit }>
-      <div>
-        <Field name="email" component={ email =>
-              <TextField
-                hintText="Email"
-                floatingLabelText="Email"
-                errorText = { email.touched && email.error }
-                { ...email }
-              />
-            }
+      <form onSubmit={ handleSubmit }>
+      <CardText>
+        <div>
+        <Field name="email" component={ TextField } hintText="Enter your email address"
+          floatingLabelText="Email"
         />
-      </div>
-      <div>
-        <Field name="password" type="password" component={ password =>
-              <TextField
-                hintText="Password"
-                floatingLabelText="Password"
-                errorText = { password.touched && password.error }
-                { ...password }
-              />
-            }
+        </div>
+        <div>
+        <Field name="password" type="password" floatingLabelText="Password"
+          hintText="Enter your password" component={ TextField }
         />
-      </div>
-
-      <CardActions>
-       <RaisedButton label="Login" type="submit" secondary style={ style } />
-     </CardActions>
-    </form>
-       </Card>
-      </div>
+        </div>
+        </CardText>
+           <CardActions>
+             <RaisedButton secondary type="submit" label="Login" disabled={ pristine || submitting } />
+             <FlatButton disabled={ pristine || submitting } label="Reset" onTouchStart={ reset } />
+          </CardActions>
+      </form>
     );
 };
 

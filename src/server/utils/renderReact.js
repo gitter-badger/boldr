@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -9,11 +9,12 @@ import configureStore from 'app/core/store';
 import createRoutes from 'app/core/routes';
 import Html from 'app/core/Html';
 
+import { ReduxAsyncConnect, loadOnServer, reducer as reduxAsyncConnect } from 'redux-connect';
 const head = Helmet.rewind();
 const renderFullPage = (component, store) => {
   const assets = webpackIsomorphicTools.assets();
   // Render the component to a string
-  const html = renderToStaticMarkup(<Html head={ head } assets={ assets } component={ component } store={ store } />);
+  const html = renderToString(<Html head={ head } assets={ assets } component={ component } store={ store } />);
 
   return `<!doctype html>\n${html}`;
 };
@@ -48,9 +49,9 @@ const handleRender = ctx => {
     } else if (renderProps) {
       const muiTheme = getMuiTheme({ userAgent: 'all' });
       const component = (
-        <Provider store={store}>
+        <Provider store={store} key="provider">
           <MuiThemeProvider muiTheme={ muiTheme }>
-            <RouterContext { ...renderProps } />
+            <RouterContext {...renderProps} />
           </MuiThemeProvider>
         </Provider>
       );
