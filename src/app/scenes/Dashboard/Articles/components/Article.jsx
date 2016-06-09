@@ -50,24 +50,12 @@ class Article extends React.Component {
 
     return (
       <div>
-        { titleHeader }
           <div className={ className }>
-            <div className="card-content">
-              { this.props.id }
-              { this.props.Tags.map((tag, i) => {
-                return (
-                  <div key={ i }>
-                  <h3>{ tag.tagname }</h3>
-                  <p> { tag.ArticlesTags.tagId }</p>
-                  </div>
-                );
-              }) }
               <Editor readOnly
                 customStyleMap={ customStyleMap }
                 editorState={ editorState }
               />
             </div>
-          </div>
         </div>
       );
   }

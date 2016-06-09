@@ -10,7 +10,7 @@ ArticleList.need = [
 
 const ArticlesContainer = (props) => {
   return (
-     <div className="container">
+     <div>
      { props.children }
      </div>
   );
