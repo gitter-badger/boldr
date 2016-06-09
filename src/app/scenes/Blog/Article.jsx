@@ -1,10 +1,16 @@
 import React from 'react';
-import { articleTypes } from 'app/components/Editor/utilities';
 import { Editor, EditorState } from 'draft-js';
+import Moment from 'moment';
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
+import Label from 'material-ui/svg-icons/action/label-outline';
+import Calendar from 'material-ui/svg-icons/action/date-range';
+import Badge from 'material-ui/Badge';
+import IconButton from 'material-ui/IconButton';
 import Display from 'app/components/Editor/Display';
+import { articleTypes } from 'app/components/Editor/utilities';
 import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';
-import _ from 'lodash';
-
+import Tag from 'components/Tag';
 class Article extends React.Component {
 
   constructor(props) {
@@ -21,7 +27,7 @@ class Article extends React.Component {
       };
     };
   }
-
+// { tag.ArticlesTags.tagId }
   componentWillReceiveProps(newProps) {
     if (newProps.content !== this.props.content) {
       this.setState({
@@ -41,24 +47,34 @@ class Article extends React.Component {
 
     const { customStyleMap, content, title, slug } = this.props;
 
-    let className = 'card RichEditor-content';
+    let className = 'RichEditor-content';
 
     let titleHeader;
     if (this.props.title) {
-      titleHeader = <h4 className="header"> { this.props.title } </h4>;
+      titleHeader = <h1 className="header"> { this.props.title } </h1>;
     }
-
+    const postedOn = Moment(this.props.createdAt).format('MMMM Do YYYY');
     return (
-      <div>
+      <div className="col-xs-12">
+      <Paper className="card" zDepth={ 2 }>
         { titleHeader }
           <div className={ className }>
             <div className="card-content">
-              <Editor readOnly
-                customStyleMap={ customStyleMap }
-                editorState={ editorState }
-              />
+            <Calendar /> { postedOn }
+              <Editor readOnly customStyleMap={ customStyleMap } editorState={ editorState } />
+              <Divider />
+              <div className="row">
+                <div className="col-xs">
+                  <IconButton tooltip="Tags"><Label /></IconButton>
+                  { this.props.Tags.map(tag => <Tag key={ tag.id } tagname={ tag.tagname } />) }
+                </div>
+                <div className="col-xs">
+                <span>{ this.props.User.firstname } { this.props.User.lastname }</span>
+                </div>
+              </div>
             </div>
           </div>
+          </Paper>
         </div>
       );
   }
@@ -70,10 +86,13 @@ Article.childContextTypes = {
 };
 
 Article.propTypes = {
-  content: React.PropTypes.object.isRequired,
+  content: React.PropTypes.string.isRequired,
   customStyleMap: React.PropTypes.object,
   slug: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  Tags: React.PropTypes.array,
+  User: React.PropTypes.object,
+  createdAt: React.PropTypes.string
 };
 
 export default Article;
