@@ -5,6 +5,8 @@ import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../../src/config';
 import paths from '../../src/config/paths';
+import hook from 'css-modules-require-hook';
+import sass from 'node-sass';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
 
@@ -12,6 +14,8 @@ const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
   'redux/dist/redux.min.js'
 ];
+const scssConfigIncludePaths = [paths.APP_DIR];
+const cssChunkNaming = '[name]__[local]___[hash:base64:5]';
 const VENDOR_DEPENDENCIES = [
   'react',
   'react-dom',
@@ -31,7 +35,7 @@ const cssLoader = [
   'css?modules',
   'sourceMap',
   'importLoaders=2',
-  'localIdentName=[name]__[local]___[hash:base64:5]'
+  `localIdentName=${cssChunkNaming}`
 ].join('&');
 
 const babelLoaderConfiguration = {
@@ -47,7 +51,17 @@ const babelLoaderConfiguration = {
       { src: './src/app/scenes', expose: 'scenes' },
       { src: './src/app/components', expose: 'components' },
       { src: './src/server', expose: 'server' }
-    ]]
+    ]],
+    ['react-transform', {
+      transforms: [{
+        transform: 'react-transform-hmr',
+        imports: ['react'],
+        locals: ['module']
+      }, {
+        transform: 'react-transform-catch-errors',
+        imports: ['react', 'redbox-react']
+      }]
+    }]
   ],
   presets: ['es2015', 'react', 'stage-0'],
   env: {
@@ -73,27 +87,46 @@ const {
 const HOT_MW_PATH = `http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}/__webpack_hmr`;
 const HOT_MW = `webpack-hot-middleware/client?path=${HOT_MW_PATH}&reload=true&timeout=20000`;
 
+// Set up server-side rendering of scss files
+// ---
+// Implement a hook in node for `.scss`-imports that uses
+// the same settings as the webpack config.
+hook({
+  extensions: ['.scss'],
+
+  // Share naming-convention of `css-loader`
+  generateScopedName: cssChunkNaming,
+
+  // Process files with same settings as `sass-loader` and return css.
+  preprocessCss: (cssFileData, cssFilePath) => {
+    // Include any paths that are part of the config,
+    // as well as the current path where css-file resides.
+    const includePaths = [].concat(scssConfigIncludePaths);
+    includePaths.push(path.dirname(cssFilePath));
+
+    return sass.renderSync({
+      data: cssFileData,
+      includePaths
+    }).css;
+  }
+});
 debug('Create configuration.');
 const config = {
   context: paths.ROOT_DIR,
+  cache: true,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: ['react-hot-loader/patch', HOT_MW,
+    app: [
+      HOT_MW,
       boldrCfg.BLDR_ENTRY
     ],
-    vendors: VENDOR_DEPENDENCIES
+    vendor: VENDOR_DEPENDENCIES
   },
   output: {
     path: paths.BUILD_DIR,
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
     publicPath: `http://localhost:${WEBPACK_DEV_SERVER_PORT}/build/`
-  },
-  resolve: {
-    alias: {},
-    root: [paths.SRC_DIR],
-
-    extensions: ['', '.js', '.jsx']
   },
   module: {
     noParse: [],
@@ -135,22 +168,43 @@ const config = {
     require('lost')(),
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
-
+  sassLoader: {
+    includePaths: scssConfigIncludePaths
+  },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', 2),
+    new webpack.optimize.CommonsChunkPlugin('common', 'common.js', 2),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        DEBUG: JSON.stringify(process.env.DEBUG)
+      },
       __CLIENT__,
       __SERVER__,
       __DEV__,
       __PROD__,
       __DEBUG__
     }),
-    webpackIsomorphicToolsPlugin.development()
-  ]
+    webpackIsomorphicToolsPlugin.development(),
+    new webpack.ProvidePlugin({
+      Promise: 'exports-loader?global.Promise!es6-promise', // Promise polyfill
+      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch' // Fetch polyfill
+    })
+  ],
+  resolve: {
+    alias: {
+      react$: require.resolve(path.join(paths.NODE_MODULES_DIR, 'react'))
+    },
+    // root: [paths.SRC_DIR],
+    modulesDirectories: ['src', 'node_modules'],
+    extensions: ['', '.js', '.jsx', 'scss']
+  },
+  node: {
+    __dirname: true,
+    fs: 'empty'
+  }
 };
 
 // Optimizing rebundling

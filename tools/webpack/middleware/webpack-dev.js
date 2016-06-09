@@ -10,13 +10,15 @@ export default function(compiler, options) {
     quiet: QUIET_MODE,
     noInfo: QUIET_MODE,
     stats: {
-      colors: true,
-      chunks: false,
-      chunkModules: false
+      colors: true
     },
     hot: true,
     lazy: false,
+    inline: false,
     historyApiFallback: true,
+    // proxy: {
+    //   '*': 'http://' + proxy.hostname + ':' + proxy.port
+    // },
     contentBase: 'http://localhost:3001',
     headers: { 'Access-Control-Allow-Origin': '*' }
   };

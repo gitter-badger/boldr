@@ -23,7 +23,7 @@ class BlogContainer extends Component {
     const articleList = [];
     for (let article of articles) { // eslint-disable-line
       articleList.push(
-        <div key={ article.id }>
+        <div key={ article.id } className="row">
           <Article {...article} />
         </div>
       );
@@ -37,10 +37,8 @@ class BlogContainer extends Component {
     return (
       <div>
       <Helmet title="Blog" />
-       <div className="container">
          BlogContainer?
          { articleList }
-       </div>
       </div>
       );
   }
@@ -48,7 +46,10 @@ class BlogContainer extends Component {
 
 BlogContainer.propTypes = {
   loading: PropTypes.bool,
-  article: PropTypes.object,
+  article: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   dispatch: PropTypes.func
 };
 

@@ -41,7 +41,7 @@ class Article extends React.Component {
 
     const { customStyleMap, content, title, slug } = this.props;
 
-    let className = 'card RichEditor-content';
+    let className = 'RichEditor-content';
 
     let titleHeader;
     if (this.props.title) {
@@ -56,11 +56,11 @@ class Article extends React.Component {
               { this.props.id }
               { this.props.Tags.map((tag, i) => {
                 return (
-                  <div key={i}>
-                <h3>  {tag.tagname}</h3>
-                  <p> {tag.ArticlesTags.tagId }</p>
+                  <div key={ i }>
+                  <h3>{ tag.tagname }</h3>
+                  <p> { tag.ArticlesTags.tagId }</p>
                   </div>
-                )
+                );
               }) }
               <Editor readOnly
                 customStyleMap={ customStyleMap }
@@ -82,7 +82,9 @@ Article.propTypes = {
   content: React.PropTypes.object.isRequired,
   customStyleMap: React.PropTypes.object,
   slug: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  id: React.PropTypes.number.isRequired,
+  Tags: React.PropTypes.array
 };
 
 export default Article;

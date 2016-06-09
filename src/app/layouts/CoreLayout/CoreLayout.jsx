@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import Helmet from 'react-helmet';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 import AppDrawer from 'app/components/AppDrawer';
 import * as boldrActions from 'app/state/boldr/boldr.actions';
 import TopBar from 'app/components/TopBar';
@@ -38,7 +37,9 @@ class CoreLayout extends Component {
            <Helmet {...meta.app.head} />
             <TopBar handleToggle={ ::this.handleToggle } />
             <AppDrawer />
+            <div className="wrap container-flud">
             { this.props.children }
+            </div>
         </div>
         </MuiThemeProvider>
     );
