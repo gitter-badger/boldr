@@ -7,7 +7,7 @@ module.exports = {
           primaryKey: true,
           autoIncrement: true
         },
-        categoryName: {
+        name: {
           type: DataTypes.STRING(30),
           allowNull: false
         },

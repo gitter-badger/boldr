@@ -76,16 +76,16 @@ module.exports = (sequelize, DataTypes) => {
         User.hasOne(models.VerificationToken, {
           foreignKey: 'userId'
         });
+        User.hasOne(models.ResetToken, {
+          foreignKey: 'userId'
+        });
+        User.belongsToMany(models.Group, {
+          through: models.UserGroup,
+          foreignKey: 'userId'
+        });
         User.hasMany(models.Upload, {
           foreignKey: 'userId'
         });
-      },
-      seedDefault: async function() { // eslint-disable-line
-        const usersJson = require('./fixtures/users.json');
-        logger.debug('seedDefault: ', JSON.stringify(usersJson, null, 4));
-        for (let userJson of usersJson) { // eslint-disable-line
-          await User.createUserInGroups(userJson, userJson.groups);
-        }
       },
       /**
        * Finds a user by its email
@@ -110,32 +110,10 @@ module.exports = (sequelize, DataTypes) => {
         return this.find({ where: { id: userid } });
       },
       /**
-       * Creates a user given a json representation and adds it to the group GroupName,
-       * returns the model of the created user
-       *
-       * @param {Object} userJson  -   User in json format
-       * @param {Array} groups - the groups to add the user in
-       *
-       * @returns {Promise}  Promise user created model
-       */
-      createUserInGroups: async function(userJson, groups) { // eslint-disable-line
-        logger.debug(`createUserInGroups user: %s, group: , ${userJson}, ${groups}`);
-        return sequelize.transaction(async function(t) {
-          logger.info('creating user');
-          const userCreated = await models.User.create(userJson, { transaction: t });
-          await models.UserGroup.addUserIdInGroups(groups, userCreated.get().id, t);
-          return userCreated;
-        })
-        .catch(err => {
-          logger.error('createUserInGroups: rolling back', err);
-          throw err;
-        });
-      },
-      /**
        * Checks whether a user is able to perform an action on a resource
        * Equivalent to: select name from permissions p join group_permissions g on
        * p.id=g.permission_id where g.group_id=(select group_id from users where
-       * email='aliceab@example.com') AND p.resource='user' and p.create=true;
+       * email='test@example.com') AND p.resource='user' and p.create=true;
        * @param {String} userId  - The userId to search
        * @param {String} resource  -The resource name to search
        * @param {String} action  - The action , "create,read,update,delete"
