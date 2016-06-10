@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
-    categoryName: {
+    name: {
       type: DataTypes.STRING(30),
       allowNull: false
     },
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'categories',
     indexes: [
       {
-        fields: ['categoryName']
+        fields: ['name']
       }
     ],
     classMethods: {

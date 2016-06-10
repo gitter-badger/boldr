@@ -2,24 +2,7 @@ import axios from 'axios';
 import { push } from 'react-router-redux';
 import { partialPopulateUser } from '../user/user.actions';
 import * as types from './auth.constants';
-const API_URL = '/api/v1';
-
-/**
- * Utility function to make AJAX requests using isomorphic fetch.
- * You can also use jquery's $.ajax({}) if you do not want to use the
- * @param  {String} method HTTP method POST, GET, DELETE
- * @param  {Object} data   What you pass to the server
- * @param  {String} api    Endpoint /login
- * @return {Promise}
- */
-function makeAuthRequest(method, data, api) {
-  return request({
-    url: api,
-    method,
-    data,
-    withCredentials: true
-  });
-}
+import { API_BASE } from 'app/config.api';
 
 // Log In Action Creators
 function beginLogin() {
@@ -94,7 +77,7 @@ export function authLogin(data) {
   return dispatch => {
     dispatch(beginLogin());
 
-    return axios.post('/api/v1/auth/login', data)
+    return axios.post(`${API_BASE}/auth/login`, data)
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response));
@@ -114,7 +97,7 @@ export function authRegister(data) {
   return dispatch => {
     dispatch(beginSignUp());
 
-    return axios.post('/api/v1/auth/register', data)
+    return axios.post(`${API_BASE}/auth/register`, data)
       .then(response => {
         if (response.status === 201) {
           dispatch(signUpSuccess(response));
@@ -133,7 +116,7 @@ export function logout() {
   return dispatch => {
     dispatch(beginLogout());
 
-    return axios.post('/api/v1/auth/logout', null)
+    return axios.post(`${API_BASE}/auth/logout`, null)
       .then(response => {
         if (response.status === 200) {
           dispatch(logoutSuccess());
@@ -167,7 +150,7 @@ export function checkTokenValidity() {
     const token = localStorage.getItem('boldr:jwt');
     if (!token || token === '') { return; }
     dispatch(checkTokenValidityRequest());
-    axios.get(`${API_URL}/auth/check`, {
+    axios.get(`${API_BASE}/auth/check`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -187,7 +170,7 @@ export function checkAuth() {
 }
 export function meFromToken(response) {
   // check if the token is still valid, if so, get user from the server
-  axios.get('/api/v1/auth/check');
+  axios.get(`${API_BASE}/auth/check`);
 
   return {
     type: types.ME_FROM_TOKEN,

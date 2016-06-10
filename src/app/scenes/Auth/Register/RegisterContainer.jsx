@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import { bindActionCreators } from 'redux';
-import RegisterForm from './RegisterForm';
+import RegisterForm from '../org.Forms/RegisterForm';
 import { signUp } from 'state/user/user.actions';
 
 class RegisterContainer extends Component {

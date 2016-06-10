@@ -5,11 +5,10 @@ import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import configureStore from 'app/core/store';
-import createRoutes from 'app/core/routes';
-import Html from 'app/core/Html';
+import configureStore from 'app/utils.redux/configureStore';
+import createRoutes from 'app/config.routes';
+import Html from 'app/utils.rendering/Html';
 
-import { ReduxAsyncConnect, loadOnServer, reducer as reduxAsyncConnect } from 'redux-connect';
 const head = Helmet.rewind();
 const renderFullPage = (component, store) => {
   const assets = webpackIsomorphicTools.assets();
