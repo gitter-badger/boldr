@@ -9,34 +9,51 @@ module.exports = {
       },
       name: {
         type: Sequelize.TEXT,
-        allowNull: false
-      },
-      resource: {
-        type: Sequelize.TEXT,
-        allowNull: true
+        defaultValue: ''
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        defaultValue: ''
       },
-      POST: {
+      editContent: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        defaultValue: false
       },
-      GET: {
+      publishContent: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        defaultValue: false
       },
-      PUT: {
+      deleteContent: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        defaultValue: false
       },
-      PATCH: {
+      manageMedia: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        defaultValue: false
       },
-      DELETE: {
+      manageExtensions: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        defaultValue: false
+      },
+      manageUsers: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      manageGroups: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      changeSiteSettings: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      importExportData: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      allPrivilages: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
