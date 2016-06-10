@@ -45,11 +45,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '',
       allowNull: true
     },
-    acl: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 0
-    },
     google: {
       type: DataTypes.STRING,
       allowNull: true
@@ -76,17 +71,18 @@ module.exports = (sequelize, DataTypes) => {
         User.hasOne(models.VerificationToken, {
           foreignKey: 'userId'
         });
+        User.hasOne(models.ResetToken, {
+          foreignKey: 'userId'
+        });
+        User.belongsToMany(models.Group, {
+          through: models.UserGroup,
+          foreignKey: 'userId'
+        });
         User.hasMany(models.Upload, {
           foreignKey: 'userId'
         });
       },
-      seedDefault: async function() { // eslint-disable-line
-        const usersJson = require('./fixtures/users.json');
-        logger.debug('seedDefault: ', JSON.stringify(usersJson, null, 4));
-        for (let userJson of usersJson) { // eslint-disable-line
-          await User.createUserInGroups(userJson, userJson.groups);
-        }
-      },
+
       /**
        * Finds a user by its email
        * returns the model of the  user
@@ -135,8 +131,7 @@ module.exports = (sequelize, DataTypes) => {
        * Checks whether a user is able to perform an action on a resource
        * Equivalent to: select name from permissions p join group_permissions g on
        * p.id=g.permission_id where g.group_id=(select group_id from users where
-       * email='aliceab@example.com') AND p.resource='user' and p.create=true;
-       * @param {String} userId  - The userId to search
+       * email='test@example.com') AND p.resource='user' and p.create=true;
        * @param {String} resource  -The resource name to search
        * @param {String} action  - The action , "create,read,update,delete"
        *
@@ -192,11 +187,7 @@ module.exports = (sequelize, DataTypes) => {
 
     instanceMethods: {
       comparePassword,
-      toJSON,
-      checkACL,
-      isMod,
-      isAdmin,
-      isBasic
+      toJSON
     }
   });
 
@@ -221,34 +212,6 @@ module.exports = (sequelize, DataTypes) => {
 
   function comparePassword(candidatePassword) {
     return bcrypt.compareSync(candidatePassword, this.password);
-  }
-
-  /**
-   * True if user is admin
-   */
-  function isAdmin() {
-    return this.checkACL(User.ACL_ADMIN);
-  }
-
-  /**
-   * True if user is mod
-   */
-  function isMod() {
-    return this.checkACL(User.ACL_MOD);
-  }
-
-  /**
-   * True if user is user
-   */
-  function isBasic() {
-    return this.checkACL(User.ACL_BASIC);
-  }
-
-  /**
-   * Check Users ACL level
-   */
-  function checkACL(min_acl_level) {
-    return this.acl >= min_acl_level;
   }
 
   return User;

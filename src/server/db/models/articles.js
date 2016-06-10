@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: ''
     },
     content: {
-      type: DataTypes.JSONB,
+      type: DataTypes.JSON,
       defaultValue: ''
     },
     markup: {
