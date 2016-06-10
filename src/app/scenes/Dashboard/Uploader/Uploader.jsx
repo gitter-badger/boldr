@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { uploadFile } from 'state/upload/upload.actions';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import { uploadFile } from './state/upload.actions';
 class Uploader extends Component {
 
   constructor(props) {

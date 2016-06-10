@@ -1,5 +1,5 @@
 import React from 'react';
-import BoldrLogo from './BoldrLogo';
+import BoldrLogo from 'shared/atm.BoldrLogo';
 
 const inlineStyles = {
   verticalAlign: 'top'

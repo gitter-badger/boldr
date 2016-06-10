@@ -3,11 +3,11 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import AppDrawer from 'app/components/AppDrawer';
-import * as boldrActions from 'app/state/boldr/boldr.actions';
-import TopBar from 'app/components/TopBar';
-import DashboardContainer from 'app/scenes/Dashboard/DashboardContainer';
-import Loader from 'app/components/Loader';
+import AppDrawer from 'components/AppDrawer';
+import * as boldrActions from 'state/boldr/boldr.actions';
+import TopBar from 'components/TopBar';
+import DashboardContainer from 'scenes/Dashboard/DashboardContainer';
+import Loader from 'shared/atm.Loader';
 
 class DashboardLayout extends Component {
 

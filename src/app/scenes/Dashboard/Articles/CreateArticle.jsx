@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { bindActionCreators } from 'redux';
 import Paper from 'material-ui/Paper';
-import * as articleActions from 'app/state/article/article.actions';
-import Loader from 'app/components/Loader';
-import { changeArticlePublishSetting } from 'app/core/api/articleEndpoint';
+import * as articleActions from 'state/article/article.actions';
+import Loader from 'shared/atm.Loader';
+import { changeArticlePublishSetting } from 'app/config.api/ep.articles';
 
-import WrapTransitions from 'app/components/WrapTransitions';
-import NewArticleForm from './components/NewArticleForm';
+import NewArticleForm from 'scenes/Dashboard/org.Forms/NewArticleForm';
 
 class CreateArticle extends Component {
 

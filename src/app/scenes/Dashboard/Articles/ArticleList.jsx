@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { List, ListItem } from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import { lightWhite } from 'material-ui/styles/colors';
 import { fetchArticles } from 'state/article/article.actions';
-import Loader from 'components/Loader';
-import Article from './components/Article';
-import Paper from 'material-ui/Paper';
+import Loader from 'shared/atm.Loader';
+import Article from 'scenes/Dashboard/components/Article';
+
 class ArticleList extends Component {
   static loadAsyncData(dispatch) {
     return dispatch(fetchArticles());

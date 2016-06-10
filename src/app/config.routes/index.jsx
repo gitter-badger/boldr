@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
 import DashboardRoutes from './dashboard.routes';
-import CoreLayout from 'app/layouts/CoreLayout';
-import HomeContainer from 'app/scenes/Home';
+import CoreLayout from 'shared/tpl.CoreLayout';
+import HomeContainer from 'scenes/Home';
 
-import BlogContainer from 'app/scenes/Blog';
-import { RegisterContainer, LoginContainer } from 'app/scenes/Auth';
-import Error404 from 'app/components/404';
+import BlogContainer from 'scenes/Blog';
+import { RegisterContainer, LoginContainer } from 'scenes/Auth';
+import Error404 from 'components/404';
 
 export default (store) => {
   return (

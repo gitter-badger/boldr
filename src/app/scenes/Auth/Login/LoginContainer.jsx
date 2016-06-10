@@ -5,7 +5,7 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { bindActionCreators } from 'redux';
-import LoginForm from './LoginForm';
+import LoginForm from 'scenes/Auth/org.Forms/LoginForm';
 import { manualLogin } from 'state/user/user.actions';
 
 class LoginContainer extends Component {

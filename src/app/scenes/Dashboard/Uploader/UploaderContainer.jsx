@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Uploader from './Uploader';
-import * as uploadActions from 'state/upload/upload.actions';
+import * as uploadActions from './state/upload.actions';
 
 const mapStateToProps = (state, ownProps) => {
   return {

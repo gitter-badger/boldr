@@ -10,10 +10,10 @@ import io from 'socket.io-client';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { checkTokenValidity } from 'state/user/user.actions';
-import preRenderMiddleware from 'core/util/preRenderMiddleware';
-import createRoutes from 'core/routes';
-import configureStore from 'core/store';
-import muiTheme from 'core/theme';
+import preRenderMiddleware from 'app/config.api/preRenderMiddleware';
+import createRoutes from 'app/config.routes';
+import configureStore from 'app/utils.redux/configureStore';
+import muiTheme from 'app/utils.rendering/theme';
 
 const token = localStorage.getItem('boldr:jwt');
 
