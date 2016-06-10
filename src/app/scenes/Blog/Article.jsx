@@ -7,10 +7,11 @@ import Label from 'material-ui/svg-icons/action/label-outline';
 import Calendar from 'material-ui/svg-icons/action/date-range';
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
-import Display from 'app/components/Editor/Display';
-import { articleTypes } from 'app/components/Editor/utilities';
-import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';
-import Tag from 'components/Tag';
+
+import Display from 'components/Editor/Display';
+import { articleTypes } from 'components/Editor/utilities';
+import { createEditorStateFromRawDraft } from 'components/Editor/helpers/convertEditorState';
+import Tag from 'shared/atm.Tag';
 class Article extends React.Component {
 
   constructor(props) {

@@ -46,8 +46,8 @@ const babelLoaderConfiguration = {
     ['babel-plugin-module-alias', [
       { src: './src/config', expose: 'config' },
       { src: './src/app', expose: 'app' },
+      { src: './src/app/shared', expose: 'shared' },
       { src: './src/app/state', expose: 'state' },
-      { src: './src/app/core', expose: 'core' },
       { src: './src/app/scenes', expose: 'scenes' },
       { src: './src/app/components', expose: 'components' },
       { src: './src/server', expose: 'server' }

@@ -6,6 +6,7 @@ import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 import Models from '../../db/models';
 import redisClient from '../../db/redis';
 const User = Models.User;
+const UserGroup = Models.UserGroup;
 const saltRounds = 10;
 
 /**
@@ -37,8 +38,8 @@ export const registerUser = async ctx => {
       lastname: ctx.request.body.lastname,
       website: ctx.request.body.website
     });
-
     const newUser = await user.save();
+    await UserGroup.addUserIdInGroups(['User'], newUser.get().id);
     const verificationToken = await generateVerifyCode();
     sendVerifyEmail(newUser.email, verificationToken);
     ctx.status = 201;

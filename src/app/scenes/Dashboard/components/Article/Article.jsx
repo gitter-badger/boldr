@@ -1,9 +1,10 @@
 import React from 'react';
-import { articleTypes } from 'app/components/Editor/utilities';
+import _ from 'lodash';
 import { Editor, EditorState } from 'draft-js';
+
+import { articleTypes } from 'app/components/Editor/utilities';
 import Display from 'app/components/Editor/Display';
 import { createEditorStateFromRawDraft } from 'app/components/Editor/helpers/convertEditorState';
-import _ from 'lodash';
 
 class Article extends React.Component {
 

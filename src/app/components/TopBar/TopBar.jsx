@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as boldrActions from 'app/state/boldr/boldr.actions';
 import { browserHistory } from 'react-router';
-import SiteLogo from '../SiteLogo';
+import SiteLogo from 'components/SiteLogo';
 const inlineStyle = {
   backgroundColor: '#fff'
 };

@@ -5,15 +5,15 @@ import { bindActionCreators } from 'redux';
 import Helmet from 'react-helmet';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppDrawer from 'app/components/AppDrawer';
-import * as boldrActions from 'app/state/boldr/boldr.actions';
-import TopBar from 'app/components/TopBar';
+import AppDrawer from 'components/AppDrawer';
+import * as boldrActions from 'state/boldr/boldr.actions';
+import TopBar from 'components/TopBar';
 import Footer from 'components/Footer';
-import Loader from 'app/components/Loader';
-import { checkTokenValidity } from 'app/state/auth/auth.actions';
+import Loader from 'shared/atm.Loader';
+import { checkTokenValidity } from 'state/auth/auth.actions';
 
-import meta from 'core/meta';
-import BoldrTheme from 'core/theme';
+import meta from 'app/utils.rendering/meta';
+import BoldrTheme from 'app/utils.rendering/theme';
 import 'app/styles/app.scss';
 
 const muiTheme = getMuiTheme(BoldrTheme);

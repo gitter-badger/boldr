@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as articleActions from 'app/state/article/article.actions';
+import * as articleActions from 'state/article/article.actions';
 import ArticleList from './ArticleList';
 
 ArticleList.need = [

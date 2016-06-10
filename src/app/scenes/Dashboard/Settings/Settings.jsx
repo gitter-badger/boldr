@@ -8,7 +8,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
-import GeneralForm from './components/GeneralForm';
+
+import GeneralForm from 'scenes/Dashboard/org.Forms/GeneralForm';
 const iconButtonElement = (
   <IconButton
     touch

@@ -2,7 +2,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
-import { API_BASE } from 'core/api';
+import { API_BASE } from 'app/config.api';
 polyfill();
 
 export const SET_USER = '@@user/SET_USER';
