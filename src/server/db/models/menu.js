@@ -1,6 +1,3 @@
-import Promise from 'bluebird';
-import bcrypt from 'bcryptjs';
-
 module.exports = (sequelize, DataTypes) => {
   const Menu = sequelize.define('Menu', {
     name: {

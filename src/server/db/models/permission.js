@@ -1,4 +1,5 @@
 import logger from 'server/lib/logger';
+
 module.exports = function(sequelize, DataTypes) {
   const Permission = sequelize.define('Permission', {
     name: {

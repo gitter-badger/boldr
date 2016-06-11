@@ -14,7 +14,9 @@ class LoginContainer extends Component {
     // Call action creator to sign up user (properties with no errors)
     this.props.manualLogin(formProps);
   }
-
+  handleGoogle() {
+    this.props.googleLogin();
+  }
   render() {
     const { handleSubmit } = this.props;
 
@@ -39,12 +41,13 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ manualLogin }, dispatch);
+  return bindActionCreators({ manualLogin, googleLogin }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
 LoginContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  manualLogin: PropTypes.func.isRequired
+  manualLogin: PropTypes.func.isRequired,
+  googleLogin: PropTypes.func
 };
