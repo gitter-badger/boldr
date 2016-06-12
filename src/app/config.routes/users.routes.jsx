@@ -6,8 +6,6 @@ import ProfileContainer from 'scenes/Users/Profile/ProfileContainer';
 import Profile from 'scenes/Users/Profile/Profile';
 export default (
   <Route path="/users" component={ UsersContainer }>
-    <Route path="/:userId" component={ Profile }>
-    <Route path="/profile" component={ ProfileContainer } />
-    </Route>
+    <Route path=":id" component={ Profile } />
   </Route>
 );

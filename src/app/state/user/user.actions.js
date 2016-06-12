@@ -233,7 +233,7 @@ const failedToReceiveUser = (data) => ({
 });
 
 // Public action creators
-export function getUser(data, userId) {
+export function getUser(userId) {
   return dispatch => {
     dispatch(requestUser());
     return axios.get(`${API_BASE}/users/${userId}`, {
