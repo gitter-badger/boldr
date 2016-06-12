@@ -5,7 +5,7 @@ import axios from 'axios';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { uploadFile } from './state/upload.actions';
-
+import UploadsListing from './UploadsListing';
 const style = {
   margin: 12
 };
@@ -16,9 +16,6 @@ class Uploader extends Component {
     this.state = {
       files: []
     };
-  }
-  onDropAccepted(func, files) {
-    console.log(files) // eslint-disable-line
   }
 
   onDrop(file) {
@@ -41,10 +38,17 @@ class Uploader extends Component {
     return (
       <div>
         <Paper zDepth={ 2 }>
-        <Dropzone ref="dropzone" multiple={ false } accept={ 'image/*' } onDrop={ ::this.onDrop }>
-            <div>Try dropping some files here, or click to select files to upload.</div>
-        </Dropzone>
-        <RaisedButton label="Browse" secondary onClick={ ::this.onOpenClick } style={ style } />
+        <div className="row">
+        <div className="col-sm-12 col-md-6">
+          <Dropzone ref="dropzone" multiple={ false } accept={ 'image/*' } onDrop={ ::this.onDrop }>
+              <div>Try dropping some files here, or click to select files to upload.</div>
+          </Dropzone>
+          <RaisedButton label="Browse" secondary onClick={ ::this.onOpenClick } style={ style } />
+          </div>
+        <div className="col-sm-12 col-md-6">
+          <UploadsListing />
+          </div>
+        </div>
         </Paper>
       </div>
       );

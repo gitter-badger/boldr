@@ -217,7 +217,8 @@ export default (sequelize, DataTypes) => {
         lastname: this.lastname,
         location: this.location,
         website: this.website,
-        avatar: this.avatar
+        avatar: this.avatar,
+        bio: this.bio
       }
     };
   }
