@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import Models from '../../db/models';
 import logger from '../../lib/logger';
 import config, { paths } from 'config';
-
+const Article = Models.Article;
 const User = Models.User;
 
 /**
@@ -28,7 +28,13 @@ export async function getAll(ctx) {
  */
 export async function getId(ctx, next) {
   try {
-    const user = await User.findById(ctx.params.id);
+    const user = await User.findById(ctx.params.id, {
+      include: [
+        {
+          model: Article
+        }
+      ]
+    });
     return ctx.ok(user);
   } catch (err) {
     return ctx.badRequest('User is Not Found');

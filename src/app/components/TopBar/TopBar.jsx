@@ -7,6 +7,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as boldrActions from 'app/state/boldr/boldr.actions';
+import { logOut } from 'state/user/user.actions';
 import { browserHistory } from 'react-router';
 import SiteLogo from 'components/SiteLogo';
 const inlineStyle = {
@@ -30,6 +31,13 @@ class TopBar extends React.Component {
     const path = '/register';
     browserHistory.push(path);
   }
+
+  handleClickSignout(event, dispatch) {
+    logOut();
+    const path = '/login';
+    browserHistory.push(path);
+  }
+
   handleHome() {
     const path = '/';
     browserHistory.push(path);
@@ -55,7 +63,7 @@ class TopBar extends React.Component {
               >
               {
                 this.props.user.isAuthenticated ?
-                  <MenuItem primaryText="Sign out" /> :
+                  <MenuItem onTouchTap={ ::this.handleClickSignout } primaryText="Sign out" /> :
                   <div>
                     <MenuItem onTouchTap={ this.handleClickRegister } primaryText="Register" />
                     <MenuItem onTouchTap={ this.handleClickLogin } primaryText="Login" />
@@ -77,7 +85,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(TopBar);
+export default connect(mapStateToProps, { logOut })(TopBar);
 
 TopBar.propTypes = {
   dispatch: PropTypes.func,
@@ -85,5 +93,6 @@ TopBar.propTypes = {
   handleClickLogin: PropTypes.func,
   handleClickRegister: PropTypes.func,
   handleHome: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  signoutUserAction: PropTypes.func
 };

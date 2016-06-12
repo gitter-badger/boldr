@@ -36,7 +36,7 @@ export const getAllArticles = async (ctx) => {
  * @param {String}  content        the article body
  * @param {String}  featureImage   an image to go along with the article
  * @param {Number}  authorId       the userId associated with the creator of the article
- * @param {ENUM} status        whether or not the article is published
+ * @param {ENUM}    status        whether or not the article is published
  * @param {Date}    createdAt      the time the article was saved.
  * @return {Object}                the article object
  */
@@ -71,7 +71,7 @@ export const createArticle = async (ctx, next) => {
     const article = await Article.create(articleFields);
     // creates a new "Tag" for every tag in the ctx.request.body.tags
     for (let i = 0; i < ctx.request.body.tags.length; i++) {
-      const newTag = await Tag.create({ tagname: ctx.request.body.tags[i] });
+      const newTag = await Tag.findOrCreate({ tagname: ctx.request.body.tags[i] });
       // Adds articleId of the previously created Article and
       // adds the tagId of each created Tag to the ArticlesTags table.
       await article.addTag(newTag);

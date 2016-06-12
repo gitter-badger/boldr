@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
 import DashboardRoutes from './dashboard.routes';
+import UsersRoutes from './users.routes';
 import CoreLayout from 'shared/tpl.CoreLayout';
 import HomeContainer from 'scenes/Home';
 
@@ -15,8 +16,10 @@ export default (store) => {
     <Route path="home" component={ HomeContainer } />
     <Route path="register" component={ RegisterContainer } />
     <Route path="login" component={ LoginContainer } />
+
     <Route path="blog" component={ BlogContainer } />
        { DashboardRoutes }
+       { UsersRoutes }
      <Route path="*" component={ Error404 } />
   </Route>
   );

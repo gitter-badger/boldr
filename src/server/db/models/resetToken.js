@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const ResetToken = sequelize.define('ResetToken', {
     token: DataTypes.STRING,
     email: DataTypes.STRING,

@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 import logger from 'server/lib/logger';
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const models = sequelize.models;
   const User = sequelize.define('User', {
     email: {

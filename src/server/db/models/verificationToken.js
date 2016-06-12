@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const VerificationToken = sequelize.define('VerificationToken', {
     token: DataTypes.STRING,
     userId: DataTypes.INTEGER,

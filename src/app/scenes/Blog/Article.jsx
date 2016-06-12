@@ -1,5 +1,6 @@
 import React from 'react';
 import { Editor, EditorState } from 'draft-js';
+import { Link } from 'react-router';
 import Moment from 'moment';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
@@ -70,7 +71,8 @@ class Article extends React.Component {
                   { this.props.Tags.map(tag => <Tag key={ tag.id } tagname={ tag.tagname } />) }
                 </div>
                 <div className="col-xs">
-                <span>{ this.props.User.firstname } { this.props.User.lastname }</span>
+                <Link to={ `/users/${this.props.User.id}/profile` }>
+                { this.props.User.firstname } { this.props.User.lastname }</Link>
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import logger from 'server/lib/logger';
 
-module.exports = function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const Permission = sequelize.define('Permission', {
     name: {
       type: DataTypes.TEXT,

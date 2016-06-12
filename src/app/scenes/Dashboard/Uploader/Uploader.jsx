@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 import { uploadFile } from './state/upload.actions';
-class Uploader extends Component {
 
+const style = {
+  margin: 12
+};
+class Uploader extends Component {
   constructor(props) {
     super(props);
 
@@ -35,17 +40,12 @@ class Uploader extends Component {
   render() {
     return (
       <div>
-       <div className="container">
-       UploaderContainer
-       <div>
-      <Dropzone ref="dropzone" multiple={ false } accept={ 'image/*' } onDrop={ ::this.onDrop }>
-          <div>Try dropping some files here, or click to select files to upload.</div>
-      </Dropzone>
-      <button type="button" onClick={ ::this.onOpenClick }>
-          Open Dropzone
-      </button>
-        </div>
-       </div>
+        <Paper zDepth={ 2 }>
+        <Dropzone ref="dropzone" multiple={ false } accept={ 'image/*' } onDrop={ ::this.onDrop }>
+            <div>Try dropping some files here, or click to select files to upload.</div>
+        </Dropzone>
+        <RaisedButton label="Browse" secondary onClick={ ::this.onOpenClick } style={ style } />
+        </Paper>
       </div>
       );
   }

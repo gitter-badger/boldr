@@ -2,10 +2,11 @@ import React from 'react';
 
 const footerStyle = {
   width: '100%',
-  height: '100px',
+  height: '80px',
   backgroundColor: 'rgba(0, 0, 0, .2)',
-  boxShhadow: '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)',
+  boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)',
   position: 'absolute',
+  marginTop: '20px',
   bottom: 0,
   left: 0
 };

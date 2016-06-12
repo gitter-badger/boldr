@@ -8,9 +8,6 @@ export const INITIAL_STATE = {
   message: '',
   error: false,
   filter: {},
-  editArticleId: -1,
-  authors: [],
-  categories: [],
   articles: [],
   article: {}
 };
@@ -59,7 +56,7 @@ export default function article(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
-        editArticleId: action.payload.id
+        articles: action.payload
       };
     default:
       return state;
