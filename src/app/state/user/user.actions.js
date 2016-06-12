@@ -15,6 +15,9 @@ export const PARTIAL_POPULATE_USER = '@@user/PARTIAL_POPULATE_USER';
 export const REQUEST_USERS = '@@user/REQUEST_USERS';
 export const RECEIVE_USERS = '@@user/RECEIVE_USERS';
 export const RECEIVE_USERS_FAILED = '@@user/RECEIVE_USERS_FAILED';
+export const REQUEST_USER = '@@user/REQUEST_USER';
+export const RECEIVE_USER = '@@user/RECEIVE_USER';
+export const RECEIVE_USER_FAILED = '@@user/RECEIVE_USER_FAILED';
 export const TOGGLE_LOGIN_MODE = '@@user/TOGGLE_LOGIN_MODE';
 export const MANUAL_LOGIN_USER = '@@user/MANUAL_LOGIN_USER';
 export const LOGIN_SUCCESS_USER = '@@user/LOGIN_SUCCESS_USER';
@@ -171,16 +174,8 @@ export function toggleLoginMode() {
 
 export function logOut() {
   return dispatch => {
-    dispatch(beginLogout());
-
-    return axios.post(`${API_BASE}/auth/logout`)
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(logoutSuccess());
-        } else {
-          dispatch(logoutError());
-        }
-      });
+    localStorage.removeItem('boldr:jwt');
+    dispatch(logoutSuccess());
   };
 }
 
@@ -217,5 +212,43 @@ export function checkTokenValidity() {
       dispatch(checkTokenValidityFailure('Token is invalid'));
       localStorage.removeItem('boldr:jwt');
     });
+  };
+}
+
+const requestUser = () => ({
+  type: REQUEST_USER
+});
+
+const userReceived = (response) => ({
+  type: RECEIVE_USER,
+  loading: false,
+  payload: response.data
+});
+
+// Fail receivers
+const failedToReceiveUser = (data) => ({
+  type: RECEIVE_USER_FAILED,
+  loading: false,
+  data
+});
+
+// Public action creators
+export function getUser(data, userId) {
+  return dispatch => {
+    dispatch(requestUser());
+    return axios.get(`${API_BASE}/users/${userId}`, {
+      timeout: 5000,
+      responseType: 'json'
+    })
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(userReceived(response));
+        } else {
+          dispatch(failedToReceiveUser('Oops! Something went wrong!'));
+        }
+      })
+      .catch(err => {
+        dispatch(failedToReceiveUser(err));
+      });
   };
 }

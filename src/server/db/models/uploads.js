@@ -1,7 +1,4 @@
-import Promise from 'bluebird';
-import bcrypt from 'bcryptjs';
-
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Upload = sequelize.define('Upload', {
     filename: {
       type: DataTypes.STRING(256),

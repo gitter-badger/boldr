@@ -1,7 +1,8 @@
-module.exports = function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const VerificationToken = sequelize.define('VerificationToken', {
     token: DataTypes.STRING,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    expiresAt: DataTypes.DATE
   }, {
     timestamps: false,
     tableName: 'verificationTokens',

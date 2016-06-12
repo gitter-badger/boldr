@@ -1,7 +1,4 @@
-import Promise from 'bluebird';
-import bcrypt from 'bcryptjs';
-
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Article = sequelize.define('Article', {
     title: {
       type: DataTypes.STRING(256),
@@ -55,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         Article.belongsToMany(models.Tag,
           { through: {
             model: models.ArticlesTags,
-            unique: false
+            unique: true
           },
           foreignKey: {
             name: 'articleId',

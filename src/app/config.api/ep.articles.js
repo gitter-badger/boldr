@@ -1,6 +1,6 @@
 import axios from 'axios';
 import configureStore from 'app/utils.redux/configureStore';
-const API_BASE = '/api/v1';
+import { API_BASE } from './index';
 
 const store = configureStore();
 export const ARTICLE_ENDPOINT = `${API_BASE}/articles`;

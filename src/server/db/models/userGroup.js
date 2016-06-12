@@ -1,7 +1,7 @@
 import assert from 'assert';
 import logger from 'server/lib/logger';
 
-module.exports = function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const models = sequelize.models;
   assert(models);
 

@@ -11,9 +11,6 @@ module.exports = {
         type: Sequelize.TEXT,
         unique: true
       },
-      resource: {
-        type: Sequelize.TEXT
-      },
       description: {
         type: Sequelize.TEXT
       },

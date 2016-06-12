@@ -18,7 +18,8 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         unique: true
-      }
+      },
+      expiresAt: Sequelize.DATE
     });
   },
   down(queryInterface, Sequelize) {

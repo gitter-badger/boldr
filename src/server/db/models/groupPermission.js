@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import logger from 'server/lib/logger';
-module.exports = function(sequelize) {
+
+export default (sequelize, DataTypes) => {
   const models = sequelize.models;
   const GroupPermission = sequelize.define('GroupPermission', {},
     {

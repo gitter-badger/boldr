@@ -22,11 +22,11 @@ module.exports = {
           defaultValue: ''
         },
         content: {
-          type: DataTypes.JSONB,
+          type: DataTypes.JSON,
           defaultValue: ''
         },
         markup: {
-          type: DataTypes.JSONB,
+          type: DataTypes.JSON,
           defaultValue: '',
           allowNull: true
         },

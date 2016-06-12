@@ -11,6 +11,7 @@ module.exports = {
           type: DataTypes.STRING,
           allowNull: false
         },
+        expiresAt: DataTypes.DATE,
         userId: {
           type: DataTypes.INTEGER
         }
