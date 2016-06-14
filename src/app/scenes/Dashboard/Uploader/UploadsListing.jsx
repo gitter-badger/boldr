@@ -41,14 +41,12 @@ class UploadsListing extends Component {
     let uploadsList = this.createUploadList(this.props.upload.files);
     return (
       <div>
-      <Helmet title="Articles" />
+      <Helmet title="Uploads" />
        <Paper zDepth={ 2 }>
-       <div className="col-xs-12 col-md-6 col-lg-4">
        <List>
        <Subheader>Uploads</Subheader>
        { uploadsList }
          </List>
-         </div>
        </Paper>
       </div>
       );

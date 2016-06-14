@@ -39,13 +39,13 @@ class Uploader extends Component {
       <div>
         <Paper zDepth={ 2 }>
         <div className="row">
-        <div className="col-sm-12 col-md-6">
+        <div className="col-sm-12 col-md">
           <Dropzone ref="dropzone" multiple={ false } accept={ 'image/*' } onDrop={ ::this.onDrop }>
               <div>Try dropping some files here, or click to select files to upload.</div>
           </Dropzone>
           <RaisedButton label="Browse" secondary onClick={ ::this.onOpenClick } style={ style } />
           </div>
-        <div className="col-sm-12 col-md-6">
+        <div className="col-sm-12 col-md">
           <UploadsListing />
           </div>
         </div>
