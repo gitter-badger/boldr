@@ -17,7 +17,6 @@ const saltRounds = 10;
  * registers a new user
  * @route /api/v1/auth/register
  * @method POST
- * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
   try {
