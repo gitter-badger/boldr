@@ -5,7 +5,7 @@
  * @exports {Object} uploadRouter
  */
 import Router from 'koa-router';
-import { upload } from './upload.controller';
+import { upload, getAll } from './upload.controller';
 import Models from '../../db/models';
 const Upload = Models.Upload;
 const User = Models.User;
@@ -15,9 +15,7 @@ const uploadRouter = new Router({
 });
 
 uploadRouter
-  .get('/test', async ctx => {
-    ctx.body = 'Hello uploads';
-  })
+  .get('/', getAll)
   .post('/', upload.single('image'), async (ctx, next) => {
     try {
       const fields = {

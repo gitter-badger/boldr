@@ -1,12 +1,15 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import moment from 'moment';
 import config, { paths } from 'config';
 import logger from 'server/lib/logger';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 import Models from '../../db/models';
 import redisClient from '../../db/redis';
+
 const User = Models.User;
 const UserGroup = Models.UserGroup;
+const VerificationToken = Models.VerificationToken;
 const saltRounds = 10;
 
 /**
@@ -14,19 +17,20 @@ const saltRounds = 10;
  * registers a new user
  * @route /api/v1/auth/register
  * @method POST
- * @see docs/api/auth/registerUser.md
  */
 export const registerUser = async ctx => {
-  const existingUser = await User.findOne({
-    where: {
-      email: ctx.request.body.email
-    }
-  });
-  if (existingUser) {
+  try {
+    const existingUser = await User.findOne({
+      where: {
+        email: ctx.request.body.email
+      }
+    });
+  } catch (existingUser) {
     ctx.status = 409;
     ctx.body = 'Account with this email address already exists!';
   }
   try {
+    // take the incoming password and hash it.
     const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
     const user = User.build({
       email: ctx.request.body.email,
@@ -38,15 +42,28 @@ export const registerUser = async ctx => {
       lastname: ctx.request.body.lastname,
       website: ctx.request.body.website
     });
+    // Save newUser once the request body forms the user model.
     const newUser = await user.save();
+    // Add the user's id to the default User group
     await UserGroup.addUserIdInGroups(['User'], newUser.get().id);
+    // Generate the verification token.
     const verificationToken = await generateVerifyCode();
+    // Send the verification email.
     sendVerifyEmail(newUser.email, verificationToken);
+    // Store the verification token, userId and expiration date in the db.
+    const verificationStorage = await VerificationToken.create({
+      userId: newUser.id,
+      token: verificationToken,
+      expiresAt: moment().add(3, 'days')
+    });
+    // Save token.
+    verificationStorage.save();
+    // Send response.
     ctx.status = 201;
     ctx.body = user;
   } catch (err) {
     ctx.status = 500;
-    ctx.body = 'Unable to register user.';
+    ctx.body = `Unable to register user: ${err}`;
   }
 };
 

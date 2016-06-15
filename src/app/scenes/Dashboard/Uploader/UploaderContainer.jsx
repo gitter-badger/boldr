@@ -4,6 +4,10 @@ import { bindActionCreators } from 'redux';
 import Uploader from './Uploader';
 import * as uploadActions from './state/upload.actions';
 
+Uploader.need = [
+  uploadActions.getUploads
+];
+
 const mapStateToProps = (state, ownProps) => {
   return {
     upload: state.upload,

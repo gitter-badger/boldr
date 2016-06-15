@@ -71,7 +71,7 @@ class Article extends React.Component {
                   { this.props.Tags.map(tag => <Tag key={ tag.id } tagname={ tag.tagname } />) }
                 </div>
                 <div className="col-xs">
-                <Link to={ `/users/${this.props.User.id}/profile` }>
+                <Link to={ `/users/${this.props.User.id}` }>
                 { this.props.User.firstname } { this.props.User.lastname }</Link>
                 </div>
               </div>

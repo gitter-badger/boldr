@@ -213,11 +213,12 @@ export default (sequelize, DataTypes) => {
       id: this.id,
       email: this.email,
       profile: {
-        firstName: this.firstName,
-        lastName: this.lastName,
+        firstname: this.firstname,
+        lastname: this.lastname,
         location: this.location,
         website: this.website,
-        avatar: this.avatar
+        avatar: this.avatar,
+        bio: this.bio
       }
     };
   }

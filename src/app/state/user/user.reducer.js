@@ -14,8 +14,7 @@ export const INITIAL_USER_STATE = {
   email: '',
   avatar: '',
   acl: '',
-  users: [],
-  user: {}
+  users: []
 };
 
 export default function user(state = INITIAL_USER_STATE, action) {
@@ -57,22 +56,25 @@ export default function user(state = INITIAL_USER_STATE, action) {
       return {
         ...state,
         loading: true,
-        error: null,
-        user: action.payload
+        error: null
       };
     case constants.RECEIVE_USER:
       return {
         ...state,
         loading: false,
         error: null,
-        user: action.payload
+        id: action.payload.id,
+        email: action.payload.email,
+        firstname: action.payload.profile.firstname,
+        lastname: action.payload.profile.lastname,
+        website: action.payload.profile.website,
+        avatar: action.payload.profile.avatar
       };
     case constants.RECEIVE_USER_FAILED:
       return {
         ...state,
         loading: false,
-        error: action.payload,
-        user: {}
+        error: action.payload
       };
     case constants.TOGGLE_LOGIN_MODE:
       return {

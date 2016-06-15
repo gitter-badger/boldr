@@ -43,3 +43,18 @@ const storage = multer.diskStorage({
 });
 
 export const upload = multer(multerOptions);
+
+/**
+ * Returns a listing of all the uploads in the database.
+ * @method getAll
+ * @param  {[type]} ctx [description]
+ * @return {[type]}     [description]
+ */
+export async function getAll(ctx) {
+  try {
+    const uploads = await Upload.findAll({});
+    return ctx.ok(uploads);
+  } catch (err) {
+    return ctx.badRequest('Unable to find any uploads');
+  }
+}
