@@ -1,9 +1,9 @@
 import { assert } from 'chai';
 import supertest from 'supertest';
-import { server } from '../../server';
+import { app } from '../../server';
 
 function request() {
-  return supertest(server.listen());
+  return supertest(app.listen());
 }
 
 describe('API: v1/articles', () => {

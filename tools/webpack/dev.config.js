@@ -6,6 +6,7 @@ import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../../src/config';
 import paths from '../../src/config/paths';
 import hook from 'css-modules-require-hook';
+import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import sass from 'node-sass';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
@@ -174,7 +175,10 @@ const config = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common', 'common.js', 2),
+    new NpmInstallPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common', filename: 'common.js', async: true, minChunks: Infinity
+    }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -202,6 +206,11 @@ const config = {
     extensions: ['', '.js', '.jsx', 'scss']
   },
   node: {
+    global: 'window',
+    crypto: 'empty',
+    module: false,
+    clearImmediate: false,
+    setImmediate: false,
     __dirname: true,
     fs: 'empty'
   }
