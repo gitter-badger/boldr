@@ -7,7 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import promiseMiddleware from 'redux-promise';
-
+import clientMiddleware from './clientMiddleware';
 import rootReducer from 'app/state/index';
 
 /**
@@ -16,8 +16,8 @@ import rootReducer from 'app/state/index';
  * @param  {History Object} history      createMemoryHistory for server. browserHistory for client rendering
  * @return {Object}              the store.
  */
-export default function configureStore(initialState, history) {
-  const middleware = [thunkMiddleware, promiseMiddleware, routerMiddleware(history)];
+export default function configureStore(initialState, history, client) {
+  const middleware = [thunkMiddleware, clientMiddleware(client), promiseMiddleware, routerMiddleware(history)];
   if (__DEV__) {
     middleware.push(createLogger());
   }
