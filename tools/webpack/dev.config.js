@@ -5,6 +5,7 @@ import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../../src/config';
 import paths from '../../src/config/paths';
+import BABEL_LOADER from './loaders/babel';
 import hook from 'css-modules-require-hook';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import sass from 'node-sass';
@@ -39,41 +40,6 @@ const cssLoader = [
   `localIdentName=${cssChunkNaming}`
 ].join('&');
 
-const babelLoaderConfiguration = {
-  cacheDirectory: true,
-  plugins: [
-    ['transform-runtime', { polyfill: false, regenerator: false }],
-    'transform-decorators-legacy',
-    ['babel-plugin-module-alias', [
-      { src: './src/config', expose: 'config' },
-      { src: './src/app', expose: 'app' },
-      { src: './src/app/shared', expose: 'shared' },
-      { src: './src/app/state', expose: 'state' },
-      { src: './src/app/scenes', expose: 'scenes' },
-      { src: './src/app/components', expose: 'components' },
-      { src: './src/server', expose: 'server' }
-    ]],
-    ['react-transform', {
-      transforms: [{
-        transform: 'react-transform-hmr',
-        imports: ['react'],
-        locals: ['module']
-      }, {
-        transform: 'react-transform-catch-errors',
-        imports: ['react', 'redbox-react']
-      }]
-    }]
-  ],
-  presets: ['es2015', 'react', 'stage-0'],
-  env: {
-    development: {
-      presets: ['react-hmre']
-    },
-    production: {
-      presets: ['react-optimize']
-    }
-  }
-};
 const {
   SERVER_HOST,
   BLDR_ENTRY,
@@ -137,7 +103,7 @@ const config = {
         loader: 'babel',
         exclude: [paths.NODE_MODULES_DIR],
         include: [paths.SRC_DIR],
-        query: babelLoaderConfiguration
+        query: BABEL_LOADER
       },
       {
         test: /\.json$/,
