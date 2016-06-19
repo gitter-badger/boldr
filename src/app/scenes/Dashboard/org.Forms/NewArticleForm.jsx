@@ -15,6 +15,11 @@ const style = {
   },
   margin: 12
 };
+const radioStyle = {
+  display: 'inline',
+  marginTop: '20px',
+  float: 'right'
+};
 class NewArticleForm extends Component {
   constructor(props) {
     super(props);
@@ -41,28 +46,29 @@ class NewArticleForm extends Component {
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={ handleSubmit }>
-      <div>
-      <Field name="title" component={ TextField } hintText= "Give it a name" floatingLabelText="Title" />
-
+      <div className="row">
+      <div className="col-md-6">
+        <Field name="title" component={ TextField } hintText= "Give it a name" floatingLabelText="Title" />
+        <Field name="slug" component={ TextField } hintText= "This will be used as the URL" floatingLabelText="Slug" />
       </div>
-      <div>
-      <Field name="slug" component={ TextField } hintText= "This will be used as the URL" floatingLabelText="Slug" />
-
-      </div>
-      <div>
+      <div className="col-md-6">
       <Field name="tags" component={ TextField } hintText= "Separate using a comma" floatingLabelText="Tags" />
       </div>
-      <div>
-
-      <Field name="content" component={ props =>
-        <BEditor placeholder="Write your content..." {...props} />
-        }
-      />
       </div>
-      <Field name="status" component={ RadioButtonGroup }>
-        <RadioButton value="draft" label="Draft" />
-        <RadioButton value="published" label="Publish" />
-      </Field>
+      <div>
+        <Field name="content" component={ props =>
+          <BEditor placeholder="Write your content..." { ...props } />
+          }
+        />
+      </div>
+      <div className="row">
+        <div className="col-md-offset-8 col-md-4">
+          <Field name="status" component={ RadioButtonGroup } style={ radioStyle }>
+            <RadioButton value="draft" label="Draft" />
+            <RadioButton value="published" label="Publish" />
+          </Field>
+        </div>
+      </div>
       <div>
         <RaisedButton type="submit" secondary label="Publish" style={ style } />
       </div>
@@ -76,6 +82,5 @@ export default reduxForm({
 })(NewArticleForm);
 
 NewArticleForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  fields: PropTypes.object.isRequired
+  handleSubmit: PropTypes.func.isRequired
 };
