@@ -40,7 +40,14 @@ export async function getId(ctx, next) {
     return ctx.badRequest('User is Not Found');
   }
 }
-
+export async function checkPermission(ctx, next) {
+  try {
+    const user = await User.getPermissions(ctx.params.id);
+    return ctx.ok(user);
+  } catch (err) {
+    return ctx.badRequest('User is Not Found');
+  }
+}
 export async function update(ctx) {
   const query = { id: ctx.params.id };
   const result = await User.update(ctx.request.body, { where: query });

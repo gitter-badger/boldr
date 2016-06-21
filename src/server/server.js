@@ -17,6 +17,9 @@ const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
 
     redisClient.on('connect', () => app.emit('log', 'info', 'redis connected'));
     redisClient.on('error', err => app.emit('error', err));
+    if (process.send) {
+      process.send('online');
+    }
   } catch (error) {
     // handle uncaught exceptions
     process.on('uncaughtException', err => {

@@ -89,7 +89,7 @@ Article.childContextTypes = {
 };
 
 Article.propTypes = {
-  content: React.PropTypes.string.isRequired,
+  content: React.PropTypes.object.isRequired,
   customStyleMap: React.PropTypes.object,
   slug: React.PropTypes.string.isRequired,
   title: React.PropTypes.string,

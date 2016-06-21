@@ -198,7 +198,7 @@ export default (sequelize, DataTypes) => {
        *
        * @returns {Promise} a Promise containing array of permission results
        */
-      getPermissions(email) {
+      getPermissions(userId) {
         return this.find({
           include: [
             {
@@ -209,7 +209,7 @@ export default (sequelize, DataTypes) => {
                 }]
             }],
           where: {
-            email
+            id: userId
           }
         });
       }

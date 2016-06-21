@@ -46,10 +46,7 @@ class BlogContainer extends Component {
 
 BlogContainer.propTypes = {
   loading: PropTypes.bool,
-  article: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
+  article: PropTypes.object,
   dispatch: PropTypes.func
 };
 

@@ -8,6 +8,7 @@ import useScroll from 'react-router-scroll';
 import axios from 'axios';
 import io from 'socket.io-client';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import WebFontLoader from 'webfontloader';
 
 import { checkTokenValidity } from 'state/user/user.actions';
 import preRenderMiddleware from 'app/config.api/preRenderMiddleware';
@@ -15,6 +16,11 @@ import createRoutes from 'app/config.routes';
 import configureStore from 'app/utils.redux/configureStore';
 import muiTheme from 'app/utils.rendering/theme';
 
+WebFontLoader.load({
+  google: {
+    families: ['Roboto:300,400,500,700', 'Material Icons']
+  }
+});
 const token = localStorage.getItem('boldr:jwt');
 
 // If its available, always send the token in the header.

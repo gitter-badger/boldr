@@ -7,6 +7,7 @@ userRouter
   .get('/', userController.getAll)
   .get('/:id', userController.getId)
   .put('/:id', userController.update)
-  .delete('/:id', userController.destroy);
+  .delete('/:id', userController.destroy)
+  .get('/permissions/:id', userController.checkPermission);
 
 export default userRouter;

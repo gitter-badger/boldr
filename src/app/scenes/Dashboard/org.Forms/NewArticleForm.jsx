@@ -47,13 +47,13 @@ class NewArticleForm extends Component {
     return (
       <form onSubmit={ handleSubmit }>
       <div className="row">
-      <div className="col-md-6">
-        <Field name="title" component={ TextField } hintText= "Give it a name" floatingLabelText="Title" />
-        <Field name="slug" component={ TextField } hintText= "This will be used as the URL" floatingLabelText="Slug" />
-      </div>
-      <div className="col-md-6">
-      <Field name="tags" component={ TextField } hintText= "Separate using a comma" floatingLabelText="Tags" />
-      </div>
+        <div className="col-md-6">
+          <Field name="title" component={ TextField } hintText= "Give it a name" floatingLabelText="Title" />
+          <Field name="slug" component={ TextField } hintText= "This will be used as the URL" floatingLabelText="Slug" />
+        </div>
+        <div className="col-md-6">
+          <Field name="tags" component={ TextField } hintText= "Separate using a comma" floatingLabelText="Tags" />
+        </div>
       </div>
       <div>
         <Field name="content" component={ props =>
