@@ -11,7 +11,6 @@ import TopBar from 'components/TopBar';
 import Footer from 'components/Footer';
 import Loader from 'shared/atm.Loader';
 import { checkTokenValidity } from 'state/auth/auth.actions';
-
 import meta from 'app/utils.rendering/meta';
 import BoldrTheme from 'app/utils.rendering/theme';
 import 'app/styles/app.scss';
@@ -35,11 +34,12 @@ class CoreLayout extends Component {
     return (
           <MuiThemeProvider muiTheme={ muiTheme }>
           <div>
-           <Helmet {...meta.app.head} />
+           <Helmet { ...meta.app.head } />
             <TopBar handleToggle={ ::this.handleToggle } />
-            <AppDrawer />
+        <AppDrawer />
+
             <div className="wrap container-flud">
-            { this.props.children }
+              { this.props.children }
             </div>
             <Footer />
         </div>

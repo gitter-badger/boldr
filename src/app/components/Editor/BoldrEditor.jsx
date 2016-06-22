@@ -13,9 +13,11 @@ import { BLOCK_TYPES } from './header/BlockTypes';
 import { INLINE_STYLES } from './header/InlineStyleTypes';
 import base64 from './helpers/convertBase64';
 import getBoxPos from './helpers/getBoxPos';
-
-import IconMenu from 'material-ui/IconMenu';
+import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
+import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
+import Divider from 'material-ui/Divider';
+import IconMenu from 'material-ui/IconMenu';
 import FontIcon from 'material-ui/FontIcon';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import MenuItem from 'material-ui/MenuItem';
@@ -27,7 +29,13 @@ import { handleLink,
 HandleLinkSpan,
 findWithRegex } from './utilities';
 import BoldrTheme from './style/BoldrTheme';
-
+const inlineStyles = {
+  urlInput: {
+    fontFamily: "'Georgia', serif",
+    marginRight: 10,
+    padding: 3
+  }
+};
 function myKeyBindingFn(e) {
   if (e.keyCode === 69 && KeyBindingUtil.hasCommandModifier(e)) {
     return 'code-block';
@@ -145,10 +153,44 @@ export default class BEditor extends React.Component {
       )
     );
   }
-
+  handlePromptForLink(e) {
+    e.preventDefault();
+    const { editorState } = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      this.setState({
+        inputtable: true,
+        urlValue: ''
+      }, () => {
+        setTimeout(() => this.refs.url.focus(), 0);
+      });
+    }
+  }
   handleKeyCommand(command) {
     const newState = RichUtils.toggleBlockType(this.state.editorState, command);
     this.onChange(newState);
+  }
+  handleConfirmLink(e) {
+    e.preventDefault();
+    const { editorState, urlValue } = this.state;
+    const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
+    this.setState({
+      editorState: RichUtils.toggleLink(
+        editorState,
+        editorState.getSelection(),
+        entityKey
+      ),
+      inputtable: false,
+      urlValue: ''
+    }, () => {
+      setTimeout(() => this.refs.editor.focus(), 0);
+    });
+  }
+
+  handleInputKeyDown(e) {
+    if (e.which === 13) {
+      this.handleConfirmLink(e);
+    }
   }
 
   handleTab(e) {
@@ -168,7 +210,35 @@ export default class BEditor extends React.Component {
     this.onChange(editorState);
     this.focus();
   }
-
+  handleRemoveLink(e) {
+    e.preventDefault();
+    const { editorState } = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      this.setState({
+        editorState: RichUtils.toggleLink(editorState, selection, null)
+      });
+    }
+  }
+  renderURLField() {
+    if (this.state.inputtable) {
+      return (
+        <div>
+          <TextField
+            onChange={ this.handleChangeURL }
+            ref="url"
+            hintText="Enter Link URL"
+            style={ inlineStyles.urlInput }
+            value={ this.state.urlValue }
+            onKeyDown={ this.handleInputKeyDown }
+          />
+            <IconButton onMouseDown={ this.handleConfirmLink }>
+              <ContentAddCircle />
+            </IconButton>
+        </div>
+      );
+    }
+  }
   render() {
     const { editorState, boxPos } = this.state;
 
@@ -186,7 +256,10 @@ export default class BEditor extends React.Component {
           <div>
           <Toolbar>
             <ToolbarGroup>
-            <InlineStyleHeaderControls editorState={ editorState } onToggle={ ::this._toggleInlineStyle } />
+            <InlineStyleHeaderControls editorState={ editorState }
+              onToggle={ ::this._toggleInlineStyle } onRemoveLink={ ::this.handleRemoveLink }
+              onPromptForLink={ ::this.handlePromptForLink }
+            />
             </ToolbarGroup>
             <ToolbarGroup>
               <BlockStyleHeaderControls editorState={ editorState } editorPos={ boxPos }
@@ -196,6 +269,8 @@ export default class BEditor extends React.Component {
             </Toolbar>
           </div>
         }
+        { this.renderURLField() }
+          <Divider />
           <div className={ className } onClick={ this.focus }>
             <Editor editorState={ editorState }
               onChange={ this.onChange }

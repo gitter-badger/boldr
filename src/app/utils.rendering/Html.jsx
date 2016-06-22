@@ -63,8 +63,7 @@ export default class Html extends Component {
         <body>
           <div id="root" dangerouslySetInnerHTML={ { __html: renderToString(component) } } />
           <script dangerouslySetInnerHTML={
-            { __html: `window.__INITIAL_STATE__=${JSON.stringify(store.getState())};` } }
-          />
+            { __html: `window.__INITIAL_STATE__=${JSON.stringify(store.getState())};` } } />
           { this.scripts }
         </body>
       </html>

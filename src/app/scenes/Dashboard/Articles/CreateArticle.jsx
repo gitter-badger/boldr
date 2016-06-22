@@ -23,11 +23,11 @@ class CreateArticle extends Component {
     return (
       <div>
       <Helmet title="New Article" />
-      <Paper
-        zDepth={ 3 }
-        style={ { padding: 40 } }
-        className="col-md-offset-3 col-md-6"
-      >
+        <Paper
+          zDepth={ 3 }
+          style={ { padding: 40 } }
+          className="col-md-offset-1 col-md-10"
+        >
           <NewArticleForm onSubmit={ ::this.handleSubmit } />
 
         </Paper>

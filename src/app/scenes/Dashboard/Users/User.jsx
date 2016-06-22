@@ -4,10 +4,10 @@ import { TableRow, TableRowColumn } from 'material-ui/Table';
 const User = (props) => {
   return (
     <TableRow hoverable>
-      <TableRowColumn>{ props.user.userId }</TableRowColumn>
+      <TableRowColumn>{ props.user.id }</TableRowColumn>
       <TableRowColumn>{ props.user.email }</TableRowColumn>
-      <TableRowColumn>{ props.user.firstname }</TableRowColumn>
-      <TableRowColumn>{ props.user.lastname }</TableRowColumn>
+      <TableRowColumn>{ props.user.profile.firstname }</TableRowColumn>
+      <TableRowColumn>{ props.user.profile.lastname }</TableRowColumn>
       <TableRowColumn>{ props.user.createdAt }</TableRowColumn>
     </TableRow>
   );
@@ -15,9 +15,8 @@ const User = (props) => {
 
 User.propTypes = {
   user: PropTypes.object,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  username: PropTypes.string,
+  firstname: PropTypes.string,
+  lastname: PropTypes.string,
   email: PropTypes.string,
   createdAt: PropTypes.string
 };
