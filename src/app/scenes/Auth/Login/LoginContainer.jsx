@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import { bindActionCreators } from 'redux';
 import LoginForm from 'scenes/Auth/org.Forms/LoginForm';
 import { manualLogin } from 'state/user/user.actions';
+import BoldrLogo from 'shared/atm.BoldrLogo';
 
 class LoginContainer extends Component {
 
@@ -27,6 +28,7 @@ class LoginContainer extends Component {
           actAsExpander={ false }
           showExpandableButton={ false }
         />
+        <BoldrLogo height="100px" width="100px" />
         <LoginForm onSubmit={ ::this.handleFormSubmit } />
         </Card>
         </div>
