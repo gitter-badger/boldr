@@ -6,6 +6,7 @@ import FileManagerIcon from 'material-ui/svg-icons/file/folder-shared';
 import PageBuildIcon from 'material-ui/svg-icons/action/build';
 import UsersIcon from 'material-ui/svg-icons/social/people';
 import CollectionsIcon from 'material-ui/svg-icons/image/collections';
+import IconButton from 'material-ui/IconButton';
 const styles = {
   sidebar: {
     width: 256,
@@ -41,22 +42,34 @@ const SidebarContent = (props) => {
       <div style={ styles.content }>
         <div style={ styles.divider } />
         <Link style={ styles.sidebarLink } to="/dashboard/articles">
-          <ArticleIcon />
+          <IconButton tooltip="Articles">
+            <ArticleIcon />
+          </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/settings">
-          <SettingsIcon />
+          <IconButton tooltip="Settings">
+           <SettingsIcon />
+          </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/users">
-          <UsersIcon />
+          <IconButton tooltip="Users">
+            <UsersIcon />
+          </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/uploader">
+         <IconButton tooltip="File Manager">
           <FileManagerIcon />
+          </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/pages">
+          <IconButton tooltip="Pages">
           <PageBuildIcon />
+          </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/collections">
+          <IconButton tooltip="Collections">
           <CollectionsIcon />
+          </IconButton>
         </Link>
       </div>
   );

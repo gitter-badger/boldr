@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { logoutUser } from 'state/auth/auth';
@@ -48,6 +50,10 @@ class TopBar extends React.Component {
     this.handleClickLogin = this.handleClickLogin.bind(this);
     this.handleClickRegister = this.handleClickRegister.bind(this);
     this.handleHome = this.handleHome.bind(this);
+        this.state = {
+      valueSingle: '3',
+      valueMultiple: ['3', '5'],
+    };
   }
 
   handleClickLogin(event) {
@@ -68,6 +74,29 @@ class TopBar extends React.Component {
     const path = '/';
     browserHistory.push(path);
   }
+  handleChangeSingle = (event, value) => {
+    this.setState({
+      valueSingle: value
+    });
+  };
+
+  handleChangeMultiple = (event, value) => {
+    this.setState({
+      valueMultiple: value
+    });
+  };
+
+  handleOpenMenu = () => {
+    this.setState({
+      openMenu: true
+    });
+  }
+
+  handleOnRequestChange = (value) => {
+    this.setState({
+      openMenu: value
+    });
+  }
   render(): any {
     return (
       <div className="topbar">
@@ -84,11 +113,15 @@ class TopBar extends React.Component {
             iconStyleRight={ inlineStyles.elementRight }
             iconElementRight={
                     <div>
-                        <Link to="/about" >
-                            <IconButton>
-                                <SocialPerson color={ iconColor } />
-                            </IconButton>
-                        </Link>
+                      <IconMenu
+                        iconButtonElement={ <IconButton><SocialPerson color={ iconColor } /></IconButton> }
+                        onChange={ ::this.handleChangeSingle }
+                        value={ this.state.valueSingle }
+                      >
+                        <MenuItem value="1"><Link to="/login">Login</Link></MenuItem>
+                        <MenuItem value="2"><Link to="/register">Register</Link></MenuItem>
+                        <MenuItem value="3"><Link to="/register">Sign Out</Link></MenuItem>
+                      </IconMenu>
                         <Link to="/blog" >
                             <IconButton>
                                 <ActionDescription color={ iconColor } />
