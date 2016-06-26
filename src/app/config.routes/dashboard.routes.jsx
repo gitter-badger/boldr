@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, IndexRoute, Redirect } from 'react-router';
+import Route from 'react-router/lib/Route';
+import IndexRoute from 'react-router/lib/IndexRoute';
 import DashboardLayout from 'scenes/Dashboard/tpl.DashboardLayout';
 import DashboardContainer from 'scenes/Dashboard/DashboardContainer';
 import ArticlesContainer from 'scenes/Dashboard/Articles/ArticlesContainer';
@@ -10,6 +11,7 @@ import PagesContainer from 'scenes/Dashboard/Pages/PagesContainer';
 import UsersContainer from 'scenes/Dashboard/Users/UsersContainer';
 import CollectionsContainer from 'scenes/Dashboard/Collections/CollectionsContainer';
 import UploaderContainer from 'scenes/Dashboard/Uploader/UploaderContainer';
+
 export default (
   <Route path="/dashboard" component={ DashboardLayout }>
     <IndexRoute component={ DashboardContainer } />

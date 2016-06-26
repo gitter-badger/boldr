@@ -42,10 +42,10 @@ const cssLoader = [
 
 const {
   SERVER_HOST,
-  BLDR_ENTRY,
   WEBPACK_DEV_SERVER_PORT,
   __CLIENT__,
   __SERVER__,
+  BLDR_ENTRY,
   __DEV__,
   __PROD__,
   __DEBUG__
@@ -84,6 +84,7 @@ const config = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
+    'react-hot-loader/patch',
       HOT_MW,
       boldrCfg.BLDR_ENTRY
     ],

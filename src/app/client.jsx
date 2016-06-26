@@ -1,24 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
+import Router from 'react-router/lib/Router';
+import browserHistory from 'react-router/lib/browserHistory';
+import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import useScroll from 'react-router-scroll';
 import axios from 'axios';
-import io from 'socket.io-client';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import WebFontLoader from 'webfontloader';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import BoldrTheme from 'app/utils.rendering/theme';
 
 import { checkTokenValidity } from 'state/user/user.actions';
 import preRenderMiddleware from 'app/config.api/preRenderMiddleware';
 import createRoutes from 'app/config.routes';
 import configureStore from 'app/utils.redux/configureStore';
-import muiTheme from 'app/utils.rendering/theme';
+const muiTheme = getMuiTheme(BoldrTheme);
 
 WebFontLoader.load({
   google: {
-    families: ['Roboto:300,400,500,700', 'Material Icons']
+    families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']
   }
 });
 const token = localStorage.getItem('boldr:jwt');
