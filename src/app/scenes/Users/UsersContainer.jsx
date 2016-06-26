@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as userActionCreators from 'state/user/user.actions';
+import * as userActionCreators from 'state/user/user';
 
 const UsersContainer = (props) => {
   return (

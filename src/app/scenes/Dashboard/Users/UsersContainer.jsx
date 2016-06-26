@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Users from './Users';
-import { getUsersList } from 'state/user/user.actions';
+import { getUsersList } from 'state/user/user';
 import Loader from 'shared/atm.Loader';
 
 class UsersContainer extends Component {

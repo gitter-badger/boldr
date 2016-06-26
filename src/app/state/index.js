@@ -3,13 +3,12 @@ import { routerReducer as routing } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import auth from './auth/auth';
-import user from './user/user.reducer';
-import article from './article/article.reducer';
-import boldr from './boldr/boldr.reducer';
-import setting from './setting/setting.reducer';
-import page from './page/page.reducer';
+import user from './user/user';
+import boldr from './boldr/boldr';
+import page from './page/page';
 import collection from './collection/collection';
 import alert from './alert/alert';
+import article from './article/article.reducer';
 import upload from 'scenes/Dashboard/Uploader/state/upload.reducer';
 
 const rootReducer = combineReducers({
@@ -21,7 +20,6 @@ const rootReducer = combineReducers({
   page,
   collection,
   alert,
-  setting,
   upload,
   form: formReducer
 });

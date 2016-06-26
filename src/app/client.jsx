@@ -13,7 +13,7 @@ import WebFontLoader from 'webfontloader';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import BoldrTheme from 'app/utils.rendering/theme';
 
-import { checkTokenValidity } from 'state/user/user.actions';
+import { checkTokenValidity } from 'state/user/user';
 import preRenderMiddleware from 'app/config.api/preRenderMiddleware';
 import createRoutes from 'app/config.routes';
 import configureStore from 'app/utils.redux/configureStore';
@@ -21,7 +21,7 @@ const muiTheme = getMuiTheme(BoldrTheme);
 
 WebFontLoader.load({
   google: {
-    families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300', 'Material Icons']
+    families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']
   }
 });
 const token = localStorage.getItem('boldr:jwt');

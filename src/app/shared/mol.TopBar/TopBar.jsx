@@ -1,16 +1,19 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
+import { Link, browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import { Link, browserHistory } from 'react-router';
-import { connect } from 'react-redux';
-import { logoutUser } from 'state/auth/auth';
 import AvWeb from 'material-ui/svg-icons/av/web';
 import ActionDescription from 'material-ui/svg-icons/action/description';
 import SocialPerson from 'material-ui/svg-icons/social/person';
-import SiteLogo from 'components/SiteLogo';
+
+import { logoutUser } from 'state/auth/auth';
+import SiteLogo from 'shared/atm.SiteLogo';
+
 const inlineStyle = {
   backgroundColor: '#fff'
 };
@@ -109,7 +112,6 @@ class TopBar extends React.Component {
             zDepth={ 2 }
             style={ inlineStyle }
             onTitleTouchTap={ this.handleHome }
-            onLeftIconButtonTouchTap={ ::this.props.handleToggle }
             iconStyleRight={ inlineStyles.elementRight }
             iconElementRight={
                     <div>

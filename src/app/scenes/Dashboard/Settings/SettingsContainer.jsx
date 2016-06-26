@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import Settings from './Settings';
-import { loadBoldrSettings } from 'state/boldr/boldr.actions';
+import { loadBoldrSettings } from 'state/boldr/boldr';
 const style = {
   backgroundColor: '#40404E',
   margin: 20,

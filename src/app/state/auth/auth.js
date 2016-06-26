@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-import { partialPopulateUser } from '../user/user.actions';
+import { partialPopulateUser } from '../user/user';
 import { API_BASE } from 'app/config.api';
 
 // Log In Action Types

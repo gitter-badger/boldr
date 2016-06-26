@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import Paper from 'material-ui/Paper';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Toggle from 'material-ui/Toggle';
-import * as userActionCreators from 'state/user/user.actions';
+import * as userActionCreators from 'state/user/user';
 
 const style = {
   backgroundColor: '#40404E',

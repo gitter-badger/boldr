@@ -1,14 +1,10 @@
-import { polyfill } from 'es6-promise';
 import axios from 'axios';
-import { push } from 'react-router-redux';
 import { API_BASE } from 'app/config.api';
-
-polyfill();
 
 export const SET_PAGE = '@@pages/SET_PAGE';
 export const LOAD_PAGES = '@@pages/LOAD_PAGES';
 export const LOAD_PAGES_SUCCESS = '@@pages/LOAD_PAGES_SUCCESS';
-export const LOAD_PAGES_FAILURE = '@@pages/LOAD_PAGES_FAILURE';
+export const LOAD_PAGES_FAIL = '@@pages/LOAD_PAGES_FAIL';
 
 export const PAGES_ENDPOINT = `${API_BASE}/pages`;
 
@@ -24,7 +20,7 @@ const loadPagesSuccess = (response) => ({
 
 // Fail receivers
 const failedToLoadPages = (data) => ({
-  type: LOAD_PAGES_FAILURE,
+  type: LOAD_PAGES_FAIL,
   loading: false,
   data
 });
@@ -48,4 +44,40 @@ export function getPagesList(data) {
         dispatch(failedToLoadPages(err));
       });
   };
+}
+
+const INITIAL_STATE = {
+  isLoading: false,
+  message: '',
+  error: false,
+  pages: []
+};
+
+export default function page(state = INITIAL_STATE, action) {
+  switch (action.type) {
+    case SET_PAGE:
+      return {
+        ...state
+      };
+    case LOAD_PAGES:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case LOAD_PAGES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        pages: action.payload.pages
+      };
+    case LOAD_PAGES_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        message: 'There was a problem loading pages'
+      };
+    default:
+      return state;
+  }
 }
