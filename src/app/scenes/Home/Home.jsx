@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+
 import Helmet from 'react-helmet';
 // require images like const logoImage = require('./image.jpg') so the server picks it up too
 const HomeContainer = () => {

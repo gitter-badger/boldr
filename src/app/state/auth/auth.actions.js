@@ -7,25 +7,24 @@ import { API_BASE } from 'app/config.api';
 // Log In Action Creators
 function beginLogin() {
   return {
-    type: types.LOGIN_USER_REQUEST
+    type: types.LOGIN_USER
   };
 }
 
-export function loginSuccess(response) {
+const loginSuccess = response => {
   localStorage.setItem('boldr:jwt', response.data.token);
   return {
     type: types.LOGIN_USER_SUCCESS,
-    payload: response.data,
-    message: response.data.message
+    payload: response.data
   };
-}
+};
 
-function loginError(err) {
+const loginError = err => {
   return {
-    type: types.LOGIN_USER_FAILURE,
-    message: err.error
+    type: LOGIN_USER_FAIL,
+    payload: err.error
   };
-}
+};
 
 // Sign Up Action Creators
 function signUpError(response) {

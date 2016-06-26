@@ -1,9 +1,4 @@
-
-import {
-  createStore,
-  applyMiddleware,
-  compose
-} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createLogger from 'redux-logger';

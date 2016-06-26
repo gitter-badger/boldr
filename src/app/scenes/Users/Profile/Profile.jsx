@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Paper from 'material-ui/Paper';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Toggle from 'material-ui/Toggle';
 import * as userActionCreators from 'state/user/user.actions';
 
@@ -12,7 +11,28 @@ const style = {
   margin: 20,
   padding: 20
 };
-class Profile extends Component {
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    loading: state.user.loading
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    userActions: bindActionCreators(userActionCreators, dispatch)
+  };
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Profile extends Component {
+  static propTypes = {
+    dispatch: React.PropTypes.func,
+    userActions: React.PropTypes.object,
+    params: React.PropTypes.object,
+    user: React.PropTypes.object
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -71,23 +91,3 @@ class Profile extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    loading: state.user.loading
-  };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    userActions: bindActionCreators(userActionCreators, dispatch)
-  };
-};
-Profile.propTypes = {
-  dispatch: React.PropTypes.func,
-  userActions: React.PropTypes.object,
-  params: React.PropTypes.object,
-  user: React.PropTypes.object
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);

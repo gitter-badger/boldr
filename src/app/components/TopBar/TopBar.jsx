@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as boldrActions from 'app/state/boldr/boldr.actions';
-import { logOut } from 'state/user/user.actions';
+import { logoutUser } from 'state/auth/auth';
 import { browserHistory } from 'react-router';
 import SiteLogo from 'components/SiteLogo';
 const inlineStyle = {
@@ -33,9 +33,7 @@ class TopBar extends React.Component {
   }
 
   handleClickSignout(event, dispatch) {
-    logOut();
-    const path = '/login';
-    browserHistory.push(path);
+    this.props.actions.logoutUser();
   }
 
   handleHome() {
@@ -52,7 +50,7 @@ class TopBar extends React.Component {
             zDepth={ 2 }
             style={ inlineStyle }
             onTitleTouchTap={ this.handleHome }
-            onLeftIconButtonTouchTap={ this.props.handleToggle }
+            onLeftIconButtonTouchTap={ ::this.props.handleToggle }
             iconElementRight={
               <IconMenu
                 iconButtonElement={
@@ -81,11 +79,17 @@ class TopBar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     boldr: state.boldr,
-    user: state.user
+    user: state.user,
+    auth: state.auth
   };
 };
 
-export default connect(mapStateToProps, { logOut })(TopBar);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ logoutUser }, dispatch)
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
 
 TopBar.propTypes = {
   dispatch: PropTypes.func,

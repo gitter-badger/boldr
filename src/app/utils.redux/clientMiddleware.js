@@ -10,16 +10,16 @@ export default function clientMiddleware(client) {
         return next(action);
       }
 
-      const [REQUEST, SUCCESS, FAILURE] = types;
+      const [REQUEST, SUCCESS, FAIL] = types;
       next({ ...rest, type: REQUEST });
 
       const actionPromise = promise(client);
       actionPromise.then(
         (result) => next({ ...rest, result, type: SUCCESS }),
-        (error) => next({ ...rest, error, type: FAILURE })
+        (error) => next({ ...rest, error, type: FAIL })
       ).catch(error => {
         console.error('MIDDLEWARE ERROR:', error); // eslint-disable-line
-        next({ ...rest, error, type: FAILURE });
+        next({ ...rest, error, type: FAIL });
       });
 
       return actionPromise;

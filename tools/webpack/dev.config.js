@@ -6,9 +6,10 @@ import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../../src/config';
 import paths from '../../src/config/paths';
 import BABEL_LOADER from './loaders/babel';
-import hook from 'css-modules-require-hook';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import sass from 'node-sass';
+import hook from 'css-modules-require-hook';
+import LodashPlugin from 'lodash-webpack-plugin';
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
 
@@ -16,6 +17,7 @@ const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
   'redux/dist/redux.min.js'
 ];
+
 const scssConfigIncludePaths = [paths.APP_DIR];
 const cssChunkNaming = '[name]__[local]___[hash:base64:5]';
 const VENDOR_DEPENDENCIES = [
@@ -37,6 +39,7 @@ const cssLoader = [
   'css?modules',
   'sourceMap',
   'importLoaders=2',
+  '-autoprefixer',
   `localIdentName=${cssChunkNaming}`
 ].join('&');
 
@@ -136,7 +139,7 @@ const config = {
     require('lost')(),
     require('autoprefixer')({ browsers: ['last 2 versions'] })
   ]),
-  sassLoader: {
+    sassLoader: {
     includePaths: scssConfigIncludePaths
   },
   plugins: [
@@ -146,6 +149,14 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common', filename: 'common.js', async: true, minChunks: Infinity
     }),
+      // Fixes for commonly used libraries (triggered only if lib is actually used)
+    new webpack.ProvidePlugin({
+      'Promise': 'exports-loader?global.Promise!es6-promise', // Promise polyfill
+      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch' // Fetch polyfill
+    }),
+
+    // Disable Moment langs from being auto-required
+    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -159,9 +170,16 @@ const config = {
       __DEBUG__
     }),
     webpackIsomorphicToolsPlugin.development(),
-    new webpack.ProvidePlugin({
-      Promise: 'exports-loader?global.Promise!es6-promise', // Promise polyfill
-      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch' // Fetch polyfill
+    new LodashPlugin({
+      shorthands: true, // Iteratee shorthands for _.property, _.matches, & _.matchesProperty
+      cloning: true, // Support “clone” methods & cloning source objects
+      currying: true, // Support “curry” methods
+      caching: true, // Caches for methods like _.cloneDeep, _.isEqual, & _.uniq
+      collections: true, // Support objects in “Collection” methods
+      flattening: true, // Support “flatten” methods & flattening rest arguments
+      paths: true, // Deep property path support for methods like _.get, _.has, & _.set
+      memoizing: true, // Support _.memoize & memoization
+      placeholders: true // Argument placeholder support for “bind”, “curry”, & “partial” methods
     })
   ],
   resolve: {

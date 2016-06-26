@@ -60,7 +60,7 @@ class AppDrawer extends React.Component {// eslint-disable-line
   render() {
     const { boldr, dispatch, user } = this.props;
     return (
-      <Drawer onBlur={ this.handleToggle } width={ 240 } open={ boldr.isSideBarOpen } docked={ false }
+      <Drawer onBlur={ ::this.handleToggle } width={ 240 } open={ boldr.isSideBarOpen } docked={ false }
         onRequestChange={ open => { this.handleToggle(); } }
       >
 

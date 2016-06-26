@@ -3,6 +3,7 @@ import React from 'react';
 const footerStyle = {
   width: '100%',
   height: '80px',
+  position: 'absolute',
   backgroundColor: 'rgba(0, 0, 0, .2)',
   boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)',
   marginTop: '20px',

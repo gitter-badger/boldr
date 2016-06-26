@@ -66,7 +66,7 @@ app.use = x => use.call(app, convert(x));
     const start = new Date();
     await next();
     const end = new Date();
-    logger.verbose(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
+    logger.info(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
   });
   /**
    * Middlewares set to be available on context.

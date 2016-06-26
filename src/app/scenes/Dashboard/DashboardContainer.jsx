@@ -1,19 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
-class DashboardContainer extends Component {
-  render() {
-    return (
-      <div>
-
-       <div className="container">
-         DashboardContainer?
-         { this.props.children }
-       </div>
-      </div>
-    );
-  }
-}
+const DashboardContainer = props => {
+  return (
+     <div className="container">
+       { props.children }
+    </div>
+  );
+};
 
 DashboardContainer.propTypes = {
   children: React.PropTypes.node

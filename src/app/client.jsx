@@ -21,7 +21,7 @@ const muiTheme = getMuiTheme(BoldrTheme);
 
 WebFontLoader.load({
   google: {
-    families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']
+    families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300', 'Material Icons']
   }
 });
 const token = localStorage.getItem('boldr:jwt');

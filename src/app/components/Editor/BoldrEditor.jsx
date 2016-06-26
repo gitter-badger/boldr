@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import Radium from 'radium';
 import { Editor, EditorState, ContentState, RichUtils, getDefaultKeyBinding,
   KeyBindingUtil, Entity, convertToRaw, CompositeDecorator, convertFromRaw,
   AtomicBlockUtils, Modifier, DefaultDraftBlockRenderMap
@@ -56,7 +55,6 @@ const styleMap = {
   }
 };
 
-@Radium
 export default class BEditor extends React.Component {
   static propTypes = {
     editorState: React.PropTypes.object,
