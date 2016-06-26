@@ -41,6 +41,7 @@
     "es6-promise": "^3.2.1",
     "flexboxgrid": "^6.3.0",
     "fs-extra": "^0.30.0",
+    "history": "^3.0.0",
     "immutable": "^3.8.1",
     "import-dir": "0.0.1",
     "ioredis": "^2.1.0",

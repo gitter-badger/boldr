@@ -55,7 +55,7 @@ function onUpdate() {
 const root = (
 <Provider store={ store }>
   <MuiThemeProvider muiTheme={ muiTheme }>
-    <Router history={ history } onUpdate={ onUpdate } render={ applyRouterMiddleware(useScroll()) }>
+    <Router history={ browserHistory } onUpdate={ onUpdate }>
         { routes }
     </Router>
   </MuiThemeProvider>
