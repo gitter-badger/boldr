@@ -1,7 +1,4 @@
-import _debug from 'debug';
 import * as constants from './user.actions';
-
-const debug = _debug('user.reducer:debug');
 
 export const INITIAL_USER_STATE = {
   loading: false,

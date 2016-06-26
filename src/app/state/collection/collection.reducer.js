@@ -1,4 +1,4 @@
-import * as constants from './collection.constants';
+const LOAD_COLLECTIONS = '@@collections/LOAD_COLLECTIONS';
 
 const INITIAL_STATE = {
   isLoading: true
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 export default function collection(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case constants.LOAD_COLLECTIONS:
+    case LOAD_COLLECTIONS:
       return {
         ...state,
         isLoading: false

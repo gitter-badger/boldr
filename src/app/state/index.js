@@ -9,7 +9,7 @@ import boldr from './boldr/boldr.reducer';
 import setting from './setting/setting.reducer';
 import page from './page/page.reducer';
 import collection from './collection/collection.reducer';
-
+import alert from './alert/alert';
 import upload from 'scenes/Dashboard/Uploader/state/upload.reducer';
 const rootReducer = combineReducers({
   routing,
@@ -19,6 +19,7 @@ const rootReducer = combineReducers({
   article,
   page,
   collection,
+  alert,
   setting,
   upload,
   form: formReducer

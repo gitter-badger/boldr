@@ -1,17 +1,14 @@
-import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import { API_BASE } from 'app/config.api';
 
-polyfill();
-
-export const TOGGLE_SIDE_BAR = '@@boldr/TOGGLE_SIDE_BAR';
-export const CHANGE_SELECTED_DRAWER_ITEM = '@@boldr/CHANGE_SELECTED_DRAWER_ITEM';
-export const DONE_LOADING = '@@boldr/DONE_LOADING';
-export const LOAD_SETTINGS = '@@boldr/LOAD_SETTINGS';
-export const LOAD_SETTINGS_SUCCESS = '@@boldr/LOAD_SETTINGS_SUCCESS';
-export const LOAD_SETTINGS_FAILURE = '@@boldr/LOAD_SETTINGS_FAILURE';
-export const SETTINGS_ENDPOINT = `${API_BASE}/settings`;
+const TOGGLE_SIDE_BAR = '@@boldr/TOGGLE_SIDE_BAR';
+const CHANGE_SELECTED_DRAWER_ITEM = '@@boldr/CHANGE_SELECTED_DRAWER_ITEM';
+const DONE_LOADING = '@@boldr/DONE_LOADING';
+const LOAD_SETTINGS = '@@boldr/LOAD_SETTINGS';
+const LOAD_SETTINGS_SUCCESS = '@@boldr/LOAD_SETTINGS_SUCCESS';
+const LOAD_SETTINGS_FAILURE = '@@boldr/LOAD_SETTINGS_FAILURE';
+const SETTINGS_ENDPOINT = `${API_BASE}/settings`;
 
 export const finishLoading = status => {
   return {

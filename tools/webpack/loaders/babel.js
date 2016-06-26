@@ -26,7 +26,8 @@ const BABEL_LOADER = {
   presets: ['es2015', 'react', 'stage-0'],
   env: {
     development: {
-      presets: ['react-hmre']
+      presets: ['react-hmre'],
+      plugins: ['react-hot-loader/babel']
     },
     production: {
       presets: ['react-optimize']

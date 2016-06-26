@@ -7,10 +7,9 @@ import { connectDatabase } from './db/connector';
 import config from 'config';
 import { inspect } from 'util';
 const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
+const server = http.createServer(app.callback());
 
 (async() => {
-  const server = await http.createServer(app.callback());
-
   try {
     server.listen(SERVER_PORT);
     logger.info(`Server started on port ${SERVER_PORT}`);
@@ -30,9 +29,11 @@ const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
       }));
     });
   }
+
   server.on('close', () => {
-    logger.info('And now my watch has ended');
+    logger.info('Closing connection');
   });
+
     // handle graceful restarts
   process.on('SIGTERM', () => {
     if (!server || !server.close) {
@@ -48,3 +49,5 @@ const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
     });
   });
 })();
+
+export default server;
