@@ -38,6 +38,8 @@
     "dotenv": "^2.0.0",
     "draft-js": "^0.7.0",
     "draft-js-export-html": "^0.3.0",
+    "draft-js-multidecorators": "^1.0.0",
+    "draft-js-prism": "^1.0.3",
     "es6-promise": "^3.2.1",
     "flexboxgrid": "^6.3.0",
     "fs-extra": "^0.30.0",

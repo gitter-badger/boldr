@@ -1,5 +1,5 @@
 import { fade } from 'material-ui/utils/colorManipulator';
-import { cyan700, grey600, pinkA100, pinkA400, fullWhite } from 'material-ui/styles/colors';
+import { cyan700, gray900, darkBlack, gray400, pinkA100, pinkA400, fullWhite, white } from 'material-ui/styles/colors';
 import zIndex from 'material-ui/styles/zIndex';
 
 const pinkish = '#DD144D';
@@ -24,16 +24,15 @@ export default {
   palette: {
     primary1Color: cyan700,
     primary2Color: cyan700,
-    primary3Color: grey600,
+    primary3Color: cyan700,
     accent1Color: pinkish,
     accent2Color: pinkA400,
     accent3Color: pinkA100,
-    textColor: fullWhite,
-    alternateTextColor: '#40404E',
-    canvasColor: '#303030',
-    borderColor: fade(fullWhite, 0.3),
-    disabledColor: fade(fullWhite, 0.3),
-    pickerHeaderColor: fade(fullWhite, 0.12),
-    clockCircleColor: fade(fullWhite, 0.12)
+    textColor: gray900,
+    alternateTextColor: white,
+    canvasColor: white,
+    borderColor: gray400,
+    disabledColor: fade(darkBlack, 0.3),
+    pinkish
   }
 };

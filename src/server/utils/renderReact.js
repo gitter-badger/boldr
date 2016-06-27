@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -13,7 +13,7 @@ const head = Helmet.rewind();
 const renderFullPage = (component, store) => {
   const assets = webpackIsomorphicTools.assets();
   // Render the component to a string
-  const html = renderToString(<Html head={ head } assets={ assets } component={ component } store={ store } />);
+  const html = renderToStaticMarkup(<Html head={ head } assets={ assets } component={ component } store={ store } />);
 
   return `<!doctype html>\n${html}`;
 };
@@ -31,13 +31,10 @@ const handleRender = ctx => {
   const store = configureStore(initialState);
   // Grab the initial state from our Redux store
   const finalState = store.getState();
-  const routes = createRoutes(finalState);
+  const routes = createRoutes(finalState, history);
   const _ctx = ctx;
   const { url: location } = _ctx;
 
-  global.navigator = {
-    userAgent: ctx.request.headers['user-agent']
-  };
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     if (error) {
       _ctx.status = 500;

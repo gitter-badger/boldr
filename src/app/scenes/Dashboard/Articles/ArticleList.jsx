@@ -30,7 +30,7 @@ class ArticleList extends Component {
       articleList.push(
         <div>
         <ListItem key={ article.id } primaryText={ article.title }>
-          <Article {...article} />
+          <Article { ...article } />
         </ListItem>
         <Divider inset />
         </div>

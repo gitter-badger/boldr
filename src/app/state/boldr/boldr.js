@@ -7,6 +7,9 @@ const LOAD_SETTINGS = '@@boldr/LOAD_SETTINGS';
 const LOAD_SETTINGS_SUCCESS = '@@boldr/LOAD_SETTINGS_SUCCESS';
 const LOAD_SETTINGS_FAILURE = '@@boldr/LOAD_SETTINGS_FAILURE';
 const SETTINGS_ENDPOINT = `${API_BASE}/settings`;
+const SNACK_MESSAGE = 'SNACK_MESSAGE';
+const CLOSE_SNACK = 'CLOSE_SNACK';
+const SOCKET_STATUS = 'SOCKET_STATUS';
 
 export const finishLoading = status => {
   return {
@@ -58,6 +61,14 @@ export function loadBoldrSettings(data) {
   };
 }
 
+export const closeSnack = () => {
+  return function(dispatch) {
+    dispatch({
+      type: CLOSE_SNACK,
+    })
+  }
+}
+
 const INITIAL_STATE = {
   isLoading: true,
   isSideBarOpen: false,
@@ -67,7 +78,13 @@ const INITIAL_STATE = {
   url: '',
   analyticsId: '',
   sitename: '',
-  logo: ''
+  logo: '',
+  snack: {
+    open: false,
+    message: null,
+    author: null,
+    name: null
+  }
 };
 
 export default function boldr(state = INITIAL_STATE, action) {
@@ -81,6 +98,19 @@ export default function boldr(state = INITIAL_STATE, action) {
       return {
         ...state,
         isSideBarOpen: !state.isSideBarOpen
+      };
+    case SNACK_MESSAGE:
+      const snack = {
+        open: true,
+        message: action.message,
+        author: action.author,
+        name: action.name
+      };
+      return { ...state, snack };
+    case CLOSE_SNACK:
+      return {
+        ...state,
+        snack: { ...INITIAL_STATE.snack }
       };
     default:
       return state;

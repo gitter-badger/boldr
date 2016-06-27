@@ -10,6 +10,7 @@ const styles = {
     padding: 8
   },
   content: {
+    marginTop: '80px',
     padding: '16px'
   }
 };

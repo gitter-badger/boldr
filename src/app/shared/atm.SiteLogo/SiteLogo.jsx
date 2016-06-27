@@ -2,7 +2,8 @@ import React from 'react';
 import BoldrLogo from 'shared/atm.BoldrLogo';
 
 const inlineStyles = {
-  verticalAlign: 'top'
+  verticalAlign: 'top',
+  color: '#333'
 };
 const inlineStyle = {
   paddingTop: '5px'
