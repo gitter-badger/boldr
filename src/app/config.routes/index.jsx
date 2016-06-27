@@ -13,7 +13,7 @@ import Error404 from 'shared/pg.Error404';
 export default (store) => {
   return (
   <Route path="/" component={ CoreLayout }>
-    <IndexRoute component={ Alert(Home) } />
+    <IndexRoute component={ Home } />
     <Route path="home" component={ Home } />
     <Route path="register" component={ RegisterContainer } />
     <Route path="login" component={ LoginContainer } />

@@ -13,11 +13,6 @@ class CoreLayout extends Component {
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   };
-  constructor(props) {
-    super(props);
-
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-  }
 
   componentDidMount() {
     this.props.dispatch(checkTokenValidity);
@@ -39,7 +34,7 @@ class CoreLayout extends Component {
 
 function mapStateToProps(state) {
   return {
-    router: state.router,
+    routing: state.routing,
     boldr: state.boldr
   };
 }
