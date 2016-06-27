@@ -137,9 +137,47 @@ export function logoutUser() {
   };
 }
 
-const ME_FROM_TOKEN = '@@auth/ME_FROM_TOKEN';
-const ME_FROM_TOKEN_SUCCESS = '@@auth/ME_FROM_TOKEN_SUCCESS';
-const ME_FROM_TOKEN_FAIL = '@@auth/ME_FROM_TOKEN_FAIL';
+
+const CHECK_TOKEN_VALIDITY_REQUEST = '@@user/CHECK_TOKEN_VALIDITY_REQUEST';
+const TOKEN_VALID = '@@user/TOKEN_VALID';
+const TOKEN_INVALID_OR_MISSING = '@@user/TOKEN_INVALID_OR_MISSING';
+
+function checkTokenValidityRequest() {
+  return { type: CHECK_TOKEN_VALIDITY_REQUEST };
+}
+
+function checkTokenValiditySuccess(response) {
+  return {
+    type: TOKEN_VALID,
+    payload: response
+  };
+}
+
+function checkTokenValidityFailure(error) {
+  return {
+    type: TOKEN_INVALID_OR_MISSING,
+    payload: error
+  };
+}
+
+export function checkTokenValidity() {
+  return dispatch => {
+    const token = localStorage.getItem('boldr:jwt');
+    if (!token || token === '') { return; }
+    dispatch(checkTokenValidityRequest());
+    axios.get(`${API_BASE}/auth/check`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      dispatch(checkTokenValiditySuccess(response));
+    })
+    .catch(() => {
+      dispatch(checkTokenValidityFailure('Token is invalid'));
+      localStorage.removeItem('boldr:jwt');
+    });
+  };
+}
+
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -223,6 +261,24 @@ export default function auth(state = INITIAL_STATE, action) {
         error: action.payload,
         isAuthenticated: true,
         isLoading: false
+      };
+    case CHECK_TOKEN_VALIDITY_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        message: ''
+      };
+    case TOKEN_VALID:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true
+      };
+    case TOKEN_INVALID_OR_MISSING:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: false
       };
     default:
       return state;

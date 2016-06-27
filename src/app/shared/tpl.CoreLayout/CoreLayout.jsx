@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Helmet from 'react-helmet';
 import TopBar from 'shared/mol.TopBar';
-import Footer from 'shared/mol.Footer';
+// import Footer from 'shared/mol.Footer';
 import { checkTokenValidity } from 'state/auth/auth';
 import meta from 'app/utils.rendering/meta';
 import 'app/styles/app.scss';
@@ -39,4 +38,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(CoreLayout);
+export default connect(mapStateToProps)(CoreLayout);

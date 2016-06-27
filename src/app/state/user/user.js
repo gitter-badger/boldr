@@ -58,46 +58,6 @@ export function getUsersList(data) {
   };
 }
 
-const CHECK_TOKEN_VALIDITY_REQUEST = '@@user/CHECK_TOKEN_VALIDITY_REQUEST';
-const TOKEN_VALID = '@@user/TOKEN_VALID';
-const TOKEN_INVALID_OR_MISSING = '@@user/TOKEN_INVALID_OR_MISSING';
-
-function checkTokenValidityRequest() {
-  return { type: CHECK_TOKEN_VALIDITY_REQUEST };
-}
-
-function checkTokenValiditySuccess(response) {
-  return {
-    type: TOKEN_VALID,
-    payload: response
-  };
-}
-
-function checkTokenValidityFailure(error) {
-  return {
-    type: TOKEN_INVALID_OR_MISSING,
-    payload: error
-  };
-}
-
-export function checkTokenValidity() {
-  return dispatch => {
-    const token = localStorage.getItem('boldr:jwt');
-    if (!token || token === '') { return; }
-    dispatch(checkTokenValidityRequest());
-    axios.get(`${API_BASE}/auth/check`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(response => {
-      dispatch(checkTokenValiditySuccess(response));
-    })
-    .catch(() => {
-      dispatch(checkTokenValidityFailure('Token is invalid'));
-      localStorage.removeItem('boldr:jwt');
-    });
-  };
-}
-
 const REQUEST_USER = '@@user/REQUEST_USER';
 const RECEIVE_USER = '@@user/RECEIVE_USER';
 const RECEIVE_USER_FAILED = '@@user/RECEIVE_USER_FAILED';
@@ -208,26 +168,7 @@ export default function user(state = INITIAL_STATE, action) {
         loading: false,
         error: action.payload
       };
-    case CHECK_TOKEN_VALIDITY_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        message: ''
-      };
-    case TOKEN_VALID:
-      return {
-        ...state,
-        loading: false,
-        isAuthenticated: true,
-        message: ''
-      };
-    case TOKEN_INVALID_OR_MISSING:
-      return {
-        ...state,
-        loading: false,
-        isAuthenticated: false,
-        message: action.message
-      };
+
     default:
       return state;
   }

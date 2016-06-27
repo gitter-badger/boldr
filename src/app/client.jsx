@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -13,7 +14,7 @@ import WebFontLoader from 'webfontloader';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import BoldrTheme from 'app/utils.rendering/theme';
 
-import { checkTokenValidity } from 'state/user/user';
+import { checkTokenValidity } from 'state/auth/auth';
 import preRenderMiddleware from 'app/config.api/preRenderMiddleware';
 import createRoutes from 'app/config.routes';
 import configureStore from 'app/utils.redux/configureStore';
