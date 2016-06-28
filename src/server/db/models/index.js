@@ -1,14 +1,26 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import dbConfig from '../dbConfig';
+import { config } from 'config/boldr';
 
-const config = dbConfig.development;
 const basename = path.basename(module.filename);
-const db = {};
+const db = config.db;
+let pool = false;
 
-// const dbUrl = process.env[config.use_env_variable];
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+if (db.pool.enabled) {
+  pool = {
+    maxConnections: db.pool.maxConnections,
+    minConnections: db.pool.minConnections,
+    maxIdleTime: db.pool.maxIdleTime
+  };
+}
+
+const sequelize = new Sequelize(db.name, db.user, db.password, {
+  host: db.ip,
+  dialect: 'postgres',
+  pool,
+  logging: db.logging
+});
 fs
   .readdirSync(__dirname)
   .filter((file) =>

@@ -1,34 +1,31 @@
+global.Promise = require('bluebird');
 /**
- * boldr/server
+ * boldr/server/boldr
  * Main web server.
  *
  * @exports {Object} app - Koa
  * @exports {Object} server - HTTP built into node.
  */
-global.Promise = require('bluebird');
 import dotenv from 'dotenv';
 import Koa from 'koa';
 import IO from 'koa-socket';
-import _debug from 'debug';
 import serve from 'koa-static';
 import convert from 'koa-convert';
 import proxy from 'koa-proxy';
 import { join } from 'path';
 import mount from 'koa-mount';
-import Router from 'koa-router';
-import BoldrMiddleware from './middleware';
+import middleware from './middleware';
 import config from 'config';
 import routers from './api';
 import { logger } from './lib';
 import { handleRender } from './utils';
 import connector from './db/connector';
-// import { register, io } from './lib/socket';
+
 // Load environment variables.
 dotenv.config();
-const debug = _debug('boldr:server:dev');
 
 // Application constants
-const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
+const { SERVER_HOST, WEBPACK_DEV_SERVER_PORT } = config;
 
 const app = new Koa();
 const io = new IO();
@@ -49,7 +46,7 @@ app.use = x => use.call(app, convert(x));
  * and context for Boldr.
  */
 (async() => {
-  await BoldrMiddleware.init(app);
+  await middleware(app);
 
   /**
    * Loads the development specific functions
@@ -62,12 +59,19 @@ app.use = x => use.call(app, convert(x));
       match: /^\/build\//
     })));
   }
+
+  /**
+   * Enables logging of response time along w/ the request type, status code, endpoint
+   * @param  {Function} async the context object on the request
+   * @return {Object}       The response log output
+   */
   app.use(async (ctx, next) => {
     const start = new Date();
     await next();
     const end = new Date();
     logger.info(`${ctx.method} ${ctx.status} ${ctx.url} => ${end - start}ms`);
   });
+
   /**
    * Middlewares set to be available on context.
    * @method use
@@ -83,7 +87,6 @@ app.use = x => use.call(app, convert(x));
     app.use(router.allowedMethods());
   }
   // Error pages
-  // eslint-disable-next-line consistent-return
   app.use(async (ctx, next) => {
     try {
       await next();
@@ -103,7 +106,6 @@ app.use = x => use.call(app, convert(x));
       } else {
         pkg.title = 'Boldr has encountered an error';
       }
-
       ctx.status = pkg.status;
 
       return ctx.render('error', { error: pkg });
@@ -130,7 +132,7 @@ app.use = x => use.call(app, convert(x));
       return;
     }
   });
-  // This is fired every time the server side receives a request
+
   app.use(handleRender);
   app.use(mount('/static', serve(join(__dirname, '..', '..', 'static'))));
 })();

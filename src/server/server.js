@@ -1,18 +1,17 @@
 import http from 'http';
 import app from './boldr';
+import { inspect } from 'util';
 
 import logger from './lib/logger';
 import redisClient from './db/redis';
-import { connectDatabase } from './db/connector';
-import config from 'config';
-import { inspect } from 'util';
-const { SERVER_HOST, SERVER_PORT, WEBPACK_DEV_SERVER_PORT } = config;
+import { config } from 'config/boldr';
+
 const server = http.createServer(app.callback());
 
 (async() => {
   try {
-    server.listen(SERVER_PORT);
-    logger.info(`Server started on port ${SERVER_PORT}`);
+    server.listen(config.port);
+    logger.info(`💚  Server started on port ${config.port}`);
 
     redisClient.on('connect', () => app.emit('log', 'info', 'redis connected'));
     redisClient.on('error', err => app.emit('error', err));

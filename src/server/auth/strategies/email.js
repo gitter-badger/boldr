@@ -1,7 +1,7 @@
 import { Strategy as CustomStrategy } from 'passport-custom';
-import bcrypt from 'bcryptjs';
-import Models from '../../db/models';
+import Models from 'server/db/models';
 const User = Models.User;
+
 export default new CustomStrategy(async (ctx, done) => {
   try {
     // Test whether is a login using email and password

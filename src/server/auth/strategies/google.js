@@ -1,5 +1,4 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
-import logger from 'server/lib/logger';
 // import { google } from '../secrets';
 import { googleSetup } from '../googleSetup';
 

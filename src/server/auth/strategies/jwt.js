@@ -1,5 +1,6 @@
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
-import Models from '../../db/models';
+import Models from 'server/db/models';
+
 const User = Models.User;
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),

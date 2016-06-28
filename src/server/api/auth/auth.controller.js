@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
-import config, { paths } from 'config';
 import logger from 'server/lib/logger';
 import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
 import Models from '../../db/models';
@@ -20,12 +19,12 @@ const saltRounds = 10;
  */
 export const registerUser = async ctx => {
   try {
-    const existingUser = await User.findOne({
+    User.findOne({
       where: {
         email: ctx.request.body.email
       }
     });
-  } catch (existingUser) {
+  } catch (error) {
     ctx.status = 409;
     ctx.body = 'Account with this email address already exists!';
   }
@@ -61,6 +60,7 @@ export const registerUser = async ctx => {
     // Send response.
     ctx.status = 201;
     ctx.body = user;
+    logger.info(`Registered account: ${user}`);
   } catch (err) {
     ctx.status = 500;
     ctx.body = `Unable to register user: ${err}`;
@@ -68,10 +68,10 @@ export const registerUser = async ctx => {
 };
 
 /**
- * @description
- * logs a user into his or her account.
- * @route /api/v1/auth/login
- * @method POST
+ * Endpoint used to login
+ * @param  {object}  ctx async  Koa object.
+ * @param  {Function}    next Function to pass error.
+ * @return {void}
  */
 export async function loginUser(ctx, next) {
   try {
@@ -84,7 +84,7 @@ export async function loginUser(ctx, next) {
       ctx.status = 403;
       ctx.body = 'Unable to log in.';
     }
-    const pw = bcrypt.compareSync(ctx.request.body.password, user.password);
+    const pw = await bcrypt.compareSync(ctx.request.body.password, user.password);
     if (pw === false) {
       ctx.status = 403;
       ctx.body = 'Unable to log in.';
@@ -95,12 +95,13 @@ export async function loginUser(ctx, next) {
     };
     // make this data available across the app on ctx.session
     ctx.session = payload;
-    const token = jwt.sign(payload, process.env.JWT_SECRET);
-    await redisClient.set(token, true);
+    const token = await jwt.sign(payload, process.env.JWT_SECRET);
+    redisClient.set(token, true);
     return ctx.ok({
       token
     });
   } catch (err) {
+    logger.debug(err);
     ctx.status = 403;
     ctx.body = 'Unable to log in.';
   }
@@ -113,7 +114,7 @@ export async function loginUser(ctx, next) {
  */
 export async function checkUser(ctx, next) {
   try {
-    const user = await User.findById(ctx.state.user.id)
+    User.findById(ctx.state.user.id)
       .then((result) => {
         return ctx.ok(result);
       });

@@ -7,9 +7,6 @@
  */
 
 import passport from 'koa-passport';
-import compose from 'koa-compose';
-import importDir from 'import-dir';
-import jwt from 'jsonwebtoken';
 // import r from '../db';
 import Models from '../db/models';
 
@@ -17,7 +14,6 @@ import Models from '../db/models';
 import jwtStrategy from './strategies/jwt';
 import emailStrategy from './strategies/email';
 import googleStrategy from './strategies/google';
-const EXPIRATION_AGE = 604800000; // 7 days
 
 const User = Models.User;
 

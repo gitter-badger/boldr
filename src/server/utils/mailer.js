@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
-import config, { paths } from 'config';
+import config from 'config';
 
 const auth = {
   auth: {

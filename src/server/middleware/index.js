@@ -1,9 +1,4 @@
-import Koa from 'koa';
-import Router from 'koa-router';
-import compose from 'koa-compose';
-import methodOverride from 'koa-methodoverride';
 import passport from 'koa-passport';
-import convert from 'koa-convert';
 import etag from 'koa-etag';
 import helmet from 'koa-helmet';
 import error from 'koa-json-error';
@@ -14,21 +9,17 @@ import jwt from './jwt';
 
 /**
  * Boldr middleware bootstraps the majority of middleware for the app.
- * @class BoldrMiddleware
- * @param  {Object} application
+ * @param  {Object} app
  */
-export default class BoldrMiddleware {
-  static init(application) {
-    application
-      .use(responseCalls)
-      .use(error())
-      .use(bodyParser)
-      .use(methodOverride())
-      .use(etag())
-      .use(jwt)
-      .use(session)
-      .use(helmet());
-    application.use(passport.initialize());
-    application.use(passport.session());
-  }
-}
+export default (app) => {
+  app
+    .use(responseCalls)
+    .use(error())
+    .use(bodyParser)
+    .use(etag())
+    .use(jwt)
+    .use(session)
+    .use(helmet());
+  app.use(passport.initialize());
+  app.use(passport.session());
+};

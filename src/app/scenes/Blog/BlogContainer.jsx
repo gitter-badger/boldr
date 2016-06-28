@@ -24,7 +24,7 @@ class BlogContainer extends Component {
     for (let article of articles) { // eslint-disable-line
       articleList.push(
         <div key={ article.id } className="row">
-          <Article {...article} />
+          <Article { ...article } />
         </div>
       );
     }

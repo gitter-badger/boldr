@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import bcrypt from 'bcryptjs';
 import logger from 'server/lib/logger';
 export default (sequelize, DataTypes) => {
@@ -221,11 +220,11 @@ export default (sequelize, DataTypes) => {
     }
   });
 
-  // ACL Enums
-  User.ACL_ADMIN = 99; // CRUD all Orgs, CRUD all Users
-  User.ACL_MOD = 50; // Edit own Org, CRUD Org Users
-  User.ACL_BASIC = 0; // View own Org, View Org Users, Edit Own User
-
+  /**
+   * Creates an object from user which
+   * not includes sensitive data.
+   * @return {Object} Returns a user object without password
+   */
   function toJSON() {
     return {
       id: this.id,
@@ -247,3 +246,4 @@ export default (sequelize, DataTypes) => {
 
   return User;
 };
+

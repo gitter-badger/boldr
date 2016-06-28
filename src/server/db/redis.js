@@ -7,7 +7,7 @@ const redisClient = new Redis({
 });
 
 redisClient.on('connect', () => {
-  logger.info('redis has connected');
+  logger.info('Redis server is listening.');
 });
 
 redisClient.on('error', err => {
@@ -16,12 +16,12 @@ redisClient.on('error', err => {
 });
 
 redisClient.on('close', () => {
-  logger.warn('redis has closed.');
+  logger.warn('Redis closed..');
   process.exit(1);
 });
 
 redisClient.on('reconnecting', () => {
-  logger.info('redis has reconnecting');
+  logger.info('Redis is reconnecting');
 });
 
 export default redisClient;

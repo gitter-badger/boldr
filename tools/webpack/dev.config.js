@@ -117,7 +117,7 @@ const config = {
           'style',
           cssLoader,
           'postcss',
-          'sass?sourceMap'
+          'sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
         ]
       },
       {

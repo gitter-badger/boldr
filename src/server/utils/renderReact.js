@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { renderToString, renderToStaticMarkup } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -9,18 +10,18 @@ import configureStore from 'app/utils.redux/configureStore';
 import createRoutes from 'app/config.routes';
 import Html from 'app/utils.rendering/Html';
 
-const head = Helmet.rewind();
 const renderFullPage = (component, store) => {
+  // Make the server / browser aware of the asset names and paths.
   const assets = webpackIsomorphicTools.assets();
-  // Render the component to a string
-  const html = renderToStaticMarkup(<Html head={ head } assets={ assets } component={ component } store={ store } />);
+  // Attach helmet to allow for page titles and meta tag control from React.
+  const head = Helmet.rewind();
+  // Render the HTML component as a string to serve to the browser.
+  const html = renderToString(<Html head={ head } assets={ assets } component={ component } store={ store } />);
 
   return `<!doctype html>\n${html}`;
 };
 
-const handleRender = ctx => {
-  // clear require() cache if in development mode
-  // (makes asset hot reloading work)
+async function handleRender(ctx) {
   if (__DEV__) {
     webpackIsomorphicTools.refresh();
   }
@@ -61,6 +62,6 @@ const handleRender = ctx => {
       _ctx.body = 'Not found';
     }
   });
-};
+}
 
 export { handleRender };
