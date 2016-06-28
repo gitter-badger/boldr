@@ -31,7 +31,8 @@ const VENDOR_DEPENDENCIES = [
   'classnames',
   'axios',
   'react-router-scroll',
-  'redux-form'
+  'redux-form',
+  'react-tap-event-plugin'
 ];
 const cssLoader = [
   'css?modules',

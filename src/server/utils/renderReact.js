@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import configureStore from 'app/utils.redux/configureStore';
 import createRoutes from 'app/config.routes';
 import Html from 'app/utils.rendering/Html';
+import BoldrTheme from 'app/utils.rendering/theme';
 
 const renderFullPage = (component, store) => {
   // Make the server / browser aware of the asset names and paths.
@@ -44,7 +45,7 @@ async function handleRender(ctx) {
       _ctx.status = 302;
       _ctx.redirect(`${redirectLocation.pathname}${redirectLocation.search}`);
     } else if (renderProps) {
-      const muiTheme = getMuiTheme({ userAgent: 'all' });
+      const muiTheme = getMuiTheme(BoldrTheme, { userAgent: ctx.headers['user-agent'] });
       const component = (
         <Provider store={store} key="provider">
           <MuiThemeProvider muiTheme={ muiTheme }>
