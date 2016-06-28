@@ -28,3 +28,16 @@ export const COLORS = [
   { label: 'Indigo', style: 'indigo' },
   { label: 'Highlight', style: 'highlight' }
 ];
+
+export const BLOCK_CONTROLS = BLOCK_TYPES.map(type => type.label);
+export const INLINE_CONTROLS = INLINE_STYLES.map(style => style.label);
+export const COLOR_CONTROLS = COLORS.map(color => color.label);
+
+export function validator(controls) {
+  return (propValue, key, componentName, location, propFullName) => {
+    const errors = propValue.map(value => (controls.indexOf(value) !== -1));
+    if (! errors.every(error => !! error)) {
+      return new Error(`Invalid prop ${propFullName} supplied to ${componentName}`);
+    }
+  };
+}

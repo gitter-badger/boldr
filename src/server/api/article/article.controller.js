@@ -71,7 +71,7 @@ export const createArticle = async (ctx, next) => {
     const article = await Article.create(articleFields);
     // creates a new "Tag" for every tag in ctx.request.body.tags
     for (let i = 0; i < ctx.request.body.tags.length; i++) {
-      const newTag = await Tag.findOrCreate({ tagname: ctx.request.body.tags[i] });
+      const newTag = await Tag.create({ tagname: ctx.request.body.tags[i] });
       // Adds articleId of the previously created Article and
       // adds the tagId of each created Tag to the ArticlesTags table.
       await article.addTag(newTag);

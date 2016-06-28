@@ -1,67 +1,201 @@
-import path from 'path';
 import webpack from 'webpack';
-import boldrCfg from 'config';
-import paths from 'config/paths';
+import path from 'path';
+import _debug from 'debug';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
+import isomorphicToolsConfig from './isomorphic.tools.config';
+import boldrCfg from '../../src/config';
+import paths from '../../src/config/paths';
+import BABEL_LOADER from './loaders/babel.server';
+import hook from 'css-modules-require-hook';
+import NpmInstallPlugin from 'npm-install-webpack-plugin';
+import sass from 'node-sass';
+const { dependencies } = require('../../package.json');
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
+const debug = _debug('app:webpack:config:dev');
 
-const commonLoaders = [
-  {
-    /*
-     * TC39 categorises proposals for babel in 4 stages
-     * Read more http://babeljs.io/docs/usage/experimental/
-     */
-    test: /\.js$|\.jsx$/,
-    loader: 'babel-loader',
-    // Reason why we put this here instead of babelrc
-    // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
-    query: {
-      presets: ['es2015', 'react', 'stage-0'],
-      plugins: ['transform-decorators-legacy', 'transform-object-assign']
-    },
-    include: paths.SRC_DIR,
-    exclude: paths.NODE_MODULES_DIR
-  },
-  { test: /\.json$/, loader: 'json-loader' },
-  {
-    test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-    loader: 'url',
-    query: {
-      name: '[hash].[ext]',
-      limit: 10000
-    }
-  }
+const deps = [
+  'react-router-redux/dist/ReactRouterRedux.min.js',
+  'redux/dist/redux.min.js'
 ];
+const nodeModules = {};
 
-export default {
-    // The configuration for the server-side rendering
-  name: 'server-side rendering',
-  context: paths.API_DIR,
+Object.keys(dependencies).forEach((mod) => {
+  nodeModules[mod] = `commonjs ${mod}`;
+});
+const scssConfigIncludePaths = [paths.APP_DIR];
+const cssChunkNaming = '[name]__[local]___[hash:base64:5]';
+const VENDOR_DEPENDENCIES = [
+  'react',
+  'react-dom',
+  'redux-thunk',
+  'react-redux',
+  'react-router',
+  'react-router-redux',
+  'material-ui',
+  'redux',
+  'lodash',
+  'classnames',
+  'axios',
+  'react-router-scroll',
+  'redux-form',
+  'react-tap-event-plugin'
+];
+const cssLoader = [
+  'css?modules',
+  'sourceMap',
+  'importLoaders=2',
+  `localIdentName=${cssChunkNaming}`
+].join('&');
+
+const {
+  SERVER_HOST,
+  WEBPACK_DEV_SERVER_PORT,
+  __DEV__,
+  __PROD__,
+  __DEBUG__
+} = boldrCfg;
+
+const HOT_MW_PATH = `http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}/__webpack_hmr`;
+const HOT_MW = `webpack-hot-middleware/client?path=${HOT_MW_PATH}&reload=true&timeout=20000`;
+
+// Set up server-side rendering of scss files
+// ---
+// Implement a hook in node for `.scss`-imports that uses
+// the same settings as the webpack config.
+hook({
+  extensions: ['.scss'],
+
+  // Share naming-convention of `css-loader`
+  generateScopedName: cssChunkNaming,
+
+  // Process files with same settings as `sass-loader` and return css.
+  preprocessCss: (cssFileData, cssFilePath) => {
+    // Include any paths that are part of the config,
+    // as well as the current path where css-file resides.
+    const includePaths = [].concat(scssConfigIncludePaths);
+    includePaths.push(path.dirname(cssFilePath));
+
+    return sass.renderSync({
+      data: cssFileData,
+      includePaths
+    }).css;
+  }
+});
+debug('Create configuration.');
+const config = {
+  context: paths.ROOT_DIR,
+  cache: true,
+  devtool: 'cheap-module-eval-source-map',
   entry: {
-    server: './index.js'
+    server: `${paths.API_DIR}/index.js`
   },
   target: 'node',
   output: {
-    // The output directory as absolute path
+      // The output directory as absolute path
     path: paths.BUILD_DIR,
-    // The filename of the entry chunk as relative path inside the output.path directory
+      // The filename of the entry chunk as relative path inside the output.path directory
     filename: 'server.js',
+      // The output path from the view of the Javascript
+    publicPath: '/build/',
     libraryTarget: 'commonjs2'
   },
   module: {
-    loaders: commonLoaders.concat([
+    noParse: [],
+    loaders: [
       {
-        test: /\.css$/,
-        loader: 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]'
+        test: /\.js[x]?$/,
+        loader: 'babel',
+        exclude: [paths.NODE_MODULES_DIR],
+        include: [paths.SRC_DIR],
+        query: BABEL_LOADER
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: webpackIsomorphicToolsPlugin.regular_expression('styles'),
+        include: [paths.SRC_DIR],
+        loaders: [
+          'style',
+          cssLoader,
+          'postcss',
+          'sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
+        ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file?name=fonts/[name].[ext]'
+      },
+      {
+        test: webpackIsomorphicToolsPlugin.regular_expression('images'),
+        loader: 'url?limit=10000'
       }
-    ])
+    ]
   },
-  resolve: {
-    root: [paths.SRC_DIR],
-    extensions: ['', '.js', '.jsx', '.css']
+  postcss: wPack => ([
+    require('postcss-import')({ addDependencyTo: wPack }),
+    require('postcss-url')(),
+    require('lost')(),
+    require('autoprefixer')({ browsers: ['last 2 versions'] })
+  ]),
+  sassLoader: {
+    includePaths: scssConfigIncludePaths
   },
+
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new NpmInstallPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' }),
+    new webpack.optimize.AggressiveMergingPlugin({
+      minSizeReduce: 1.5,
+      moveToParents: true
+    }),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      __DEVCLIENT__: false,
-      __DEVSERVER__: true
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        DEBUG: JSON.stringify(process.env.DEBUG)
+      },
+      __CLIENT__: false,
+      __SERVER__: true,
+      __DEV__,
+      __PROD__,
+      __DEBUG__
+    }),
+    webpackIsomorphicToolsPlugin.development(),
+    new webpack.ProvidePlugin({
+      Promise: 'exports-loader?global.Promise!es6-promise', // Promise polyfill
+      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch' // Fetch polyfill
     })
-  ]
+  ],
+  externals: nodeModules,
+  resolve: {
+    alias: {
+      react$: require.resolve(path.join(paths.NODE_MODULES_DIR, 'react'))
+    },
+    // root: [paths.SRC_DIR],
+    modulesDirectories: ['src', 'node_modules'],
+    extensions: ['', '.js', '.jsx', 'scss']
+  },
+  node: {
+    global: 'window',
+    crypto: 'empty',
+    module: false,
+    clearImmediate: false,
+    setImmediate: false,
+    __dirname: true,
+    fs: 'empty'
+  }
 };
+
+// Optimizing rebundling
+deps.forEach(dep => {
+  const depPath = path.resolve(paths.NODE_MODULES_DIR, dep);
+
+  config.resolve.alias[dep.split(path.sep)[0]] = depPath;
+  config.module.noParse.push(depPath);
+});
+
+export default config;

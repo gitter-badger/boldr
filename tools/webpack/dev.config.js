@@ -9,6 +9,7 @@ import BABEL_LOADER from './loaders/babel';
 import hook from 'css-modules-require-hook';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import sass from 'node-sass';
+
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
 
@@ -16,6 +17,7 @@ const deps = [
   'react-router-redux/dist/ReactRouterRedux.min.js',
   'redux/dist/redux.min.js'
 ];
+
 const scssConfigIncludePaths = [paths.APP_DIR];
 const cssChunkNaming = '[name]__[local]___[hash:base64:5]';
 const VENDOR_DEPENDENCIES = [
@@ -46,7 +48,6 @@ const {
   WEBPACK_DEV_SERVER_PORT,
   __CLIENT__,
   __SERVER__,
-  BLDR_ENTRY,
   __DEV__,
   __PROD__,
   __DEBUG__
@@ -144,8 +145,10 @@ const config = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new NpmInstallPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common', filename: 'common.js', async: true, minChunks: Infinity
+    new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' }),
+    new webpack.optimize.AggressiveMergingPlugin({
+      minSizeReduce: 1.5,
+      moveToParents: true
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({

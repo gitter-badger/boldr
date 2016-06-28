@@ -1,9 +1,5 @@
-import image from './image/extension';
-import video from './video/extension';
-import link from './link/extension';
+import Link from './Link';
+import Image from './Image';
+import Video from './Video';
 
-export default [
-  image,
-  link,
-  video
-];
+export { Link, Image, Video };

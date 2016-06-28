@@ -176,7 +176,7 @@ export default class BoldrEditor extends Component {
     const { editorState } = this.state;
 
     return (
-      <div onBlur={ this.handleUpdate }>
+      <div>
         <div>
           <BlockStyleControls
             editorState={ editorState }
@@ -191,7 +191,7 @@ export default class BoldrEditor extends Component {
           { this.renderURLField() }
           <Divider />
         </div>
-        <div onClick={ this.handleFocus }>
+        <div>
           <Editor
             onChange={ this.handleChange }
             blockStyleFn={ getBlockStyle }

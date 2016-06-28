@@ -1,5 +1,6 @@
 import React from 'react';
-import { Entity } from 'draft-js';
+import { Entity, getVisibleSelectionRect } from 'draft-js';
+
 import styles from './Editor.scss';
 import { Media } from './atomicBlocks/media';
 export const articleTypes = {
@@ -66,11 +67,33 @@ export function findLinkEntities(contentBlock, callback) {
   );
 }
 
-export const Link = (props) => {
-  const { url } = Entity.get(props.entityKey).getData();
-  return (
-    <a href={url} className={styles.link}>
-      {props.children}
-    </a>
-    );
-};
+export function getSelectedBlockElement(range) {
+  let node = range.startContainer;
+  do {
+    const nodeIsDataBlock = node.getAttribute
+                            ? node.getAttribute("data-block")
+                            : null;
+    if (nodeIsDataBlock) {
+      return node;
+    }
+    node = node.parentNode;
+  } while (node !== null);
+  return null;
+}
+export function getSelectionCoords(editor, toolbar) {
+  const editorBounds = editor.getBoundingClientRect();
+  const rangeBounds = getVisibleSelectionRect(window);
+
+  if (!rangeBounds) {
+    return null;
+  }
+
+  const rangeWidth = rangeBounds.right - rangeBounds.left;
+
+  const toolbarHeight = toolbar.offsetHeight;
+  // const rangeHeight = rangeBounds.bottom - rangeBounds.top;
+  const offsetLeft = (rangeBounds.left - editorBounds.left)
+            + (rangeWidth / 2);
+  const offsetTop = rangeBounds.top - editorBounds.top - (toolbarHeight + 14);
+  return { offsetLeft, offsetTop };
+}

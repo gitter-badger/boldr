@@ -1,50 +1,21 @@
 import React, { PropTypes, Component } from 'react';
-import { Editor, EditorState, ContentState, RichUtils, getDefaultKeyBinding,
-  KeyBindingUtil, Entity, convertToRaw, CompositeDecorator, convertFromRaw,
+import { Editor, EditorState, RichUtils, getDefaultKeyBinding,
+  Entity, convertToRaw, CompositeDecorator, convertFromRaw,
   AtomicBlockUtils, Modifier, DefaultDraftBlockRenderMap
 } from 'draft-js';
-import StyleButton from './header/StyleButton';
-import { BlockStyleHeaderControls } from './header/controls/BlockStyleHeaderControls';
-import { InlineStyleHeaderControls } from './header/controls/InlineStyleHeaderControls';
 
-import { stateToHTML } from 'draft-js-export-html';
-import { BLOCK_TYPES } from './header/BlockTypes';
-import { INLINE_STYLES } from './header/InlineStyleTypes';
-import base64 from './helpers/convertBase64';
+import Link from './extension/Link';
+
 import getBoxPos from './helpers/getBoxPos';
-import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
-import IconMenu from 'material-ui/IconMenu';
-import FontIcon from 'material-ui/FontIcon';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import RaisedButton from 'material-ui/RaisedButton';
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
-
-import { handleLink,
-HandleLinkSpan,
-findWithRegex } from './utilities';
+import Toolbar from './components/org.Toolbar';
+import Sidebar from './components/org.Sidebar';
+import actions from './actions';
+import Media from './components/org.Media';
+import { findLinkEntities } from './utilities';
 import BoldrTheme from './style/BoldrTheme';
-const inlineStyles = {
-  urlInput: {
-    fontFamily: "'Georgia', serif",
-    marginRight: 10,
-    padding: 3
-  }
-};
-function myKeyBindingFn(e) {
-  if (e.keyCode === 69 && KeyBindingUtil.hasCommandModifier(e)) {
-    return 'code-block';
-  }
-  return getDefaultKeyBinding(e);
-}
-const blockRenderMap = DefaultDraftBlockRenderMap
-  .set('paragraph', {
-    element: 'p'
-  });
+
+const blockRenderMap = DefaultDraftBlockRenderMap.set('paragraph', { element: 'p' });
 
 const styleMap = {
   CODE: {
@@ -55,14 +26,14 @@ const styleMap = {
   }
 };
 
-export default class BEditor extends React.Component {
+export default class BEditor extends Component {
   static propTypes = {
-    editorState: React.PropTypes.object,
-    children: React.PropTypes.element,
-    onChange: React.PropTypes.func,
-    defaultContentState: React.PropTypes.object,
-    readOnly: React.PropTypes.bool,
-    onToggle: React.PropTypes.func
+    editorState: PropTypes.object,
+    children: PropTypes.element,
+    onChange: PropTypes.func,
+    defaultContentState: PropTypes.object,
+    readOnly: PropTypes.bool,
+    onToggle: PropTypes.func
   };
 
   constructor(props) {
@@ -70,8 +41,8 @@ export default class BEditor extends React.Component {
 
     this.decorator = new CompositeDecorator([
       {
-        strategy: handleLink,
-        component: HandleLinkSpan
+        strategy: findLinkEntities,
+        component: Link
       }
     ]);
 
@@ -82,6 +53,7 @@ export default class BEditor extends React.Component {
       this.setState({
         editorState
       });
+
       const contentState = editorState.getCurrentContent();
 
       if (contentState.getPlainText()) {
@@ -90,9 +62,12 @@ export default class BEditor extends React.Component {
         this.props.onChange(null);
       }
     };
+    this.mediaBlockRenderer = ::this.mediaBlockRenderer;
     this.focus = () => {
       this.refs.editor.focus();
     };
+    this.keyBindings = this.props.keyBindings || [];
+    this.externalKeyBindings = ::this.externalKeyBindings;
   }
 
   componentDidMount() {
@@ -105,16 +80,7 @@ export default class BEditor extends React.Component {
       this.onChange(EditorState.createWithContent(newContentState, this.decorator));
     }
   }
-  addImg(event) {
-    const { editorState } = this.state;
-    if (!event.target.files[0]) {
-      return;
-    }
-    base64(event.target.files[0]).then((src) => {
-      const entityKey = Entity.create('image', 'IMMUTABLE', { src });
-      this.onChange(AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' '));
-    });
-  }
+
   addBlock(type) {
     const { editorState } = this.state;
     if (type === 'image') {
@@ -134,6 +100,7 @@ export default class BEditor extends React.Component {
       this.setState({ boxPos: { top: getBoxPos() } });
     }, 300);
   }
+
   _toggleBlockType(blockType) {
     this.onChange(
       RichUtils.toggleBlockType(
@@ -151,23 +118,33 @@ export default class BEditor extends React.Component {
       )
     );
   }
-  handlePromptForLink(e) {
-    e.preventDefault();
-    const { editorState } = this.state;
-    const selection = editorState.getSelection();
-    if (!selection.isCollapsed()) {
-      this.setState({
-        inputtable: true,
-        urlValue: ''
-      }, () => {
-        setTimeout(() => this.refs.url.focus(), 0);
-      });
+
+  externalKeyBindings(e): string {
+    for (const kb of this.keyBindings) {
+      if (kb.isKeyBound(e)) {
+        return kb.name;
+      }
     }
+    return getDefaultKeyBinding(e);
   }
+
   handleKeyCommand(command) {
-    const newState = RichUtils.toggleBlockType(this.state.editorState, command);
-    this.onChange(newState);
+    // external key bindings
+    const extKb = this.keyBindings.find(kb => kb.name === command);
+    if (extKb) {
+      extKb.action();
+      return true;
+    }
+
+    const { editorState } = this.props;
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      this.props.onChange(newState);
+      return true;
+    }
+    return false;
   }
+
   handleConfirmLink(e) {
     e.preventDefault();
     const { editorState, urlValue } = this.state;
@@ -208,37 +185,31 @@ export default class BEditor extends React.Component {
     this.onChange(editorState);
     this.focus();
   }
-  handleRemoveLink(e) {
-    e.preventDefault();
-    const { editorState } = this.state;
-    const selection = editorState.getSelection();
-    if (!selection.isCollapsed()) {
-      this.setState({
-        editorState: RichUtils.toggleLink(editorState, selection, null)
-      });
+  mediaBlockRenderer(block) {
+    if (block.getType() === 'atomic') {
+      return {
+        component: Media,
+        editable: false,
+        props: {
+          onChange: this.onChange,
+          editorState: this.props.editorState,
+          setReadOnly: this.setReadOnly
+        }
+      };
+    }
+
+    return null;
+  }
+
+  blockStyleFn(contentBlock) {
+    const type = contentBlock.getType();
+    if (type === 'unstyled') {
+      return 'paragraph';
     }
   }
-  renderURLField() {
-    if (this.state.inputtable) {
-      return (
-        <div>
-          <TextField
-            onChange={ this.handleChangeURL }
-            ref="url"
-            hintText="Enter Link URL"
-            style={ inlineStyles.urlInput }
-            value={ this.state.urlValue }
-            onKeyDown={ this.handleInputKeyDown }
-          />
-            <IconButton onMouseDown={ this.handleConfirmLink }>
-              <ContentAddCircle />
-            </IconButton>
-        </div>
-      );
-    }
-  }
+
   render() {
-    const { editorState, boxPos } = this.state;
+    const { editorState } = this.state;
 
     let className = !this.props.readOnly ? 'RichEditor-editor' : null;
     const contentState = editorState.getCurrentContent();
@@ -249,45 +220,40 @@ export default class BEditor extends React.Component {
     }
 
     return (
-      <div style={ BoldrTheme.base } className={ !this.props.readOnly ? 'RichEditor-root' : null }>
+            <div id="boldr-editor">
+      <div style={ BoldrTheme.base } className={ !this.props.readOnly ? 'RichEditor-root' : null } ref="editor">
         { !this.props.readOnly &&
-          <div>
-          <Toolbar>
-            <ToolbarGroup>
-            <InlineStyleHeaderControls editorState={ editorState }
-              onToggle={ ::this._toggleInlineStyle } onRemoveLink={ ::this.handleRemoveLink }
-              onPromptForLink={ ::this.handlePromptForLink }
-            />
-            </ToolbarGroup>
-            <ToolbarGroup>
-              <BlockStyleHeaderControls editorState={ editorState } editorPos={ boxPos }
-                addBlock={ ::this.addBlock } onToggle={ ::this._toggleBlockType }
-              />
-              </ToolbarGroup>
-            </Toolbar>
-          </div>
+          <Toolbar editorState={ editorState }
+            editor={ this.refs.editor }
+            onChange={ ::this.onChange }
+            onToggle={ ::this._toggleInlineStyle }
+            addBlock={ ::this.addBlock }
+            onToggle={ ::this._toggleBlockType }
+            actions={ actions }
+          />
+
         }
-        { this.renderURLField() }
           <Divider />
+          <Sidebar
+            editorState={ editorState }
+            onChange={ this.onChange }
+          />
           <div className={ className } onClick={ this.focus }>
             <Editor editorState={ editorState }
               onChange={ this.onChange }
-              placeholder="Whats your story? Someone is listening"
+              blockRendererFn={ this.mediaBlockRenderer }
+              blockStyleFn={ this.blockStyleFn }
+              placeholder={ this.props.placeholder }
+              onTab={ ::this.handleTab }
               customStyleMap={ styleMap }
               handleKeyCommand={ ::this.handleKeyCommand }
-              onTab={ ::this.handleTab }
-              keyBindingFn={ myKeyBindingFn }
+              keyBindingFn={ this.externalKeyBindings }
               blockRenderMap={ blockRenderMap }
-              ref="editor"
               readOnly={ this.props.readOnly }
               contentEditable
-              disableContentEditableWarning
-              suppressContentEditableWarning
             />
-
-            <input onChange={ ::this.addImg } ref="insertImage" type="file" accept="image/*" hidden="hidden" />
-
           </div>
+      </div>
       </div>
     );
   }
