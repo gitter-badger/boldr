@@ -1,7 +1,6 @@
 import passport from 'koa-passport';
 import etag from 'koa-etag';
 import helmet from 'koa-helmet';
-import error from 'koa-json-error';
 import responseCalls from './responseCalls';
 import bodyParser from './bodyParser';
 import session from './session';
