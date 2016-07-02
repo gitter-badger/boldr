@@ -17,6 +17,7 @@ class RegisterContainer extends Component {
     return (
       <div>
       <Helmet title="Register" />
+      <div className="col-md-8">
       <Card>
         <CardHeader
           title="Register"
@@ -26,6 +27,7 @@ class RegisterContainer extends Component {
         />
           <RegisterForm onSubmit={ ::this.handleFormSubmit } />
         </Card>
+        </div>
         </div>
     );
   }

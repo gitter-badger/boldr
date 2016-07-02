@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-
+// Material UI
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -10,52 +10,19 @@ import MenuItem from 'material-ui/MenuItem';
 import AvWeb from 'material-ui/svg-icons/av/web';
 import ActionDescription from 'material-ui/svg-icons/action/description';
 import SocialPerson from 'material-ui/svg-icons/social/person';
-
+// Boldr
 import { logoutUser } from 'state/auth/auth';
 import SiteLogo from 'shared/atm.SiteLogo';
+// Styles
+import inlineStyles, { iconColor } from './inlineStyles';
 
-const inlineStyle = {
-  backgroundColor: '#fff'
-};
-const iconColor = '#8F8F8F';
-const inlineStyles = {
-  appBar: {
-    boxSizing: 'border-box',
-    backgroundColor: '#fff',
-    height: 56,
-    minHeight: 56,
-    padding: '4px 10%',
-    border: '1px solid #f3f3f3'
-  },
-  title: {
-    color: iconColor,
-    fontSize: '1.6rem',
-    lineHeight: '5.0rem',
-    cursor: 'pointer'
-  },
-  elementRight: {
-    height: 48,
-    minHeight: 48,
-    marginTop: 0
-  },
-  gitHubButton: {
-    color: iconColor,
-    margin: 0
-  },
-  iconStyles: {
-    height: 48,
-    marginTop: 0
-  }
-};
+@connect(mapStateToProps, mapDispatchToProps)
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClickLogin = this.handleClickLogin.bind(this);
-    this.handleClickRegister = this.handleClickRegister.bind(this);
-    this.handleHome = this.handleHome.bind(this);
-        this.state = {
+    this.state = {
       valueSingle: '3',
-      valueMultiple: ['3', '5'],
+      valueMultiple: ['3', '5']
     };
   }
 
@@ -73,7 +40,7 @@ class TopBar extends React.Component {
     this.props.actions.logoutUser();
   }
 
-  handleHome() {
+  handleClickHome() {
     const path = '/';
     browserHistory.push(path);
   }
@@ -110,8 +77,8 @@ class TopBar extends React.Component {
             title={ <SiteLogo SiteLogoOrTitle="Boldr" /> }
             showMenuIconButton={ false }
             zDepth={ 2 }
-            style={ inlineStyle }
-            onTitleTouchTap={ this.handleHome }
+            style={ inlineStyles.appbar }
+            onTitleTouchTap={ ::this.handleClickHome }
             iconStyleRight={ inlineStyles.elementRight }
             iconElementRight={
                     <div>
@@ -156,7 +123,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({ logoutUser }, dispatch)
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
+
+export default TopBar;
 
 TopBar.propTypes = {
   dispatch: PropTypes.func,
@@ -166,5 +134,8 @@ TopBar.propTypes = {
   handleHome: PropTypes.func,
   user: PropTypes.object,
   signoutUserAction: PropTypes.func,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  onTitleTouchTap: PropTypes.func,
+  rounded: PropTypes.bool,
+  zDepth: PropTypes.number
 };

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import LoginForm from 'scenes/Auth/org.Forms/LoginForm';
 import { loginUser } from 'state/auth/auth';
 import BoldrLogo from 'shared/atm.BoldrLogo';
-
+import { LayoutColumn, LayoutRow } from 'shared/index';
 const mapStateToProps = (state) => {
   return { errorMessage: state.auth.error };
 };
@@ -30,15 +30,19 @@ class LoginContainer extends Component {
     return (
     <div>
       <Helmet title="Login" />
-      <Card>
-        <CardHeader
-          title="Log in"
-          actAsExpander={ false }
-          showExpandableButton={ false }
-        />
-        <BoldrLogo height="100px" width="100px" />
-        <LoginForm onSubmit={ ::this.handleFormSubmit } />
-        </Card>
+      <LayoutRow>
+        <LayoutColumn width={ 1 / 3 }>
+          <Card className="auth-login__card">
+              <CardHeader
+                title="Log in"
+                actAsExpander={ false }
+                showExpandableButton={ false }
+              />
+              <BoldrLogo height="100px" width="100px" />
+              <LoginForm onSubmit={ ::this.handleFormSubmit } />
+            </Card>
+          </LayoutColumn>
+        </LayoutRow>
     </div>
     );
   }

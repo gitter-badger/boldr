@@ -4,14 +4,15 @@ import Helmet from 'react-helmet';
 import TopBar from 'shared/mol.TopBar';
 // import Footer from 'shared/mol.Footer';
 import { checkTokenValidity } from 'state/auth/auth';
-import meta from 'app/utils.rendering/meta';
+import meta from 'app/utils.ssr/meta';
+import { LayoutContainer } from 'shared/index';
+
 import 'app/styles/app.scss';
 
 class CoreLayout extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    snack: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -23,10 +24,9 @@ class CoreLayout extends Component {
       <div>
         <Helmet { ...meta.app.head } />
         <TopBar />
-        <div className="wrap container-flud">
+        <LayoutContainer>
           { this.props.children }
-
-        </div>
+        </LayoutContainer>
 
       </div>
     );
@@ -36,8 +36,7 @@ class CoreLayout extends Component {
 function mapStateToProps(state) {
   return {
     routing: state.routing,
-    boldr: state.boldr,
-    snack: state.boldr.snack
+    boldr: state.boldr
   };
 }
 

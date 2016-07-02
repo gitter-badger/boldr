@@ -8,6 +8,7 @@ import Label from 'material-ui/svg-icons/action/label-outline';
 import Calendar from 'material-ui/svg-icons/action/date-range';
 import IconButton from 'material-ui/IconButton';
 
+import { LayoutColumn } from 'shared/index';
 import { articleTypes } from 'components/Editor/utilities';
 import { createEditorStateFromRawDraft } from 'components/Editor/helpers/convertEditorState';
 import Tag from 'shared/atm.Tag';
@@ -56,7 +57,7 @@ class Article extends React.Component {
     }
     const postedOn = Moment(this.props.createdAt).format('MMMM Do YYYY');
     return (
-      <div className="col-xs-12">
+      <LayoutColumn width={ 1 / 3 }>
       <Paper className="card" zDepth={ 2 }>
         { titleHeader }
           <div className={ className }>
@@ -77,7 +78,7 @@ class Article extends React.Component {
             </div>
           </div>
           </Paper>
-        </div>
+          </LayoutColumn>
       );
   }
 }

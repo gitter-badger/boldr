@@ -8,7 +8,6 @@ import paths from '../../src/config/paths';
 import BABEL_LOADER from './loaders/babel';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 
-const assetsPath = paths.ASSETS_DIR;
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
 const scssConfigIncludePaths = [paths.APP_DIR];
@@ -55,7 +54,7 @@ const config = {
   cache: true,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    'app': [
+    app: [
       HOT_MW,
       'react-hot-loader/patch',
       boldrCfg.BLDR_ENTRY
@@ -167,9 +166,5 @@ deps.forEach(dep => {
   config.resolve.alias[dep.split(path.sep)[0]] = depPath;
   config.module.noParse.push(depPath);
 });
-
-if (process.env.WEBPACK_DLLS === '1' && validDLLs) {
-  helpers.installVendorDLL(config, 'vendor');
-}
 
 export default config;

@@ -8,8 +8,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import configureStore from 'app/utils.redux/configureStore';
 import createRoutes from 'app/config.routes';
-import Html from 'app/utils.rendering/Html';
-import BoldrTheme from 'app/utils.rendering/theme';
+import Html from 'app/utils.ssr/Html';
+import BoldrTheme from 'app/utils.ssr/theme';
 
 const renderFullPage = (component, store) => {
   // Make the server / browser aware of the asset names and paths.

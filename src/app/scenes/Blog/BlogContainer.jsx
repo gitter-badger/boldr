@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { fetchArticles } from 'app/state/article/article.actions';
 import Article from './Article';
+import { LayoutContainer, LayoutRow } from 'shared/index';
 
 class BlogContainer extends Component {
   static loadAsyncData(dispatch) {
@@ -22,9 +23,9 @@ class BlogContainer extends Component {
     const articleList = [];
     for (let article of articles) { // eslint-disable-line
       articleList.push(
-        <div key={ article.id } className="row">
+        <LayoutRow key={ article.id }>
           <Article { ...article } />
-        </div>
+        </LayoutRow>
       );
     }
     return articleList;
@@ -35,8 +36,9 @@ class BlogContainer extends Component {
     return (
       <div>
       <Helmet title="Blog" />
-         BlogContainer?
-         { articleList }
+        <LayoutContainer>
+           { articleList }
+        </LayoutContainer>
       </div>
       );
   }

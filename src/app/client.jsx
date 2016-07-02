@@ -11,7 +11,7 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import WebFontLoader from 'webfontloader';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import BoldrTheme from 'app/utils.rendering/theme';
+import BoldrTheme from 'app/utils.ssr/theme';
 
 import { checkTokenValidity } from 'state/auth/auth';
 import preRenderMiddleware from 'app/config.api/preRenderMiddleware';
