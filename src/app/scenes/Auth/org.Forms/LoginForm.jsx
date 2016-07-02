@@ -8,7 +8,7 @@ import {
 } from 'redux-form-material-ui';
 
 const LoginForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit, reset } = props;
   return (
       <form onSubmit={ handleSubmit }>
       <CardText>
@@ -24,8 +24,8 @@ const LoginForm = props => {
         </div>
         </CardText>
            <CardActions>
-             <RaisedButton secondary type="submit" label="Login" disabled={ pristine || submitting } />
-             <FlatButton disabled={ pristine || submitting } label="Reset" onTouchStart={ reset } />
+             <RaisedButton secondary type="submit" label="Login" />
+             <FlatButton label="Reset" onTouchStart={ reset } />
           </CardActions>
       </form>
     );
@@ -33,7 +33,6 @@ const LoginForm = props => {
 
 LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool,
   reset: PropTypes.func,
   submitting: PropTypes.bool
 };

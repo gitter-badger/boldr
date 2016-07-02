@@ -25,7 +25,8 @@
     "React": true,
     "PropTypes": true,
     "_": true,
-    "helpers": true
+    "helpers": true,
+    "socket": true
   },
   "rules": {
     "no-shadow" : 0,

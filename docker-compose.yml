@@ -18,11 +18,14 @@ services:
       - "redisstore:/data"
     networks:
       - boldr
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:9.5
+    container_name: ${PROJECT_ID}-db
     volumes_from:
-          - dbstore
+        - dbstore
     ports:
       - "5432:5432"
     networks:

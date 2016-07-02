@@ -13,7 +13,6 @@ import jwt from './jwt';
 export default (app) => {
   app
     .use(responseCalls)
-    .use(error())
     .use(bodyParser)
     .use(etag())
     .use(jwt)

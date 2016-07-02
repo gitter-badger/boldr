@@ -6,18 +6,11 @@ import isomorphicToolsConfig from './isomorphic.tools.config';
 import boldrCfg from '../../src/config';
 import paths from '../../src/config/paths';
 import BABEL_LOADER from './loaders/babel';
-import hook from 'css-modules-require-hook';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
-import sass from 'node-sass';
 
+const assetsPath = paths.ASSETS_DIR;
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(isomorphicToolsConfig);
 const debug = _debug('app:webpack:config:dev');
-
-const deps = [
-  'react-router-redux/dist/ReactRouterRedux.min.js',
-  'redux/dist/redux.min.js'
-];
-
 const scssConfigIncludePaths = [paths.APP_DIR];
 const cssChunkNaming = '[name]__[local]___[hash:base64:5]';
 const VENDOR_DEPENDENCIES = [
@@ -56,38 +49,15 @@ const {
 const HOT_MW_PATH = `http://${SERVER_HOST}:${WEBPACK_DEV_SERVER_PORT}/__webpack_hmr`;
 const HOT_MW = `webpack-hot-middleware/client?path=${HOT_MW_PATH}&reload=true&timeout=20000`;
 
-// Set up server-side rendering of scss files
-// ---
-// Implement a hook in node for `.scss`-imports that uses
-// the same settings as the webpack config.
-hook({
-  extensions: ['.scss'],
-
-  // Share naming-convention of `css-loader`
-  generateScopedName: cssChunkNaming,
-
-  // Process files with same settings as `sass-loader` and return css.
-  preprocessCss: (cssFileData, cssFilePath) => {
-    // Include any paths that are part of the config,
-    // as well as the current path where css-file resides.
-    const includePaths = [].concat(scssConfigIncludePaths);
-    includePaths.push(path.dirname(cssFilePath));
-
-    return sass.renderSync({
-      data: cssFileData,
-      includePaths
-    }).css;
-  }
-});
 debug('Create configuration.');
 const config = {
   context: paths.ROOT_DIR,
   cache: true,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: [
-    'react-hot-loader/patch',
+    'app': [
       HOT_MW,
+      'react-hot-loader/patch',
       boldrCfg.BLDR_ENTRY
     ],
     vendor: VENDOR_DEPENDENCIES
@@ -109,6 +79,7 @@ const config = {
         query: BABEL_LOADER
       },
       {
+        happy: { id: 'json' },
         test: /\.json$/,
         loader: 'json'
       },
@@ -164,8 +135,7 @@ const config = {
     }),
     webpackIsomorphicToolsPlugin.development(),
     new webpack.ProvidePlugin({
-      Promise: 'exports-loader?global.Promise!es6-promise', // Promise polyfill
-      'window.fetch': 'exports-loader?self.fetch!whatwg-fetch' // Fetch polyfill
+      Promise: 'exports-loader?global.Promise!es6-promise' // Promise polyfill
     })
   ],
   resolve: {
@@ -174,7 +144,7 @@ const config = {
     },
     // root: [paths.SRC_DIR],
     modulesDirectories: ['src', 'node_modules'],
-    extensions: ['', '.js', '.jsx', 'scss']
+    extensions: ['', '.js', '.jsx', '.scss']
   },
   node: {
     global: 'window',
@@ -186,7 +156,10 @@ const config = {
     fs: 'empty'
   }
 };
-
+const deps = [
+  'react-router-redux/dist/ReactRouterRedux.min.js',
+  'redux/dist/redux.min.js'
+];
 // Optimizing rebundling
 deps.forEach(dep => {
   const depPath = path.resolve(paths.NODE_MODULES_DIR, dep);
@@ -194,5 +167,9 @@ deps.forEach(dep => {
   config.resolve.alias[dep.split(path.sep)[0]] = depPath;
   config.module.noParse.push(depPath);
 });
+
+if (process.env.WEBPACK_DLLS === '1' && validDLLs) {
+  helpers.installVendorDLL(config, 'vendor');
+}
 
 export default config;

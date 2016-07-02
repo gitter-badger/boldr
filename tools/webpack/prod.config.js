@@ -196,7 +196,7 @@ const config = {
     },
     // root: [paths.SRC_DIR],
     modulesDirectories: ['src', 'node_modules'],
-    extensions: ['', '.js', '.jsx', 'scss']
+    extensions: ['', '.js', '.jsx', '.scss']
   },
   node: {
     global: 'window',

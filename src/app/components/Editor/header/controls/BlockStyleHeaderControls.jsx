@@ -29,8 +29,7 @@ export const BlockStyleHeaderControls = (props) => {
         <IconButton touch>
           <NavigationExpandMoreIcon />
         </IconButton>
-      }
-    >
+      }>
       { BLOCK_TYPES.map((type) =>
           <MenuItem
             key={ type.label }

@@ -15,7 +15,7 @@ global.__SERVER__ = true;
 global.__DEV__ = boldrConfig.__DEV__;
 global.__PROD__ = boldrConfig.__PROD__;
 global.__DEBUG__ = boldrConfig.__DEBUG__;
-
+global.__DLLS__ = process.env.WEBPACK_DLLS === '1';
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools#mainjs
 global.webpackIsomorphicTools =
   new WebpackIsomorphicTools(isomorphicToolsConfig)

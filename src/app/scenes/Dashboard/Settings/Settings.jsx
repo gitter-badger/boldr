@@ -14,7 +14,6 @@ const iconButtonElement = (
   <IconButton
     touch
     tooltip="more"
-    tooltipPosition="bottom-left"
   >
     <MoreVertIcon />
   </IconButton>

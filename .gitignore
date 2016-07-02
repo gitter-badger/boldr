@@ -11,6 +11,8 @@ npm-debug.log
 uploads/
 dist/*
 build/*
+.happypack/*
+static/assets/*
 
 reports
 docs/logs
@@ -19,7 +21,6 @@ tools/data
 # webpack-isomorphic-tools
 webpack-assets.json
 webpack-stats.json
-dist/
 
 # Files
 #

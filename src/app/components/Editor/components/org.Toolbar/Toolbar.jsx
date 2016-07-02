@@ -9,7 +9,38 @@ import LinkInput from '../atm.LinkInput';
 import ToolbarItem from '../atm.ToolbarItem';
 import getBoxPos from '../../helpers/getBoxPos';
 import { getSelectionCoords, handleLink, HandleLinkSpan } from '../../utilities';
-
+const inline = {
+  toolbar: {
+    background: 'yellow',
+    height: 0,
+    position: 'absolute',
+    display: 'none',
+    zIndex: 10
+  },
+  wrapper: {
+    display: 'inline-block'
+  },
+  list: {
+    padding: '0 8px',
+    margin: 0,
+    whiteSpace: 'nowrap',
+    listStyleType: 'none',
+    display: 'inline'
+  },
+  arrow: {
+    display: 'inline-block',
+    top: '100%',
+    left: '50%',
+    height: 0,
+    width: 0,
+    position: 'absolute',
+    pointerEvents: 'none',
+    borderWidth: '8px',
+    borderStyle: 'solid',
+    borderColor: '#181818 transparent transparent',
+    marginLeft: '-8px'
+  }
+};
 class Toolbar extends Component {
   static propTypes = {
     editorState: PropTypes.object,
@@ -40,7 +71,7 @@ class Toolbar extends Component {
     this.focus = () => {
       this.refs.editor.focus();
     };
-        this.renderButton = ::this.renderButton;
+    this.renderButton = ::this.renderButton;
     this.cancelLink = ::this.cancelLink;
   }
 
@@ -67,52 +98,6 @@ class Toolbar extends Component {
       }
     }
   }
-  toggleLink() {
-    if (this.hasLink()) {
-      this.unlink();
-    } else {
-      this.setState({editingLink: true});
-    }
-  }
-
-  renderButton(item, position) {
-    let current = null;
-    let toggle = null;
-    let active = null;
-    let key = item.label;
-
-    switch(item.type) {
-      case "inline": {
-        current = this.props.editorState.getCurrentInlineStyle();
-        toggle = () => this.toggleInlineStyle(item.style);
-        active = current.has(item.style);
-        break;
-      }
-      case "block": {
-        const selection = this.props.editorState.getSelection();
-        current = this.props.editorState
-          .getCurrentContent()
-          .getBlockForKey(selection.getStartKey())
-          .getType();
-        toggle = () => this.toggleBlockStyle(item.style);
-        active = item.style === current;
-        break;
-      }
-      case "separator": {
-        key = "sep-" + position;
-        break;
-      }
-      case "entity": {
-        toggle = () => this.toggleLink();
-        active = this.hasLink();
-        break;
-      }
-    }
-
-    return (
-      <ToolbarItem key={key} active={active} toggle={toggle} item={item} />
-    );
-  }
   setBarPosition() {
     const editor = this.props.editor;
     const toolbar = this.refs.toolbar;
@@ -133,6 +118,13 @@ class Toolbar extends Component {
           left: selectionCoords.offsetLeft
         }
       });
+    }
+  }
+  toggleLink() {
+    if (this.hasLink()) {
+      this.unlink();
+    } else {
+      this.setState({ editingLink: true });
     }
   }
   addBlock(type) {
@@ -203,11 +195,51 @@ class Toolbar extends Component {
       editingLink: false
     });
   }
+  renderButton(item, position) {
+    let current = null;
+    let toggle = null;
+    let active = null;
+    let key = item.label;
+
+    switch (item.type) {
+      case 'inline': {
+        current = this.props.editorState.getCurrentInlineStyle();
+        toggle = () => this.toggleInlineStyle(item.style);
+        active = current.has(item.style);
+        break;
+      }
+      case 'block': {
+        const selection = this.props.editorState.getSelection();
+        current = this.props.editorState
+          .getCurrentContent()
+          .getBlockForKey(selection.getStartKey())
+          .getType();
+        toggle = () => this.toggleBlockStyle(item.style);
+        active = item.style === current;
+        break;
+      }
+      case 'separator': {
+        key = `sep-${position}`;
+        break;
+      }
+      case 'entity': {
+        toggle = () => this.toggleLink();
+        active = this.hasLink();
+        break;
+      }
+      default:
+        return undefined;
+    }
+
+    return (
+      <ToolbarItem style={ inline.wrapper } key={ key } active={ active } toggle={ toggle } item={ item } />
+    );
+  }
   render() {
     const { editorState, boxPos } = this.state;
-    const toolbarClass = classNames("toolbar", {
-      "toolbar--open": this.state.show,
-      "toolbar--editing-link": this.state.editingLink
+    const toolbarClass = classNames('toolbar', {
+      'toolbar--open': this.state.show,
+      'toolbar--editing-link': this.state.editingLink
     });
     let className = !this.props.readOnly ? 'RichEditor-editor' : null;
     const contentState = editorState.getCurrentContent();
@@ -218,19 +250,11 @@ class Toolbar extends Component {
     }
 
     return (
-      <div className={ toolbarClass }
-        style={ this.state.position }
-        ref="toolbarWrapper"
-      >
-            <InlineStyleHeaderControls editorState={ this.props.editorState }
-              onToggle={ ::this.toggleInlineStyle }
-            />
+      <div>
 
-              <BlockStyleHeaderControls editorState={ this.props.editorState } editorPos={ boxPos }
-                addBlock={ ::this.addBlock } onToggle={ ::this.toggleBlockStyle }
-              />
-              <div className="toolbar__wrapper" ref="toolbar">
-          <ul className="toolbar__list" onMouseDown={ (x) => {x.preventDefault();} }>
+         <div className={ toolbarClass } style={ this.state.position } ref="toolbarWrapper">
+        <div ref="toolbar">
+          <ul style={ inline.list } onMouseDown={ (x) => {x.preventDefault();} }>
             { this.props.actions.map(this.renderButton) }
           </ul>
           <LinkInput
@@ -241,8 +265,9 @@ class Toolbar extends Component {
             editor={ this.props.editor }
             cancelLink={ this.cancelLink }
           />
-          <span className="toolbar__arrow" />
+          <span style={ inline.arrow } />
         </div>
+      </div>
       </div>
     );
   }

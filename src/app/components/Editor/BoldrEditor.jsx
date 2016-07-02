@@ -9,14 +9,17 @@ import Link from './extension/Link';
 import getBoxPos from './helpers/getBoxPos';
 import Divider from 'material-ui/Divider';
 import Toolbar from './components/org.Toolbar';
-import Sidebar from './components/org.Sidebar';
 import actions from './actions';
 import Media from './components/org.Media';
 import { findLinkEntities } from './utilities';
 import BoldrTheme from './style/BoldrTheme';
 
 const blockRenderMap = DefaultDraftBlockRenderMap.set('paragraph', { element: 'p' });
-
+const inline = {
+  editor: {
+    minHeight: '400px'
+  }
+};
 const styleMap = {
   CODE: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -210,18 +213,17 @@ export default class BEditor extends Component {
 
   render() {
     const { editorState } = this.state;
-
-    let className = !this.props.readOnly ? 'RichEditor-editor' : null;
+    let className = !this.props.readOnly ? 'BoldrEditor-editor' : null;
     const contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (contentState.getBlockMap().first().getType() !== 'unstyled') {
-        className += ' RichEditor-hidePlaceholder';
+        className += ' BoldrEditor-hidePlaceholder';
       }
     }
 
     return (
-            <div id="boldr-editor">
-      <div style={ BoldrTheme.base } className={ !this.props.readOnly ? 'RichEditor-root' : null } ref="editor">
+      <div>
+      <div style={ BoldrTheme.base } className={ !this.props.readOnly ? 'BoldrEditor-root' : null } ref="editor">
         { !this.props.readOnly &&
           <Toolbar editorState={ editorState }
             editor={ this.refs.editor }
@@ -231,14 +233,10 @@ export default class BEditor extends Component {
             onToggle={ ::this._toggleBlockType }
             actions={ actions }
           />
-
         }
           <Divider />
-          <Sidebar
-            editorState={ editorState }
-            onChange={ this.onChange }
-          />
-          <div className={ className } onClick={ this.focus }>
+
+          <div className={ className } onClick={ ::this.focus }>
             <Editor editorState={ editorState }
               onChange={ this.onChange }
               blockRendererFn={ this.mediaBlockRenderer }
@@ -251,6 +249,7 @@ export default class BEditor extends Component {
               blockRenderMap={ blockRenderMap }
               readOnly={ this.props.readOnly }
               contentEditable
+              style={ inline.editor }
             />
           </div>
       </div>
@@ -258,9 +257,3 @@ export default class BEditor extends Component {
     );
   }
 }
-
-BEditor.defaultProps = {
-  onChange: () => {
-
-  }
-};

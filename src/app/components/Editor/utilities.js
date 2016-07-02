@@ -1,7 +1,6 @@
 import React from 'react';
 import { Entity, getVisibleSelectionRect } from 'draft-js';
 
-import styles from './Editor.scss';
 import { Media } from './atomicBlocks/media';
 export const articleTypes = {
   OVERVIEW: 'overview',

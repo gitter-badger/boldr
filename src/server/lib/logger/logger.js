@@ -6,7 +6,7 @@
  */
 
 import winston from 'winston';
-import config from 'config';
+import config from '../../../config';
 
 const transports = [];
 if (config.logger.console) {
