@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import RegisterForm from '../org.Forms/RegisterForm';
 import { registerUser } from 'state/auth/auth';
 
+@connect(mapStateToProps, mapDispatchToProps)
 class RegisterContainer extends Component {
 
   handleFormSubmit(formProps) {
@@ -38,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ registerUser }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);
+export default RegisterContainer;
 
 RegisterContainer.propTypes = {
   registerUser: PropTypes.func.isRequired

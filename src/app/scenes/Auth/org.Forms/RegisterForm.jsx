@@ -1,16 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { CardActions, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import {
   TextField
 } from 'redux-form-material-ui';
-
-const style = {
-  margin: 12
-};
 
 const validate = values => {
   const errors = {};
@@ -27,7 +21,7 @@ const validate = values => {
 };
 
 const RegisterForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit } = props;
   return (
       <form onSubmit={ handleSubmit }>
       <CardText>
@@ -46,8 +40,7 @@ const RegisterForm = props => {
         </div>
         </CardText>
            <CardActions>
-             <RaisedButton secondary type="submit" label="Create account" disabled={ pristine || submitting } />
-             <FlatButton disabled={ pristine || submitting } label="Reset" onTouchStart={ reset } />
+             <RaisedButton secondary type="submit" label="Create account" />
           </CardActions>
       </form>
     );

@@ -1,18 +1,17 @@
 import React from 'react';
-import { Editor, EditorState } from 'draft-js';
+import { Editor } from 'draft-js';
 import { Link } from 'react-router';
 import Moment from 'moment';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import Label from 'material-ui/svg-icons/action/label-outline';
 import Calendar from 'material-ui/svg-icons/action/date-range';
-import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 
-import Display from 'components/Editor/Display';
 import { articleTypes } from 'components/Editor/utilities';
 import { createEditorStateFromRawDraft } from 'components/Editor/helpers/convertEditorState';
 import Tag from 'shared/atm.Tag';
+
 class Article extends React.Component {
 
   constructor(props) {
@@ -47,7 +46,7 @@ class Article extends React.Component {
   render() {
     const { editorState } = this.state;
 
-    const { customStyleMap, content, title, slug } = this.props;
+    const { customStyleMap } = this.props;
 
     let className = 'RichEditor-content';
 

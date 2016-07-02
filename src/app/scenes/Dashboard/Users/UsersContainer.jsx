@@ -4,6 +4,7 @@ import Users from './Users';
 import { getUsersList } from 'state/user/user';
 import Loader from 'shared/atm.Loader';
 
+@connect(mapStateToProps, null)
 class UsersContainer extends Component {
   static loadAsyncData(dispatch) {
     return dispatch(getUsersList());
@@ -13,7 +14,7 @@ class UsersContainer extends Component {
     this.constructor.loadAsyncData(this.props.dispatch);
   }
   render() {
-    const { loading, user } = this.props;
+    const { loading } = this.props;
     return (
       <div>
        <div className="container">
@@ -35,4 +36,4 @@ const mapStateToProps = (state) => ({
   loading: state.user.loading
 });
 
-export default connect(mapStateToProps, null)(UsersContainer);
+export default UsersContainer;
