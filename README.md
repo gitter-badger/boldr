@@ -37,8 +37,9 @@ Create the database for Boldr to use, and put it in the .env file where you see
 
 ```bash
 $ npm run migrate
+$ npm run seed
 ```
-The above command will create the table structure for your database. If you wish to prepopulate the database with dummy data, run `npm run seed` afterwards.
+The above command will create the table structure for your database. It will populate a fake user with the following credentials: test@test.com // password. It also establishes the default groups and permissions data.
 
 #### Development
 
