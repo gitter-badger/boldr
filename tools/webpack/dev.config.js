@@ -139,7 +139,9 @@ const config = {
   ],
   resolve: {
     alias: {
-      react$: require.resolve(path.join(paths.NODE_MODULES_DIR, 'react'))
+      react$: require.resolve(path.join(paths.NODE_MODULES_DIR, 'react')),
+      state: require.resolve(path.join(paths.APP_DIR, 'state')),
+      scenes: require.resolve(path.join(paths.APP_DIR, 'scenes'))
     },
     // root: [paths.SRC_DIR],
     modulesDirectories: ['src', 'node_modules'],

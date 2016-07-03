@@ -22,7 +22,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:9.5
+    build: tools/docker/postgres
     container_name: ${PROJECT_ID}-db
     volumes_from:
         - dbstore

@@ -49,7 +49,7 @@ const conf = convict({
     name: {
       doc: 'Name of the database.',
       format: String,
-      default: 'database',
+      default: 'boldr',
       env: 'DB_NAME',
       arg: 'dbName'
     },
@@ -84,7 +84,7 @@ const conf = convict({
     password: {
       doc: 'Password for the database.',
       format: String,
-      default: 'rekto',
+      default: 'password',
       env: 'DB_PASSWORD',
       arg: 'dbPassword'
     },
