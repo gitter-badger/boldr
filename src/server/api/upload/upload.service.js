@@ -1,6 +1,5 @@
 import config from 'config';
 import aws from 'aws-sdk';
-import multer from 'koa-multer';
 import multerS3 from 'multer-s3';
 import path from 'path';
 

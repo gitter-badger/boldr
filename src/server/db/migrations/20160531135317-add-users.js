@@ -19,6 +19,9 @@ module.exports = {
         password: {
           type: DataTypes.STRING
         },
+        salt: {
+          type: DataTypes.STRING
+        },
         firstname: {
           type: DataTypes.STRING(256),
           defaultValue: '',
@@ -49,6 +52,7 @@ module.exports = {
           defaultValue: '',
           allowNull: true
         },
+        provider: DataTypes.STRING,
         google: {
           type: DataTypes.STRING,
           allowNull: true

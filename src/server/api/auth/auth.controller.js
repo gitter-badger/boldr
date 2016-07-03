@@ -30,10 +30,10 @@ export const registerUser = async ctx => {
   }
   try {
     // take the incoming password and hash it.
-    const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
+    // const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
     const user = User.build({
       email: ctx.request.body.email,
-      password: hash,
+      password: ctx.request.body.password,
       location: ctx.request.body.location,
       bio: ctx.request.body.bio,
       avatar: ctx.request.body.avatar,
@@ -41,6 +41,7 @@ export const registerUser = async ctx => {
       lastname: ctx.request.body.lastname,
       website: ctx.request.body.website
     });
+    // newUser.setDataValue('provider', 'local');
     // Save newUser once the request body forms the user model.
     const newUser = await user.save();
     // Add the user's id to the default User group
@@ -84,7 +85,8 @@ export async function loginUser(ctx, next) {
       ctx.status = 403;
       ctx.body = 'Unable to log in.';
     }
-    const pw = await bcrypt.compareSync(ctx.request.body.password, user.password);
+
+    const pw = await user.authenticate(ctx.request.body.password, user.password);
     if (pw === false) {
       ctx.status = 403;
       ctx.body = 'Unable to log in.';

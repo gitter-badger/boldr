@@ -30,7 +30,7 @@ export default (sequelize, DataTypes) => {
     },
     indexes: [
       {
-        fields: ['tagname']
+        fields: ['tagname'], unique: true
       }
     ]
   });

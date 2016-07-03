@@ -11,7 +11,7 @@ export default new CustomStrategy(async (ctx, done) => {
       if (!user) {
         return done(null, false, { message: `Email ${ctx.body.email} not found` });
       }
-      const pw = user.comparePassword(ctx.body.password, user.password);
+      const pw = user.authenticate(ctx.body.password, user.password);
       if (pw === false) {
         done(null, false);
       }
