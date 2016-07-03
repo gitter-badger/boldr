@@ -6,6 +6,14 @@ import { bindActionCreators } from 'redux';
 import RegisterForm from '../org.Forms/RegisterForm';
 import { registerUser } from 'state/auth/auth';
 
+function mapStateToProps(state) {
+  return { errorMessage: state.user.error };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ registerUser }, dispatch);
+};
+
 @connect(mapStateToProps, mapDispatchToProps)
 class RegisterContainer extends Component {
 
@@ -32,14 +40,6 @@ class RegisterContainer extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return { errorMessage: state.user.error };
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ registerUser }, dispatch);
-};
 
 export default RegisterContainer;
 

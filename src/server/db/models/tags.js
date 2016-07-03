@@ -27,7 +27,12 @@ export default (sequelize, DataTypes) => {
           onDelete: 'cascade'
         });
       }
-    }
+    },
+    indexes: [
+      {
+        fields: ['tagname']
+      }
+    ]
   });
 
   return Tag;

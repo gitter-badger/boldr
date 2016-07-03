@@ -41,16 +41,6 @@ export const getAllArticles = async (ctx) => {
  * @return {Object}                the article object
  */
 export const createArticle = async (ctx, next) => {
-  const body = {
-    title: ctx.request.body.title,
-    slug: slug(ctx.request.body.slug),
-    markup: ctx.request.body.markup,
-    content: ctx.request.body.content,
-    featureImage: ctx.request.body.featureImage,
-    authorId: ctx.state.user.id,
-    status: ctx.request.body.status,
-    tags: ctx.request.body.tags
-  };
   // Split the ctx.request.body.tags at each , as a tag
   if (ctx.request.body.tags) {
     ctx.request.body.tags = ctx.request.body.tags.split(',', MAX_TAGS).map(tag => tag.substr(0, 15));
@@ -71,7 +61,7 @@ export const createArticle = async (ctx, next) => {
     const article = await Article.create(articleFields);
     // creates a new "Tag" for every tag in ctx.request.body.tags
     for (let i = 0; i < ctx.request.body.tags.length; i++) {
-      const newTag = await Tag.create({ tagname: ctx.request.body.tags[i] });
+      const newTag = await Tag.findOrCreate({ tagname: ctx.request.body.tags[i] });
       // Adds articleId of the previously created Article and
       // adds the tagId of each created Tag to the ArticlesTags table.
       await article.addTag(newTag);

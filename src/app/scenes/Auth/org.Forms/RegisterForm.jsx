@@ -38,6 +38,9 @@ const RegisterForm = props => {
         <div>
           <Field name="firstname" floatingLabelText="First Name" component={ TextField } />
         </div>
+        <div>
+          <Field name="lastname" floatingLabelText="Last Name" component={ TextField } />
+        </div>
         </CardText>
            <CardActions>
              <RaisedButton secondary type="submit" label="Create account" />

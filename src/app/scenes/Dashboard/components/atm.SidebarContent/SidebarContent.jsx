@@ -43,32 +43,32 @@ const SidebarContent = (props) => {
         <div style={ styles.divider } />
         <Link style={ styles.sidebarLink } to="/dashboard/articles">
           <IconButton tooltip="Articles">
-            <ArticleIcon />
+            <ArticleIcon color="#fff" />
           </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/settings">
           <IconButton tooltip="Settings">
-           <SettingsIcon />
+           <SettingsIcon color="#fff" />
           </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/users">
           <IconButton tooltip="Users">
-            <UsersIcon />
+            <UsersIcon color="#fff" />
           </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/uploader">
          <IconButton tooltip="File Manager">
-          <FileManagerIcon />
+          <FileManagerIcon color="#fff" />
           </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/pages">
           <IconButton tooltip="Pages">
-          <PageBuildIcon />
+          <PageBuildIcon color="#fff" />
           </IconButton>
         </Link>
         <Link style={ styles.sidebarLink } to="/dashboard/collections">
           <IconButton tooltip="Collections">
-          <CollectionsIcon />
+          <CollectionsIcon color="#fff" />
           </IconButton>
         </Link>
       </div>

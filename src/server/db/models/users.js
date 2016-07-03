@@ -6,13 +6,7 @@ export default (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: true,
-      unique: true,
-      validate: {
-        isEmail: { msg: 'email is invalid, it must be like: youremail@boldr.io' },
-        notEmpty: {
-          msg: 'email is required'
-        }
-      }
+      unique: true
     },
     password: {
       type: DataTypes.STRING
@@ -20,27 +14,12 @@ export default (sequelize, DataTypes) => {
     firstname: {
       type: DataTypes.STRING(256),
       defaultValue: '',
-      allowNull: false,
-      validate: {
-        is: {
-          args: /^([ \u00c0-\u01ffa-zA-Z'\-])+$/i,
-          msg: 'first name must only contain letters'
-        },
-        notEmpty: {
-          msg: 'first name is required'
-        }
-      }
+      allowNull: false
     },
     lastname: {
       type: DataTypes.STRING(256),
       defaultValue: '',
-      allowNull: true,
-      validate: {
-        is: {
-          args: /^([ \u00c0-\u01ffa-zA-Z'\-])+$/i,
-          msg: 'last name must only contain letters'
-        }
-      }
+      allowNull: true
     },
     location: {
       type: DataTypes.STRING(256),

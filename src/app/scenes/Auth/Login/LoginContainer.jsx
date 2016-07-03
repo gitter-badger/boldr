@@ -7,6 +7,7 @@ import LoginForm from 'scenes/Auth/org.Forms/LoginForm';
 import { loginUser } from 'state/auth/auth';
 import BoldrLogo from 'shared/atm.BoldrLogo';
 import { LayoutColumn, LayoutRow } from 'shared/index';
+
 const mapStateToProps = (state) => {
   return { errorMessage: state.auth.error };
 };
