@@ -49,7 +49,7 @@ const styleMap = {
 };
 
 export default class BoldrEditor extends Component {
-  props: Props;
+
   constructor(props) {
     super(props);
 
@@ -91,7 +91,7 @@ export default class BoldrEditor extends Component {
       this.onChange(EditorState.createWithContent(newContentState, this.decorator));
     }
   }
-
+  props: Props;
   addBlock(type) {
     const { editorState } = this.state;
     if (type === 'image') {

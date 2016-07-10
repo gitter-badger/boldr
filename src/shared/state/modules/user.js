@@ -2,7 +2,7 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
-
+import decode from 'jwt-decode';
 import { API_BASE } from '../../config.api';
 polyfill();
 
@@ -32,9 +32,11 @@ const beginLogin = () => {
 // Login Success
 export function loginSuccess(response:Object) {
   localStorage.setItem('boldr:jwt', response.data.token);
+  const decoded = decode(response.data.token);
   return {
     type: LOGIN_USER_SUCCESS,
-    payload: response.data.token
+    payload: response.data.token,
+    role: decoded.role
   };
 }
 // Login Error
@@ -83,10 +85,10 @@ export function signUpSuccess(response:Object) {
   };
 }
 // Signup Error
-export function signUpError(message:string) {
+export function signUpError(err:string) {
   return {
     type: SIGNUP_USER_FAIL,
-    message
+    message: err
   };
 }
 // Signup Action
@@ -97,14 +99,14 @@ export function signUp(data:Object) {
     return makeUserRequest('post', data, `${API_BASE}/auth/signup`)
       .then(response => {
         if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message));
+          dispatch(signUpSuccess(response));
           dispatch(push('/'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
         }
       })
       .catch(err => {
-        dispatch(signUpError(err.data.message));
+        dispatch(signUpError(err));
       });
   };
 }
@@ -155,10 +157,12 @@ function checkTokenValidityRequest() {
   return { type: CHECK_TOKEN_VALIDITY_REQUEST };
 }
 
-function checkTokenValiditySuccess(response) {
+function checkTokenValiditySuccess(response, token) {
+  const decoded = decode(token);
   return {
     type: TOKEN_VALID,
-    payload: response.data
+    payload: response.data,
+    role: decoded.role
   };
 }
 
@@ -178,7 +182,7 @@ export function checkTokenValidity() {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      dispatch(checkTokenValiditySuccess(response));
+      dispatch(checkTokenValiditySuccess(response, token));
     })
     .catch(() => {
       dispatch(checkTokenValidityFailure('Token is invalid'));
@@ -187,16 +191,20 @@ export function checkTokenValidity() {
   };
 }
 
+
 /**
  * INITIAL STATE
  */
-export const INITIAL_STATE = {
-  message: '',
+export const INITIAL_USER_STATE = {
   isLoading: false,
   authenticated: false,
-  token: undefined,
   users: [],
-  currentUser: {}
+  currentUser: {
+    name: '',
+    email: '',
+    role: '',
+    token: undefined
+  }
 };
 
 /**
@@ -204,51 +212,51 @@ export const INITIAL_STATE = {
  * @param  {Object} state       The initial state
  * @param  {Object} action      The action object
  */
-export default function user(state:Object = INITIAL_STATE, action:Object = {}) {
+export default function user(state:Object = INITIAL_USER_STATE, action:Object = {}) {
   switch (action.type) {
     case LOGIN_USER_REQUEST:
       return Object.assign({}, state, {
-        isLoading: true,
-        message: ''
+        isLoading: true
       });
     case LOGIN_USER_SUCCESS:
       return Object.assign({}, state, {
         isLoading: false,
         authenticated: true,
-        message: '',
-        token: action.payload
+        currentUser: {
+          token: action.payload,
+          role: action.role
+        }
       });
     case LOGIN_USER_FAIL:
       return Object.assign({}, state, {
         isLoading: false,
-        authenticated: false,
-        message: action.message
+        authenticated: false
       });
     case CHECK_TOKEN_VALIDITY_REQUEST:
       return Object.assign({}, state, {
         isLoading: true,
-        message: '',
-        authenticated: false,
-        token: ''
+        authenticated: false
       });
     case TOKEN_VALID:
       return Object.assign({}, state, {
         isLoading: false,
         authenticated: true,
-        message: '',
-        token: action.payload
+        currentUser: {
+          token: action.payload,
+          role: action.role
+        }
       });
     case TOKEN_INVALID_OR_MISSING:
       return Object.assign({}, state, {
         isLoading: false,
         authenticated: false,
-        message: action.message,
-        token: ''
+        currentUser: {
+          token: ''
+        }
       });
     case SIGNUP_USER_REQUEST:
       return Object.assign({}, state, {
-        isLoading: true,
-        message: ''
+        isLoading: true
       });
     case SIGNUP_USER_SUCCESS:
       return Object.assign({}, state, {
@@ -258,13 +266,11 @@ export default function user(state:Object = INITIAL_STATE, action:Object = {}) {
     case SIGNUP_USER_FAIL:
       return Object.assign({}, state, {
         isLoading: false,
-        authenticated: false,
-        message: action.message
+        authenticated: false
       });
     case LOGOUT_USER:
       return Object.assign({}, state, {
-        isLoading: true,
-        message: ''
+        isLoading: true
       });
     case LOGOUT_USER_SUCCESS:
       return Object.assign({}, state, {

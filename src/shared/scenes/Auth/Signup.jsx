@@ -43,24 +43,28 @@ class Signup extends Component {
     return (
         <div>
           { this.renderHeader() }
-          <p>{message}</p>
+          <p>{ message }</p>
 
-          <form onSubmit={::this.handleOnSubmit}>
+          <form onSubmit={ ::this.handleOnSubmit }>
             <input
               type="email"
               ref="email"
-              placeholder="email" />
+              placeholder="email"
+            />
             <input
               type="password"
               ref="password"
-              placeholder="password" />
+              placeholder="password"
+            />
             <input
               type="text"
               ref="name"
-              placeholder="Name" />
+              placeholder="Name"
+            />
             <input
               type="submit"
-              value="Sign up" />
+              value="Sign up"
+            />
           </form>
 
         </div>

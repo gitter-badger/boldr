@@ -13,7 +13,7 @@ import ActionDescription from 'material-ui/svg-icons/action/description';
 import SocialPerson from 'material-ui/svg-icons/social/person';
 // Boldr
 import { logOut } from 'state/modules/user';
-import SiteLogo from 'shared/components/atm.SiteLogo';
+import SiteLogo from 'shared/components/atm.SiteLogo/index';
 // Styles
 import inlineStyles, { iconColor } from './inlineStyles';
 
@@ -23,6 +23,7 @@ type Props = {
   handleClickLogin: Function,
   handleClickRegister: Function,
   handleHome: Function,
+  actions: Object,
   user: Object,
   signoutUserAction: Function,
   isAuthenticated: Boolean
@@ -36,7 +37,7 @@ class TopBar extends React.Component {
       valueMultiple: ['3', '5']
     };
   }
-
+  props: Props;
   handleClickLogin(event) {
     const path = '/login';
     browserHistory.push(path);
@@ -112,11 +113,13 @@ class TopBar extends React.Component {
                     <ActionDescription color={ iconColor } />
                   </IconButton>
                 </Link>
-                <Link to="/dashboard" >
-                  <IconButton>
-                    <AvWeb color={ iconColor } />
-                  </IconButton>
-                </Link>
+                { this.props.user.currentUser.role === 'admin' ?
+                  <Link to="/dashboard" >
+                    <IconButton>
+                      <AvWeb color={ iconColor } />
+                    </IconButton>
+                  </Link> : null
+                }
               </div>
             }
           />

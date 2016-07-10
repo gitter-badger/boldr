@@ -13,7 +13,7 @@ const validateJwt = expressJwt({ secret: config.jwt.secret });
  * Otherwise returns 403
  * @returns {Function} - express middleware
  */
-export function isAuthenticated() {
+function isAuthenticated() {
   return compose()
   // Validate jwt
   .use((req, res, next) => {
@@ -45,7 +45,7 @@ const userRoles = ['user', 'staff', 'admin'];
  * @param {String} roleRequired - the role to check for
  * @returns {Function} - express middleware
  */
-export function hasRole(roleRequired) {
+function hasRole(roleRequired) {
   if (!roleRequired) throw new Error('Required role needs to be set');
 
   return compose()
@@ -64,7 +64,7 @@ export function hasRole(roleRequired) {
  * else req.user would be undefined
  * @returns {Function} - express middleware
  */
-export function appendUser() {
+function appendUser() {
   return compose()
       // Attach user to request
       .use((req, res, next) => {
@@ -94,7 +94,7 @@ export function appendUser() {
  * for it on the request
  * @returns {Function} - express middleware
  */
-export function addAuthHeaderFromCookie() {
+function addAuthHeaderFromCookie() {
   return compose()
     .use((req, res, next) => {
       if (req.cookies.token) {
@@ -109,9 +109,9 @@ export function addAuthHeaderFromCookie() {
  * @param {String} id - ObjectId of user
  * @returns {Promise} - resolves to the signed token
  */
-export function signToken(id) {
+function signToken(id, role) {
   return new Promise((resolve, reject) => {
-    jwt.sign({ id }, config.jwt.secret, { expiresIn: config.jwt.expiresIn }, (err, token) => {
+    jwt.sign({ id, role }, config.jwt.secret, { expiresIn: config.jwt.expiresIn }, (err, token) => {
       if (err) return reject(err);
       else return resolve(token);
     });
@@ -124,7 +124,7 @@ export function signToken(id) {
  * @param {Object} res - Express response object
  * @returns {*} - forgetaboutit
  */
-export function setTokenCookie(req, res) {
+function setTokenCookie(req, res) {
   if (!req.user) return res.json(404, { message: 'Something went wrong, please try again.' });
   const token = signToken(req.user.id, req.user.role);
   res.cookie('token', token);

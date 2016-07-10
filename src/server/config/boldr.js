@@ -234,6 +234,29 @@ const conf = convict({
       env: 'FACEBOOK_CB',
       arg: 'fbcb'
     }
+  },
+  twitter: {
+    key: {
+      doc: 'The client key for Twitter authentication.',
+      format: String,
+      default: 'boldrsecret',
+      env: 'TWITTER_KEY',
+      arg: 'twitterkey'
+    },
+    secret: {
+      doc: 'Secret for Twitter OAuth',
+      format: String,
+      default: 'boldrsecret',
+      env: 'TWITTER_SECRET',
+      arg: 'twittersecret'
+    },
+    callback: {
+      doc: 'Callback URL for Twitter OAuth',
+      format: String,
+      default: '/api/v1/auth/facebook/callback',
+      env: 'TWITTER_CB',
+      arg: 'twittercb'
+    }
   }
 });
 
