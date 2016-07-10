@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -13,10 +14,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import WebFontLoader from 'webfontloader';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import BoldrTheme from 'shared/styles/theme';
-import createRoutes from 'shared/config.routes';
+import createRoutes from 'shared/config.routes/index';
 import configureStore from 'shared/utils.redux/configureStore';
 import preRenderMiddleware from 'shared/utils.redux/preRenderMiddleware';
 import { checkTokenValidity } from 'shared/state/modules/user';
+
 WebFontLoader.load({
   google: {
     families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']
@@ -48,11 +50,11 @@ function onUpdate() {
 
 function initSocket() {
   const socket = io('');
-  socket.on('news', (data) => {
+  socket.on('news', data => {
     console.log(data);
     socket.emit('my other event', { my: 'data from client' });
   });
-  socket.on('msg', (data) => {
+  socket.on('msg', data => {
     console.log(data);
   });
 
@@ -67,9 +69,9 @@ function renderApp() {
 
     render(
       <AppContainer>
-        <Provider store={store}>
+        <Provider store={ store }>
           <MuiThemeProvider muiTheme={ muiTheme }>
-            <Router history={history} onUpdate={onUpdate} {...renderProps} />
+            <Router history={ history } onUpdate={ onUpdate } { ...renderProps } />
           </MuiThemeProvider>
         </Provider>
       </AppContainer>,

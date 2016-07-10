@@ -1,14 +1,13 @@
 import session from 'express-session';
-import pg from 'pg';
-import connectPostgres from 'connect-pg-simple';
+import redisStore from 'connect-redis';
+import redisClient from './redis';
 import { db } from './sequelize';
 
-const PGStore = connectPostgres(session);
+const RedisStore = redisStore(session);
 
 export default () =>
-  new PGStore(
+  new RedisStore(
     {
-      pg,
-      conString: db
+      client: redisClient
     }
   );

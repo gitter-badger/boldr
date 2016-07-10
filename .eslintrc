@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "axial",
+  "extends": ["boldr", "boldr/react"],
   "env": {
     "browser": true,
     "es6": true,
@@ -19,6 +19,8 @@
     }
   },
   "rules": {
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "babel/new-cap": 0,
+    "babel/arrow-parens": 0
   }
 }

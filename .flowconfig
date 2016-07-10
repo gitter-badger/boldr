@@ -6,15 +6,18 @@
 .*/src/shared/styles/.*
 .*/node_modules/react-tap-event-plugin
 .*/node_modules/fbjs
+
 [include]
-src/
+./src/
 
 [libs]
-node_modules/fbjs/flow/lib/Promise.js
-flow-typed
-node_modules/iflow-lodash/index.js.flow
-node_modules/iflow-redux/index.js.flow
-node_modules/iflow-react-redux/index.js.flow
+./node_modules/fbjs/lib/
+./node_modules/react/lib/
+./node_modules/fbjs/flow/lib/Promise.js
+./flow-typed/
+./node_modules/iflow-lodash/index.js.flow
+./node_modules/iflow-redux/index.js.flow
+./node_modules/iflow-react-redux/index.js.flow
 
 
 [options]

@@ -38,15 +38,15 @@ services:
     depends_on:
       - dbstore
 
-  # redis:
-  #   image: redis:3-alpine
-  #   container_name: ${PROJECT_ID}-redis
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - "redisstore:/data"
-  #   networks:
-  #     - boldr
+  redis:
+    image: redis:3-alpine
+    container_name: ${PROJECT_ID}-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redisstore:/data"
+    networks:
+      - boldr
 
 networks:
   boldr:
@@ -55,5 +55,5 @@ networks:
 volumes:
   dbstore:
     driver: local
-  # redisstore:
-  #   driver: local
+  redisstore:
+    driver: local

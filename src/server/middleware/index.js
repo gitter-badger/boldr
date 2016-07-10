@@ -1,8 +1,8 @@
+import path from 'path';
 import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import path from 'path';
 import flash from 'express-flash';
 import methodOverride from 'method-override';
 import morgan from 'morgan';
@@ -28,7 +28,7 @@ export default (app) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(methodOverride('X-HTTP-Method-Override'));
-  app.use(express.static(path.join(__dirname, '../../..', 'public')));
+  app.use(express.static(path.join(__dirname, '..', '..', '..', 'static')));
   app.set('trust proxy', 'loopback');
 
   const sessionStore = dbSession();
@@ -38,7 +38,7 @@ export default (app) => {
     saveUninitialized: false,
     secret: config.jwt.secret,
     proxy: true,
-    name: 'sessionId',
+    name: 'boldr:sid',
     cookie: {
       httpOnly: true,
       secure: false
@@ -85,7 +85,12 @@ export default (app) => {
   app.use(passport.session());
 
   app.use(flash());
-
+  app.use((req, res, next) => {
+    if (!req.session) {
+      return next(new Error('Lost connection to redis'));
+    }
+    next(); // otherwise continue
+  });
   if (!config.env === 'production') {
     app.use(errorHandler());
   }

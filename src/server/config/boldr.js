@@ -76,6 +76,22 @@ const conf = convict({
       arg: 'logfile'
     }
   },
+  redis: {
+    host: {
+      doc: 'The Redis host address',
+      format: String,
+      default: '127.0.0.1',
+      env: 'REDIS_HOST',
+      arg: 'redisH'
+    },
+    port: {
+      doc: 'The port of the running Redis server.',
+      format: 'port',
+      default: 6379,
+      env: 'REDIS_PORT',
+      arg: 'redisP'
+    }
+  },
   db: {
     name: {
       doc: 'Name of the database.',

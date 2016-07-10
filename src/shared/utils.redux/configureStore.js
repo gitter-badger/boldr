@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
-import rootReducer from '../state';
 import createLogger from 'redux-logger';
+import rootReducer from '../state';
 
 /*
  * @param {Object} initial state to bootstrap our stores with for server-side rendering
@@ -29,6 +29,7 @@ export default function configureStore(initialState, history) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../state', () => {
       const nextReducer = require('../state');
+
       store.replaceReducer(nextReducer);
     });
   }

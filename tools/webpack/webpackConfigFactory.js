@@ -115,7 +115,9 @@ function webpackConfigFactory({ target, mode }) {
           'react-redux',
           'axios',
           'redux-thunk',
-          'socket.io-client'
+          'socket.io-client',
+          'material-ui',
+          'react-tap-event-plugin'
         ])
       })
     ),
@@ -241,7 +243,7 @@ function webpackConfigFactory({ target, mode }) {
               plugins: [['transform-runtime', { polyfill: false }]],
               env: {
                 development: {
-                  plugins: ['react-hot-loader/babel']
+                  plugins: ['react-hot-loader/babel', 'transform-decorators-legacy']
                 }
               }
             },

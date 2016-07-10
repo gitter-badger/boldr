@@ -1,13 +1,13 @@
 /* @flow */
-import { install } from 'source-map-support';
 
-import express from 'express';
 import http from 'http';
+import _debug from 'debug';
+import express from 'express';
 import SocketIO from 'socket.io';
 import winston from 'winston';
 import expressWinston from 'express-winston';
-import clientConfigBuilder from '../../tools/webpack/webpack.client.config.js';
-
+import { install } from 'source-map-support';
+import clientConfigBuilder from '../../tools/webpack/webpack.client.config.js'; // eslint-disable-line
 import boldrSSR from './ssr/boldrSSR';
 import { config } from './config/boldr';
 import { logger, socketHandler } from './lib';
@@ -15,6 +15,8 @@ import authMiddleware from './middleware/auth';
 import middleware from './middleware';
 import routes from './api/routes';
 import models from './db/models';
+
+const debug = _debug('boldr:server');
 install(); // source-maps
 const ENV = config.env;
 // Create our express server.

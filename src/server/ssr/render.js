@@ -1,7 +1,7 @@
 // @flow
 import { renderToString } from 'react-dom/server';
 import createHtml from './createHtml';
-import ClientBundleAssets from '../../../build/client/assets.json';
+import ClientBundleAssets from '../../../build/client/assets.json'; // eslint-disable-line
 import type { Assets, PageData } from './types';
 
 // This takes the assets.json file that was output by webpack for our client
