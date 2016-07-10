@@ -1,28 +1,65 @@
-import slug from 'slugg';
-import Models from '../../db/models';
-const Article = Models.Article;
-const User = Models.User;
-const Tag = Models.Tag;
+import slug from 'limax';
+import { Article, User, Tag } from '../../db/models';
+import Boom from 'boom';
 const MAX_TAGS = 15;
+/**
+ * @api {get} /articles       Get all articles
+ * @apiVersion 1.0.0
+ * @apiName getAllArticles
+ * @apiGroup Article
+ *
+ * @apiExample Example usage:
+ * curl -i http://localhost:3000/api/v1/articles
+ *
+ * @apiSuccess {String}  id   The Article ID
+ */
+export const getAllArticles = async (req, res, next) => {
+  try {
+    const articles = await Article.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [{
+        model: User,
+        attributes: ['id', 'name', 'displayName', 'picture', 'email', 'role']
+      }, {
+        model: Tag,
+        attributes: ['tagname', 'id']
+      }]
+    });
+
+    return res.status(200).json(articles);
+  } catch (error) {
+    next(error);
+  }
+};
 
 /**
- * Gets all articles
- * @method getAllArticles
- * @param  {request} ctx
- * @return {Array}     array containing all article objects.
+ * @api {get} /articles/:id  Get a specific article by its id
+ * @apiVersion 1.0.0
+ * @apiName ShowArticle
+ * @apiGroup Article
+ *
+ * @apiExample Example usage:
+ * curl -i http://localhost:3000/api/v1/articles/1
+ *
+ * @apiParam {String}    id   The article's id.
+ *
+ * @apiSuccess {String}  id   The Article ID
  */
-export const getAllArticles = async (ctx) => {
-  const articles =
-  await Article.findAll({
-    include: [{
-      model: User,
-      attributes: ['id', 'firstname', 'lastname', 'email']
-    }, {
-      model: Tag,
-      attributes: ['tagname']
-    }]
-  });
-  return ctx.ok(articles);
+export const showArticle = async (req, res, next) => {
+  try {
+    const article = await Article.findById(req.params.id, {
+      include: [{
+        model: User,
+        attributes: ['id', 'name', 'displayName', 'picture', 'email', 'role']
+      }, {
+        model: Tag,
+        attributes: ['tagname', 'id']
+      }]
+    });
+    return res.status(200).json(article);
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -38,122 +75,38 @@ export const getAllArticles = async (ctx) => {
  * @param {Date}    createdAt      the time the article was saved.
  * @return {Object}                the article object
  */
-export const createArticle = async (ctx, next) => {
-  // Split the ctx.request.body.tags at each , as a tag
-  if (ctx.request.body.tags) {
-    ctx.request.body.tags = ctx.request.body.tags.split(',', MAX_TAGS).map(tag => tag.substr(0, 15));
-  }
-
-  const articleFields = {
-    title: ctx.request.body.title,
-    slug: slug(ctx.request.body.slug),
-    markup: ctx.request.body.markup,
-    content: ctx.request.body.content,
-    featureImage: ctx.request.body.featureImage,
-    authorId: ctx.state.user.id,
-    status: ctx.request.body.status
-  };
-
-  try {
-    // Creates an article with all fields except for tags
-    const article = await Article.create(articleFields);
-    // creates a new "Tag" for every tag in ctx.request.body.tags
-    for (let i = 0; i < ctx.request.body.tags.length; i++) {
-      const newTag = await Tag.create({ tagname: ctx.request.body.tags[i] });
-      // Adds articleId of the previously created Article and
-      // adds the tagId of each created Tag to the ArticlesTags table.
-      await article.addTag(newTag);
-    }
-    // Performs a quick get to save an api req.
-    if (ctx.request.body.tags) {
-      article.Tags = ctx.request.body.tags.map(tag => ({ tagname: tag }));
-    }
-    // Send the article and 201.
-    return ctx.created(article);
-  } catch (err) {
-    return ctx.error(`Something went terribly wrong creating your article. Try again. ${err}`);
-  }
-};
-
-/**
- * Show a specific article
- * @method showArticle
- * @param  {String} ctx the articleId passed as a param
- * @return {Object}     the article.
- */
-export const showArticle = async (ctx) => {
-  const article = await Article.findById(ctx.params.id, {
+export const createArticle = (req, res, next) => {
+  Article.create({
+    title: req.body.title,
+    slug: slug(req.body.title),
+    markup: req.body.markup,
+    content: req.body.content,
+    featureImage: req.body.featureImage,
+    authorId: req.user.id,
+    status: req.body.status,
+    tags: req.body.tags
+  }, {
     include: [{
-      model: User,
-      attributes: ['id', 'firstname', 'lastname', 'email']
-    }, {
       model: Tag,
-      attributes: ['tagname']
+      as: 'tags'
     }]
+  }).then(function(article) {
+    return res.status(201).json(article);
   });
-  return ctx.ok(article);
 };
-
 /**
- * looks up an article by the slug, which is a sanitized version of its title.
- * @method getArticleBySlug
- * @param  {String}   ctx  the slug param.
- * @return {Object}        The article
+ * TODO: This is fucked. Maybe populate the tags within the model.
+ * ).then(function(article) {
+   // creates a new "Tag" for every tag in ctx.request.body.tags
+   for (let i = 0; i < req.body.tags.length; i++) {
+     const newTag = Tag.create({ tagname: req.body.tags[i] });
+     // Adds articleId of the previously created Article and
+     // adds the tagId of each created Tag to the ArticlesTags table.
+     article.addTag(newTag);
+   }
+   // Performs a quick get to save an api req.
+   if (req.body.tags) {
+     article.tags = req.body.tags.map(tag => ({ tagname: tag }));
+   }
+ });
  */
-export const getArticleBySlug = async (ctx, next) => {
-  const article = await Article.findOne({ where: { slug: ctx.params.slug },
-    include: [{
-      model: User,
-      attributes: ['id', 'firstname', 'lastname', 'email']
-    }, {
-      model: Tag,
-      attributes: ['tagname']
-    }] });
-
-  return ctx.ok(article);
-};
-
-/**
- * looks up all articles by the userId (authorId)
- * @method getArticleByAuthor
- * @param  {String}   ctx  the userId param
- * @return {Array}        Articles
- */
-export const getArticleByAuthor = async (ctx, next) => {
-  const articles = await Article.findAll({ where: { authorId: ctx.params.userId },
-    include: [{
-      model: User,
-      attributes: ['id', 'firstname', 'lastname', 'email']
-    }, {
-      model: Tag,
-      attributes: ['tagname']
-    }]
-  });
-  return ctx.ok(articles);
-};
-
-/**
- * Updates an article
- * @method update
- * @param  {String} ctx the articleId param
- * @return {Object}     Updated article.
- */
-export const update = async (ctx) => {
-  const result = await Article.update(ctx.request.body, { where: { id: ctx.params.id } });
-  return ctx.ok(result);
-};
-
-/**
- * Remove an article from the database.
- * @method destroy
- * @param  {String} ctx the articleId passed as a param
- * @return {Number}     should return 204.
- *        if(!req.user.isAdmin()){
-            delete req.body.enabled;
-        }
- */
-export const destroy = async (ctx) => {
-  const found = await Article.findById(ctx.params.id);
-  found.destroy();
-  ctx.status = 204;
-};

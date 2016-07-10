@@ -1,127 +1,106 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import moment from 'moment';
-import logger from 'server/lib/logger';
-import { sendVerifyEmail, generateVerifyCode } from '../../utils/mailer';
-import Models from '../../db/models';
-import redisClient from '../../db/redis';
+import passport from 'passport';
+import Boom from 'boom';
 
-const User = Models.User;
-const UserGroup = Models.UserGroup;
-const VerificationToken = Models.VerificationToken;
-const saltRounds = 10;
+import { User } from '../../db/models';
+import { signToken } from '../../middleware/auth/authService';
 
 /**
- * @description
- * registers a new user
- * @route /api/v1/auth/register
- * @method POST
+ * @api {post} /auth/login          Login to a registered account.
+ * @apiVersion 1.0.0
+ * @apiName login
+ * @apiGroup Auth
+ *
+ * @apiParam {String}   Email       The email address registered to the account.
+ * @apiParam {String}   Password    The password
+ * @apiSuccess {String} Token       The jsonwebtoken
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI...."}
  */
-export const registerUser = async ctx => {
-  try {
-    User.findOne({
-      where: {
-        email: ctx.request.body.email
-      }
-    });
-  } catch (error) {
-    ctx.status = 409;
-    ctx.body = 'Account with this email address already exists!';
-  }
-  try {
-    // take the incoming password and hash it.
-    // const hash = bcrypt.hashSync(ctx.request.body.password, saltRounds);
-    const user = User.build({
-      email: ctx.request.body.email,
-      password: ctx.request.body.password,
-      location: ctx.request.body.location,
-      bio: ctx.request.body.bio,
-      avatar: ctx.request.body.avatar,
-      firstname: ctx.request.body.firstname,
-      lastname: ctx.request.body.lastname,
-      website: ctx.request.body.website
-    });
-    // newUser.setDataValue('provider', 'local');
-    // Save newUser once the request body forms the user model.
-    const newUser = await user.save();
-    // Add the user's id to the default User group
-    await UserGroup.addUserIdInGroups(['User'], newUser.get().id);
-    // Generate the verification token.
-    const verificationToken = await generateVerifyCode();
-    // Send the verification email.
-    sendVerifyEmail(newUser.email, verificationToken);
-    // Store the verification token, userId and expiration date in the db.
-    const verificationStorage = await VerificationToken.create({
-      userId: newUser.id,
-      token: verificationToken,
-      expiresAt: moment().add(3, 'days')
-    });
-    // Save token.
-    verificationStorage.save();
-    // Send response.
-    ctx.status = 201;
-    ctx.body = user;
-    logger.info(`Registered account: ${user}`);
-  } catch (err) {
-    ctx.status = 500;
-    ctx.body = `Unable to register user: ${err}`;
-  }
-};
-
-/**
- * Endpoint used to login
- * @param  {object}  ctx async  Koa object.
- * @param  {Function}    next Function to pass error.
- * @return {void}
- */
-export async function loginUser(ctx, next) {
-  try {
-    const user = await User.findOne({
-      where: {
-        email: ctx.request.body.email
-      }
-    });
+export function login(req, res, next) {
+  // Do email and password validation for the server
+  passport.authenticate('local', (authErr, user, info) => {
+    if (authErr) {
+      console.log(authErr);
+      return next(authErr);
+    }
     if (!user) {
-      ctx.status = 403;
-      ctx.body = 'Unable to log in.';
+      return Boom.unauthorized(info.message);
     }
 
-    const pw = await user.authenticate(ctx.request.body.password, user.password);
-    if (pw === false) {
-      ctx.status = 403;
-      ctx.body = 'Unable to log in.';
-    }
-    const payload = {
-      email: user.email,
-      id: user.id
+    return req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        return Boom.unauthorized(loginErr);
+      }
+
+      signToken(user.id, user.role).then(token => {
+        req.user = user;
+        return res.status(200).json({ token });
+      });
+    });
+  })(req, res, next);
+}
+
+/**
+ * @api {post} /auth/logout           Remove the session information
+ * @apiVersion 1.0.0
+ * @apiName logout
+ * @apiGroup Auth
+ */
+export function logout(req, res) {
+  req.logout();
+  res.redirect('/');
+}
+
+/**
+ * @api {post} /auth/signup           Create a new account.
+ * @apiVersion 1.0.0
+ * @apiName signup
+ * @apiGroup Auth
+ */
+export async function signUp(req, res, next) {
+  try {
+    const userData = {
+      email: req.body.email,
+      password: req.body.password,
+      displayName: req.body.displayName,
+      name: req.body.name,
+      location: req.body.location,
+      bio: req.body.bio,
+      picture: req.body.picture,
+      gender: req.body.gender,
+      website: req.body.website,
+      provider: 'local'
     };
-    // make this data available across the app on ctx.session
-    ctx.session = payload;
-    const token = await jwt.sign(payload, process.env.JWT_SECRET);
-    redisClient.set(token, true);
-    return ctx.ok({
-      token
+    const user = await User.createWithPass(userData);
+    req.logIn(user, (err) => {
+      if (err) {
+        return Boom.unauthorized({ message: err });
+      }
+      return res.status(200).json({
+        message: 'You have been successfully logged in.'
+      });
     });
   } catch (err) {
-    logger.debug(err);
-    ctx.status = 403;
-    ctx.body = 'Unable to log in.';
+    return next(err);
   }
 }
-/**
- * @description
- * checks if the user is logged in and returns their information
- * @route /api/v1/auth/check
- * @method GET
- */
-export async function checkUser(ctx, next) {
+
+export async function checkUser(req, res, next) {
   try {
-    User.findById(ctx.state.user.id)
+    User.findById(req.user.id)
       .then((result) => {
-        return ctx.ok(result);
+        return res.status(200).json(result);
       });
   } catch (err) {
-    ctx.status = 403;
-    ctx.body = 'Unable to log in.';
+    return Boom.forbidden(err);
   }
 }
+
+export default {
+  login,
+  logout,
+  signUp,
+  checkUser
+};

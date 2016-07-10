@@ -1,23 +1,92 @@
-import passport from 'koa-passport';
-import etag from 'koa-etag';
-import helmet from 'koa-helmet';
-import responseCalls from './responseCalls';
-import bodyParser from './bodyParser';
-import session from './session';
-import jwt from './jwt';
+import express from 'express';
+import passport from 'passport';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+import path from 'path';
+import flash from 'express-flash';
+import methodOverride from 'method-override';
+import morgan from 'morgan';
+import lusca from 'lusca';
+import hpp from 'hpp';
+import cors from 'cors';
+import compression from 'compression';
+import errorHandler from 'errorhandler';
+import winston from 'winston';
+import expressWinston from 'express-winston';
+import { session as dbSession } from '../db';
+import { config } from '../config/boldr';
+import { logger } from '../lib';
 
-/**
- * Boldr middleware bootstraps the majority of middleware for the app.
- * @param  {Object} app
- */
 export default (app) => {
-  app
-    .use(responseCalls)
-    .use(bodyParser)
-    .use(etag())
-    .use(jwt)
-    .use(session)
-    .use(helmet());
+  app.set('port', config.port);
+
+  app.disable('x-powered-by');
+  app.use(compression());
+  app.use(morgan('dev'));
+  app.use(hpp());
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(methodOverride('X-HTTP-Method-Override'));
+  app.use(express.static(path.join(__dirname, '../../..', 'public')));
+  app.set('trust proxy', 'loopback');
+
+  const sessionStore = dbSession();
+
+  const sess = {
+    resave: false,
+    saveUninitialized: false,
+    secret: config.jwt.secret,
+    proxy: true,
+    name: 'sessionId',
+    cookie: {
+      httpOnly: true,
+      secure: false
+    },
+    store: sessionStore
+  };
+  app.use(lusca({
+    xframe: 'SAMEORIGIN',
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true
+    },
+    xssProtection: true
+  }));
+
+  if (config.env === 'development') {
+    expressWinston.requestWhitelist.push('body');
+    expressWinston.responseWhitelist.push('body');
+    app.use(expressWinston.logger({
+      transports: [
+        new winston.transports.Console({
+          json: true,
+          colorize: true
+        })
+      ],
+      meta: true,   // optional: log meta data about request (defaults to true)
+      msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+      colorStatus: true   // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
+    }));
+  }
+
+  logger.info('--------------------------');
+  logger.info('===> 😊  Starting Boldr . . .');
+  logger.info(`===> 🌎  Environment: ${config.env}`);
+  if (config.env === 'production') {
+    logger.info('===> 🚦  Note: In order for authentication to work in production');
+    logger.info('===>           you will need a secure HTTPS connection');
+    sess.cookie.secure = true;
+  }
+  app.use(session(sess));
+
   app.use(passport.initialize());
   app.use(passport.session());
+
+  app.use(flash());
+
+  if (!config.env === 'production') {
+    app.use(errorHandler());
+  }
 };

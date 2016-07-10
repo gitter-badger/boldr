@@ -1,13 +1,7 @@
-import Router from 'koa-router';
-import * as userController from './user.controller';
+import * as usersController from './user.controller';
 
-const userRouter = new Router({ prefix: '/api/v1/users' });
-
-userRouter
-  .get('/', userController.getAll)
-  .get('/:id', userController.getId)
-  .put('/:id', userController.update)
-  .delete('/:id', userController.destroy)
-  .get('/permissions/:id', userController.checkPermission);
-
-export default userRouter;
+export default (app, router) => {
+  router.get('/users', usersController.getAllUsers);
+  // Load user when API with userId route parameter is hit
+  router.param('userId', usersController.load);
+};

@@ -1,4 +1,13 @@
 import logger from './logger';
-import errors from './errors';
+import socketHandler from './sockets';
+import { generateSaltAndHash, verifyPassword, processQuery } from './helpers';
+import { responseHandler } from './handlers';
 
-export { logger, errors };
+export {
+  logger,
+  socketHandler,
+  generateSaltAndHash,
+  verifyPassword,
+  responseHandler,
+  processQuery
+};

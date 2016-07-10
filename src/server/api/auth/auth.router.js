@@ -1,15 +1,33 @@
-import Router from 'koa-router';
-import { registerUser, checkUser } from './auth.controller';
-import { authEmail, isAuthenticated } from '../../auth';
-import generateToken from 'server/auth/generateToken';
+import passport from 'passport';
+import * as authController from './auth.controller';
+import { isAuthenticated } from '../../middleware/auth/authService';
 
-const authRouter = new Router();
 
-authRouter.prefix('/api/v1/auth');
+export default (app, router) => {
+  router.post('/auth/login', authController.login);
+  router.post('/auth/signup', authController.signUp);
+  router.post('/auth/logout', authController.logout);
+  router.get('/auth/check', authController.checkUser);
+  router.get('/auth/google', passport.authenticate('google', {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email'
+    ]
+  }));
 
-authRouter
-  .post('/register', registerUser)
-  .get('/check', isAuthenticated(), checkUser)
-  .post('/login', authEmail(), generateToken());
-
-export default authRouter;
+  router.get('/auth/google/callback',
+    passport.authenticate('google', {
+      successRedirect: '/',
+      failureRedirect: '/auth/login'
+    })
+  );
+  router.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['email']
+  }));
+  router.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+      successRedirect: '/',
+      failureRedirect: '/auth/login'
+    })
+  );
+};

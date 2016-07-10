@@ -6,16 +6,16 @@
  */
 
 import winston from 'winston';
-import config from '../../../config';
-
+import { config } from '../../config/boldr';
 const transports = [];
 if (config.logger.console) {
   transports.push(
     new winston.transports.Console({
       handleExceptions: false,
       prettyPrint: true,
+      json: false,
       colorize: true,
-      level: config.logger.level,
+      level: 'debug',
       timestamp: () => new Date().toLocaleString()
     })
   );

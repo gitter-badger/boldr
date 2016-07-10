@@ -1,62 +1,28 @@
-import jwt from 'jsonwebtoken';
-import Models from '../../db/models';
-import logger from '../../lib/logger';
-import config, { paths } from 'config';
-const Article = Models.Article;
-const User = Models.User;
+import Boom from 'boom';
+import { User } from '../../db/models';
 
 /**
- * Returns a listing of all the user users in the database.
- * @method getUsers
- * @param  {[type]} ctx [description]
- * @return {[type]}     [description]
+ * Load user and append to req.
  */
-export async function getAll(ctx) {
+export function load(req, res, next, id) {
+  User.findById(id).then((user) => {
+    req.user = user;    // eslint-disable-line no-param-reassign
+    return next();
+  }).error((e) => next(e));
+}
+
+export const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.findAll({});
-    return ctx.ok(users);
-  } catch (err) {
-    return ctx.badRequest('Users dont exist?');
-  }
-}
 
-/**
- * Performs a lookup of a user by their id.
- * @param  {[type]}   ctx  context of the request
- * @param  {Function} next continue to the next middleware
- * @return {Object}        the User object.
- */
-export async function getId(ctx, next) {
-  try {
-    const user = await User.findById(ctx.params.id, {
-      include: [
-        {
-          model: Article
-        }
-      ]
-    });
-    return ctx.ok(user);
-  } catch (err) {
-    return ctx.badRequest('User is Not Found');
+    return res.status(200).json(users);
+  } catch (error) {
+    Boom.badRequest({ message: error });
+    next(error);
   }
-}
-export async function checkPermission(ctx, next) {
-  try {
-    const user = await User.getPermissions(ctx.params.id);
-    return ctx.ok(user);
-  } catch (err) {
-    return ctx.badRequest('User is Not Found');
-  }
-}
-export async function update(ctx) {
-  const query = { id: ctx.params.id };
-  const result = await User.update(ctx.request.body, { where: query });
-  return ctx.ok(result);
-}
+};
 
-export async function destroy(ctx) {
-  const result = await User.findById(ctx.params.id);
-  result.destroy();
-
-  return ctx.ok();
-}
+export default {
+  load,
+  getAllUsers
+};

@@ -1,36 +1,45 @@
-export default (sequelize, DataTypes) => {
-  const Category = sequelize.define('Category', {
-    name: {
-      type: DataTypes.STRING(30),
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.STRING(256),
-      allowNull: true
-    },
-    image: {
-      type: DataTypes.STRING(256),
-      allowNull: true
+import DataType from 'sequelize';
+import Model from '../sequelize';
+import uuid from 'node-uuid';
+/**
+ * Creates a UUID for the User if it's not given.
+ * @param  {Object} instance Instance object of the User
+ * @return {void}
+ */
+function createUUIDIfNotExist(instance) {
+  if (!instance.id) {
+    instance.id = uuid.v4();
+  }
+}
+const Category = Model.define('categories', {
+  id: {
+    type: DataType.UUID,
+    primaryKey: true,
+    defaultValue: DataType.UUIDV4
+  },
+  name: {
+    type: DataType.STRING(30),
+    allowNull: false
+  },
+  description: {
+    type: DataType.STRING(256),
+    allowNull: true
+  },
+  image: {
+    type: DataType.STRING(256),
+    allowNull: true
+  }
+}, {
+  tableName: 'categories',
+  freezeTableName: true,
+  hooks: {
+    beforeValidate: createUUIDIfNotExist
+  },
+  indexes: [
+    {
+      fields: ['name']
     }
-  }, {
-    timestamps: false,
-    tableName: 'categories',
-    indexes: [
-      {
-        fields: ['name']
-      }
-    ],
-    classMethods: {
-      associate(models) {
-        Category.hasMany(models.Upload, {
-          foreignKey: 'categoryId'
-        });
-        Category.hasMany(models.Collection, {
-          foreignKey: 'categoryId'
-        });
-      }
-    }
-  });
+  ]
+});
 
-  return Category;
-};
+export default Category;

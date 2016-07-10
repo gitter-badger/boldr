@@ -1,39 +1,24 @@
 {
-  "extends": "axial",
   "parser": "babel-eslint",
+  "extends": "axial",
   "env": {
     "browser": true,
-    "node": true,
-    "mocha": true,
     "es6": true,
-    "shared-node-browser": true
+    "node": true
   },
-  "plugins": ["import"],
-  "globals": {
-    "__CLIENT__": false,
-    "__SERVER__": false,
-    "__DEV__": false,
-    "__PROD__": false,
-    "__TEST__": false,
-    "__DEBUG__": false,
-    "webpackIsomorphicTools": false,
-    "expect": true,
-    "global": true,
-    "window": true,
-    "sinon": true,
-    "debug": true,
-    "React": true,
-    "PropTypes": true,
-    "_": true,
-    "helpers": true,
-    "socket": true
+  "plugins": [
+    "flowtype",
+    "flow-vars"
+  ],
+  "ecmaFeatures": {
+    "defaultParams": true
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
   },
   "rules": {
-    "no-shadow" : 0,
-    "consistent-return": 0,
-    "import/no-unresolved": 0,
-    "no-param-reassign": 0,
-    "generator-star-spacing": 0,
-    "arrow-parens": 0
+    "no-unused-vars": 0
   }
 }

@@ -1,31 +1,87 @@
-import fs from 'fs';
-import path from 'path';
-import Sequelize from 'sequelize';
-import dbConfig from '../sequelize.config';
+import sequelize from '../sequelize';
+import User from './user';
+import Token from './token';
+import Article from './article';
+import ArticlesTags from './articlesTags';
+import Tag from './tag';
+import Category from './category';
+import Media from './media';
+import MediaCategories from './mediaCategories';
 
-const config = dbConfig.development;
-const basename = path.basename(module.filename);
-const db = {};
-
-// const dbUrl = process.env[config.use_env_variable];
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
-fs
-  .readdirSync(__dirname)
-  .filter((file) =>
-    (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
-  )
-  .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+Article.belongsToMany(Tag, {
+  through: {
+    model: ArticlesTags,
+    unique: true
+  },
+  foreignKey: {
+    name: 'articleId',
+    allowNull: true
+  },
+  constraints: false,
+  onDelete: 'cascade'
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
-module.exports = db;
+Article.belongsTo(User, {
+  foreignKey: 'authorId'
+});
+
+Category.belongsToMany(Media, {
+  through: {
+    model: MediaCategories,
+    foreignKey: 'categoryId',
+    unique: true
+  },
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
+
+Media.belongsTo(Category, {
+  foreignKey: 'categoryId'
+});
+
+Media.belongsTo(User, {
+  foreignKey: 'ownerId'
+});
+
+Tag.belongsToMany(Article, {
+  through: {
+    model: ArticlesTags,
+    unique: true
+  },
+  foreignKey: {
+    name: 'tagId',
+    allowNull: true
+  },
+  constraints: false,
+  onDelete: 'cascade'
+});
+
+Token.belongsTo(User, {
+  foreignKey: 'userId'
+});
+
+User.hasMany(Token, {
+  foreignKey: 'userId',
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
+
+User.hasMany(Article, {
+  foreignKey: 'authorId',
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
+
+User.hasMany(Media, {
+  foreignKey: 'ownerId',
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
+
+function sync(...args) {
+  return sequelize.sync(...args);
+}
+
+export default { sync };
+export { User, Token, Article, Tag, Media, ArticlesTags };

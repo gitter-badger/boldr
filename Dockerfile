@@ -1,16 +1,13 @@
-FROM strues/node:latest
-MAINTAINER Steven Truesdell <steven@strues.io>
+FROM mhart/alpine-node:6.3
 
-ENV HOME /home/app
-ENV NODE_ENV development
-ENV PATH $HOME/node_modules/.bin:$PATH
-WORKDIR $HOME
+RUN mkdir -p /src
+WORKDIR /src
+ADD . .
 
-COPY package.json $HOME/package.json
-RUN npm install
-
-COPY . $HOME
+RUN apk add --no-cache make gcc g++ python \
+  && npm install \
+  && npm run build
 
 EXPOSE 3000
 
-ENTRYPOINT ["npm", "start"]
+CMD npm run start
