@@ -9,6 +9,7 @@ import browserHistory from 'react-router/lib/browserHistory';
 import match from 'react-router/lib/match';
 import { syncHistoryWithStore } from 'react-router-redux';
 import io from 'socket.io-client';
+import { trigger } from 'redial';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import WebFontLoader from 'webfontloader';
@@ -62,21 +63,36 @@ function initSocket() {
 }
 global.socket = initSocket();
 function renderApp() {
-  match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      console.log('==> 😭  React Router match failed.'); // eslint-disable-line no-console
-    }
+  history.listen(location => {
+    match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
+      if (error) {
+        console.log('==> 😭  React Router match failed.'); // eslint-disable-line no-console
+      }
+      const locals = {
+        path: renderProps.location.pathname,
+        query: renderProps.location.query,
+        params: renderProps.params,
+        dispatch: store.dispatch
+      };
+      const { components } = renderProps;
 
-    render(
+      if (window.__INITIAL_STATE__) {
+        delete window.__INITIAL_STATE__;
+      } else {
+        trigger('fetch', components, locals);
+      }
+      trigger('defer', components, locals);
+      render(
       <AppContainer>
         <Provider store={ store }>
           <MuiThemeProvider muiTheme={ muiTheme }>
-            <Router history={ history } onUpdate={ onUpdate } { ...renderProps } />
+            <Router history={ history } { ...renderProps } />
           </MuiThemeProvider>
         </Provider>
       </AppContainer>,
       container
     );
+    });
   });
 }
 

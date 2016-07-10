@@ -1,17 +1,20 @@
+import { provideHooks } from 'redial';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchArticles, FETCH_ARTICLES_REQUEST } from 'state/modules/article';
 import BlogPost from './components/org.BlogPost';
-
+@provideHooks({
+  fetch: ({ dispatch }) => dispatch(fetchArticles())
+})
 class Blog extends Component {
   constructor(props) {
     super(props);
     this.createArticleList = (articleList) => this._createArticleList(articleList);
   }
-  componentDidMount() {
-    this.props.actions.fetchArticles();
-  }
+  // componentDidMount() {
+  //   this.props.actions.fetchArticles();
+  // }
 
   _createArticleList(articles) {
     const articleList = [];
