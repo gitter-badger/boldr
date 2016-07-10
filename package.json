@@ -67,6 +67,7 @@
     "express-winston": "^1.4.2",
     "helmet": "^2.1.1",
     "hpp": "0.2.1",
+    "http-proxy-middleware": "^0.17.0",
     "ioredis": "^2.2.0",
     "jsonwebtoken": "^7.0.1",
     "limax": "^1.4.0",

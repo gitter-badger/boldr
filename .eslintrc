@@ -21,6 +21,7 @@
   "rules": {
     "no-unused-vars": 0,
     "babel/new-cap": 0,
-    "babel/arrow-parens": 0
+    "babel/arrow-parens": 0,
+    "import/no-unresolved": 0
   }
 }
