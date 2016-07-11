@@ -14,7 +14,7 @@ ____
 * Postgres 9.5  
 
 
-### Alpha 0.1.0-alpha.3
+### 0.1.0-alpha.3
 7/11/2016  
 
 [-] **Setup and Settings**  Added a setup within the dashboard for settings and site customization. This is the first step in the process of loading / preloading various customizations before sending them down to the browser. At the moment the setup *wizard* contains the basic info like Website name, URL, etc...
