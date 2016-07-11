@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const express = require('express');
 const createWebpackMiddleware = require('webpack-dev-middleware');
 const createWebpackHotMiddleware = require('webpack-hot-middleware');
+
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const WP_DIR = path.join(ROOT_DIR, 'tools', 'webpack');
 

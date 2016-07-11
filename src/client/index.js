@@ -14,6 +14,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import WebFontLoader from 'webfontloader';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// Non-vendor
 import BoldrTheme from 'shared/styles/theme';
 import createRoutes from 'shared/config.routes/index';
 import configureStore from 'shared/utils.redux/configureStore';
@@ -25,6 +26,7 @@ WebFontLoader.load({
     families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']
   }
 });
+
 const container = document.getElementById('app');
 const initialState = window.__INITIAL_STATE__;
 const muiTheme = getMuiTheme(BoldrTheme);
@@ -39,15 +41,6 @@ if (token) {
 // If its available, always send the token in the header.
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;  // eslint-disable-line
 injectTapEventPlugin();
-function onUpdate() {
-  if (window.__INITIAL_STATE__ !== null) {
-    window.__INITIAL_STATE__ = null;
-    return;
-  }
-
-  const { components, params } = this.state;
-  preRenderMiddleware(store.dispatch, components, params);
-}
 
 function initSocket() {
   const socket = io('');
@@ -62,6 +55,7 @@ function initSocket() {
   return socket;
 }
 global.socket = initSocket();
+
 function renderApp() {
   history.listen(location => {
     match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {

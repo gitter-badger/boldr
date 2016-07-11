@@ -1,6 +1,8 @@
 import slug from 'limax';
-import { Article, User, Tag } from '../../db/models';
 import Boom from 'boom';
+
+import { Article, User, Tag } from '../../db/models';
+
 const MAX_TAGS = 15;
 /**
  * @api {get} /articles       Get all articles
@@ -90,9 +92,9 @@ export const createArticle = (req, res, next) => {
       model: Tag,
       as: 'tags'
     }]
-  }).then(function(article) {
+  }).then((article) => {
     return res.status(201).json(article);
-  });
+  }).error((err) => next(err));
 };
 /**
  * TODO: This is fucked. Maybe populate the tags within the model.

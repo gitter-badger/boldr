@@ -1,5 +1,6 @@
-import * as tagController from './tag.controller';
+import * as tagCtrl from './tag.controller';
 
 export default (app, router) => {
-  router.get('/tags', tagController.getAllTags);
+  router.get('/tags', tagCtrl.getAllTags);
+  router.post('/tags', tagCtrl.createTag);
 };

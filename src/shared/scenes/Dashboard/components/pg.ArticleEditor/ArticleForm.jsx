@@ -4,6 +4,7 @@ import { TextField, RadioButtonGroup } from 'redux-form-material-ui';
 import Checkbox from 'material-ui/Checkbox';
 import { RadioButton } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import BoldrEditor from 'shared/components/org.BoldrEditor';
 
 const style = {
   block: {
@@ -22,25 +23,13 @@ const radioStyle = {
 class NewArticleForm extends Component {
   constructor(props) {
     super(props);
-
-    this.onChange = (value) => {
-      this.setState({
-        value
-      });
-    };
-
-    this.getMarkup = (markup) => {
-      this.setState({
-        markup
-      });
-    };
-
-    this.renderInnerMarkup = () => this._renderInnerMarkup();
-    this.renderReturnedContent = (value) => this._renderReturnedContent(value);
-
-    this.state = {
-    };
+    this.state = { editorState: null };
+    this.onChange = ::this.onChange;
   }
+  onChange(editorState) {
+    this.setState({ editorState });
+  }
+
   render() {
     const { handleSubmit } = this.props;
     return (
@@ -54,6 +43,10 @@ class NewArticleForm extends Component {
           </div>
         </div>
         <div>
+        <Field name="content" component={ props =>
+          <BoldrEditor placeholder="Write your story" { ...props } />
+          }
+        />
 
         </div>
         <div className="row">

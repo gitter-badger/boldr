@@ -67,11 +67,11 @@ export default class BoldrEditor extends Component {
 
       const contentState = editorState.getCurrentContent();
 
-      if (contentState.getPlainText()) {
-        this.props.onChange(convertToRaw(contentState));
-      } else {
-        this.props.onChange(null);
-      }
+      // if (contentState.getPlainText()) {
+      //   this.props.onChange(convertToRaw(contentState));
+      // } else {
+      //   this.props.onChange(null);
+      // }
     };
     this.mediaBlockRenderer = ::this.mediaBlockRenderer;
     this.focus = () => {

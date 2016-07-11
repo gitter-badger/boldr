@@ -1,6 +1,7 @@
-// slug = require('limax');
-import { Article, User, Tag } from '../../db/models';
 import Boom from 'boom';
+import { Article, User, Tag } from '../../db/models';
+import { respondWithResult, handleError } from '../../lib/helpers';
+
 
 /**
  * @api {get} /tags       Get all tags
@@ -15,7 +16,7 @@ import Boom from 'boom';
  * @apiSuccess {String}  tagname      The name of the tag
  * @apiSuccess {String}  description  The description of the tag
  */
-export const getAllTags = async (req, res, next) => {
+const getAllTags = async (req, res, next) => {
   try {
     const tags = await Tag.findAll({});
 
@@ -24,4 +25,15 @@ export const getAllTags = async (req, res, next) => {
     Boom.badRequest({ message: error });
     next(error);
   }
+};
+
+const createTag = (req, res, next) => {
+  return Tag.create(req.body)
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
+};
+
+export {
+  getAllTags,
+  createTag
 };
