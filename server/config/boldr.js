@@ -60,6 +60,29 @@ const conf = convict({
     env: 'PRINT_STACK',
     arg: 'printStack'
   },
+  mail: {
+    key: {
+      doc: 'The Mailgun API key',
+      format: String,
+      default: 'key-',
+      env: 'MG_KEY',
+      arg: 'mgkey'
+    },
+    domain: {
+      doc: 'The domain on Mailgun.',
+      format: String,
+      default: 'boldr.io',
+      env: 'MG_DOMAIN',
+      arg: 'mgdomain'
+    },
+    from: {
+      doc: 'The address sent emails come from.',
+      format: String,
+      default: 'postmaster@boldr.io',
+      env: 'MG_FROM',
+      arg: 'mgfr'
+    }
+  },
   aws: {
     id: {
       doc: 'AWS Access Key Id.',

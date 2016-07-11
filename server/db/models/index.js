@@ -8,6 +8,7 @@ import Category from './category';
 import Media from './media';
 import MediaCategories from './mediaCategories';
 import Setting from './setting';
+import VerificationToken from './verification';
 
 Article.belongsToMany(Tag, {
   through: {
@@ -80,9 +81,19 @@ User.hasMany(Media, {
   onDelete: 'cascade'
 });
 
+User.hasOne(VerificationToken, {
+  foreignKey: 'verificationTokenId',
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
+
+VerificationToken.belongsTo(User, {
+  foreignKey: 'userId'
+});
+
 function sync(...args) {
   return sequelize.sync(...args);
 }
 
 export default { sync };
-export { User, Token, Article, Tag, Media, ArticlesTags, Category, Setting };
+export { User, Token, Article, Tag, Media, ArticlesTags, Category, Setting, VerificationToken };

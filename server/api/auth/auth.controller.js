@@ -1,7 +1,9 @@
 import passport from 'passport';
 import Boom from 'boom';
+import moment from 'moment';
 
-import { User } from '../../db/models';
+import { sendVerifyEmail, generateVerifyCode } from '../../lib';
+import { User, VerificationToken } from '../../db/models';
 import { signToken } from '../../middleware/auth/authService';
 
 /**
@@ -74,6 +76,18 @@ export async function signUp(req, res, next) {
       provider: 'local'
     };
     const user = await User.createWithPass(userData);
+    // Generate the verification token.
+    const verificationToken = await generateVerifyCode();
+    // Send the verification email.
+    sendVerifyEmail(user.email, verificationToken);
+    // Store the verification token, userId and expiration date in the db.
+    const verificationStorage = await VerificationToken.create({
+      userId: user.id,
+      token: verificationToken,
+      expiresAt: moment().add(3, 'days')
+    });
+    // Save token.
+    verificationStorage.save();
     req.logIn(user, (err) => {
       if (err) {
         return Boom.unauthorized({ message: err });
