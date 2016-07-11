@@ -2,7 +2,6 @@ import Boom from 'boom';
 import { Article, User, Tag } from '../../db/models';
 import { respondWithResult, saveUpdates, handleEntityNotFound, removeEntity, handleError } from '../../lib/helpers';
 
-
 /**
  * @api {get} /tags       Get all tags
  * @apiVersion 1.0.0

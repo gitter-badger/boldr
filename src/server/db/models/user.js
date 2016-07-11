@@ -116,7 +116,8 @@ const User = Model.define('users', {
           gender: this.gender,
           location: this.location,
           website: this.website,
-          picture: this.picture
+          picture: this.picture,
+          role: this.role
         }
       };
     }

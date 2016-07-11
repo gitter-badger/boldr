@@ -39,7 +39,7 @@ function createHtml(assets : ?Assets) {
     return `<!DOCTYPE html>
     <html lang='en'>
       <head>
-        <meta charSet='utf-8' />
+        <meta charset='utf-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         <meta httpEquiv='Content-Language' content='en' />
 
