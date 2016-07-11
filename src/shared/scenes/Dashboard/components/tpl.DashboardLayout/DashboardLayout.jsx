@@ -44,13 +44,13 @@ class DashboardLayout extends Component {
   componentWillUnmount() {
     this.state.mql.removeListener(::this.mediaQueryChanged);
   }
-  props: Props;
+
   onSetOpen(open) {
     this.setState({
       open
     });
   }
-
+  props: Props;
   mediaQueryChanged() {
     this.setState({
       docked: this.state.mql.matches
@@ -81,21 +81,23 @@ class DashboardLayout extends Component {
       <div>
         <Sidebar { ...sidebarProps }>
           <div style={ styles.content }>
-            <Flex align="center">
-              <p>
-                {
-                  !this.state.docked && <a onClick={ ::this.toggleOpen }
-                    href="#" style={ styles.contentHeaderMenuLink }
-                  >=</a>
-                }
+            <Flex align="center" justify="space-between">
+              <Box auto>
+                <p>
+                  {
+                    !this.state.docked && <a onClick={ ::this.toggleOpen }
+                      href="#" style={ styles.contentHeaderMenuLink }
+                    >=</a>
+                  }
 
-              </p>
-              <Paper
-                zDepth={ 3 }
-                style={ { padding: 40 } }
-              >
-                { this.props.children }
-              </Paper>
+                </p>
+                <Paper
+                  zDepth={ 3 }
+                  style={ { padding: 40 } }
+                >
+                  { this.props.children }
+                </Paper>
+              </Box>
               </Flex>
           </div>
         </Sidebar>

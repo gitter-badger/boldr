@@ -7,14 +7,23 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import { Flex, Box } from 'reflexbox';
 import { loadBoldrSettings, saveBoldrSetup } from 'state/modules/boldr';
+import SetupForm from '../atm.SetupForm';
 @provideHooks({
   fetch: ({ dispatch }) => dispatch(loadBoldrSettings())
 })
-class Settings extends Component {
-
+class Setup extends Component {
+  handleSubmit(values) {
+    this.props.dispatch(saveBoldrSetup(values));
+  }
   render() {
     return (
       <div>
+        <Toolbar style={ { backgroundColor: 'rgb(64, 64, 78)' } }>
+          <ToolbarGroup>
+            <ToolbarTitle text="Setup" style={ { color: 'rgba(237, 237, 237, 1)' } } />
+          </ToolbarGroup>
+        </Toolbar>
+        <SetupForm onSubmit={ ::this.handleSubmit } />
 
       </div>
     );
@@ -26,4 +35,4 @@ const mapStateToProps = (state, ownProps) => {
     isLoading: state.boldr.isLoading
   };
 };
-export default connect(mapStateToProps)(Settings);
+export default connect(mapStateToProps)(Setup);

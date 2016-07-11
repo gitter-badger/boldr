@@ -7,6 +7,7 @@ import Tag from './tag';
 import Category from './category';
 import Media from './media';
 import MediaCategories from './mediaCategories';
+import Setting from './setting';
 
 Article.belongsToMany(Tag, {
   through: {
@@ -84,4 +85,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, Token, Article, Tag, Media, ArticlesTags, Category };
+export { User, Token, Article, Tag, Media, ArticlesTags, Category, Setting };

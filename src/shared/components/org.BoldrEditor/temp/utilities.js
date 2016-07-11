@@ -1,7 +1,7 @@
 import React from 'react';
 import { Entity, getVisibleSelectionRect } from 'draft-js';
 
-// import { Media } from './atomicBlocks/media';
+import { Media } from './atomicBlocks/media';
 export const articleTypes = {
   OVERVIEW: 'overview',
   FULL: 'full',
@@ -28,18 +28,18 @@ export function findWithRegex(regex, contentBlock, callback) {
     callback(start, start + matchArr[0].length);
   }
 }
-//
-// export function getMediaBlockObject(block) {
-//   switch (block.getType()) {
-//     case 'atomic':
-//       return {
-//         component: Media,
-//         editable: false
-//       };
-//     default:
-//       return null;
-//   }
-// }
+
+export function getMediaBlockObject(block) {
+  switch (block.getType()) {
+    case 'atomic':
+      return {
+        component: Media,
+        editable: false
+      };
+    default:
+      return null;
+  }
+}
 
 export const articleStyle = {
   fontWeight: 300,

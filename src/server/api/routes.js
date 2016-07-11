@@ -4,6 +4,7 @@ import authRouter from './auth/auth.router';
 import mediaRouter from './media/media.router';
 import tagRouter from './tag/tag.router';
 import articleRouter from './article/article.router';
+import settingRouter from './setting/setting.router';
 
 export default (app, router, passport) => {
   // ### Server Routes
@@ -13,7 +14,7 @@ export default (app, router, passport) => {
   articleRouter(app, router, passport);
   mediaRouter(app, router, passport);
   tagRouter(app, router, passport);
-
+  settingRouter(app, router, passport);
   // Use Boom for 404 error handling.
   router.use((req, res, next) => {
     next(Boom.notFound('Looks like you might be lost...'));
