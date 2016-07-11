@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Flex, Box } from 'reflexbox';
 import Paper from 'material-ui/Paper';
 
-import Sidebar from '../mol.Sidebar';
-import SidebarContent from '../atm.SidebarContent';
+import Sidebar from '../mol.Sidebar/index';
+import SidebarContent from '../atm.SidebarContent/index';
 
 const styles = {
   contentHeaderMenuLink: {
@@ -31,7 +31,7 @@ class DashboardLayout extends Component {
       open: false
     };
   }
-  props: Props;
+
   componentDidMount() {
     const mql = window.matchMedia(`(min-width: 800px)`); // eslint-disable-line
     mql.addListener(::this.mediaQueryChanged);
@@ -50,7 +50,7 @@ class DashboardLayout extends Component {
       open
     });
   }
-
+  props: Props;
   mediaQueryChanged() {
     this.setState({
       docked: this.state.mql.matches
@@ -81,20 +81,23 @@ class DashboardLayout extends Component {
       <div>
         <Sidebar { ...sidebarProps }>
           <div style={ styles.content }>
-            <Flex align="center">
-              <p>
-                {
-                  !this.state.docked && <a onClick={ ::this.toggleOpen }
-                    href="#" style={ styles.contentHeaderMenuLink }>=</a>
-                }
+            <Flex align="center" justify="space-between">
+              <Box auto>
+                <p>
+                  {
+                    !this.state.docked && <a onClick={ ::this.toggleOpen }
+                      href="#" style={ styles.contentHeaderMenuLink }
+                    >=</a>
+                  }
 
-              </p>
-              <Paper
-                zDepth={ 3 }
-                style={ { padding: 40 } }
-              >
-                { this.props.children }
-              </Paper>
+                </p>
+                <Paper
+                  zDepth={ 3 }
+                  style={ { padding: 40 } }
+                >
+                  { this.props.children }
+                </Paper>
+              </Box>
               </Flex>
           </div>
         </Sidebar>

@@ -13,255 +13,176 @@ import {
   Modifier,
   DefaultDraftBlockRenderMap
 } from 'draft-js';
+const rawContent = {
+  blocks: [
+    {
+      text: (
+        'This is an "immutable" entity: Superman. Deleting any ' +
+        'characters will delete the entire entity. Adding characters ' +
+        'will remove the entity from the range.'
+      ),
+      type: 'unstyled',
+      entityRanges: [{ offset: 31, length: 8, key: 'first' }]
+    },
+    {
+      text: '',
+      type: 'unstyled'
+    },
+    {
+      text: (
+        'This is a "mutable" entity: Batman. Characters may be added ' +
+        'and removed.'
+      ),
+      type: 'unstyled',
+      entityRanges: [{ offset: 28, length: 6, key: 'second' }]
+    },
+    {
+      text: '',
+      type: 'unstyled'
+    },
+    {
+      text: (
+        'This is a "segmented" entity: Green Lantern. Deleting any ' +
+        'characters will delete the current "segment" from the range. ' +
+        'Adding characters will remove the entire entity from the range.'
+      ),
+      type: 'unstyled',
+      entityRanges: [{ offset: 30, length: 13, key: 'third' }]
+    }
+  ],
 
-import { findLinkEntities } from './utilities';
-import { Link } from './components';
-import actions from './actions';
-import BoldrTheme from './style/BoldrTheme';
-import Media from './components/org.Media';
-import getBoxPos from './helpers/getBoxPos';
-import Divider from 'material-ui/Divider';
-import Toolbar from './components/org.Toolbar';
-
-type Props = {
-  editorState: Object,
-  children: any,
-  onChange: Function,
-  defaultContentState: Object,
-  readOnly: Boolean,
-  onToggle: Function
-}
-
-const blockRenderMap = DefaultDraftBlockRenderMap.set('paragraph', { element: 'p' });
-const inline = {
+  entityMap: {
+    first: {
+      type: 'TOKEN',
+      mutability: 'IMMUTABLE'
+    },
+    second: {
+      type: 'TOKEN',
+      mutability: 'MUTABLE'
+    },
+    third: {
+      type: 'TOKEN',
+      mutability: 'SEGMENTED'
+    }
+  }
+};
+const styles = {
+  root: {
+    fontFamily: '\'Helvetica\', sans-serif',
+    padding: 20,
+    width: 600
+  },
   editor: {
-    minHeight: '400px'
+    border: '1px solid #ccc',
+    cursor: 'text',
+    minHeight: 80,
+    padding: 10
+  },
+  button: {
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  immutable: {
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    padding: '2px 0'
+  },
+  mutable: {
+    backgroundColor: 'rgba(204, 204, 255, 1.0)',
+    padding: '2px 0'
+  },
+  segmented: {
+    backgroundColor: 'rgba(248, 222, 126, 1.0)',
+    padding: '2px 0'
   }
 };
 
-const styleMap = {
-  CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2
-  }
-};
 
-export default class BoldrEditor extends Component {
-
+class BoldrEditor extends Component {
   constructor(props) {
     super(props);
 
-    this.decorator = new CompositeDecorator([
+    const decorator = new CompositeDecorator([
       {
-        strategy: findLinkEntities,
-        component: Link
+        strategy: getEntityStrategy('IMMUTABLE'),
+        component: TokenSpan
+      },
+      {
+        strategy: getEntityStrategy('MUTABLE'),
+        component: TokenSpan
+      },
+      {
+        strategy: getEntityStrategy('SEGMENTED'),
+        component: TokenSpan
       }
     ]);
+
+    const blocks = convertFromRaw(rawContent);
+
     this.state = {
-      editorState: EditorState.createEmpty(this.decorator)
+      editorState: EditorState.createWithContent(blocks, decorator)
     };
-    this.onChange = (editorState) => {
-      this.setState({ editorState });
 
-      const contentState = editorState.getCurrentContent();
-
-      // if (contentState.getPlainText()) {
-      //   this.props.onChange(convertToRaw(contentState));
-      // } else {
-      //   this.props.onChange(null);
-      // }
+    this.focus = () => this.refs.editor.focus();
+    this.onChange = (editorState) => this.setState({ editorState });
+    this.logState = () => {
+      const content = this.state.editorState.getCurrentContent();
+      console.log(convertToRaw(content));
     };
-    this.mediaBlockRenderer = ::this.mediaBlockRenderer;
-    this.focus = () => {
-      this.refs.editor.focus();
-    };
-    this.keyBindings = this.props.keyBindings || [];
-    this.externalKeyBindings = ::this.externalKeyBindings;
-  }
-
-  componentDidMount() {
-    if (this.props.defaultContentState) {
-      const newRawContent = {
-        ...this.props.defaultContentState,
-        entityMap: {}
-      };
-      const newContentState = convertFromRaw(newRawContent);
-      this.onChange(EditorState.createWithContent(newContentState, this.decorator));
-    }
-  }
-  props: Props;
-  addBlock(type) {
-    const { editorState } = this.state;
-    if (type === 'image') {
-      this.refs.insertImage.click();
-    } else if (type === 'line') {
-      const entityKey = Entity.create(type, 'IMMUTABLE');
-      this.onChange(AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' '));
-    } else if (type === 'video') {
-        const src = window.prompt('Enter a URL'); // eslint-disable-line
-      if (!src) {
-        return;
-      }
-      const entityKey = Entity.create(type, 'IMMUTABLE', { src });
-      this.onChange(AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' '));
-    }
-    setTimeout(() => {
-      this.setState({ boxPos: { top: getBoxPos() } });
-    }, 300);
-  }
-
-  _toggleBlockType(blockType) {
-    this.onChange(
-        RichUtils.toggleBlockType(
-          this.state.editorState,
-          blockType
-        )
-      );
-  }
-
-  _toggleInlineStyle(inlineStyle) {
-    this.onChange(
-        RichUtils.toggleInlineStyle(
-          this.state.editorState,
-          inlineStyle
-        )
-      );
-  }
-
-  externalKeyBindings(e): string {
-    for (const kb of this.keyBindings) {
-      if (kb.isKeyBound(e)) {
-        return kb.name;
-      }
-    }
-    return getDefaultKeyBinding(e);
-  }
-
-  handleKeyCommand(command) {
-      // external key bindings
-    const extKb = this.keyBindings.find(kb => kb.name === command);
-    if (extKb) {
-      extKb.action();
-      return true;
-    }
-
-    const { editorState } = this.props;
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.props.onChange(newState);
-      return true;
-    }
-    return false;
-  }
-
-  handleConfirmLink(e) {
-    e.preventDefault();
-    const { editorState, urlValue } = this.state;
-    const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
-    this.setState({
-      editorState: RichUtils.toggleLink(
-          editorState,
-          editorState.getSelection(),
-          entityKey
-        ),
-      inputtable: false,
-      urlValue: ''
-    }, () => {
-      setTimeout(() => this.refs.editor.focus(), 0);
-    });
-  }
-
-  handleInputKeyDown(e) {
-    if (e.which === 13) {
-      this.handleConfirmLink(e);
-    }
-  }
-
-  handleTab(e) {
-    e.preventDefault();
-    const contentState = this.state.editorState.getCurrentContent();
-    const targetRange = this.state.editorState.getSelection();
-    const newContentState = Modifier.insertText(
-        contentState,
-        targetRange,
-        '\t'
-      );
-    const editorState = EditorState.push(
-        this.state.editorState,
-        newContentState
-      );
-
-    this.onChange(editorState);
-    this.focus();
-  }
-  mediaBlockRenderer(block) {
-    if (block.getType() === 'atomic') {
-      return {
-        component: Media,
-        editable: false,
-        props: {
-          onChange: this.onChange,
-          editorState: this.props.editorState,
-          setReadOnly: this.setReadOnly
-        }
-      };
-    }
-
-    return null;
-  }
-
-  blockStyleFn(contentBlock) {
-    const type = contentBlock.getType();
-    if (type === 'unstyled') {
-      return 'paragraph';
-    }
   }
 
   render() {
-    const { editorState } = this.state;
-    let className = !this.props.readOnly ? 'BoldrEditor-editor' : null;
-    const contentState = editorState.getCurrentContent();
-    if (!contentState.hasText()) {
-      if (contentState.getBlockMap().first().getType() !== 'unstyled') {
-        className += ' BoldrEditor-hidePlaceholder';
-      }
-    }
-
     return (
-        <div>
-          <div style={ BoldrTheme.base } className={ !this.props.readOnly ? 'BoldrEditor-root' : null } ref="editor">
-            { !this.props.readOnly &&
-              <Toolbar editorState={ editorState }
-                editor={ this.refs.editor }
-                onChange={ ::this.onChange }
-                onToggle={ ::this._toggleInlineStyle }
-                addBlock={ ::this.addBlock }
-                onToggle={ ::this._toggleBlockType }
-                actions={ actions }
-              />
-            }
-            <Divider />
+      <div style={ styles.root }>
+        <div style={ styles.editor } onClick={ this.focus }>
+          <Editor
+            editorState={ this.state.editorState }
+            onChange={ this.onChange }
+            placeholder="Enter some text..."
+            ref="editor"
+          />
+        </div>
+        <input
+          onClick={ this.logState }
+          style={ styles.button }
+          type="button"
+          value="Log State"
+        />
+      </div>
+  );
+  }
+}
+function getEntityStrategy(mutability) {
+  return function(contentBlock, callback) {
+    contentBlock.findEntityRanges(
+            (character) => {
+              const entityKey = character.getEntity();
+              if (entityKey === null) {
+                return false;
+              }
+              return Entity.get(entityKey).getMutability() === mutability;
+            },
+            callback
+          );
+  };
+}
 
-            <div className={ className } onClick={ ::this.focus }>
-              <Editor editorState={ editorState }
-                onChange={ this.onChange }
-                blockRendererFn={ this.mediaBlockRenderer }
-                blockStyleFn={ this.blockStyleFn }
-                placeholder={ this.props.placeholder }
-                onTab={ ::this.handleTab }
-                customStyleMap={ styleMap }
-                handleKeyCommand={ ::this.handleKeyCommand }
-                keyBindingFn={ this.externalKeyBindings }
-                blockRenderMap={ blockRenderMap }
-                readOnly={ this.props.readOnly }
-                contentEditable
-                style={ inline.editor }
-              />
-            </div>
-        </div>
-        </div>
-      );
+function getDecoratedStyle(mutability) {
+  switch (mutability) {
+    case 'IMMUTABLE': return styles.immutable;
+    case 'MUTABLE': return styles.mutable;
+    case 'SEGMENTED': return styles.segmented;
+    default: return null;
   }
-  }
+}
+
+const TokenSpan = (props) => {
+  const style = getDecoratedStyle(
+          Entity.get(props.entityKey).getMutability()
+        );
+  return (
+          <span { ...props } style={ style }>
+            { props.children }
+          </span>
+        );
+};
+export default BoldrEditor;

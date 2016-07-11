@@ -12,15 +12,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   trigger
 } from 'redial';
-import render from './render';
-import createRoutes from '../../shared/config.routes';
-import preRenderMiddleware from '../../shared/utils.redux/preRenderMiddleware';
-import configureStore from '../../shared/utils.redux/configureStore';
-import BoldrTheme from '../../shared/styles/theme';
 import type {
   $Request,
   $Response
 } from 'express';
+import createRoutes from '../../shared/config.routes';
+import preRenderMiddleware from '../../shared/utils.redux/preRenderMiddleware';
+import configureStore from '../../shared/utils.redux/configureStore';
+import BoldrTheme from '../../shared/styles/theme';
+import render from './render';
+
 /**
  * An express middleware that is capabable of doing React server side rendering.
  */
@@ -35,7 +36,20 @@ function boldrSSR(request: $Request, response: $Response) {
     response.status(200).send(html);
     return;
   }
-  const store = configureStore();
+  const authenticated = request.isAuthenticated();
+  const initialState = {
+    user: {
+      authenticated,
+      isLoading: false,
+      users: [],
+      currentUser: {
+        role: request.user.role || undefined,
+        name: request.user.name || undefined,
+        email: request.user.email || undefined
+      }
+    }
+  };
+  const store = configureStore(initialState);
   const history = createMemoryHistory(request.originalUrl);
   const routes = createRoutes(store);
 
