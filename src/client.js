@@ -1,0 +1,90 @@
+/* eslint-disable import/no-unresolved */
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
+import axios from 'axios';
+import Router from 'react-router/lib/Router';
+import browserHistory from 'react-router/lib/browserHistory';
+import match from 'react-router/lib/match';
+import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { trigger } from 'redial';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import useScroll from 'react-router-scroll';
+import WebFontLoader from 'webfontloader';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// Non-vendor
+import { checkTokenValidity } from 'state/modules/user';
+import BoldrTheme from './styles/theme';
+import createRoutes from './config.routes/index';
+import createStore from './utils.redux/configureStore';
+// import preRenderMiddleware from 'utils.redux/preRenderMiddleware';
+import ApiClient from './config.api/ApiClient';
+
+WebFontLoader.load({
+  google: {
+    families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']
+  }
+});
+
+const container = document.getElementById('content');
+const client = new ApiClient();
+const initialState = window.__INITIAL_STATE__;
+const muiTheme = getMuiTheme(BoldrTheme);
+const store = createStore(browserHistory, client, window.__data);
+const history = syncHistoryWithStore(browserHistory, store);
+const routes = createRoutes(store);
+
+const token = localStorage.getItem('boldr:jwt') || undefined;
+if (token) {
+  store.dispatch(checkTokenValidity());
+}
+// If its available, always send the token in the header.
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;  // eslint-disable-line
+injectTapEventPlugin();
+
+function renderApp() {
+  history.listen(location => {
+    match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
+      if (error) {
+        console.log('==> 😭  React Router match failed.'); // eslint-disable-line no-console
+      }
+      const locals = {
+        path: renderProps.location.pathname,
+        query: renderProps.location.query,
+        params: renderProps.params,
+        dispatch: store.dispatch
+      };
+      const { components } = renderProps;
+
+      if (window.__INITIAL_STATE__) {
+        delete window.__INITIAL_STATE__;
+      } else {
+        trigger('fetch', components, locals);
+      }
+      trigger('defer', components, locals);
+      render(
+      <AppContainer>
+        <Provider store={ store } key="provider">
+          <MuiThemeProvider muiTheme={ muiTheme }>
+            <Router render={ applyRouterMiddleware(useScroll()) } { ...renderProps } />
+          </MuiThemeProvider>
+        </Provider>
+      </AppContainer>,
+      container
+    );
+    });
+  });
+}
+
+// The following is needed so that we can hot reload our App.
+if (process.env.NODE_ENV === 'development' && module.hot) {
+  // Accept changes to this file for hot reloading.
+  module.hot.accept();
+  // Any changes to our routes will cause a hotload re-render.
+  module.hot.accept('./config.routes', renderApp);
+}
+
+renderApp();
