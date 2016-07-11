@@ -40,7 +40,7 @@ if (config.env === 'development') {
 
 models.sync().catch(err => logger.error(err.stack)).then(() => {
   server.listen(process.env.SERVER_PORT);
-  logger.inf(`==> 💚  API Server listening on ${process.env.SERVER_PORT}`);
+  logger.info(`==> 💚  API Server listening on ${process.env.SERVER_PORT}`);
 });
 
 server.on('error', onError);
