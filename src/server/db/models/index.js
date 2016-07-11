@@ -84,4 +84,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, Token, Article, Tag, Media, ArticlesTags };
+export { User, Token, Article, Tag, Media, ArticlesTags, Category };

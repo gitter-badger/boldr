@@ -162,7 +162,10 @@ function checkTokenValiditySuccess(response, token) {
   return {
     type: TOKEN_VALID,
     payload: response.data,
-    role: decoded.role
+    role: decoded.role,
+    token,
+    email: response.data.email,
+    name: response.data.profile.name
   };
 }
 
@@ -242,8 +245,10 @@ export default function user(state:Object = INITIAL_USER_STATE, action:Object = 
         isLoading: false,
         authenticated: true,
         currentUser: {
-          token: action.payload,
-          role: action.role
+          token: action.token,
+          role: action.role,
+          name: action.name,
+          email: action.email
         }
       });
     case TOKEN_INVALID_OR_MISSING:

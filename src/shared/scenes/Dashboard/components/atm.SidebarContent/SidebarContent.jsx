@@ -7,6 +7,7 @@ import PageBuildIcon from 'material-ui/svg-icons/action/build';
 import UsersIcon from 'material-ui/svg-icons/social/people';
 import CollectionsIcon from 'material-ui/svg-icons/image/collections';
 import IconButton from 'material-ui/IconButton';
+
 const styles = {
   sidebar: {
     width: 256,

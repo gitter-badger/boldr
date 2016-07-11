@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Flex, Box } from 'reflexbox';
 import Paper from 'material-ui/Paper';
 
-import Sidebar from '../mol.Sidebar';
-import SidebarContent from '../atm.SidebarContent';
+import Sidebar from '../mol.Sidebar/index';
+import SidebarContent from '../atm.SidebarContent/index';
 
 const styles = {
   contentHeaderMenuLink: {
@@ -31,7 +31,7 @@ class DashboardLayout extends Component {
       open: false
     };
   }
-  props: Props;
+
   componentDidMount() {
     const mql = window.matchMedia(`(min-width: 800px)`); // eslint-disable-line
     mql.addListener(::this.mediaQueryChanged);
@@ -44,7 +44,7 @@ class DashboardLayout extends Component {
   componentWillUnmount() {
     this.state.mql.removeListener(::this.mediaQueryChanged);
   }
-
+  props: Props;
   onSetOpen(open) {
     this.setState({
       open
@@ -85,7 +85,8 @@ class DashboardLayout extends Component {
               <p>
                 {
                   !this.state.docked && <a onClick={ ::this.toggleOpen }
-                    href="#" style={ styles.contentHeaderMenuLink }>=</a>
+                    href="#" style={ styles.contentHeaderMenuLink }
+                  >=</a>
                 }
 
               </p>
