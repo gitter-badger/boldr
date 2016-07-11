@@ -29,7 +29,7 @@ const port = normalizePort(config.port);
 // Get an instance of the express Router
 const router = express.Router(); // eslint-disable-line
 
-middleware(app);
+middleware(app, io);
 authMiddleware();
 routes(app, router);
 socketHandler(io);

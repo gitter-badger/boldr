@@ -30,6 +30,9 @@ type Props = {
 };
 
 class TopBar extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object
+  };
   constructor(props) {
     super(props);
     this.state = {

@@ -7,11 +7,13 @@ import axios from 'axios';
 import Router from 'react-router/lib/Router';
 import browserHistory from 'react-router/lib/browserHistory';
 import match from 'react-router/lib/match';
+import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import { syncHistoryWithStore } from 'react-router-redux';
 import io from 'socket.io-client';
 import { trigger } from 'redial';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import useScroll from 'react-router-scroll';
 import WebFontLoader from 'webfontloader';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // Non-vendor
@@ -80,7 +82,7 @@ function renderApp() {
       <AppContainer>
         <Provider store={ store }>
           <MuiThemeProvider muiTheme={ muiTheme }>
-            <Router history={ history } { ...renderProps } />
+            <Router history={ history } render={ applyRouterMiddleware(useScroll()) } { ...renderProps } />
           </MuiThemeProvider>
         </Provider>
       </AppContainer>,

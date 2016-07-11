@@ -9,12 +9,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import BoldrEditor from 'shared/components/org.BoldrEditor';
 import NewArticleForm from './ArticleForm';
 import { createArticle } from 'state/modules/article';
+
 class ArticleEditor extends Component {
-  handleSubmit(values) {
-   // const boldrEditor = this.refs.boldrEditor;
-   // const content = boldrEditor.getContent().toJS();
-   // console.(content); // eslint-disable-line
-    this.props.dispatch(createArticle(values));
+  handleSubmit(values, content) {
+    const articleData = {
+      title: values.title,
+      tags: values.tags,
+      status: values.status,
+      content
+    };
+    console.log(articleData);
+
+    this.props.dispatch(createArticle(articleData));
   }
   render() {
     return (

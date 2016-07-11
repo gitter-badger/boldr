@@ -7,6 +7,10 @@ import '../../styles/main.scss';
 const CoreLayout = ({ children }) => {
   return (
     <div>
+      <Helmet
+        title="Boldr"
+        titleTemplate={ '%s | powered by Boldr' }
+      />
       <TopBar />
       <Message />
       { children }

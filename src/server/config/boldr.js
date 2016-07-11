@@ -60,6 +60,29 @@ const conf = convict({
     env: 'PRINT_STACK',
     arg: 'printStack'
   },
+  aws: {
+    id: {
+      doc: 'AWS Access Key Id.',
+      format: String,
+      default: '',
+      env: 'AWS_ACCESS_KEY_ID',
+      arg: 'awsid'
+    },
+    secret: {
+      doc: 'AWS secret access key',
+      format: String,
+      default: '',
+      env: 'AWS_SECRET_ACCESS_KEY',
+      arg: 'awssecret'
+    },
+    bucket: {
+      doc: 'Default Bucket for uploads.',
+      format: String,
+      default: 'boldr',
+      env: 'AWS_BUCKET',
+      arg: 'awsbucket'
+    }
+  },
   logger: {
     console: {
       doc: 'Stream server logs to the console',

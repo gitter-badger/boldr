@@ -17,7 +17,7 @@ import { session as dbSession } from '../db';
 import { config } from '../config/boldr';
 import { logger } from '../lib';
 
-export default (app) => {
+export default (app, io) => {
   app.set('port', config.port);
 
   app.disable('x-powered-by');
@@ -80,7 +80,9 @@ export default (app) => {
     sess.cookie.secure = true;
   }
   app.use(session(sess));
-
+  io.use((io, next) => {
+    session(sess);
+  });
   app.use(passport.initialize());
   app.use(passport.session());
 

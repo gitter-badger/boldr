@@ -77,11 +77,11 @@ export function errorCreatingArticle(err:Object) {
   };
 }
 // Fetch Articles Action
-export function createArticle(data:Object) {
+export function createArticle(articleData:Object) {
   return (dispatch:Function) => {
     dispatch(beginCreateArticle());
 
-    return request.post(`${API_ARTICLES}`, data)
+    return request.post(`${API_ARTICLES}`, articleData)
       .then(response => {
         if (response.status === 201) {
           dispatch(createArticleSuccess(response));

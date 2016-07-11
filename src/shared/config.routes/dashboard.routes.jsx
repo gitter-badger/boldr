@@ -39,6 +39,11 @@ function resolveSettingsComponent(nextState, cb) {
     .then(module => cb(null, module.default))
     .catch(handleError);
 }
+function resolveSetupComponent(nextState, cb) {
+  System.import('scenes/Dashboard/components/pg.Setup')
+    .then(module => cb(null, module.default))
+    .catch(handleError);
+}
 function resolveUsersComponent(nextState, cb) {
   System.import('scenes/Dashboard/Users')
     .then(module => cb(null, module.default))
@@ -54,6 +59,7 @@ export default (
     <Route path="media" getComponent={ resolveMediaComponent } />
     <Route path="pages" getComponent={ resolvePagesComponent } />
     <Route path="settings" getComponent={ resolveSettingsComponent } />
+    <Route path="setup" getComponent={ resolveSetupComponent } />
     <Route path="users" getComponent={ resolveUsersComponent } />
   </Route>
 );
