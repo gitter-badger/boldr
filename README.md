@@ -53,17 +53,16 @@ run into errors.
 #### Development
 
 ```bash
-$ npm run start:dev
+$ npm run build-dlls
+$ npm run dev
 ```
-
-The start:dev command launches the server, tells Webpack to compile the source code, and watch for changes.
 
 
 #### Production
 > No way. Not yet. However if you feel like building the application as if it were production execute the following
 
 ```bash
-$ npm run compile
+$ npm run build
 ```
 
 ## Contribute
