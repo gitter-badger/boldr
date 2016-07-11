@@ -16,7 +16,7 @@ export default (passport) => {
       } else {
         User.sync().then(() => {
           return User.create({
-            name: profile.name.givenName + profile.name.familyName,
+            name: profile.name.givenName + ' ' + profile.name.familyName,
             facebook: profile.id,
             email: profile.emails[0].value
           });
