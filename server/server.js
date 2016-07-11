@@ -1,13 +1,10 @@
 /* @flow */
-
 import http from 'http';
 import _debug from 'debug';
 import express from 'express';
 import winston from 'winston';
 import expressWinston from 'express-winston';
-import { install } from 'source-map-support';
-// import clientConfigBuilder from '../../tools/webpack/webpack.client.config.js'; // eslint-disable-line
-// import boldrSSR from './ssr/boldrSSR';
+
 import { config } from './config/boldr';
 import { logger } from './lib';
 import authMiddleware from './middleware/auth';
@@ -16,7 +13,6 @@ import routes from './api/routes';
 import models from './db/models';
 
 const debug = _debug('boldr:server');
-install(); // source-maps
 const ENV = config.env;
 // Create our express server.
 const app = express();
@@ -41,22 +37,10 @@ if (config.env === 'development') {
     ]
   }));
 }
-// Configure static serving of our webpack bundled client files.
-// const webpackClientConfig = clientConfigBuilder({ mode: process.env.NODE_ENV });
-
-// app.use(
-//   webpackClientConfig.output.publicPath,
-//   express.static(webpackClientConfig.output.path));
-//
-//
-// app.get('*', boldrSSR);
 
 models.sync().catch(err => logger.error(err.stack)).then(() => {
-  const listener = server.listen(process.env.SERVER_PORT);
-
-  if (process.env.NODE_ENV === 'development') {
-    logger.info(`==> 💚  HTTP Listener is running on port ${process.env.SERVER_PORT}`); // eslint-disable-line no-console,max-len
-  }
+  server.listen(process.env.SERVER_PORT);
+  logger.inf(`==> 💚  API Server listening on ${process.env.SERVER_PORT}`);
 });
 
 server.on('error', onError);

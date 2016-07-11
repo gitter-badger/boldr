@@ -7,6 +7,7 @@
     "build": "better-npm-run build",
     "build-dlls": "./node_modules/.bin/webpack --config tools/webpack/dlls/vendor/webpack.config.js",
     "clean": "rimraf build static/dist",
+    "db:init": "./tools/scripts/db-init.sh",
     "dev": "concurrently --kill-others \"npm run watch:client\" \"npm run start:dev\" \"npm run start:server\"",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint -c .eslintrc src server",
