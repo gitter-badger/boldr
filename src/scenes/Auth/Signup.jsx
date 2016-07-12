@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-// import SignupForm from './components/atm.SignupForm';
+import SignupForm from './components/atm.SignupForm';
 import { signUp } from 'state/modules/user';
 
 type Props = {
@@ -15,14 +15,9 @@ type Props = {
 class Signup extends Component {
   props: Props;
 
-  handleOnSubmit(event, formProps) {
-    event.preventDefault();
-
+  handleOnSubmit(values) {
     const { signUp } = this.props;
-    const email = ReactDOM.findDOMNode(this.refs.email).value;
-    const password = ReactDOM.findDOMNode(this.refs.password).value;
-    const name = ReactDOM.findDOMNode(this.refs.name).value;
-    signUp({ email, password, name });
+    signUp({ email: values.email, password: values.password, name: values.name, displayName: values.displayName });
   }
 
   renderHeader() {
@@ -45,28 +40,7 @@ class Signup extends Component {
           { this.renderHeader() }
           <p>{ message }</p>
 
-          <form onSubmit={ ::this.handleOnSubmit }>
-            <input
-              type="email"
-              ref="email"
-              placeholder="email"
-            />
-            <input
-              type="password"
-              ref="password"
-              placeholder="password"
-            />
-            <input
-              type="text"
-              ref="name"
-              placeholder="Name"
-            />
-            <input
-              type="submit"
-              value="Sign up"
-            />
-          </form>
-
+          <SignupForm onSubmit={ ::this.handleOnSubmit } />
         </div>
     );
   }

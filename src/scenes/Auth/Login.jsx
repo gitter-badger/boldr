@@ -3,9 +3,11 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import { Flex, Box } from 'reflexbox';
 import { Card, CardHeader } from 'material-ui/Card';
 import { Link } from 'react-router';
 import { manualLogin } from 'state/modules/user';
+import LoginForm from './components/atm.LoginForm';
 
 type Props = {
   user: Object,
@@ -17,13 +19,9 @@ class Login extends Component {
 
   props: Props;
 
-  handleOnSubmit(event) {
-    event.preventDefault();
-
+  handleOnSubmit(values) {
     const { manualLogin } = this.props;
-    const email = ReactDOM.findDOMNode(this.refs.email).value;
-    const password = ReactDOM.findDOMNode(this.refs.password).value;
-    manualLogin({ email, password });
+    manualLogin({ email: values.email, password: values.password });
   }
   renderHeader() {
     return (
@@ -45,29 +43,20 @@ class Login extends Component {
     const { isLoading, message } = this.props.user;
 
     return (
-        <div>
+        <Flex auto>
           <Helmet title="Login" />
-          <Card className="auth-login__card">
-            { this.renderHeader() }
-            <div>
-              <p>{message}</p>
-              <form onSubmit={::this.handleOnSubmit}>
-                <input
-                  type="email"
-                  ref="email"
-                  placeholder="email" />
-                <input
-                  type="password"
-                  ref="password"
-                  placeholder="password" />
-                <input
-                  type="submit"
-                  value="Login" />
-              </form>
-               <a href="/api/v1/auth/facebook">Login with Facebook</a>
-            </div>
-          </Card>
-        </div>
+          <Box col={ 5 }>
+            <Card className="auth-login__card">
+              { this.renderHeader() }
+              <div>
+                <p>{ message }</p>
+                <LoginForm onSubmit={ ::this.handleOnSubmit } />
+
+                <a href="/api/v1/auth/facebook">Login with Facebook</a>
+              </div>
+            </Card>
+          </Box>
+        </Flex>
     );
   }
 }

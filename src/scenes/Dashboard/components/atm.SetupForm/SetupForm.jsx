@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import MenuItem from 'material-ui/MenuItem';
 import { RadioButton } from 'material-ui/RadioButton';
-import {
-  Checkbox,
-  RadioButtonGroup,
-  SelectField,
-  TextField,
-  Toggle
-} from 'redux-form-material-ui';
+
 import SetupFormPage1 from './formPage1';
 import SetupFormPage2 from './formPage2';
 import SetupFormPage3 from './formPage3';

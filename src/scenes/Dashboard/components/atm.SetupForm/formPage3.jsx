@@ -1,19 +1,19 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import RenderField from 'components/atm.RenderField';
 import MenuItem from 'material-ui/MenuItem';
 import { RadioButton } from 'material-ui/RadioButton';
-import {
-  Checkbox,
-  RadioButtonGroup,
-  SelectField,
-  TextField,
-  Toggle
-} from 'redux-form-material-ui';
+
 import Heading from 'components/atm.Heading';
 
+export const fields = ['siteName', 'siteUrl', 'description', 'logo', 'favicon', 'analyticsId', 'allowRegistration'];
+
 const SetupFormPage3 = (props) => {
-  const { handleSubmit, previousPage } = props;
+  const {
+    // fields: { favoriteColor, employed, notes },
+    handleSubmit,
+    previousPage
+    } = props;
   return (
     <form onSubmit={ handleSubmit }>
       <Heading size={ 1 }>Temporarily empty placeholder page. Click the button below to finish</Heading>
@@ -27,5 +27,6 @@ const SetupFormPage3 = (props) => {
 
 export default reduxForm({
   form: 'SetupForm',
+  fields,
   destroyOnUnmount: false
 })(SetupFormPage3);

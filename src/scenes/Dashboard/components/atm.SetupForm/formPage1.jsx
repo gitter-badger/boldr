@@ -1,20 +1,15 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { Flex, Box } from 'reflexbox';
-import {
-  Checkbox,
-  RadioButtonGroup,
-  SelectField,
-  TextField,
-  Toggle
-} from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import RenderField from 'components/atm.RenderField';
 import Heading from 'components/atm.Heading';
 import BoldrLogo from 'components/atm.BoldrLogo';
 
+export const fields = ['siteName', 'siteUrl'];
+
 const SetupFormPage1 = (props) => {
-  const { handleSubmit } = props;
+  const { fields: { siteName, siteUrl }, handleSubmit } = props;
   return (
     <Flex>
       <Box p={ 4 } col={ 7 } align="flex-start">
@@ -26,8 +21,8 @@ const SetupFormPage1 = (props) => {
         </Flex>
         <Flex align="baseline">
           <form onSubmit={ handleSubmit }>
-            <Field name="siteName" component={ TextField } hintText="Website name" />
-            <Field name="siteUrl" component={ TextField } hintText="Site URL" />
+            <input type="text" { ...siteName } />
+            <input type="text" { ...siteUrl } />
             <div>
               <RaisedButton
                 label="Next"
@@ -36,12 +31,13 @@ const SetupFormPage1 = (props) => {
             </div>
           </form>
         </Flex>
-        </Box>
+      </Box>
       </Flex>
       );
 };
 
 export default reduxForm({
   form: 'SetupForm',
+  fields,
   destroyOnUnmount: false
 })(SetupFormPage1);

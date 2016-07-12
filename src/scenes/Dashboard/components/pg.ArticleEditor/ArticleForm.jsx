@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { TextField, RadioButtonGroup } from 'redux-form-material-ui';
-import Checkbox from 'material-ui/Checkbox';
+import { reduxForm } from 'redux-form';
+import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
 import { RadioButton } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Editor, EditorState } from 'draft-js';
 import BoldrEditor from 'components/org.BoldrEditor';
+// import TextEditor from 'components/org.Editor/Editor/Editor';
 
 const style = {
   block: {
@@ -29,42 +30,50 @@ class NewArticleForm extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { fields: { title, tags, content, status }, handleSubmit } = this.props;
     const { editorState } = this.state;
     return (
       <form onSubmit={ handleSubmit }>
         <div className="row">
           <div className="col-md-6">
-            <Field name="title" component={ TextField } hintText= "Give it a name" floatingLabelText="Title" />
+            <TextField hintText= "Give it a name"
+              floatingLabelText="Title"
+              fullWidth
+              errorText = { title.touched && title.error }
+              { ...title }
+            />
           </div>
           <div className="col-md-6">
-            <Field name="tags" component={ TextField } hintText= "Separate using a comma" floatingLabelText="Tags" />
+            <TextField hintText= "Tag your post"
+              floatingLabelText="Tags"
+              fullWidth
+              errorText = { tags.touched && tags.error }
+              { ...tags }
+            />
           </div>
         </div>
         <div>
-          <Field name="content" component={ props =>
-            <BoldrEditor editorState={ editorState } onChange={ this.onChange } { ...props } />
-          } />
-
+          <BoldrEditor placeholder="Tell your story" { ...content } />
         </div>
         <div className="row">
-          <div className="col-md-offset-8 col-md-4">
-            <Field name="status" component={ RadioButtonGroup } style={ radioStyle }>
-              <RadioButton value="draft" label="Draft" />
-              <RadioButton value="published" label="Publish" />
-            </Field>
-          </div>
+          <label>
+            <input type="radio" { ...status } value="draft" checked={ status.value === 'draft' } /> Draft
+          </label>
+          <label>
+            <input type="radio" { ...status } value="published" checked={ status.value === 'published' } /> Published
+          </label>
         </div>
         <div>
           <RaisedButton type="submit" secondary label="Publish" style={ style } />
         </div>
-    </form>
+      </form>
       );
   }
 }
 
 export default reduxForm({
-  form: 'NewArticleForm'
+  form: 'NewArticleForm',
+  fields: ['title', 'tags', 'content', 'status']
 })(NewArticleForm);
 
 NewArticleForm.propTypes = {

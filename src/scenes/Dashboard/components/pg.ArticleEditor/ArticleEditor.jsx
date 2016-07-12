@@ -11,12 +11,12 @@ import NewArticleForm from './ArticleForm';
 import { createArticle } from 'state/modules/article';
 
 class ArticleEditor extends Component {
-  handleSubmit(values, content) {
+  handleSubmit(values) {
     const articleData = {
       title: values.title,
       tags: values.tags,
       status: values.status,
-      content
+      content: values.content
     };
     console.log(articleData);
 

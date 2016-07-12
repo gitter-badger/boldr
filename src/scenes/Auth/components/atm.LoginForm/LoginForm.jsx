@@ -1,25 +1,26 @@
 import React, { PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { CardActions, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import {
-  TextField
-} from 'redux-form-material-ui';
+import TextField from 'material-ui/TextField';
 
 const LoginForm = props => {
-  const { handleSubmit, reset } = props;
+  const { fields: { email, password }, handleSubmit, reset } = props;
   return (
       <form onSubmit={ handleSubmit }>
         <CardText>
           <div>
-            <Field name="email" component={ TextField } hintText="Enter your email address"
+            <TextField
               floatingLabelText="Email"
+              { ...email }
             />
           </div>
           <div>
-            <Field name="password" type="password" floatingLabelText="Password"
-              hintText="Enter your password" component={ TextField }
+            <TextField
+              floatingLabelText="Password"
+              type="password"
+              { ...password }
             />
           </div>
         </CardText>
@@ -34,9 +35,11 @@ const LoginForm = props => {
 LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func,
-  submitting: PropTypes.bool
+  submitting: PropTypes.bool,
+  fields: PropTypes.object
 };
 
 export default reduxForm({
-  form: 'LoginForm'
+  form: 'LoginForm',
+  fields: ['email', 'password']
 })(LoginForm);
