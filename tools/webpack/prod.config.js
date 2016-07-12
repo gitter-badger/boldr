@@ -15,7 +15,8 @@ const ROOT_DIR = path.join(__dirname, '..', '..');
 const assetsPath = path.resolve(ROOT_DIR, './static/dist');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'hidden-source-map',
+  target: 'web',
   context: path.resolve(ROOT_DIR),
   entry: {
     main: [
@@ -94,13 +95,17 @@ module.exports = {
     // ignore dev config
     new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
     new webpack.ProvidePlugin({
+      fetch: 'exports?self.fetch!whatwg-fetch',
       React: 'react'
     }),
     // optimizations
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
+        warnings: false,
+        drop_console: true,
+        drop_debugger: true,
+        dead_code: true
       }
     }),
 

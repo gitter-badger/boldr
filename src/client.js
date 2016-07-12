@@ -46,35 +46,45 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;  // eslint-d
 injectTapEventPlugin();
 
 function renderApp() {
-  history.listen(location => {
-    match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
+  const { pathname, search, hash } = window.location;
+  const location = `${pathname}${search}${hash}`;
+
+  match({ routes, location }, () => {
+    render(
+        <AppContainer>
+          <Provider store={ store } key="provider">
+            <MuiThemeProvider muiTheme={ muiTheme }>
+              <Router routes={ routes } history={ browserHistory } key={ Math.random() } />
+            </MuiThemeProvider>
+          </Provider>
+        </AppContainer>,
+        container
+      );
+  });
+  return browserHistory.listen(location => {
+    // Match routes based on location object:
+    match({ routes, location }, (error, redirectLocation, renderProps) => {
       if (error) {
         console.log('==> 😭  React Router match failed.'); // eslint-disable-line no-console
       }
+      const { components } = renderProps;
       const locals = {
         path: renderProps.location.pathname,
         query: renderProps.location.query,
         params: renderProps.params,
         dispatch: store.dispatch
       };
-      const { components } = renderProps;
-
-      if (window.__INITIAL_STATE__) {
-        delete window.__INITIAL_STATE__;
+      // Don't fetch data for initial route, server has already done the work:
+      if (window.INITIAL_STATE) {
+        // Delete initial data so that subsequent data fetches can occur:
+        delete window.INITIAL_STATE;
       } else {
+        // Fetch mandatory data dependencies for 2nd route change onwards:
         trigger('fetch', components, locals);
       }
+
+      // Fetch deferred, client-only data dependencies:
       trigger('defer', components, locals);
-      render(
-      <AppContainer>
-        <Provider store={ store } key="provider">
-          <MuiThemeProvider muiTheme={ muiTheme }>
-            <Router render={ applyRouterMiddleware(useScroll()) } { ...renderProps } />
-          </MuiThemeProvider>
-        </Provider>
-      </AppContainer>,
-      container
-    );
     });
   });
 }

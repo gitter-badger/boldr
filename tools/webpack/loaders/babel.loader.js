@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const babelrc = fs.readFileSync('./.babelrc');
 let babelrcObject = {};
 
@@ -16,7 +17,7 @@ const babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.developm
 let combinedPlugins = babelrcObject.plugins || [];
 combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins);
 
-const babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject, {plugins: combinedPlugins});
+const babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject, { plugins: combinedPlugins });
 delete babelLoaderQuery.env;
 
 // Since we use .babelrc for client and server, and we don't want HMR enabled on the server, we have to add
@@ -33,12 +34,12 @@ for (let i = 0; i < babelLoaderQuery.plugins.length; ++i) {
 }
 
 if (!reactTransform) {
-  reactTransform = ['react-transform', {transforms: []}];
+  reactTransform = ['react-transform', { transforms: [] }];
   babelLoaderQuery.plugins.push(reactTransform);
 }
 
 if (!reactTransform[1] || !reactTransform[1].transforms) {
-  reactTransform[1] = Object.assign({}, reactTransform[1], {transforms: []});
+  reactTransform[1] = Object.assign({}, reactTransform[1], { transforms: [] });
 }
 
 // make sure react-transform-hmr is enabled

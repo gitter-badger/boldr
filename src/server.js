@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { trigger } from 'redial';
+
 import BoldrTheme from './styles/theme';
 import createStore from './utils.redux/configureStore';
 import ApiClient from './config.api/ApiClient';
@@ -117,6 +118,11 @@ app.use((req, res) => {
           ReactDOM.renderToString(
             <Html assets={ webpackIsomorphicTools.assets() } component={ component } store={ store } />
           ));
+      }).catch((mountError) => {
+        console.error('Application crash!');
+        console.error(mountError.message);
+        console.error(mountError.stack);
+        res.status(500).send('Server error! Please check the logs');
       });
     } else {
       res.status(404).send('Not found');

@@ -70,7 +70,10 @@ module.exports = {
       'redux-thunk',
       'redux-form',
       'material-ui',
-      'react-tap-event-plugin'
+      'react-tap-event-plugin',
+      'redial',
+      'react-router-scroll',
+      'webfontloader'
     ]
   },
 

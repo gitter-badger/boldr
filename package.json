@@ -155,6 +155,7 @@
     "superagent": "^2.0.0",
     "webfontloader": "^1.6.26",
     "webpack-isomorphic-tools": "^2.3.2",
+    "whatwg-fetch": "^1.0.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {

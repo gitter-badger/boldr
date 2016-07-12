@@ -27,7 +27,8 @@ const cssLoader = [
 ].join('&');
 
 const webpackConfig = module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
+  target: 'web',
   context: path.resolve(ROOT_DIR),
   entry: {
     main: [
@@ -107,6 +108,7 @@ const webpackConfig = module.exports = {
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
+      fetch: 'exports?self.fetch!whatwg-fetch',
       React: 'react'
     }),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),

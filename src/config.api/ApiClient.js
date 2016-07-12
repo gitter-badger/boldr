@@ -9,7 +9,7 @@ function formatUrl(path) {
   if (__SERVER__) {
     return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
   }
-  return '/api' + adjustedPath;
+  return '/api/v1' + adjustedPath;
 }
 
 export default class ApiClient {
