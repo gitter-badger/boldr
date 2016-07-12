@@ -1,25 +1,34 @@
+/* @flow */
 import React, { Component } from 'react';
-import { EditorState } from 'draft-js';
-import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { TextField, RadioButtonGroup } from 'redux-form-material-ui';
 import Checkbox from 'material-ui/Checkbox';
 import { RadioButton } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import BoldrEditor from 'components/org.BoldrEditor';
-import NewArticleForm from './ArticleForm';
-import { createArticle } from 'state/modules/article';
 
+import { createArticle } from 'state/modules/article';
+import NewArticleForm from './ArticleForm';
+
+type Props = {
+  dispatch: Function,
+  createArticle: Function,
+  handleSubmit: Function
+};
+type articleType = {
+  title: string,
+  tags: Array<Object>,
+  status: string,
+  content: Object
+}
 class ArticleEditor extends Component {
+  props: Props;
   handleSubmit(values) {
-    const articleData = {
+    const articleData: articleType = {
       title: values.title,
       tags: values.tags,
       status: values.status,
       content: values.content
     };
-    console.log(articleData);
-
     this.props.dispatch(createArticle(articleData));
   }
   render() {

@@ -5,8 +5,8 @@ import Toggle from 'material-ui/Toggle';
 import { RadioButton } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Editor, EditorState } from 'draft-js';
-import BoldrEditor from 'components/org.BoldrEditor';
-// import TextEditor from 'components/org.Editor/Editor/Editor';
+// import BoldrEditor from 'components/org.BoldrEditor';
+import TextEditor from 'components/org.Editor/Editor/Editor';
 
 const style = {
   block: {
@@ -25,10 +25,25 @@ const radioStyle = {
 class NewArticleForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
-    this.onChange = (editorState) => this.setState({ editorState });
-  }
 
+    this.onChange = (value) => {
+      this.setState({
+        value
+      });
+    };
+
+    this.getMarkup = (markup) => {
+      this.setState({
+        markup
+      });
+    };
+
+    this.renderInnerMarkup = () => this._renderInnerMarkup();
+    this.renderReturnedContent = (value) => this._renderReturnedContent(value);
+
+    this.state = {
+    };
+  }
   render() {
     const { fields: { title, tags, content, status }, handleSubmit } = this.props;
     const { editorState } = this.state;
@@ -53,7 +68,9 @@ class NewArticleForm extends Component {
           </div>
         </div>
         <div>
-          <BoldrEditor placeholder="Tell your story" { ...content } />
+          <TextEditor placeholder="Tell your story" { ...content }
+            handleUpdate={ (value) => { content.onChange(value); } }
+          />
         </div>
         <div className="row">
           <label>

@@ -1,6 +1,6 @@
 /* @flow */
 import { polyfill } from 'es6-promise';
-import request from 'axios';
+import axios from 'axios';
 import { push } from 'react-router-redux';
 
 import { API_ARTICLES } from '../../config.api';
@@ -8,7 +8,7 @@ import { API_ARTICLES } from '../../config.api';
 polyfill();
 
 function makeArticleRequest(method, data, api = `${API_ARTICLES}`) {
-  return request[method](api, data);
+  return axios[method](api, data);
 }
 
 /**
@@ -81,7 +81,14 @@ export function createArticle(articleData:Object) {
   return (dispatch:Function) => {
     dispatch(beginCreateArticle());
 
-    return request.post(`${API_ARTICLES}`, articleData)
+    return axios({ method: 'post', url: `${API_ARTICLES}`, headers: {
+      'Authorization': `Bearer ${localStorage.getItem('boldr:jwt')}`
+    }, data: {
+      title: articleData.title,
+      content: articleData.content,
+      tags: [
+    { tagname: articleData.tag }
+      ], status: articleData.status } })
       .then(response => {
         if (response.status === 201) {
           dispatch(createArticleSuccess(response));
