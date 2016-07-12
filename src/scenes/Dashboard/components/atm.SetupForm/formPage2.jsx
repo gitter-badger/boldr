@@ -10,8 +10,10 @@ import {
   TextField,
   Toggle
 } from 'redux-form-material-ui';
+import { Col, Row, Container } from 'components/index';
 
 export const fields = ['description', 'logo', 'favicon', 'analyticsId', 'allowRegistration'];
+
 const SetupFormPage2 = (props) => {
   const { fields: {
     description, logo, favicon, analyticsId, allowRegistration },

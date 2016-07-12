@@ -10,7 +10,7 @@ export const fields = ['siteName', 'siteUrl', 'description', 'logo', 'favicon', 
 
 const SetupFormPage3 = (props) => {
   const {
-    // fields: { favoriteColor, employed, notes },
+    fields: { allowRegistration },
     handleSubmit,
     previousPage
     } = props;

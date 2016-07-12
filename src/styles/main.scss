@@ -1,5 +1,7 @@
-@import 'vendor/ress.scss';
-@import 'abstracts/variables.scss';
-@import 'abstracts/mixins.scss';
-@import 'helpers/helpers.scss';
-@import 'base/global.scss';
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'vendor/ress';
+@import 'helpers/helpers';
+
+@import 'base/global';
+@import 'layout/grid';

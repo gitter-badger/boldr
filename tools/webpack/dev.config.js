@@ -60,13 +60,7 @@ const webpackConfig = module.exports = {
       createSourceLoader({
         happy: { id: 'sass' },
         test: /\.scss$/,
-        loaders: [
-          'style',
-          cssLoader,
-          'postcss',
-          'resolve-url-loader',
-          'sass?sourceMap'
-        ]
+        loader: 'style-loader!css-loader!postcss-loader!sass-loader'
       }),
 
       { test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
@@ -78,7 +72,7 @@ const webpackConfig = module.exports = {
   },
   progress: true,
   resolve: {
-    extensions: ['', '.json', '.js', '.jsx', '.scss'],
+    extensions: ['', '.json', '.js', '.jsx'],
     modulesDirectories: [
       'src',
       'node_modules'
@@ -96,7 +90,7 @@ const webpackConfig = module.exports = {
   sassLoader: {
     includePaths: [
       path.resolve(ROOT_DIR, 'node_modules'),
-      path.resolve(ROOT_DIR, 'src')
+      path.resolve(ROOT_DIR, 'src/styles')
     ]
   },
   postcss: [

@@ -3,10 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { Flex, Box } from 'reflexbox';
 import { Card, CardHeader } from 'material-ui/Card';
 import { Link } from 'react-router';
 import { manualLogin } from 'state/modules/user';
+import { Col, Row, Container } from 'components/index';
 import LoginForm from './components/atm.LoginForm';
 
 type Props = {
@@ -43,20 +43,22 @@ class Login extends Component {
     const { isLoading, message } = this.props.user;
 
     return (
-        <Flex auto>
+        <Container fluid>
           <Helmet title="Login" />
-          <Box col={ 5 }>
-            <Card className="auth-login__card">
-              { this.renderHeader() }
-              <div>
-                <p>{ message }</p>
-                <LoginForm onSubmit={ ::this.handleOnSubmit } />
+          <Row>
+            <Col sm="12" md={ { size: 8, offset: 2 } }>
+              <Card className="auth-login__card">
+                { this.renderHeader() }
+                <div>
+                  <p>{ message }</p>
+                  <LoginForm onSubmit={ ::this.handleOnSubmit } />
 
-                <a href="/api/v1/auth/facebook">Login with Facebook</a>
-              </div>
-            </Card>
-          </Box>
-        </Flex>
+                  <a href="/api/v1/auth/facebook">Login with Facebook</a>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
     );
   }
 }

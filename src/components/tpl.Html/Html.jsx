@@ -3,21 +3,32 @@ import ReactDOM from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
 
-/**
- * Wrapper component containing HTML metadata and boilerplate tags.
- * Used in server-side code only to wrap the string output of the
- * rendered route component.
- *
- * The only thing this component doesn't (and can't) include is the
- * HTML doctype declaration, which is added to the rendered output
- * by the server.js file.
- */
 export default class Html extends Component {
   static propTypes = {
     assets: PropTypes.object,
     component: PropTypes.node,
     store: PropTypes.object
   };
+  get styles() {
+    const { assets } = this.props;
+    const { styles, assets: _assets } = assets;
+    const stylesArray = Object.keys(styles);
+
+      // styles (will be present only in production with webpack extract text plugin)
+    if (stylesArray.length !== 0) {
+      return stylesArray.map((style, i) =>
+          <link href={ assets.styles[style] } key={ i } rel="stylesheet" type="text/css" />
+        );
+    }
+
+      // (will be present only in development mode)
+      // It's not mandatory but recommended to speed up loading of styles
+      // (resolves the initial style flash (flicker) on page load in development mode)
+    const scssPaths = Object.keys(_assets).filter(asset => asset.includes('.scss'));
+    return scssPaths.map((style, i) =>
+        <style dangerouslySetInnerHTML={ { __html: _assets[style]._style } } key={ i } />
+      );
+  }
 
   render() {
     const { assets, component, store } = this.props;
@@ -41,12 +52,7 @@ export default class Html extends Component {
               rel="stylesheet" type="text/css" charSet="UTF-8"
             />
           ) }
-
-          { /* (will be present only in development mode) */ }
-          { /* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */ }
-          { /* can smoothen the initial style flash (flicker) on page load in development mode. */ }
-          { /* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */ }
-          { Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={ { __html: require('../../styles/main.scss') } } /> : null }
+          { this.styles }
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={ { __html: content } } />

@@ -22,7 +22,7 @@ import createRoutes from './config.routes/index';
 import createStore from './utils.redux/configureStore';
 // import preRenderMiddleware from 'utils.redux/preRenderMiddleware';
 import ApiClient from './config.api/ApiClient';
-
+import './styles/main.scss';
 WebFontLoader.load({
   google: {
     families: ['Roboto:300,400,500,700', 'Roboto Condensed:400,300']

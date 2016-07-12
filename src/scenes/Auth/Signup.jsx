@@ -3,8 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import SignupForm from './components/atm.SignupForm';
+import { Col, Row, Container } from 'components/index';
 import { signUp } from 'state/modules/user';
+import SignupForm from './components/atm.SignupForm';
 
 type Props = {
   user: Object,
@@ -36,12 +37,12 @@ class Signup extends Component {
     const { isLoading, message } = this.props.user;
 
     return (
-        <div>
+        <Container>
           { this.renderHeader() }
           <p>{ message }</p>
 
           <SignupForm onSubmit={ ::this.handleOnSubmit } />
-        </div>
+        </Container>
     );
   }
 }

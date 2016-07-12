@@ -5,7 +5,7 @@ import Checkbox from 'material-ui/Checkbox';
 import { RadioButton } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
-import { Flex, Box } from 'reflexbox';
+import { Col, Row, Container } from 'components/index';
 import { loadBoldrSettings, saveBoldrSetup } from 'state/modules/boldr';
 import SetupForm from '../atm.SetupForm';
 @provideHooks({

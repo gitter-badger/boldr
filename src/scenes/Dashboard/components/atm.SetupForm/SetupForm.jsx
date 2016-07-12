@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
 import MenuItem from 'material-ui/MenuItem';
 import { RadioButton } from 'material-ui/RadioButton';
 
@@ -38,6 +37,4 @@ class SetupForm extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'SetupForm'
-})(SetupForm);
+export default SetupForm;
