@@ -104,11 +104,13 @@ class TopBar extends React.Component {
                 >
                   {
                     this.props.user.authenticated ?
-                      <MenuItem value="3"><Link to="/api/v1/auth/logout">Sign Out</Link></MenuItem> :
-                        <div>
-                          <MenuItem value="1"><Link to="/login">Login</Link></MenuItem>
-                          <MenuItem value="2"><Link to="/signup">Signup</Link></MenuItem>
-                        </div>
+                      <div>
+                        <MenuItem value="4"><Link to="/profile">Profile</Link></MenuItem>
+                        <MenuItem value="3"><Link to="/api/v1/auth/logout">Sign Out</Link></MenuItem></div> :
+                          <div>
+                            <MenuItem value="1"><Link to="/login">Login</Link></MenuItem>
+                            <MenuItem value="2"><Link to="/signup">Signup</Link></MenuItem>
+                          </div>
                   }
                 </IconMenu>
                 <Link to="/blog" >

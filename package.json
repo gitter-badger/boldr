@@ -186,6 +186,7 @@
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
     "concurrently": "^2.2.0",
+    "core-js": "^2.4.0",
     "css-loader": "0.23.1",
     "deep-equal": "^1.0.1",
     "dotenv": "2.0.0",

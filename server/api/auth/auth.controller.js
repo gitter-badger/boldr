@@ -101,15 +101,28 @@ export async function signUp(req, res, next) {
   }
 }
 
-export async function checkUser(req, res, next) {
-  try {
-    User.findById(req.user.id)
-      .then((result) => {
-        return res.status(200).json(result);
-      });
-  } catch (err) {
-    return Boom.forbidden(err);
-  }
+export function checkUser(req, res, next) {
+  const userId = req.user.id;
+  return User.find({
+    where: {
+      id: userId
+    },
+    attributes: [
+      'id',
+      'name',
+      'email',
+      'displayName',
+      'role',
+      'provider'
+    ]
+  })
+    .then(user => { // don't ever give out the password or salt
+      if (!user) {
+        return res.status(401).end();
+      }
+      res.json(user);
+    })
+    .catch(err => next(err));
 }
 
 export default {

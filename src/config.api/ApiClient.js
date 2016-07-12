@@ -7,9 +7,9 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
   if (__SERVER__) {
-    return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
+    return 'http://localhost:8000/api/v1' + adjustedPath;
   }
-  return '/api/v1' + adjustedPath;
+  return 'http://localhost:8000/api/v1' + adjustedPath;
 }
 
 export default class ApiClient {

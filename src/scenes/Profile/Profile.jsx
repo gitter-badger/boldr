@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-const Profile = () => {
-  return (
+import { Col, Row, Container } from 'components/index';
+import ProfileMain from './components/pg.ProfileMain';
+
+class Profile extends Component {
+  render() {
+    return (
     <div>
-      <h1>About Boldr</h1>
-      <div>
-        <p>A bold cms for you?
-        </p>
-      </div>
-      <div>
-        <p>Want to contribute? Help us out!
-          If you think the code on &nbsp;
-          <a target="_blank" href="https://github.com/strues/boldr">this repo</a>
-          &nbsp;could be improved, please create an issue&nbsp;
-          <a target="_blank" href="https://github.com/strues/boldr/issues">here</a>!
-        </p>
-      </div>
+      <ProfileMain currentUser={ this.props.user.currentUser } />
     </div>
   );
+  }
+}
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user,
+    isLoading: state.user.isLoading,
+    currentUser: state.user.currentUser
+  };
 };
 
-export default Profile;
+export default connect(mapStateToProps, null)(Profile);

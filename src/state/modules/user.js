@@ -150,8 +150,8 @@ export function logOut() {
  * TOKEN CHECK ACTIONS
  */
 export const CHECK_TOKEN_VALIDITY_REQUEST = 'CHECK_TOKEN_VALIDITY_REQUEST';
-export const TOKEN_VALID = 'TOKEN_VALID';
-export const TOKEN_INVALID_OR_MISSING = 'OKEN_INVALID_OR_MISSING';
+export const CHECK_TOKEN_VALIDITY_SUCCESS = 'CHECK_TOKEN_VALIDITY_SUCCESS';
+export const CHECK_TOKEN_VALIDITY_FAIL = 'CHECK_TOKEN_VALIDITY_FAIL';
 
 function checkTokenValidityRequest() {
   return { type: CHECK_TOKEN_VALIDITY_REQUEST };
@@ -160,7 +160,7 @@ function checkTokenValidityRequest() {
 function checkTokenValiditySuccess(response, token) {
   const decoded = decode(token);
   return {
-    type: TOKEN_VALID,
+    type: CHECK_TOKEN_VALIDITY_SUCCESS,
     payload: response.data,
     role: decoded.role,
     token,
@@ -171,14 +171,14 @@ function checkTokenValiditySuccess(response, token) {
 
 function checkTokenValidityFailure(error) {
   return {
-    type: TOKEN_INVALID_OR_MISSING,
+    type: CHECK_TOKEN_VALIDITY_FAIL,
     payload: error
   };
 }
 
 export function checkTokenValidity() {
+  const token = localStorage.getItem('boldr:jwt');
   return (dispatch:Function) => {
-    const token = localStorage.getItem('boldr:jwt');
     if (!token || token === '') { return; }
     dispatch(checkTokenValidityRequest());
     request.get(`${API_BASE}/auth/check`, {
@@ -240,7 +240,7 @@ export default function user(state:Object = INITIAL_USER_STATE, action:Object = 
         isLoading: true,
         authenticated: false
       });
-    case TOKEN_VALID:
+    case CHECK_TOKEN_VALIDITY_SUCCESS:
       return Object.assign({}, state, {
         isLoading: false,
         authenticated: true,
@@ -251,7 +251,7 @@ export default function user(state:Object = INITIAL_USER_STATE, action:Object = 
           email: action.email
         }
       });
-    case TOKEN_INVALID_OR_MISSING:
+    case CHECK_TOKEN_VALIDITY_FAIL:
       return Object.assign({}, state, {
         isLoading: false,
         authenticated: false,

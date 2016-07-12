@@ -1,13 +1,13 @@
 import passport from 'passport';
 import * as authController from './auth.controller';
-import { isAuthenticated } from '../../middleware/auth/authService';
 
+import { isAuthenticated } from '../../middleware/auth/authService';
 
 export default (app, router) => {
   router.post('/auth/login', authController.login);
   router.post('/auth/signup', authController.signUp);
   router.post('/auth/logout', authController.logout);
-  router.get('/auth/check', authController.checkUser);
+  router.get('/auth/check', isAuthenticated(), authController.checkUser);
   router.get('/auth/google', passport.authenticate('google', {
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',

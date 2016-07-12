@@ -17,43 +17,61 @@ function makeArticleRequest(method, data, api = `${API_ARTICLES}`) {
 export const FETCH_ARTICLES_REQUEST:string = 'FETCH_ARTICLES_REQUEST';
 export const FETCH_ARTICLES_SUCCESS:string = 'FETCH_ARTICLES_SUCCESS';
 export const FETCH_ARTICLES_FAIL:string = 'FETCH_ARTICLES_FAIL';
-
-const beginFetchingArticles = () => {
-  return { type: FETCH_ARTICLES_REQUEST };
-};
-// Fetch Articles Success
-export function fetchedArticles(response:Object) {
-  return {
-    type: FETCH_ARTICLES_SUCCESS,
-    payload: response.data
-  };
-}
-// Fetch Articles Error
-export function errorFetchingArticles(err:Object) {
-  return {
-    type: FETCH_ARTICLES_FAIL,
-    error: err.data
-  };
-}
+//
+// const beginFetchingArticles = () => {
+//   return { type: FETCH_ARTICLES_REQUEST };
+// };
+// // Fetch Articles Success
+// export function fetchedArticles(response:Object) {
+//   return {
+//     type: FETCH_ARTICLES_SUCCESS,
+//     payload: response.data
+//   };
+// }
+// // Fetch Articles Error
+// export function errorFetchingArticles(err:Object) {
+//   return {
+//     type: FETCH_ARTICLES_FAIL,
+//     error: err.data
+//   };
+// }
+//
+// export function isValidEmail(data) {
+//   return {
+//     types: [IS_VALID, IS_VALID_SUCCESS, IS_VALID_FAIL],
+//     promise: (client) => client.post('/survey/isValid', {
+//       data
+//     })
+//   };
+// }
 // Fetch Articles Action
-export function fetchArticles(data:Object) {
-  return (dispatch:Function) => {
-    dispatch(beginFetchingArticles());
 
-    return makeArticleRequest('get', data, `${API_ARTICLES}`)
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(fetchedArticles(response));
-        }
-      })
-      .catch(err => {
-        dispatch(errorFetchingArticles(err));
-      });
+export function loadArticles() {
+  return {
+    types: [FETCH_ARTICLES_REQUEST, FETCH_ARTICLES_SUCCESS, FETCH_ARTICLES_FAIL],
+    promise: (client) => client.get('/articles') // params not used, just shown as demonstration
   };
 }
+// export function fetchArticles(data:Object) {
+//   return (dispatch:Function) => {
+//     dispatch(beginFetchingArticles());
+//
+//     return makeArticleRequest('get', data, `${API_ARTICLES}`)
+//       .then(response => {
+//         if (response.status === 200) {
+//           dispatch(fetchedArticles(response));
+//         }
+//       })
+//       .catch(err => {
+//         dispatch(errorFetchingArticles(err));
+//       });
+//   };
+// }
 
 /**
- * GET ARTICLE ACTIONS
+ * CREATE` ARTICLE ACTIONS
+ * @TODO Before sending data, or in the server, split the tags by , and put them
+ * in as tags:[{tagname: tag}]
  */
 export const CREATE_ARTICLE_REQUEST:string = 'CREATE_ARTICLE_REQUEST';
 export const CREATE_ARTICLE_SUCCESS:string = 'CREATE_ARTICLE_SUCCESS';
@@ -104,7 +122,12 @@ export const INITIAL_STATE = {
   isLoading: false,
   error: undefined,
   message: '',
-  articles: []
+  articles: [],
+  articleList: [
+    {
+      title: ''
+    }
+  ]
 };
 
 /**
@@ -121,6 +144,7 @@ export default function article(state:Object = INITIAL_STATE, action:Object = {}
     case FETCH_ARTICLES_SUCCESS:
       return Object.assign({}, state, {
         isLoading: false,
+        articleList: action.result,
         articles: action.payload
       });
     case FETCH_ARTICLES_FAIL:
