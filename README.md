@@ -1,82 +1,163 @@
-![boldr](static/favicon-96x96.png) Boldr
-====
 
-> Your dreams are bold. Your thoughts are bold. So why shouldn't your CMS be a little, **Boldr**?
+<p align="center"><img src="/docs/assets/boldr-text-logo.png" width="200"></p>
 
 
-Boldr aims to provide a CMS to use as a base for your next web project. Built on cutting edge web technologies, along with a few time tested favorites, we believe Boldr could become something special. Of course the world doesn't need another never finished CMS project, nor does it need the "next WordPress". Boldr tries to be none of that.
-____
-### Tech Stack
-
-* Node 6
-* Express
-* React
-* Postgres 9.5  
+[![Build Status](https://drone.boldr.io/api/badges/strues/boldr/status.svg)](https://drone.boldr.io/strues/boldr) [![Build Status](https://travis-ci.org/strues/boldr.svg?branch=master)](https://travis-ci.org/strues/boldr) [![Code Climate](https://codeclimate.com/github/strues/boldr/badges/gpa.svg)](https://codeclimate.com/github/strues/boldr)   [![codecov](https://codecov.io/gh/strues/boldr/branch/master/graph/badge.svg)](https://codecov.io/gh/strues/boldr)  [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)  
 
 
-### 0.1.0-alpha.3
-7/11/2016  
+-------    
 
-[-] **Setup and Settings**  Added a setup within the dashboard for settings and site customization. This is the first step in the process of loading / preloading various customizations before sending them down to the browser. At the moment the setup *wizard* contains the basic info like Website name, URL, etc...
+[![Join the chat at https://gitter.im/getboldr/Lobby](https://badges.gitter.im/getboldr/Lobby.svg)](https://gitter.im/getboldr/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[-] **We're using Express**
+**Boldr** is a modern content management framework.
 
-[-] **Redis** Redis is used for sessions as well as caching *caching is in the early stages*.
-    - This will be perhaps an opt in / out deal. Using PG as the fallback
+Think of Boldr as the solid foundation for building your next great web application. Unlike most other CMS platforms, Boldr is entirely JavaScript. Boldr features Universal / Isomorphic rendering for improved performance and Search Engine Optimization.
 
-[-] **Article Editor** Is now pretty damn broken. Nearly has the issue resolved. However, tags are now storing as unique.
 
-[-] **Media Manager** Connecting to AWS S3. Uploading functionality as well as file management is coming along.
-____
+#### Incoming 💥  Breaking  💥  Changes and Major Improvements
+
+Pardon the mess while things get resettled over the next 24 hours in the next and dev branches.
+
+
+**Have questions or want to help with development?**
+Come visit with us [![Join the chat at https://gitter.im/boldr/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/boldr/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
+## Table of Contents
+- [Boldr Repositories](#boldr-repositories)
+- [Current Features](#current-features)
+- [Technology Stack](#core-technologies)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+  - [Development](#development)
+  - [Production](#production)
+- [Documentation](https://docs.boldr.io)
+- [Demo](#demo)
+- [Contributing](#contributing)
+- [Screenshots](#screenshots)
+
+
+## Boldr Repositories
+
+- [Boldr API](https://github.com/boldr/boldr-api)
+- [Boldr UI](https://github.com/boldr/boldr-ui)
+- [Boldr Tools](https://github.com/boldr/boldr-tools)
+
+
+## Current Features
+
+* Standalone REST API - Giving you the freedom to do whatever you'd like without looking at an interface.
+* Rich Text Editor / WYSIWYG
+* Server side rendering
+* Authentication with JSON Web Tokens
+* Content tagging - Easily relate content to similar topics
+* Drag and drop file uploading
+* User management with basic role based access control (major expansion of capabilities planned for a later date)
+* Basic user and author profiles.
+* Redis caching
+* Command line interface - Quick and easy project bootstrapping
+
+
+## Technology Stack
+
+- [Node](https://github.com/nodejs/node)
+- [Express](https://github.com/expressjs/express)
+- [React](https://github.com/facebook/react)
+- [Postgres](https://github.com/postgres/postgres) ([Knex](http://knexjs.org/) & [Objection](https://github.com/Vincit/objection.js/))
+- [Redis](http://redis.io/)
+- [Docker](https://github.com/docker/docker)
+- [Webpack](https://github.com/webpack/webpack)
 
 ## Getting Started
-At the moment, Boldr is in active development and not quite ready for use. However, to download it, and run it for development follow these directions.
 
-```bash
-$ git clone git@github.com:strues/boldr.git
-$ npm install
-```
+**Development Disclaimer:** At the moment, Boldr is in active development. Meaning there might be the occasional breaking changes, and architectural adjustments.
 
-Rename `example.env` to `.env`  and modify the values to match your environment. The values set in this file are loaded upon launch by the configuration file located in `src/server/config/boldr.js`. Click [here to view](https://github.com/strues/boldr/blob/master/src/server/config/boldr.js). You may also define the values in the respective environment.json file within the configuration directory. Take note that the .env file **overrides** all other configuration settings.
+That said, I'm confident the majority of large breaking changes is behind us.
 
-A Docker-Compose file along with a Postgres Dockerfile are included in the repository for you to use if you'd like.
-
-Create the database for Boldr to use, and put it in the .env file where you see
-`DB_NAME=`
-
-```bash
-$ npm run migrate
-```
-The above command will create the table structure for your database. You will need to create the database beforehand or you will
-run into errors.
-
-#### Development
-
-```bash
-$ npm run start:dev
-```
-
-The start:dev command launches the server, tells Webpack to compile the source code, and watch for changes.
+**Step 1**
+First you must somehow get the files to your machine. Below outlines two options. Using the CLI is recommended. Boldr relies on an API in order to get its data. Running Boldr's API, at least until you get a grasp on how everything works together, will provide the best possible experience.
 
 
-#### Production
-> No way. Not yet. However if you feel like building the application as if it were production execute the following
+**Using Boldr-CLI:**  
 
-```bash
-$ npm run compile
-```
+```shell
+   yarn global --add boldr-cli
+   boldr-cli init
+   cd boldr-cms
+   yarn
+```  
 
-## Contribute
-Looking for an open source project to contribute to? We could use a hand developing Boldr.
+**Using git:**  
 
-## Documentation
-#### API Documentation
-[View Here](docs/api/apidocs.md)  
+```shell
+  git clone git@github.com:strues/boldr.git <DIR_NAME>
+  cd <DIR_NAME>
+  yarn
+```  
 
-#### Change Log
-[View Here](docs/CHANGELOG.md)
+If you don't feel like installing a global CLI, but still want to use the API, grab the files from https://github.com/boldr/boldr-api
 
-#### Webpack configuration
-[View Here](docs/webpack.md)
 
-[logo]: https://boldr.io/favicon-96x96.png "Boldr"
+## Usage
+
+Boldr runs on the following ports:
+**Frontend**: 3000 - _React SSR server_  
+**Webpack**: 3001 - _dev only_  
+
+
+
+### Development
+
+
+Run the CMS using `npm run dev`
+
+After Boldr has started visit <http://localhost:3000>. If you're using the API, an admin account is already created and you may login using these credentials:
+
+> Email - admin@boldr.io
+> Password - password
+
+Settings for the build process are located in `config/values.js`.
+
+### Production
+
+See the [production docs](docs/production.md)
+
+
+## Demo
+
+Visit [https://staging.boldr.io](https://staging.boldr.io) and explore the current demo deployment
+
+> Email - admin@boldr.io<br>
+> Password - password
+
+## Contributing
+
+Looking for an open source project to contribute to? All types of contributions are welcome here. Take a look at some of the [current issues](https://github.com/strues/boldr/issues) and see if you find something you'd like to help out with. Feel free to submit pull requests to the develop branch.
+
+**Contribution Area Ideas**
+
+- Documentation
+- Designs
+- React
+- Node
+- Build / Installation
+- Play a major role in a community driven project, have some fun, and work on improving your skills.
+
+
+## Screenshots  
+|         |            |   |
+| ------------- |:-------------:| -----:|
+![createPost][createPostImg] | ![uploadMedia][uploadMediaImg]  | ![single][blogSingle]
+
+
+
+
+[cc-img]: https://codeclimate.com/github/strues/boldr/badges/gpa.svg
+[cc-link]: https://codeclimate.com/github/strues/boldr
+
+[coverage-link]: https://codeclimate.com/github/strues/boldr/coverage
+[coverage-img]: https://codeclimate.com/github/strues/boldr/badges/coverage.svg
+
+[createPostImg]: /docs/assets/create-post.png
+[uploadMediaImg]: /docs/assets/upload-media.png
+[blogSingle]: /docs/assets/create-post.png
